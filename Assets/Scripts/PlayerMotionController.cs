@@ -119,7 +119,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(isJumping)
         {
-            velocity.y += Mathf.Sqrt(jumpMaxHeight * -3.0f * gravity);
+            velocity.y = Mathf.Sqrt(jumpMaxHeight * -3.0f * gravity);
             isJumping = false;
         }
         
