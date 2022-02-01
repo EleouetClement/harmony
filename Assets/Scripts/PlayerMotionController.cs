@@ -26,6 +26,7 @@ public class PlayerMotionController : MonoBehaviour
     private Rigidbody char_body;
     private PlayerInput char_playerInput;
     private CharacterController char_characterControler;
+    public CameraController char_cameraController;
     public Animator char_animator;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
@@ -97,8 +98,8 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void Move()
     {
-        forwardDirection = new Vector3(0, 0, inputAxis.y * transform.forward.z);
-        rightDirection = inputAxis.x * transform.right;
+        forwardDirection = inputAxis.y * char_cameraController.GetViewForward;
+        rightDirection = inputAxis.x * char_cameraController.GetViewRight;
         Vector3 movement = forwardDirection + rightDirection;
         movement.Normalize();
         velocity += movement * walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl);     
@@ -109,7 +110,7 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void Rotate()
     {
-        
+        Vector3 cameraDirection = char_cameraController.GetViewDirection;
     }
 
     /// <summary>
@@ -181,14 +182,17 @@ public class PlayerMotionController : MonoBehaviour
             // Visualize SphereCast with two spheres and a line
             Vector3 startPoint = new Vector3(transform.position.x, transform.position.y - (char_characterControler.height / 2) + startDistanceOffset, transform.position.z);
             Vector3 endPoint = new Vector3(transform.position.x, transform.position.y - (char_characterControler.height / 2) + startDistanceOffset - sphereCastDistance, transform.position.z);
+            if(startPoint != null && endPoint != null)
+            {
+                Gizmos.color = Color.white;
+                Gizmos.DrawWireSphere(startPoint, sphereCastRadius);
 
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(startPoint, sphereCastRadius);
+                Gizmos.color = Color.gray;
+                Gizmos.DrawWireSphere(endPoint, sphereCastRadius);
 
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireSphere(endPoint, sphereCastRadius);
-
-            Gizmos.DrawLine(startPoint, endPoint);
+                Gizmos.DrawLine(startPoint, endPoint);
+            }
+            
         }
     }
 
