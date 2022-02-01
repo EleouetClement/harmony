@@ -8,6 +8,9 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] [Range(0, 20)] private float walkSpeed = 1f;
     [SerializeField] [Range(0, 200)] private float rotationSpeed = 1f;
     [SerializeField] [Range(0, 10)] private float jumpMaxHeight = 1f;
+    [SerializeField] [Range(0, 10)] private float dragMultipler = 1f;
+    [SerializeField] [Range(0, 10)] private float airDragMultipler = 1f;
+    [SerializeField] [Range(0, 1)] private float airControl = 1f;
     private Rigidbody char_body;
     private PlayerInput char_playerInput;
     private CharacterController char_characterControler;
@@ -45,6 +48,7 @@ public class PlayerMotionController : MonoBehaviour
         Jump();
         Rotate();
         AddForce();
+        char_characterControler.Move(velocity * Time.fixedDeltaTime);
     }
 
     /// <summary>
@@ -81,7 +85,7 @@ public class PlayerMotionController : MonoBehaviour
         rightDirection = inputAxis.x * transform.right;
         Vector3 movement = forwardDirection + rightDirection;
         movement.Normalize();
-        velocity = movement * walkSpeed * Time.fixedDeltaTime;     
+        velocity += movement * walkSpeed * Time.fixedDeltaTime * ( char_characterControler.isGrounded? 1 : airControl);     
     }
 
     /// <summary>
@@ -102,7 +106,7 @@ public class PlayerMotionController : MonoBehaviour
             velocity.y += Mathf.Sqrt(jumpMaxHeight * -3.0f * gravity);
             isJumping = false;
         }
-        velocity.y += gravity * Time.fixedDeltaTime;
+        
     }
 
     /// <summary>
@@ -110,6 +114,23 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void AddForce()
     {
-        char_characterControler.Move(velocity);
+        if(!char_characterControler.isGrounded)
+        { 
+            velocity.y += gravity * Time.fixedDeltaTime;
+        }
+        velocity += DragForce();
     }
+
+    private Vector3 DragForce()
+    {
+        Vector3 force = -velocity;
+        force *= Time.fixedDeltaTime;
+        force *= char_characterControler.isGrounded ? dragMultipler : airDragMultipler;
+        force = Vector3.ClampMagnitude(force, velocity.magnitude);
+        return force;
+    }
+
+    
+
+
 }
