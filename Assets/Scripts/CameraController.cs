@@ -42,11 +42,19 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public Vector3 GetViewXZDirection
+    public Vector3 GetViewForward
     {
         get
         {
             return transform.forward;
+        }
+    }
+
+    public Vector3 GetViewRight
+    {
+        get
+        {
+            return transform.right;
         }
     }
 
