@@ -13,7 +13,7 @@ public class WaterMissiles : AbstractSpell
     [HideInInspector]
     public float castingTime;
 
-    private List<GameObject> balls;
+    private List<GameObject> balls = new List<GameObject>(20);
     private int spawnedballs = 0;
 
     public override void FixedUpdate()
@@ -21,14 +21,26 @@ public class WaterMissiles : AbstractSpell
         timeLocale += Time.fixedDeltaTime;
         if (spawnedballs <= BallsToSpawn) {
             spawnedballs++;
-            Instantiate(BallPrefab);
+            balls.Add(Instantiate(BallPrefab));
         }
+
+        float castmax = castingTime < 0.1f ? 2 : castingTime;
+        if (timeLocale > castmax) {
+            balls.ForEach(e => { Destroy(e); });
+
+            elementary.GetComponent<ElementaryController>().currentSpell = null;
+            elementary.transform.position = getDestination();
+            elementary.GetComponent<ElementaryController>().computePosition = true;
+
+            Destroy(gameObject);
+        }
+       
     }
 
     /// <returns>The destination position of the child missiles. </returns>
     private Vector3 getDestination()
     {
-        if (target == null) return base.target;
+        if (targetTransform == null) return base.target;
         return targetTransform.position;
     }
 

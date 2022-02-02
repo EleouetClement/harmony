@@ -20,7 +20,7 @@ public class ElementaryController : MonoBehaviour
     /// <summary>
     /// true if the element handles itself
     /// </summary>
-    public bool computePosition = false;
+    public bool computePosition = true;
     private bool hasShoulder = false;
 
     private Transform shoulder;
