@@ -9,16 +9,16 @@ public abstract class AbstractSpells
     
     public Vector3 target { get; protected set; }
 
-    public GameObject elementary { get; private set; }
+    public GameObject elementary { get; protected set; }
 
     /// <summary>
     /// define spell power
-    /// <br></br>
+    /// <br>
     /// charge is between 0 and 100
     /// </summary>
-    public float charge { get; private set; }
+    public float charge { get; protected set; }
 
-    public AbstractSpells(GameObject elemRef, Vector3 target, float charge)
+    protected AbstractSpells(GameObject elemRef, Vector3 target, float charge)
     {
         this.charge = Mathf.Clamp(charge, 0, 100);
         this.target = target;
