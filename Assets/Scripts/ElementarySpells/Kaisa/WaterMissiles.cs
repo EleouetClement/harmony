@@ -27,11 +27,13 @@ public class WaterMissiles : AbstractSpell
             while (spawnedballs <= BallsToSpawn)
             {
                 spawnedballs++;
-                balls.Add(Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity));
+                GameObject ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
+                balls.Add(ball);
+                ball.GetComponent<WaterBall>().targetLocation = getDestination();
             }
         }
         // Spell self destruction
-        float castmax = castingTime < 0.1f ? 2 : castingTime;
+        float castmax = castingTime < 0.1f ? 1 : castingTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
             balls.ForEach(e => { Destroy(e); });
