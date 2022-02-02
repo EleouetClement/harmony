@@ -10,8 +10,8 @@ public class WaterMissiles : AbstractSpell
     private float timeLocale = 0f;
     [HideInInspector]
     public Transform targetTransform;
-    [HideInInspector]
-    public float castingTime;
+
+    public float maxSpellTime;
 
     private List<GameObject> balls = new List<GameObject>(20);
     private int spawnedballs = 0;
@@ -33,7 +33,7 @@ public class WaterMissiles : AbstractSpell
             }
         }
         // Spell self destruction
-        float castmax = castingTime < 0.1f ? 1 : castingTime;
+        float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
             balls.ForEach(e => { Destroy(e); });
