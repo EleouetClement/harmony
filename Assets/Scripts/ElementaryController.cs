@@ -5,14 +5,26 @@ using UnityEngine;
 public class ElementaryController : MonoBehaviour
 {
 
+    [Header("Elementary positionning")]
     [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;
     [SerializeField][Range(-2, 2)] private float forwardOffset = 0;
-    [SerializeField][Min(0)]  private float lerpInterpolationValue= 4;
+    [SerializeField][Min(0)]       private float lerpInterpolationValue= 4;
+    [Header("Elementary stats")]
+    [SerializeField] [Range(0, 50)] private float maxDistance = 10;
+    [SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
+    [SerializeField] private int layerMask;
 
-
-    private bool isAway = false;
+    /// <summary>
+    /// true if the element handles itself
+    /// </summary>
+    private bool computePosition = false;
     private bool hasShoulder = false;
+
+    /// <summary>
+    /// false is the elementary is 
+    /// </summary>
+    private bool attack;
     private Transform shoulder;
     // Start is called before the first frame update
     void Start()
@@ -23,9 +35,18 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isAway)
+
+    }
+
+    private void FixedUpdate()
+    {
+        if (!computePosition)
         {
             Orbit();
+        }
+        else
+        {
+            
         }
     }
 
@@ -33,14 +54,21 @@ public class ElementaryController : MonoBehaviour
     /// The elementary throw itself straigth forward
     /// </summary>
     public void AttackForward(Vector3 target)
-    {
-        isAway = true;
+    {   
+        //TO MOVE -> SPELL CLASS
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position, target,out hit ,maxDistance, layerMask))
+        {
+            computePosition = true;
+            attack = true;
+
+        }
     }
 
     /// <summary>
     /// Recall the elementary next to the player
     /// </summary>
-    public void Return()
+    public void Recall()
     {
 
     }
@@ -74,4 +102,10 @@ public class ElementaryController : MonoBehaviour
         hasShoulder = true;
         shoulder = shouldersTransform;
     }
+
+    //private void MoveToTarget()
+    //{
+    //    gameObject.GetComponent<Rigidbody>().MovePosition(target);     
+    //}
+    
 }

@@ -75,8 +75,7 @@ public class PlayerMotionController : MonoBehaviour
     void OnMove(InputValue value)
     {
         //Debug.Log(value.Get<Vector2>());
-        inputAxis = value.Get<Vector2>();
-        
+        inputAxis = value.Get<Vector2>();       
     }
 
     /// <summary>

@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerGameplayController : MonoBehaviour
 {
     [Header("Elementary")]
     [SerializeField] GameObject elementaryObjectReference;
     [SerializeField] GameObject playerMeshReference;
+    [SerializeField] private CameraController playerCameraController;
     private ElementaryController elementaryController;
-
 
     private void Awake()
     {
@@ -24,6 +25,19 @@ public class PlayerGameplayController : MonoBehaviour
     void Update()
     {
        
+    }
+
+
+    private void OnSpellLeft(InputValue value)
+    {
+        Debug.Log("Attack");
+        elementaryController.AttackForward(playerCameraController.GetViewDirection);
+    }
+
+    private void OnRecall()
+    {
+        Debug.Log("Recall");
+        elementaryController.Recall();
     }
 
     /// <summary>
@@ -55,5 +69,6 @@ public class PlayerGameplayController : MonoBehaviour
             }
 
         }
+        
     }
 }
