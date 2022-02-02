@@ -18,20 +18,26 @@ public class PlayerGameplayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-       
+
     }
 
 
     private void OnSpellLeft(InputValue value)
     {
         Debug.Log("Attack");
-        elementaryController.CastSpell(new WaterMissiles(gameObject, null, 100f));
+        AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
+        s.init(elementaryController.gameObject, Vector3.zero, 100f);
+        if (s is WaterMissiles)
+        {
+            ((WaterMissiles)s).targetTransform = null;
+        }
+        elementaryController.CastSpell(s);
     }
 
 
@@ -65,6 +71,6 @@ public class PlayerGameplayController : MonoBehaviour
             }
 
         }
-        
+
     }
 }

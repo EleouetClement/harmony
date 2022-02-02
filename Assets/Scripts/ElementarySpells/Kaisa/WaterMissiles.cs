@@ -2,28 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaterMissiles : AbstractSpells
+public class WaterMissiles : AbstractSpell
 {
+    public GameObject BallPrefab;
+    public int BallsToSpawn;
+
     private float timeLocale = 0f;
-    private new Transform target;
+    [HideInInspector]
+    public Transform targetTransform;
+    [HideInInspector]
+    public float castingTime;
 
-    public WaterMissiles(GameObject elemRef, Vector3 target, float charge) : base(elemRef, target, charge)
-    {
-    }
-
-    public WaterMissiles(GameObject elemRef, Transform target, float charge) : base(elemRef, Vector3.zero, charge)
-    {
-        this.target = target;
-    }
+    private List<GameObject> balls;
+    private int spawnedballs = 0;
 
     public override void FixedUpdate()
     {
         timeLocale += Time.fixedDeltaTime;
+        if (spawnedballs <= BallsToSpawn) {
+            spawnedballs++;
+            Instantiate(BallPrefab);
+        }
     }
 
     /// <returns>The destination position of the child missiles. </returns>
-    private Vector3 getDestination() {
+    private Vector3 getDestination()
+    {
         if (target == null) return base.target;
-        return target.position;
+        return targetTransform.position;
     }
+
 }

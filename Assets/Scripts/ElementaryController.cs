@@ -15,15 +15,18 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
+    [SerializeField] public AbstractSpell[] spells;
+
     /// <summary>
     /// true if the element handles itself
     /// </summary>
-    private bool computePosition = false;
+    public bool computePosition = false;
     private bool hasShoulder = false;
 
     private Transform shoulder;
 
-    private AbstractSpells currentSpell;
+    public AbstractSpell currentSpell;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +54,7 @@ public class ElementaryController : MonoBehaviour
     /// <summary>
     /// The elementary throw itself straigth forward
     /// </summary>
-    public void CastSpell(AbstractSpells spell)
+    public void CastSpell(AbstractSpell spell)
     {
         currentSpell = spell;
         computePosition = false;
