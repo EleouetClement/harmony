@@ -31,14 +31,10 @@ public class PlayerGameplayController : MonoBehaviour
     private void OnSpellLeft(InputValue value)
     {
         Debug.Log("Attack");
-        elementaryController.AttackForward(playerCameraController.GetViewDirection);
+        elementaryController.CastSpell(playerCameraController.GetViewDirection);
     }
 
-    private void OnRecall()
-    {
-        Debug.Log("Recall");
-        elementaryController.Recall();
-    }
+
 
     /// <summary>
     /// Set the Elementary shoulder reference
@@ -64,7 +60,7 @@ public class PlayerGameplayController : MonoBehaviour
                 }
                 else
                 {
-                    elementaryController.SetShoulderOrigin(playerMeshReference.transform);
+                    elementaryController.SetPLayerOrigin(playerMeshReference.transform);
                 }
             }
 

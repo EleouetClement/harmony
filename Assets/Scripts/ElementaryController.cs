@@ -21,11 +21,9 @@ public class ElementaryController : MonoBehaviour
     private bool computePosition = false;
     private bool hasShoulder = false;
 
-    /// <summary>
-    /// false is the elementary is 
-    /// </summary>
-    private bool attack;
     private Transform shoulder;
+
+    private AbstractSpells currentSpell;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,37 +38,23 @@ public class ElementaryController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!computePosition)
+        if (computePosition)
         {
             Orbit();
         }
-        else
+        if(currentSpell != null)
         {
-            
+            currentSpell.FixedUpdate();
         }
     }
 
     /// <summary>
     /// The elementary throw itself straigth forward
     /// </summary>
-    public void AttackForward(Vector3 target)
-    {   
-        //TO MOVE -> SPELL CLASS
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position, target,out hit ,maxDistance, layerMask))
-        {
-            computePosition = true;
-            attack = true;
-
-        }
-    }
-
-    /// <summary>
-    /// Recall the elementary next to the player
-    /// </summary>
-    public void Recall()
+    public void CastSpell(AbstractSpells spell)
     {
-
+        currentSpell = spell;
+        computePosition = false;
     }
 
     /// <summary>
@@ -88,10 +72,10 @@ public class ElementaryController : MonoBehaviour
     }
 
     /// <summary>
-    /// Set the elementary Anchor
+    /// Set player position for this elementary
     /// </summary>
     /// <param name="shouldersTransform"></param>
-    public void SetShoulderOrigin(Transform shouldersTransform)
+    public void SetPLayerOrigin(Transform shouldersTransform)
     {
         if (shouldersTransform == null)
         {
@@ -102,10 +86,4 @@ public class ElementaryController : MonoBehaviour
         hasShoulder = true;
         shoulder = shouldersTransform;
     }
-
-    //private void MoveToTarget()
-    //{
-    //    gameObject.GetComponent<Rigidbody>().MovePosition(target);     
-    //}
-    
 }
