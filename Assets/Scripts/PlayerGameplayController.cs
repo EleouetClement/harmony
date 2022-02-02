@@ -31,7 +31,7 @@ public class PlayerGameplayController : MonoBehaviour
     private void OnSpellLeft(InputValue value)
     {
         Debug.Log("Attack");
-        //elementaryController.CastSpell(new WaterMissiles(gameObject, 100f));
+        elementaryController.CastSpell(new WaterMissiles(gameObject, null, 100f));
     }
 
 
