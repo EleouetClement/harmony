@@ -17,7 +17,8 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <br>
     /// charge is between 0 and 100
     /// </summary>
-    public float charge { get; protected set; }
+    public float charge { get; protected set; }//TO CHANGE
+
     public abstract void FixedUpdate();
 
     /// <summary>
