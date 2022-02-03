@@ -32,7 +32,7 @@ public class Fireball : AbstractSpell
     /// <summary>
     /// Store the current fire ball object reference to apply the transforms
     /// </summary>
-    private GameObject fireBallInstance;
+    private GameObject fireOrbInstance;
     /// <summary>
     /// true if the distance between the projectile and the character surpass maxDistance
     /// </summary>
@@ -54,8 +54,7 @@ public class Fireball : AbstractSpell
             ApplyForces();
         }
         velocity = target * baseProjectileSpeed * Time.fixedDeltaTime;
-        Debug.Log(velocity);
-        transform.Translate(velocity);
+        fireOrbInstance.transform.Translate(velocity);
     }
 
 
@@ -69,6 +68,7 @@ public class Fireball : AbstractSpell
     private void ApplyForces()
     {
         //TO DO...
+
     }
 
     public override void init(GameObject elemRef, Vector3 target)
@@ -80,8 +80,8 @@ public class Fireball : AbstractSpell
         }
         else
         {
-            fireBallInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
-            origin = fireBallInstance.transform.position;
+            fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
+            origin = fireOrbInstance.transform.position;
             elementary.GetComponent<ElementaryController>().computePosition = false;
         }
     }
