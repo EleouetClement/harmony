@@ -8,7 +8,7 @@ public class BasicController : MonoBehaviour
 {
     private CharacterController controller;
     private Vector2 moveInput;
-    private float speed = 3;
+    private float speed = 7;
 
     private void Awake()
     {
