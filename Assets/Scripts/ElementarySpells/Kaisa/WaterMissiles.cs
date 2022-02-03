@@ -5,7 +5,8 @@ using UnityEngine;
 public class WaterMissiles : AbstractSpell
 {
     public WaterBall BallPrefab;
-    public float BallsToSpawn;
+    
+    public float TimePerBall = 0.12f;
 
     private float timeLocale = 0f;
     [HideInInspector]
@@ -20,14 +21,7 @@ public class WaterMissiles : AbstractSpell
     {
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
-        while (spawnedballs <= BallsToSpawn)
-        {
-            spawnedballs++;
-            WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
-            ball.parent = this;
-            balls.Add(ball);
-            ball.GetComponent<WaterBall>().targetLocation = getDestination();
-        }
+        
     }
 
     public override void FixedUpdate()
@@ -35,11 +29,19 @@ public class WaterMissiles : AbstractSpell
         base.FixedUpdate();
         // Time locale
         timeLocale += Time.fixedDeltaTime;
+        // Ball spawning
+        if (!isReleased() && spawnedballs * TimePerBall < timeLocale) {
+            spawnedballs++;
+            WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
+            ball.parent = this;
+            balls.Add(ball);
+            ball.GetComponent<WaterBall>().targetLocation = getDestination();
+        }
+
         // Spell self destruction
         float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
-            Debug.Log("AbstractSpell ended");
             balls.ForEach(e => { Destroy(e.gameObject); });
             elementary.GetComponent<ElementaryController>().currentSpell = null;
             elementary.transform.position = getDestination();

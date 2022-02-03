@@ -34,6 +34,7 @@ public class PlayerGameplayController : MonoBehaviour
         {
             if (value.isPressed)
             {
+                // TODO : Find a smarter way to instanciate the right spell here.
                 AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
                 s.init(elementaryController.gameObject, Vector3.zero);
                 if (s is WaterMissiles)
