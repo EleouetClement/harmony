@@ -13,7 +13,7 @@ public class Fireball : AbstractSpell
     /// The maximum distance before applying bullet drop
     /// </summary>
     [Min(1)]public float maxDistance;
-
+    [Min(1)]public float livingTime;
     /// <summary>
     /// Distance from which the projectile reach its max speed
     /// </summary>
@@ -75,6 +75,7 @@ public class Fireball : AbstractSpell
         velocity = target * currentSpeed * Time.fixedDeltaTime;
         fireOrbInstance.transform.Translate(velocity);
         elementary.transform.Translate(velocity);
+
     }
     
 
@@ -109,12 +110,30 @@ public class Fireball : AbstractSpell
             {
                 speedStep = projectileTopSpeed / maxSpeedDistance;
                 currentSpeed = projectileStartSpeed;
-            }        
+            }
+            
         }
+    }
+    /// <summary>
+    /// Detroys fire Orbs and resets Elementary
+    /// </summary>
+    public override void Terminate()
+    {
+        Destroy(fireOrbInstance);
+        ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
+        elemCtrl.currentSpell = null;
+        elemCtrl.computePosition = true;
     }
 
     protected override void onChargeEnd(float chargetime)
     {
-        
+        //if(chargetime >= maxCastTime)
+        //{
+        //    //TO DO...
+        //}
+        //else
+        //{
+        //    //TO DO...
+        //}
     }
 }

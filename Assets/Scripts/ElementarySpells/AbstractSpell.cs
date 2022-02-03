@@ -22,12 +22,47 @@ public abstract class AbstractSpell : MonoBehaviour
     /// Charge of the spell, in seconds.
     /// </summary>
     public float charge { get; private set; } = 0f;
+
+
+    /// <summary>
+    /// Maximum cast charge duration
+    /// </summary>
+    private float maxCastTime = 4f;
+
+
+    /// <summary>
+    /// Maximum living time for the spell
+    /// </summary>
+    private float maxLivingTime = 3f;
+
+    private float currentCastTime = 0f;
+
+    private float currentLivingTime = 0f;
+
+
     private bool chargeend = false;
 
     public virtual void FixedUpdate()
     {
         if (!chargeend)
             charge += Time.fixedDeltaTime;
+        if (isReleased())
+        {
+            currentLivingTime += Time.fixedDeltaTime;
+            if (currentLivingTime >= maxLivingTime)
+            {
+
+            }
+        }
+        else
+        {
+
+            currentCastTime += Time.fixedDeltaTime;
+            if (currentCastTime >= maxCastTime)
+            {
+                onChargeEnd(currentCastTime);
+            }
+        }
     }
 
     /// <summary>
@@ -52,6 +87,12 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         return chargeend;
     }
+
+    /// <summary>
+    /// Kills this spell instance, disposes all ressources used by this spell and returns elemntary to 
+    /// the player.
+    /// </summary>
+    public abstract void Terminate();
 
     /// <summary>
     /// Event triggered by The player controller to notify that the spell cast button has been released. 
