@@ -40,6 +40,14 @@ public class PlayerGameplayController : MonoBehaviour
         elementaryController.CastSpell(s);
     }
 
+    private void OnSpellRight()
+    {
+        Debug.Log("FireBall");
+        AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
+        spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection, 100f);
+        elementaryController.CastSpell(spell);
+    }
+
 
 
     /// <summary>
