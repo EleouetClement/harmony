@@ -19,6 +19,7 @@ public class WaterMissiles : AbstractSpell
 
     public override void FixedUpdate()
     {
+        base.FixedUpdate();
         timeLocale += Time.fixedDeltaTime;
         // Spell inititalisation in scene
         if (!initialized)
@@ -58,4 +59,8 @@ public class WaterMissiles : AbstractSpell
         return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
 
+    protected override void onChargeEnd(float chargetime)
+    {
+        // Does nothing yet
+    }
 }

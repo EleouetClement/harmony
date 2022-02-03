@@ -30,14 +30,16 @@ public class PlayerGameplayController : MonoBehaviour
 
     private void OnSpellLeft(InputValue value)
     {
-        if (value.isPressed) {
+        if (value.isPressed)
+        {
             AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
-            s.init(elementaryController.gameObject, Vector3.zero, 100f);
+            s.init(elementaryController.gameObject, Vector3.zero);
             if (s is WaterMissiles)
-            {
                 ((WaterMissiles)s).targetTransform = null;
-            }
             elementaryController.CastSpell(s);
+        }
+        else {
+            elementaryController.currentSpell?.OnRelease();
         }
     }
 
@@ -45,7 +47,7 @@ public class PlayerGameplayController : MonoBehaviour
     {
         Debug.Log("FireBall");
         AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-        spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection, 100f);
+        spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
         elementaryController.CastSpell(spell);
     }
 
