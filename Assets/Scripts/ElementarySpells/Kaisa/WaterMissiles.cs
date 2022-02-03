@@ -5,7 +5,7 @@ using UnityEngine;
 public class WaterMissiles : AbstractSpell
 {
     public WaterBall BallPrefab;
-    public int BallsToSpawn;
+    public float BallsToSpawn;
 
     private float timeLocale = 0f;
     [HideInInspector]
@@ -23,7 +23,7 @@ public class WaterMissiles : AbstractSpell
         while (spawnedballs <= BallsToSpawn)
         {
             spawnedballs++;
-            WaterBall ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
+            WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
             ball.parent = this;
             balls.Add(ball);
             ball.GetComponent<WaterBall>().targetLocation = getDestination();
@@ -55,11 +55,6 @@ public class WaterMissiles : AbstractSpell
     {
         if (targetTransform == null) return base.target;
         return targetTransform.position;
-    }
-
-    private Vector3 randomVector()
-    {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
 
     protected override void onChargeEnd(float chargetime)
