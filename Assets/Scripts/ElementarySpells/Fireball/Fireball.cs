@@ -13,12 +13,26 @@ public class Fireball : AbstractSpell
     /// The maximum distance before applying bullet drop
     /// </summary>
     [Min(1)]public float maxDistance;
-    /// <summary>
-    /// Force needed to be applied when bullet drop is on
-    /// </summary>
-    [SerializeField][Range(-20, 0)] private float gravityForce;
-    [SerializeField] [Min(0)] private float baseProjectileSpeed;
 
+    /// <summary>
+    /// Distance from which the projectile reach its max speed
+    /// </summary>
+    [Min(0)] public float maxSpeedDistance;
+
+    [SerializeField] [Min(0)] private float projectileTopSpeed;
+    [SerializeField] [Min(0)] private float projectileStartSpeed;
+
+    [Header("Projectile drop")]
+    /// <summary>
+    /// Force needed to be applied when bullet drop is on.
+    /// it increases by 
+    /// </summary>
+    [SerializeField] [Range(-1, 0)] private float gravityForce;
+
+    /// <summary>
+    /// factor that is add to gravity each frame when forces are on.
+    /// </summary>
+    [SerializeField] [Min(0)] private float gravityIncreaseFactor;
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
     /// </summary>
@@ -33,10 +47,9 @@ public class Fireball : AbstractSpell
     /// Store the current fire ball object reference to apply the transforms
     /// </summary>
     private GameObject fireOrbInstance;
-    /// <summary>
-    /// true if the distance between the projectile and the character surpass maxDistance
-    /// </summary>
-    private bool applyProjectileDrop = false;
+
+    private float speedStep;
+    private float currentSpeed;
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -49,26 +62,30 @@ public class Fireball : AbstractSpell
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if(currentSpeed < projectileTopSpeed)
+        {
+            currentSpeed += speedStep;
+            
+        }
+        Debug.Log(currentSpeed);
         if(Vector3.Distance(origin, transform.position) >= maxDistance)
         {
             ApplyForces();
         }
-        velocity = target * baseProjectileSpeed * Time.fixedDeltaTime;
+        velocity = target * currentSpeed * Time.fixedDeltaTime;
         fireOrbInstance.transform.Translate(velocity);
-    }
-
-
-
-    private void Move()
-    {
-        velocity += target * baseProjectileSpeed * Time.fixedDeltaTime;
+        elementary.transform.Translate(velocity);
     }
     
 
+    /// <summary>
+    /// Apply custom gravity on y direction axis
+    /// </summary>
     private void ApplyForces()
     {
-        //TO DO...
-
+        target += new Vector3(0.0f, gravityForce, 0.0f);
+        target.Normalize();
+        gravityForce -= gravityIncreaseFactor;
     }
 
     public override void init(GameObject elemRef, Vector3 target)
@@ -83,9 +100,18 @@ public class Fireball : AbstractSpell
             fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
             origin = fireOrbInstance.transform.position;
             elementary.GetComponent<ElementaryController>().computePosition = false;
+            if(projectileStartSpeed > projectileTopSpeed)
+            {
+                Debug.LogWarning("Fireball.init : projectileStartSpeed > projectiletTopSpeed");
+                currentSpeed = projectileTopSpeed;
+            }
+            else
+            {
+                speedStep = projectileTopSpeed / maxSpeedDistance;
+                currentSpeed = projectileStartSpeed;
+            }        
         }
     }
-
 
     protected override void onChargeEnd(float chargetime)
     {
