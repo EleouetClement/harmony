@@ -48,4 +48,4 @@ MonoBehaviour:
     type: 3}
   BallsToSpawn: 5
   targetTransform: {fileID: 0}
-  maxSpellTime: 2
+  maxSpellTime: 3

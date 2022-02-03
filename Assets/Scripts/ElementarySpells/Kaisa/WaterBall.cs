@@ -8,6 +8,8 @@ using UnityEngine;
 public class WaterBall : MonoBehaviour
 {
 
+    public WaterMissiles parent;
+
     public float traveltime = 1f;
     [HideInInspector]
     public Vector3 targetLocation;
@@ -16,6 +18,7 @@ public class WaterBall : MonoBehaviour
     /// <summary>
     /// True if the ball is launched and seeking the target, false if it's precast hover mode.
     /// </summary>
+    [HideInInspector]
     public bool launched = false;
 
     /// <summary>
@@ -37,5 +40,11 @@ public class WaterBall : MonoBehaviour
             TimeLocale += Time.deltaTime;
             transform.position = Vector3.Lerp(spawnLocation, targetLocation, Mathf.Clamp(TimeLocale / traveltime, 0, 1));
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (parent.gameObject == null) 
+            Destroy(gameObject);
     }
 }

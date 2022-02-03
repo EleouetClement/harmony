@@ -47,6 +47,12 @@ public abstract class AbstractSpell : MonoBehaviour
         onChargeEnd(charge);
     }
 
+    /// <returns>True if this spell has already been released</returns>
+    public bool isReleased()
+    {
+        return chargeend;
+    }
+
     /// <summary>
     /// Event triggered by The player controller to notify that the spell cast button has been released. 
     /// Do note that there is no garentee that this event is ever called, as the player might not ever release the key.

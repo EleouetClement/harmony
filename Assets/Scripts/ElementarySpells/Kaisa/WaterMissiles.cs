@@ -15,29 +15,32 @@ public class WaterMissiles : AbstractSpell
 
     private List<WaterBall> balls = new List<WaterBall>(20);
     private int spawnedballs = 0;
-    private bool initialized = false;
+
+    public override void init(GameObject elemRef, Vector3 target)
+    {
+        base.init(elemRef, target);
+        elementary.GetComponent<MeshRenderer>().enabled = false;
+        while (spawnedballs <= BallsToSpawn)
+        {
+            spawnedballs++;
+            WaterBall ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
+            ball.parent = this;
+            balls.Add(ball);
+            ball.GetComponent<WaterBall>().targetLocation = getDestination();
+        }
+    }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        // Time locale
         timeLocale += Time.fixedDeltaTime;
-        // Spell inititalisation in scene
-        if (!initialized)
-        {
-            elementary.GetComponent<MeshRenderer>().enabled = false;
-            while (spawnedballs <= BallsToSpawn)
-            {
-                spawnedballs++;
-                WaterBall ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
-                balls.Add(ball);
-                ball.GetComponent<WaterBall>().targetLocation = getDestination();
-            }
-        }
         // Spell self destruction
         float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
-            balls.ForEach(e => { Destroy(e); });
+            Debug.Log("AbstractSpell ended");
+            balls.ForEach(e => { Destroy(e.gameObject); });
             elementary.GetComponent<ElementaryController>().currentSpell = null;
             elementary.transform.position = getDestination();
             elementary.GetComponent<ElementaryController>().computePosition = true;
@@ -61,6 +64,6 @@ public class WaterMissiles : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        // Does nothing yet
+        balls.ForEach(e => { e.launched = true; });
     }
 }
