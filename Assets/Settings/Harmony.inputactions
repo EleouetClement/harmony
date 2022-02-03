@@ -47,7 +47,7 @@
                     "id": "88844cc8-cdf1-4e2b-9f28-035127ce97d5",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -56,7 +56,7 @@
                     "id": "85d34372-8d14-4858-a4d6-f1f8494d1acb",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -65,7 +65,7 @@
                     "id": "17974811-21f4-4e51-8d2b-43b37304cfa6",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -83,7 +83,7 @@
                     "id": "06bcbdda-b565-4a3f-a5fa-10a82cb2613d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
@@ -92,16 +92,7 @@
                     "id": "ec0d3269-05cb-4ca1-924f-77164a5ad7e9",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Recall",
-                    "type": "Button",
-                    "id": "618c0295-9ab0-48d8-b597-888b19fa11da",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 }
             ],
@@ -422,28 +413,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "SpellRight",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3631cce8-2629-4919-bc14-a7a19662ed04",
-                    "path": "<Keyboard>/r",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard&Mouse",
-                    "action": "Recall",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "ca0d52f7-d75e-4b4a-af29-9b6ce9fc79fa",
-                    "path": "<Gamepad>/buttonNorth",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Recall",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

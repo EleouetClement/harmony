@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1189008554754054848}
   - component: {fileID: 6547625095814438233}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WaterOrbsSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,8 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a27d7df2c590f4dbd81b7bf50149b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BallPrefab: {fileID: 4921862008359665824, guid: 9432210ea7945ee4595feddf6288e7ad,
+  BallPrefab: {fileID: -3416303769625551740, guid: 9432210ea7945ee4595feddf6288e7ad,
     type: 3}
-  BallsToSpawn: 5
+  TimePerBall: 0.12
   targetTransform: {fileID: 0}
-  maxSpellTime: 2
+  maxSpellTime: 3

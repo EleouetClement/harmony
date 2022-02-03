@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 439266640353123122}
   - component: {fileID: 5146521055465724137}
   - component: {fileID: -3416303769625551740}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WaterOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4921862008359665824}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 1
@@ -110,5 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a31edc0ff2e3a5b42b49565292390c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  parent: {fileID: 0}
+  setuptime: 0.5
   traveltime: 0.7
+  bezierLaunchmulti: 4
   targetLocation: {x: 0, y: 0, z: 0}
+  launched: 0

@@ -42,6 +42,14 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    public Vector3 GetViewPosition
+    {
+        get
+        {
+            return cam.transform.position;
+        }
+    }
+
     public Vector3 GetViewForward
     {
         get
@@ -81,13 +89,13 @@ public class CameraController : MonoBehaviour
         
         float horizontalDistance =
             Physics.BoxCast(transform.position, CameraHalfExtends, sideDirection, out RaycastHit sideHit, cam.transform.rotation, baseHorizontalDistance-cam.nearClipPlane,
-                collisionMask)
+                collisionMask, QueryTriggerInteraction.Ignore)
                 ? sideHit.distance + cam.nearClipPlane
                 : baseHorizontalDistance;
 
         float distance = 
             Physics.BoxCast(transform.position+ sideDirection * horizontalDistance, CameraHalfExtends, -cam.transform.forward, out RaycastHit backHit, cam.transform.rotation, baseDistance - cam.nearClipPlane,
-                collisionMask)
+                collisionMask, QueryTriggerInteraction.Ignore)
                 ? backHit.distance + cam.nearClipPlane
                 : baseDistance;
 
