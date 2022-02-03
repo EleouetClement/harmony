@@ -30,14 +30,15 @@ public class PlayerGameplayController : MonoBehaviour
 
     private void OnSpellLeft(InputValue value)
     {
-        Debug.Log("Attack");
-        AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
-        s.init(elementaryController.gameObject, Vector3.zero, 100f);
-        if (s is WaterMissiles)
-        {
-            ((WaterMissiles)s).targetTransform = null;
+        if (value.isPressed) {
+            AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
+            s.init(elementaryController.gameObject, Vector3.zero, 100f);
+            if (s is WaterMissiles)
+            {
+                ((WaterMissiles)s).targetTransform = null;
+            }
+            elementaryController.CastSpell(s);
         }
-        elementaryController.CastSpell(s);
     }
 
     private void OnSpellRight()
