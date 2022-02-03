@@ -11,7 +11,7 @@
                     "id": "78e8c7aa-cf4d-4a3e-a2a7-f624d8f200b2",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "initialStateCheck": true
                 },
                 {
@@ -83,7 +83,7 @@
                     "id": "06bcbdda-b565-4a3f-a5fa-10a82cb2613d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press(behavior=2)",
                     "initialStateCheck": false
                 },
                 {
