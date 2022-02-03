@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WaterMissiles : AbstractSpell
 {
-    public GameObject BallPrefab;
+    public WaterBall BallPrefab;
     public int BallsToSpawn;
 
     private float timeLocale = 0f;
@@ -13,7 +13,7 @@ public class WaterMissiles : AbstractSpell
 
     public float maxSpellTime;
 
-    private List<GameObject> balls = new List<GameObject>(20);
+    private List<WaterBall> balls = new List<WaterBall>(20);
     private int spawnedballs = 0;
     private bool initialized = false;
 
@@ -28,7 +28,7 @@ public class WaterMissiles : AbstractSpell
             while (spawnedballs <= BallsToSpawn)
             {
                 spawnedballs++;
-                GameObject ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
+                WaterBall ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
                 balls.Add(ball);
                 ball.GetComponent<WaterBall>().targetLocation = getDestination();
             }
