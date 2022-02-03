@@ -8,14 +8,26 @@ using UnityEngine;
 public abstract class AbstractSpell : MonoBehaviour
 {
 
+    /// <summary>
+    /// The target location of the spell. Contains an arbitrary value that may differ spell to spell, but usually corresponds to where the spell is aimed at.
+    /// </summary>
     public Vector3 target { get; protected set; }
 
+    /// <summary>
+    /// Reference to the player orbitine elementary
+    /// </summary>
     public GameObject elementary { get; protected set; }
 
+    /// <summary>
+    /// Charge of the spell, in seconds.
+    /// </summary>
     public float charge { get; private set; } = 0f;
+    private bool chargeend = false;
 
-    public virtual void FixedUpdate() {
-        charge += Time.fixedDeltaTime;
+    public virtual void FixedUpdate()
+    {
+        if (!chargeend)
+            charge += Time.fixedDeltaTime;
     }
 
     /// <summary>
@@ -31,7 +43,8 @@ public abstract class AbstractSpell : MonoBehaviour
 
     public void OnRelease()
     {
-
+        chargeend = true;
+        onChargeEnd(charge);
     }
 
     /// <summary>
