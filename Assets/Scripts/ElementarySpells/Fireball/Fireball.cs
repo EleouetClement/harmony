@@ -29,6 +29,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
+        base.FixedUpdate();
         if(calculateDirection)
         {
 
@@ -49,4 +50,13 @@ public class Fireball : AbstractSpell
 
     }
 
+    public override void init(GameObject elemRef, Vector3 target)
+    {
+        base.init(elemRef, target);
+    }
+
+    protected override void onChargeEnd(float chargetime)
+    {
+        throw new System.NotImplementedException();
+    }
 }
