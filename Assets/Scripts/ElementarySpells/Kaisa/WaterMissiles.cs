@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class WaterMissiles : AbstractSpell
 {
-    public GameObject BallPrefab;
-    public int BallsToSpawn;
+    public WaterBall BallPrefab;
+    
+    public float TimePerBall = 0.12f;
 
     private float timeLocale = 0f;
     [HideInInspector]
@@ -13,30 +14,36 @@ public class WaterMissiles : AbstractSpell
 
     public float maxSpellTime;
 
-    private List<GameObject> balls = new List<GameObject>(20);
+    private List<WaterBall> balls = new List<WaterBall>(20);
     private int spawnedballs = 0;
-    private bool initialized = false;
+
+    public override void init(GameObject elemRef, Vector3 target)
+    {
+        base.init(elemRef, target);
+        elementary.GetComponent<MeshRenderer>().enabled = false;
+        
+    }
 
     public override void FixedUpdate()
     {
+        base.FixedUpdate();
+        // Time locale
         timeLocale += Time.fixedDeltaTime;
-        // Spell inititalisation in scene
-        if (!initialized)
-        {
-            elementary.GetComponent<MeshRenderer>().enabled = false;
-            while (spawnedballs <= BallsToSpawn)
-            {
-                spawnedballs++;
-                GameObject ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
-                balls.Add(ball);
-                ball.GetComponent<WaterBall>().targetLocation = getDestination();
-            }
+        // Ball spawning
+        if (!isReleased() && spawnedballs * TimePerBall < timeLocale) {
+            spawnedballs++;
+            WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
+            ball.parent = this;
+            balls.Add(ball);
+            ball.GetComponent<WaterBall>().targetLocation = getDestination();
         }
+        // Target location update
+        balls.ForEach(e => { e.targetLocation = getDestination(); });
         // Spell self destruction
         float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
-            balls.ForEach(e => { Destroy(e); });
+            balls.ForEach(e => { Destroy(e.gameObject); });
             elementary.GetComponent<ElementaryController>().currentSpell = null;
             elementary.transform.position = getDestination();
             elementary.GetComponent<ElementaryController>().computePosition = true;
@@ -53,9 +60,8 @@ public class WaterMissiles : AbstractSpell
         return targetTransform.position;
     }
 
-    private Vector3 randomVector()
+    protected override void onChargeEnd(float chargetime)
     {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
+        balls.ForEach(e => { e.launched = true; });
     }
-
 }

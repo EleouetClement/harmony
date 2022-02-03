@@ -45,10 +45,6 @@ public class ElementaryController : MonoBehaviour
         {
             Orbit();
         }
-        if(currentSpell != null)
-        {
-            currentSpell.FixedUpdate();
-        }
     }
 
     /// <summary>
