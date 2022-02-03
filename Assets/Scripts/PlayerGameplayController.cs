@@ -38,7 +38,11 @@ public class PlayerGameplayController : MonoBehaviour
                 AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
                 s.init(elementaryController.gameObject, Vector3.zero);
                 if (s is WaterMissiles)
-                    ((WaterMissiles)s).targetTransform = null;
+                {
+                    Collider[] enemies = Physics.OverlapSphere(Vector3.zero, 200f, 1 << HarmonyLayers.LAYER_TARGETABLE);
+                    if (enemies.Length >= 1)
+                        ((WaterMissiles)s).targetTransform = enemies[0].gameObject.transform;
+                }
                 elementaryController.CastSpell(s);
             }
 
@@ -51,11 +55,11 @@ public class PlayerGameplayController : MonoBehaviour
     {
         Debug.Log("FireBall");
         if (elementaryController.currentSpell == null)
-        {          
+        {
             AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
             spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
             elementaryController.CastSpell(spell);
-        }    
+        }
     }
 
 

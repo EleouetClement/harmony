@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1006983962636285123}
   - component: {fileID: 1006983962636285120}
   - component: {fileID: 1006983962636285121}
+  - component: {fileID: 1498510093121200613}
   m_Layer: 8
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -131,6 +132,20 @@ MonoBehaviour:
   nextWayPoint: 0
   chaseTarget: {fileID: 0}
   stateTimeElapsed: 0
+--- !u!136 &1498510093121200613
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006983962636285134}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1006983962768721374
 GameObject:
   m_ObjectHideFlags: 0
