@@ -46,12 +46,15 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         if (!chargeend)
             charge += Time.fixedDeltaTime;
+        Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
         if (isReleased())
         {
+
             currentLivingTime += Time.fixedDeltaTime;
             if (currentLivingTime >= maxLivingTime)
             {
-
+                Debug.Log("Terminate");
+                Terminate();
             }
         }
         else
@@ -60,7 +63,7 @@ public abstract class AbstractSpell : MonoBehaviour
             currentCastTime += Time.fixedDeltaTime;
             if (currentCastTime >= maxCastTime)
             {
-                onChargeEnd(currentCastTime);
+                OnRelease();
             }
         }
     }

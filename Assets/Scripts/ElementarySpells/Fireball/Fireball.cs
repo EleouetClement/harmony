@@ -67,7 +67,7 @@ public class Fireball : AbstractSpell
             currentSpeed += speedStep;
             
         }
-        Debug.Log(currentSpeed);
+        //Debug.Log(currentSpeed);
         if(Vector3.Distance(origin, transform.position) >= maxDistance)
         {
             ApplyForces();
@@ -123,6 +123,7 @@ public class Fireball : AbstractSpell
         ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
         elemCtrl.currentSpell = null;
         elemCtrl.computePosition = true;
+        Destroy(gameObject);
     }
 
     protected override void onChargeEnd(float chargetime)
