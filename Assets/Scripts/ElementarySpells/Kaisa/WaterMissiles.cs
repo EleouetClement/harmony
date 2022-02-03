@@ -5,7 +5,8 @@ using UnityEngine;
 public class WaterMissiles : AbstractSpell
 {
     public WaterBall BallPrefab;
-    public int BallsToSpawn;
+    
+    public float TimePerBall = 0.12f;
 
     private float timeLocale = 0f;
     [HideInInspector]
@@ -20,14 +21,7 @@ public class WaterMissiles : AbstractSpell
     {
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
-        while (spawnedballs <= BallsToSpawn)
-        {
-            spawnedballs++;
-            WaterBall ball = Instantiate(BallPrefab, transform.position + randomVector(), Quaternion.identity);
-            ball.parent = this;
-            balls.Add(ball);
-            ball.GetComponent<WaterBall>().targetLocation = getDestination();
-        }
+        
     }
 
     public override void FixedUpdate()
@@ -35,11 +29,20 @@ public class WaterMissiles : AbstractSpell
         base.FixedUpdate();
         // Time locale
         timeLocale += Time.fixedDeltaTime;
+        // Ball spawning
+        if (!isReleased() && spawnedballs * TimePerBall < timeLocale) {
+            spawnedballs++;
+            WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
+            ball.parent = this;
+            balls.Add(ball);
+            ball.GetComponent<WaterBall>().targetLocation = getDestination();
+        }
+        // Target location update
+        balls.ForEach(e => { e.targetLocation = getDestination(); });
         // Spell self destruction
         float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
-            Debug.Log("AbstractSpell ended");
             balls.ForEach(e => { Destroy(e.gameObject); });
             elementary.GetComponent<ElementaryController>().currentSpell = null;
             elementary.transform.position = getDestination();
@@ -55,11 +58,6 @@ public class WaterMissiles : AbstractSpell
     {
         if (targetTransform == null) return base.target;
         return targetTransform.position;
-    }
-
-    private Vector3 randomVector()
-    {
-        return new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), Random.Range(-1f, 1f));
     }
 
     protected override void onChargeEnd(float chargetime)
