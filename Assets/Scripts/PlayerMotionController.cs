@@ -53,8 +53,6 @@ public class PlayerMotionController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //forwardDirection = Input.GetAxis("Vertical");
-        //rightDirection = Input.GetAxis("Horizontal");
 
     }
 
