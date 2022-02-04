@@ -31,7 +31,7 @@ public class EarthMortar : AbstractSpell
 	public override void FixedUpdate()
 	{
 		base.FixedUpdate();
-		ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
+
 		if (ball == null)
 		{
 			elementary.transform.position = lastBallCoord;
@@ -39,6 +39,10 @@ public class EarthMortar : AbstractSpell
 			elementary.GetComponent<ElementaryController>().currentSpell = null;
 			elementary.GetComponent<ElementaryController>().computePosition = true;
 			Destroy(gameObject);
+		}
+		else 
+		{
+			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
 		}
 
 	}
