@@ -75,6 +75,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
+        Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
         if(!isReleased())
         {
@@ -98,7 +99,7 @@ public class Fireball : AbstractSpell
             currentSpeed += speedStep;
 
         }
-        if (Vector3.Distance(origin, transform.position) >= maxDistance)
+        if (Vector3.Distance(origin, fireOrbInstance.transform.position) >= maxDistance)
         {
             ApplyForces();
         }

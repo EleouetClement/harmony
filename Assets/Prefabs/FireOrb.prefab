@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2126602675620413774}
   - component: {fileID: 3544793877649866875}
   - component: {fileID: -5888652122493973867}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FireOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
