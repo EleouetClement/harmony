@@ -33,6 +33,7 @@ public class Fireball : AbstractSpell
     [SerializeField] [Min(0)] private float projectileMaxSize;
     [SerializeField] [Min(0)] private float projectileTopSpeedGrowth;
     [SerializeField] [Min(0)] private float projectileMaxDistanceGrowth;
+    [SerializeField] [Min(0)] private float perfectCastTiming;
    
 
     [Header("Projectile drop")]
@@ -64,6 +65,7 @@ public class Fireball : AbstractSpell
     private float speedStep;
     private float currentSpeed;
     private bool launched = false;
+    private bool isExplosive = false;
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -160,14 +162,13 @@ public class Fireball : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        if (chargetime >= maxCastTime)
-        {
-            //TO DO...
-        }
-        else
-        {
-            //TO DO...
-        }
         launched = true;
+        float timing = Mathf.Abs(perfectCastTiming - chargetime);
+        Debug.Log(timing);
+        if (timing <= 0.2)
+        {
+            isExplosive = true;
+            Debug.Log("Fire ball is now explosive!");
+        }
     }
 }
