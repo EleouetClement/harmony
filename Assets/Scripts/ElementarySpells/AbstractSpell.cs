@@ -27,7 +27,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum cast charge duration
     /// </summary>
-    public float maxCastTime { get; private set; } = 4f;
+    protected float maxCastTime = 4f;
 
 
     /// <summary>
@@ -53,7 +53,7 @@ public abstract class AbstractSpell : MonoBehaviour
             currentLivingTime += Time.fixedDeltaTime;
             if (currentLivingTime >= maxLivingTime)
             {
-                Debug.Log("Terminate");
+               // Debug.Log("Terminate");
                 Terminate();
             }
         }
