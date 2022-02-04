@@ -23,7 +23,7 @@ public class PlayerMotionController : MonoBehaviour
 
 
     public CameraController cameraController;
-
+    
     private CharacterController controller;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
@@ -36,7 +36,7 @@ public class PlayerMotionController : MonoBehaviour
 
     private void Awake()
     {
-        controller = gameObject.GetComponent<CharacterController>();
+        controller = GetComponent<CharacterController>();
     }
 
     void Start()
@@ -47,6 +47,7 @@ public class PlayerMotionController : MonoBehaviour
     void Update()
     {
 
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void FixedUpdate()
@@ -90,8 +91,7 @@ public class PlayerMotionController : MonoBehaviour
         velocity += dragForce;
 
         #endregion
-
-        controller.Move(velocity * Time.fixedDeltaTime);
+        
     }
 
     /// <summary>
