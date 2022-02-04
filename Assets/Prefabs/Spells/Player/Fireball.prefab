@@ -49,11 +49,11 @@ MonoBehaviour:
   maxDistance: 50
   livingTime: 1
   maxSpeedDistance: 25
-  projectileTopSpeed: 80
-  projectileStartSpeed: 10
-  projectileGrowth: 0
-  projectileMaxSize: 1.51
-  projectileTopSpeedGrowth: 0
+  projectileTopSpeed: 120
+  projectileStartSpeed: 80
+  projectileGrowth: 0.0156
+  projectileMaxSize: 4.2
+  projectileTopSpeedGrowth: 9.32
   projectileMaxDistanceGrowth: 0
   perfectCastTiming: 2
   gravityForce: -0.005
