@@ -22,12 +22,50 @@ public abstract class AbstractSpell : MonoBehaviour
     /// Charge of the spell, in seconds.
     /// </summary>
     public float charge { get; private set; } = 0f;
+
+
+    /// <summary>
+    /// Maximum cast charge duration
+    /// </summary>
+    public float maxCastTime { get; private set; } = 4f;
+
+
+    /// <summary>
+    /// Maximum living time for the spell
+    /// </summary>
+    public float maxLivingTime { get; private set; } = 3f;
+
+    private float currentCastTime = 0f;
+
+    private float currentLivingTime = 0f;
+
+
     private bool chargeend = false;
 
     public virtual void FixedUpdate()
     {
         if (!chargeend)
             charge += Time.fixedDeltaTime;
+        //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
+        if (isReleased())
+        {
+            //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
+            currentLivingTime += Time.fixedDeltaTime;
+            if (currentLivingTime >= maxLivingTime)
+            {
+                Debug.Log("Terminate");
+                Terminate();
+            }
+        }
+        else
+        {
+            currentCastTime += Time.fixedDeltaTime;
+            if (currentCastTime >= maxCastTime)
+            {
+                //Debug.Log("Liberation forcee");
+                OnRelease();
+            }
+        }
     }
 
     /// <summary>
@@ -54,10 +92,19 @@ public abstract class AbstractSpell : MonoBehaviour
     }
 
     /// <summary>
+    /// Kills this spell instance, disposes all ressources used by this spell and returns elemntary to 
+    /// the player.
+    /// </summary>
+    public abstract void Terminate();
+
+    /// <summary>
     /// Event triggered by The player controller to notify that the spell cast button has been released. 
     /// Do note that there is no garentee that this event is ever called, as the player might not ever release the key.
     /// </summary>
     /// <param name="chargetime">The time this spell has been charged for, in seconds. Because this is abstract, this is the duration of the key press.</param>
     protected abstract void onChargeEnd(float chargetime);
+
+
+
 
 }
