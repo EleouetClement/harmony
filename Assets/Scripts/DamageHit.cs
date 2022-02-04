@@ -46,5 +46,10 @@ public class DamageHit
         this.direction = direction;
     }
 
+    public override string ToString()
+    {
+        return "[Damage : " + damage + " / Type : " + type + " / Direction : " + direction + "]";
+    }
+
 
 }
