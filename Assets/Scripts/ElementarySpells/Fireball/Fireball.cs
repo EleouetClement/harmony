@@ -22,11 +22,18 @@ public class Fireball : AbstractSpell
 
     [SerializeField] [Min(0)] private float projectileTopSpeed;
     [SerializeField] [Min(0)] private float projectileStartSpeed;
+    
+
+
+    [Header("Projectile Casting upgrades")]
     /// <summary>
     /// by how many units the projectile size will increase per frame
     /// </summary>
     [SerializeField] [Range(0, 0.1f)] private float projectileGrowth;
     [SerializeField] [Min(0)] private float projectileMaxSize;
+    [SerializeField] [Min(0)] private float projectileTopSpeedGrowth;
+    [SerializeField] [Min(0)] private float projectileMaxDistanceGrowth;
+   
 
     [Header("Projectile drop")]
     /// <summary>
@@ -60,8 +67,6 @@ public class Fireball : AbstractSpell
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
-        
-
     }
     /// <summary>
     /// Moves the fireball following the AbstractSpell target direction
@@ -71,12 +76,12 @@ public class Fireball : AbstractSpell
         base.FixedUpdate();
         if(!isReleased())
         {
-            //Debug.Log("Casting fireball");
             if(fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
                 fireOrbInstance.transform.localScale += new Vector3(projectileGrowth, projectileGrowth, projectileGrowth);
             }
-            
+            projectileTopSpeed += projectileTopSpeedGrowth;
+            maxDistance += projectileMaxDistanceGrowth;
         }
         if(launched)
         {

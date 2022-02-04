@@ -54,6 +54,8 @@ MonoBehaviour:
   projectileStartSpeed: 0.1
   projectileGrowth: 0.0289
   projectileMaxSize: 1.51
+  projectileTopSpeedGrowth: 0.59
+  projectileMaxDistanceGrowth: 1.2
   gravityForce: -0.1
   gravityIncreaseFactor: 0.01
 --- !u!54 &-6881862150709225710
