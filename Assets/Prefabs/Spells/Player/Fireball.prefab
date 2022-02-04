@@ -48,9 +48,12 @@ MonoBehaviour:
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
   maxDistance: 50
+  livingTime: 0
   maxSpeedDistance: 5
   projectileTopSpeed: 20
   projectileStartSpeed: 0.1
+  projectileGrowth: 0.0289
+  projectileMaxSize: 1.51
   gravityForce: -0.1
   gravityIncreaseFactor: 0.01
 --- !u!54 &-6881862150709225710

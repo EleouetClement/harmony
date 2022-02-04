@@ -33,7 +33,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum living time for the spell
     /// </summary>
-    public float maxLivingTime {get;} = 3f;
+    public float maxLivingTime { get; private set; } = 3f;
 
     private float currentCastTime = 0f;
 
@@ -46,10 +46,10 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         if (!chargeend)
             charge += Time.fixedDeltaTime;
-        Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
+        //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
         if (isReleased())
         {
-
+            //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
             currentLivingTime += Time.fixedDeltaTime;
             if (currentLivingTime >= maxLivingTime)
             {
@@ -59,10 +59,10 @@ public abstract class AbstractSpell : MonoBehaviour
         }
         else
         {
-
             currentCastTime += Time.fixedDeltaTime;
             if (currentCastTime >= maxCastTime)
             {
+                //Debug.Log("Liberation forcee");
                 OnRelease();
             }
         }

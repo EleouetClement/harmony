@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,11 @@ public class Fireball : AbstractSpell
 
     [SerializeField] [Min(0)] private float projectileTopSpeed;
     [SerializeField] [Min(0)] private float projectileStartSpeed;
+    /// <summary>
+    /// by how many units the projectile size will increase per frame
+    /// </summary>
+    [SerializeField] [Range(0, 0.1f)] private float projectileGrowth;
+    [SerializeField] [Min(0)] private float projectileMaxSize;
 
     [Header("Projectile drop")]
     /// <summary>
@@ -50,6 +56,7 @@ public class Fireball : AbstractSpell
 
     private float speedStep;
     private float currentSpeed;
+    private bool launched = false;
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -62,10 +69,22 @@ public class Fireball : AbstractSpell
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-       
+        if(!isReleased())
+        {
+            //Debug.Log("Casting fireball");
+            if(fireOrbInstance.transform.localScale.x < projectileMaxSize)
+            {
+                fireOrbInstance.transform.localScale += new Vector3(projectileGrowth, projectileGrowth, projectileGrowth);
+            }
+            
+        }
+        if(launched)
+        {
+            Move();
+        }
+        
     }
-
-    private void Update()
+    private void Move()
     {
         if (currentSpeed < projectileTopSpeed)
         {
@@ -76,9 +95,15 @@ public class Fireball : AbstractSpell
         {
             ApplyForces();
         }
+
         velocity = target * currentSpeed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
         elementary.transform.Translate(velocity);
+    }
+
+    private void Update()
+    {
+        
     }
 
     /// <summary>
@@ -138,5 +163,6 @@ public class Fireball : AbstractSpell
         {
             //TO DO...
         }
+        launched = true;
     }
 }
