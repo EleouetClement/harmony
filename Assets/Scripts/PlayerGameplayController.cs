@@ -78,9 +78,9 @@ public class PlayerGameplayController : MonoBehaviour
             if (value.isPressed)
             {
                 Debug.Log("EarthMortar");
-                AbstractSpell spell = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
+                AbstractSpell spell = Instantiate(elementaryController.spells[2], elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
-                elementaryController.CastSpell(spell);
+                elementaryController.currentSpell = spell;
             }
 		}
 		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())

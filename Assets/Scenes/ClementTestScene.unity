@@ -1553,20 +1553,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkSpeed: 7.1
-  rotationSpeed: 1
-  jumpMaxHeight: 1
-  dragMultipler: 1
-  airDragMultipler: 1
+  jumpForce: 1
+  friction: 1
+  airFriction: 1
   airControl: 0.25
-  sphereCastRadius: 1
-  sphereCastDistance: 1
-  rayCastDistance: 1
-  layerMask: 3
-  startDistanceOffset: 0.2
-  debug: 0
   gravity: -9.81
-  char_cameraController: {fileID: 1727810814}
-  char_animator: {fileID: 0}
+  groundTestRadiusFactor: 0.95
+  groundMaxDistance: 0.1
+  layerMask: 3
+  debug: 0
+  cameraController: {fileID: 1727810814}
 --- !u!114 &1333269638
 MonoBehaviour:
   m_ObjectHideFlags: 0
