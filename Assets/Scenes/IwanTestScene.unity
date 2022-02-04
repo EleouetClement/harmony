@@ -948,11 +948,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1044575874}
+  - component: {fileID: 1044575876}
   - component: {fileID: 1044575873}
   - component: {fileID: 1044575872}
   - component: {fileID: 1044575871}
   - component: {fileID: 1044575875}
-  - component: {fileID: 1044575876}
   m_Layer: 0
   m_Name: Elementary
   m_TagString: Untagged

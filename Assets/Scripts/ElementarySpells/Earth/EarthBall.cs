@@ -49,6 +49,7 @@ public class EarthBall : MonoBehaviour
         launched = true;
         //Vector3 launchDirection = target - elementary.transform.position;
         earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
+        GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().AddForce(earthMortarRef.elementary.transform.forward * range, ForceMode.Impulse);
     }
 
