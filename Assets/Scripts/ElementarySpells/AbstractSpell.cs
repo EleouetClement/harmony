@@ -18,6 +18,9 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     public GameObject elementary { get; protected set; }
 
+
+    protected AbstractMarker marker;
+
     /// <summary>
     /// Charge of the spell, in seconds.
     /// </summary>

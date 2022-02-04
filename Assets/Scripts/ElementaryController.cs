@@ -5,6 +5,8 @@ using UnityEngine;
 public class ElementaryController : MonoBehaviour
 {
 
+
+    [SerializeField] public CameraController playerCameraController;
     [Header("Elementary positionning")]
     [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;

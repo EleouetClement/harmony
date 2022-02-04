@@ -7,7 +7,7 @@ public class PositionningMarker : AbstractMarker
 
     private GameObject positionMarkerPrefab;
     private GameObject currentMarker;
-    private Vector3 targetPosition;
+    public Vector3 targetPosition { get; private set; }
 
     public override void DisplayTarget(Vector3 direction)
     {
