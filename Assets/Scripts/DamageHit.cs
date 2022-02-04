@@ -22,24 +22,24 @@ public class DamageHit
     /// </summary>
     public Vector3 direction = Vector3.zero;
 
-    DamageHit(float damage)
+    public DamageHit(float damage)
     {
         this.damage = damage;
     }
 
-    DamageHit(float damage, GameEngineInfo.DamageType type)
+    public DamageHit(float damage, GameEngineInfo.DamageType type)
     {
         this.damage = damage;
         this.type = type;
     }
 
-    DamageHit(float damage, Vector3 direction)
+    public DamageHit(float damage, Vector3 direction)
     {
         this.damage = damage;
         this.direction = direction;
     }
 
-    DamageHit(float damage, GameEngineInfo.DamageType type, Vector3 direction)
+    public DamageHit(float damage, GameEngineInfo.DamageType type, Vector3 direction)
     {
         this.damage = damage;
         this.type = type;

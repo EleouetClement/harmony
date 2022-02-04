@@ -56,11 +56,22 @@ public class WaterBall : MonoBehaviour
             TimeLaunch += Time.deltaTime;
             //transform.position = Vector3.Lerp(hoverLocation, targetLocation, Mathf.Clamp(TimeLaunch / traveltime, 0, 1));
             transform.position = BezierInterpolate(Mathf.Clamp(TimeLaunch / traveltime, 0, 1), spawnLocation, bezierpointStart, targetLocation, bezierPointEnd);
+
+            if (TimeLaunch >= traveltime) Hit();
         }
         else
         {
             transform.position = Vector3.Lerp(spawnLocation, hoverLocation, Mathf.Clamp(TimeLocale / setuptime, 0, 1));
         }
+    }
+
+    private void Hit() {
+        if (parent.targetTransform != null) {
+            GameObject p = parent.targetTransform.gameObject;
+            p.GetComponent<IDamageable>().OnDamage(new DamageHit(10f,GameEngineInfo.DamageType.Water));
+        }
+        parent.RemoveBall(this);
+       
     }
 
     private void FixedUpdate()
