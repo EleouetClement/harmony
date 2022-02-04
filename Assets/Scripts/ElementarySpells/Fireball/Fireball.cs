@@ -62,22 +62,24 @@ public class Fireball : AbstractSpell
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        if(currentSpeed < projectileTopSpeed)
+       
+    }
+
+    private void Update()
+    {
+        if (currentSpeed < projectileTopSpeed)
         {
             currentSpeed += speedStep;
-            
+
         }
-        //Debug.Log(currentSpeed);
-        if(Vector3.Distance(origin, transform.position) >= maxDistance)
+        if (Vector3.Distance(origin, transform.position) >= maxDistance)
         {
             ApplyForces();
         }
-        velocity = target * currentSpeed * Time.fixedDeltaTime;
+        velocity = target * currentSpeed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
         elementary.transform.Translate(velocity);
-
     }
-    
 
     /// <summary>
     /// Apply custom gravity on y direction axis
@@ -128,13 +130,13 @@ public class Fireball : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        //if(chargetime >= maxCastTime)
-        //{
-        //    //TO DO...
-        //}
-        //else
-        //{
-        //    //TO DO...
-        //}
+        if (chargetime >= maxCastTime)
+        {
+            //TO DO...
+        }
+        else
+        {
+            //TO DO...
+        }
     }
 }

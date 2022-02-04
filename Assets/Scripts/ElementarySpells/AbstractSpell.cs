@@ -27,13 +27,13 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum cast charge duration
     /// </summary>
-    private float maxCastTime = 4f;
+    public float maxCastTime { get; private set; } = 4f;
 
 
     /// <summary>
     /// Maximum living time for the spell
     /// </summary>
-    private float maxLivingTime = 3f;
+    public float maxLivingTime {get;} = 3f;
 
     private float currentCastTime = 0f;
 
@@ -103,5 +103,8 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     /// <param name="chargetime">The time this spell has been charged for, in seconds. Because this is abstract, this is the duration of the key press.</param>
     protected abstract void onChargeEnd(float chargetime);
+
+
+
 
 }
