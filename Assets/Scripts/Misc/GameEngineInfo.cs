@@ -11,7 +11,7 @@ public static class GameEngineInfo
 
     public enum DamageType
     {
-        Physical, Earth, Water, Fire
+        Physical, Earth, Water, Fire, Wind
     }
 
 
