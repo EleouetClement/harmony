@@ -46,15 +46,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
-  maxDistance: 1
-  livingTime: 0
-  maxSpeedDistance: 1
-  projectileTopSpeed: 1
-  projectileStartSpeed: 1
+  maxDistance: 50
+  livingTime: 1
+  maxSpeedDistance: 25
+  projectileTopSpeed: 80
+  projectileStartSpeed: 10
   projectileGrowth: 0
   projectileMaxSize: 1.51
   projectileTopSpeedGrowth: 0
   projectileMaxDistanceGrowth: 0
   perfectCastTiming: 2
-  gravityForce: -0.1
-  gravityIncreaseFactor: 0.01
+  gravityForce: -0.005
+  gravityIncreaseFactor: 0
