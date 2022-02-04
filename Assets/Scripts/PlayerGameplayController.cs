@@ -51,14 +51,23 @@ public class PlayerGameplayController : MonoBehaviour
             elementaryController.currentSpell?.OnRelease();
     }
 
-    private void OnSpellRight()
+    private void OnSpellRight(InputValue value)
     {
-        Debug.Log("FireBall");
-        if (elementaryController.currentSpell == null)
+        if(elementaryController.currentSpell == null)
         {
-            AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-            spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
-            elementaryController.CastSpell(spell);
+            if (value.isPressed)
+            {
+                AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
+                spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
+                elementaryController.CastSpell(spell);
+            }
+        }
+        Debug.Log(value.isPressed);
+        
+        if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+        {
+            Debug.Log("liberation tim�e");
+            elementaryController.currentSpell?.OnRelease();
         }
     }
 

@@ -36,15 +36,15 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-    }
-
-    private void FixedUpdate()
-    {
         if (computePosition)
         {
             Orbit();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        
     }
 
     /// <summary>

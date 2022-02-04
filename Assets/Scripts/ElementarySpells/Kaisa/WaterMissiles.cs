@@ -43,12 +43,7 @@ public class WaterMissiles : AbstractSpell
         float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
         if (timeLocale > castmax || balls.Count <= 0)
         {
-            balls.ForEach(e => { Destroy(e.gameObject); });
-            elementary.GetComponent<ElementaryController>().currentSpell = null;
-            elementary.transform.position = getDestination();
-            elementary.GetComponent<ElementaryController>().computePosition = true;
-            elementary.GetComponent<MeshRenderer>().enabled = true;
-            Destroy(gameObject);
+            Terminate();
         }
 
     }
@@ -63,5 +58,14 @@ public class WaterMissiles : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         balls.ForEach(e => { e.launched = true; });
+    }
+    public override void Terminate()
+    {
+        balls.ForEach(e => { Destroy(e.gameObject); });
+        elementary.GetComponent<ElementaryController>().currentSpell = null;
+        elementary.transform.position = getDestination();
+        elementary.GetComponent<ElementaryController>().computePosition = true;
+        elementary.GetComponent<MeshRenderer>().enabled = true;
+        Destroy(gameObject);
     }
 }
