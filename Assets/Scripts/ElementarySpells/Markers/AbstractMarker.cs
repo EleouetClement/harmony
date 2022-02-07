@@ -9,7 +9,9 @@ using UnityEngine;
 public abstract class AbstractMarker : MonoBehaviour
 {
 
+
     protected float maxRayCastDistance { get; private set; }
+
     protected GameObject markerPrefab;
     /// <summary>
     /// Marker behaviour, how it should display itself in the scene
@@ -26,6 +28,7 @@ public abstract class AbstractMarker : MonoBehaviour
         this.maxRayCastDistance = maxRayCastDistance;
         markerPrefab = prefab;
     }
+
 
     public abstract void OnDestroy();
 

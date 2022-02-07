@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
+/// <summary>
+/// Demo class to show how to use the positionning marker
+/// </summary>
 public class MarkerTestSpell : AbstractSpell
 {
     public GameObject PosMarkerPrefab;
@@ -12,9 +17,7 @@ public class MarkerTestSpell : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        //posMark = (PositionningMarker) marker;
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
-        //posMark.Init(Mathf.Infinity, PosMarkerPrefab, elementary.transform);
         marker.Init(2000, PosMarkerPrefab);
     }
 
@@ -43,6 +46,5 @@ public class MarkerTestSpell : AbstractSpell
         PositionningMarker posMark= (PositionningMarker)marker;
         Debug.Log("Position locked : " + posMark.targetPosition);
         Destroy(marker.gameObject);
-        //Destroy(posMark);
     }
 }

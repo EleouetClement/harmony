@@ -9,7 +9,8 @@ public class PositionningMarker : AbstractMarker
     public override void DisplayTarget(Vector3 direction, Vector3 origin)
     {
         RaycastHit hit;
-        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, 1<<6))
+        
+        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, HarmonyLayers.LAYER_GROUND))
         {
             if(hit.collider.gameObject.layer.Equals(6))
             {
