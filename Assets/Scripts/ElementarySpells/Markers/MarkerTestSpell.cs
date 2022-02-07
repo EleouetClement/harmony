@@ -39,6 +39,8 @@ public class MarkerTestSpell : AbstractSpell
     }
     protected override void onChargeEnd(float chargetime)
     {
+        PositionningMarker posMark= (PositionningMarker)marker;
+        Debug.Log("Position locked : " + posMark.targetPosition);
         Destroy(marker.gameObject);
         //Destroy(posMark);
     }

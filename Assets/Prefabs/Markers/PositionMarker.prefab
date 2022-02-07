@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8966274939627693208}
   - component: {fileID: 8966274939627693209}
-  - component: {fileID: -6487926079191963958}
+  - component: {fileID: -6944805443472516443}
   m_Layer: 0
   m_Name: PositionMarker
   m_TagString: Untagged
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Offset: {x: 0, y: 0, z: 0.5}
   m_Size: {x: 1, y: 1, z: 1}
   m_FadeFactor: 1
---- !u!114 &-6487926079191963958
+--- !u!114 &-6944805443472516443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
