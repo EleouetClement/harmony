@@ -5,14 +5,16 @@ using UnityEngine;
 public class ElementaryController : MonoBehaviour
 {
 
+
+    [SerializeField] public CameraController playerCameraController;
     [Header("Elementary positionning")]
     [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;
     [SerializeField][Range(-2, 2)] private float forwardOffset = 0;
     [SerializeField][Min(0)]       private float lerpInterpolationValue= 4;
     [Header("Elementary stats")]
-    [SerializeField] [Range(0, 50)] private float maxDistance = 10;
-    [SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
+    //[SerializeField] [Range(0, 50)] private float maxDistance = 10;
+    //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
     [SerializeField] public AbstractSpell[] spells;
