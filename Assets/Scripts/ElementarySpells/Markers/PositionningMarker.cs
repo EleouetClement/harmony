@@ -4,36 +4,36 @@ using UnityEngine;
 
 public class PositionningMarker : AbstractMarker
 {
-
-    private GameObject positionMarkerPrefab;
-    private GameObject currentMarker;
+    private GameObject currentMarkerInstance;
     public Vector3 targetPosition { get; private set; }
 
     public override void DisplayTarget(Vector3 direction)
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, direction, out hit, maxRayCastDistance, 3))
+        if (Physics.Raycast(origin.position, direction, out hit, maxRayCastDistance, 3))
         {
             if(hit.collider.gameObject.layer.Equals(6))
             {
                 targetPosition = hit.point;
-                currentMarker.transform.position = hit.point;
+                currentMarkerInstance.transform.position = hit.point;
             }
         }
         else
         {
+            Debug.DrawRay(origin.position, direction, Color.red);
             Debug.Log("No valid target");
+            
         }
     }
 
-    public override void Init(float maxRayCastDistance)
+    public override void Init(float maxRayCastDistance, GameObject prefab, Transform origin)
     {
-        base.Init(maxRayCastDistance);
-        currentMarker = Instantiate(positionMarkerPrefab, Vector3.zero, Quaternion.identity);
+        base.Init(maxRayCastDistance, prefab, origin);
+        currentMarkerInstance = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
     }
 
-    private void OnDestroy()
+    public override void OnDestroy()
     {
-        Destroy(currentMarker);
+        Destroy(currentMarkerInstance);
     }
 }

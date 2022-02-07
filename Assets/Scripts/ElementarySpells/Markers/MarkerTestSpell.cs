@@ -4,19 +4,25 @@ using UnityEngine;
 
 public class MarkerTestSpell : AbstractSpell
 {
-
+    public GameObject PosMarkerPrefab;
     private CameraController cameraController;
-
+    //private PositionningMarker posMark;
     public override void init(GameObject elemRef, Vector3 target)
     {
         base.init(elemRef, target);
-        marker = new PositionningMarker();
+        GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
+        marker = tmp.GetComponent<PositionningMarker>();
+        //posMark = (PositionningMarker) marker;
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
+        //posMark.Init(Mathf.Infinity, PosMarkerPrefab, elementary.transform);
+        marker.Init(Mathf.Infinity, PosMarkerPrefab, elementary.transform);
     }
 
     public override void Terminate()
     {
-
+        elementary.GetComponent<ElementaryController>().currentSpell = null;
+        elementary.GetComponent<ElementaryController>().computePosition = true;
+        Destroy(gameObject);
     }
 
     public override void FixedUpdate()
@@ -29,6 +35,7 @@ public class MarkerTestSpell : AbstractSpell
     }
     protected override void onChargeEnd(float chargetime)
     {
-        Destroy(marker);
+        Destroy(marker.gameObject);
+        //Destroy(posMark);
     }
 }

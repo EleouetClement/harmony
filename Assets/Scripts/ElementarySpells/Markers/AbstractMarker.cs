@@ -10,7 +10,8 @@ public abstract class AbstractMarker : MonoBehaviour
 {
 
     protected float maxRayCastDistance { get; private set; }
-
+    protected GameObject markerPrefab;
+    protected Transform origin;
     /// <summary>
     /// Marker behaviour, how it should display itself in the scene
     /// and how it returns the target position/reference
@@ -21,9 +22,13 @@ public abstract class AbstractMarker : MonoBehaviour
     /// pseudo constructor
     /// </summary>
     /// <param name="maxRayCastDistance"></param>
-    public virtual void Init(float maxRayCastDistance)
+    public virtual void Init(float maxRayCastDistance, GameObject prefab, Transform origin)
     {
         this.maxRayCastDistance = maxRayCastDistance;
+        markerPrefab = prefab;
+        this.origin = origin;
     }
+
+    public abstract void OnDestroy();
 
 }
