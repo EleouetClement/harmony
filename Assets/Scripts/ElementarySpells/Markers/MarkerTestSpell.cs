@@ -15,7 +15,7 @@ public class MarkerTestSpell : AbstractSpell
         //posMark = (PositionningMarker) marker;
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
         //posMark.Init(Mathf.Infinity, PosMarkerPrefab, elementary.transform);
-        marker.Init(Mathf.Infinity, PosMarkerPrefab, elementary.transform);
+        marker.Init(2000, PosMarkerPrefab);
     }
 
     public override void Terminate()
@@ -27,10 +27,14 @@ public class MarkerTestSpell : AbstractSpell
 
     public override void FixedUpdate()
     {
-        base.FixedUpdate();
+        base.FixedUpdate();     
+    }
+
+    public void LateUpdate()
+    {
         if (!isReleased())
         {
-            marker.DisplayTarget(cameraController.GetViewDirection);
+            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.GetViewPosition);
         }
     }
     protected override void onChargeEnd(float chargetime)

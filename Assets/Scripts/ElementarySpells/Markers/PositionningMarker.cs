@@ -7,10 +7,10 @@ public class PositionningMarker : AbstractMarker
     private GameObject currentMarkerInstance;
     public Vector3 targetPosition { get; private set; }
 
-    public override void DisplayTarget(Vector3 direction)
+    public override void DisplayTarget(Vector3 direction, Vector3 origin)
     {
         RaycastHit hit;
-        if (Physics.Raycast(origin.position, direction, out hit, maxRayCastDistance, 3))
+        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, 1<<6))
         {
             if(hit.collider.gameObject.layer.Equals(6))
             {
@@ -20,15 +20,15 @@ public class PositionningMarker : AbstractMarker
         }
         else
         {
-            Debug.DrawRay(origin.position, direction, Color.red);
+            Debug.DrawRay(origin, direction * maxRayCastDistance, Color.red, 10);
             Debug.Log("No valid target");
             
         }
     }
 
-    public override void Init(float maxRayCastDistance, GameObject prefab, Transform origin)
+    public override void Init(float maxRayCastDistance, GameObject prefab)
     {
-        base.Init(maxRayCastDistance, prefab, origin);
+        base.Init(maxRayCastDistance, prefab);
         currentMarkerInstance = Instantiate(markerPrefab, Vector3.zero, Quaternion.identity);
     }
 
