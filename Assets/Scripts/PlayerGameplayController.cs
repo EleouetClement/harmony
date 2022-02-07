@@ -62,7 +62,7 @@ public class PlayerGameplayController : MonoBehaviour
                 elementaryController.CastSpell(spell);
             }
         }
-        Debug.Log(value.isPressed);
+        //Debug.Log(value.isPressed);
         
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
         {
