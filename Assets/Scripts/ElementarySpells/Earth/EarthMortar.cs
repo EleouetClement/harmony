@@ -15,7 +15,7 @@ public class EarthMortar : AbstractSpell
 
 	private void Start()
 	{
-		
+		maxCastTime = 1.5f;
 		
 	}
 
@@ -23,7 +23,7 @@ public class EarthMortar : AbstractSpell
 	{
 		base.init(elemRef, target);
 		elementary.GetComponent<MeshRenderer>().enabled = false;
-		elementary.GetComponent<SphereCollider>().enabled = false;
+		//elementary.GetComponent<SphereCollider>().enabled = false;
 		ball = Instantiate(earthBall, elementary.transform.position, Quaternion.identity);
 		ball.GetComponent<EarthBall>().earthMortarRef = this;
 	}
@@ -36,15 +36,20 @@ public class EarthMortar : AbstractSpell
 		{
 			elementary.transform.position = lastBallCoord;
 			elementary.GetComponent<MeshRenderer>().enabled = true;
+			elementary.GetComponent<ElementaryController>().currentSpell = null;
 			elementary.GetComponent<ElementaryController>().computePosition = true;
 			Destroy(gameObject);
+		}
+		else 
+		{
+			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
 		}
 
 	}
 	protected override void onChargeEnd(float chargetime)
 	{
 		
-		ball.GetComponent<EarthBall>().Launch(chargetime/maxCastTime);
+		ball.GetComponent<EarthBall>().Launch();
 	}
 
 	public override void Terminate()
