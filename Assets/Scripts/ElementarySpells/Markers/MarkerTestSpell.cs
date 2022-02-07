@@ -35,6 +35,7 @@ public class MarkerTestSpell : AbstractSpell
         if (!isReleased())
         {
             marker.DisplayTarget(cameraController.GetViewDirection, cameraController.GetViewPosition);
+            marker.transform.LookAt(cameraController.transform);
         }
     }
     protected override void onChargeEnd(float chargetime)

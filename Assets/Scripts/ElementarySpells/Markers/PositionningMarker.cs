@@ -15,6 +15,7 @@ public class PositionningMarker : AbstractMarker
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
+                
             }
         }
         else
