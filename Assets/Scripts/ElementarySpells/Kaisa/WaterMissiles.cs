@@ -59,6 +59,12 @@ public class WaterMissiles : AbstractSpell
     {
         balls.ForEach(e => { e.launched = true; });
     }
+
+    public void RemoveBall(WaterBall ball) {
+        balls.Remove(ball);
+        Destroy(ball.gameObject);
+    }
+
     public override void Terminate()
     {
         balls.ForEach(e => { Destroy(e.gameObject); });

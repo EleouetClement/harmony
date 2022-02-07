@@ -9,6 +9,7 @@ public class PlayerMotionController : MonoBehaviour
     [Header("Character settings")]
     [Range(0, 20)] public float walkSpeed = 1f;
     [Range(0, 10)] public float jumpForce = 1f;
+    [Range(0, 90)] public float maxFloorAngle = 45;
     [Header("Character Physics settings")]
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
@@ -37,6 +38,7 @@ public class PlayerMotionController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
+        controller.slopeLimit = 90;
     }
 
     void Start()
@@ -52,16 +54,19 @@ public class PlayerMotionController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        floorAngle = GetSlopeAngle();
-        onGround = controller.isGrounded && floorAngle < controller.slopeLimit;
+        UpdateGroundState();
+        bool sliding = floorAngle > maxFloorAngle;
 
         #region Apply Direction Input
 
-        forwardDirection = inputAxis.y * cameraController.GetViewForward;
-        rightDirection = inputAxis.x * cameraController.GetViewRight;
-        Vector3 movement = forwardDirection + rightDirection;
-        movement.Normalize();
-        velocity += movement * walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl);
+        if (!sliding)
+        {
+            forwardDirection = inputAxis.y * cameraController.GetViewForward;
+            rightDirection = inputAxis.x * cameraController.GetViewRight;
+            Vector3 movement = forwardDirection + rightDirection;
+            movement.Normalize();
+            velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        }
 
         #endregion
 
@@ -69,15 +74,15 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!onGround)
         {
-            if (controller.isGrounded)
+            velocity.y += gravity * Time.fixedDeltaTime;
+        }
+        else
+        {
+            if (sliding)
             {
                 Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
                 velocity += force;
-            }
-            else
-            {
-                velocity.y += gravity * Time.fixedDeltaTime;
             }
         }
 
@@ -86,7 +91,7 @@ public class PlayerMotionController : MonoBehaviour
         #region Apply Friction
 
         Vector3 dragForce = -velocity * Time.fixedDeltaTime;
-        dragForce *= onGround ? friction : airFriction;
+        dragForce *= onGround && !sliding ? friction : airFriction;
         dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
         velocity += dragForce;
 
@@ -121,16 +126,19 @@ public class PlayerMotionController : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    private float GetSlopeAngle()
+    private void UpdateGroundState()
     {
-        float angleOneInDegrees = 0;
-        float angleTwoInDegrees = 0;// FOR LATER (Edges & corners)
-        if (Physics.SphereCast(transform.position, controller.radius* groundTestRadiusFactor, Vector3.down, out surfaceInfo, controller.height/2-controller.radius + groundMaxDistance, layerMask))
-        {
-            angleOneInDegrees = Vector3.Angle(surfaceInfo.normal, Vector3.up);
-        }
+        onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
 
-        return angleOneInDegrees;
+        if (onGround)
+        {
+            floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+        }
+        else
+        {
+            floorAngle = 0;
+        }
     }
 
 
