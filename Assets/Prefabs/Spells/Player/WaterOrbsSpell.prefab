@@ -48,4 +48,4 @@ MonoBehaviour:
     type: 3}
   TimePerBall: 0.12
   targetTransform: {fileID: 0}
-  maxSpellTime: 0.6
+  maxSpellTime: 3
