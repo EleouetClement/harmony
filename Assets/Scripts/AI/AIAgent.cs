@@ -8,7 +8,7 @@ using UnityEditor;
 
 namespace Harmony.AI
 {
-    public class AIAgent : MonoBehaviour
+    public class AIAgent : MonoBehaviour, IDamageable
     {
         public Transform eyes;
         public bool aiActive = true;
@@ -60,6 +60,11 @@ namespace Harmony.AI
             stateTimeElapsed = 0;
         }
 
+        public void OnDamage(DamageHit hit)
+        {
+            Debug.Log(hit);
+        }
+
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
@@ -67,7 +72,7 @@ namespace Harmony.AI
             {
                 Gizmos.color = CurrentState.sceneGizmoColor;
                 Handles.color = CurrentState.sceneGizmoColor;
-                Handles.Label(transform.position+Vector3.up,CurrentState.name);
+                Handles.Label(transform.position + Vector3.up, CurrentState.name);
 
                 foreach (Transition currentStateTransition in CurrentState.transitions)
                 {
@@ -82,7 +87,6 @@ namespace Harmony.AI
             }
         }
 #endif
-
 
     }
 }
