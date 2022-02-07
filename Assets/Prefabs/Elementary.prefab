@@ -136,5 +136,7 @@ MonoBehaviour:
   layerMask: 0
   spells:
   - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
-  computePosition: 0
+  - {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769, type: 3}
+  - {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210, type: 3}
+  computePosition: 1
   currentSpell: {fileID: 0}

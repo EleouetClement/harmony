@@ -71,7 +71,21 @@ public class PlayerGameplayController : MonoBehaviour
         }
     }
 
-
+    private void OnInteract(InputValue value)
+    {
+		if (elementaryController.currentSpell == null)
+		{
+            if (value.isPressed)
+            {
+                Debug.Log("EarthMortar");
+                AbstractSpell spell = Instantiate(elementaryController.spells[2], elementaryController.transform.position, Quaternion.identity);
+                spell.init(elementaryController.gameObject, Vector3.zero);
+                elementaryController.currentSpell = spell;
+            }
+		}
+		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+			elementaryController.currentSpell?.OnRelease();
+	}
 
     /// <summary>
     /// Set the Elementary shoulder reference
