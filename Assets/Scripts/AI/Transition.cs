@@ -11,6 +11,11 @@ namespace Harmony.AI
         public State trueState;
         public State falseState;
 
+        public void InitializeDecision(AIAgent controller)
+        {
+            decision.Initialize(controller);
+        }
+
         public bool ComputeDecision(AIAgent controller)
         {
             return decision.Decide(controller);
