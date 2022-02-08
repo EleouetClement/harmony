@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35e8689a8724e474f8dbe9749dccddda, type: 3}
   m_Name: TestChasingState
   m_EditorClassIdentifier: 
-  actions:
+  enterActions: []
+  updateActions:
   - {fileID: 11400000, guid: ee9842ecbd7ef094d8de3384252e6470, type: 2}
+  exitActions: []
   transitions: []
   sceneGizmoColor: {r: 1, g: 0, b: 0, a: 1}
