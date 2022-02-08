@@ -42,6 +42,7 @@ public class EarthMortar : AbstractSpell
 		}
 		else 
 		{
+			//refreshes charge level to earth ball
 			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
 		}
 
