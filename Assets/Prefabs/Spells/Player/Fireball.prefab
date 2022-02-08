@@ -56,5 +56,5 @@ MonoBehaviour:
   projectileTopSpeedGrowth: 9.32
   projectileMaxDistanceGrowth: 0
   perfectCastTiming: 2
-  gravityForce: -0.1
-  gravityIncreaseFactor: 0.01
+  gravityForce: -0.002
+  gravityIncreaseFactor: 0

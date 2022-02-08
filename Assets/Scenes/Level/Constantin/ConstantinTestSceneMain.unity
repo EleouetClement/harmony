@@ -149,6 +149,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
+      propertyPath: spells.Array.data[0]
+      value: 
+      objectReference: {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
       propertyPath: spells.Array.data[1]
       value: 
       objectReference: {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769,
