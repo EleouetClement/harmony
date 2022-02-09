@@ -5,22 +5,30 @@ using UnityEngine;
 public class EarthBall : MonoBehaviour
 {
 	public EarthMortar earthMortarRef;
+	public EarthBallMarker earthMarkerRef;
 	private bool launched;
+
+	public bool displayTrajectory;
 	public float charge;
 
 	private Vector3 launchVelocity;
 
-	private float range;
+	/// <summary>
+	/// Defines the time it takes for the ball to reach target
+	/// </summary>
+	public float speed;
+
 	/// <summary>
 	///	Defines max mass of elementary at max charge level
 	/// </summary>
 	public float maxMass;
 
-	/// <summary>
-	///	Defines min and max range at max charge level
-	/// </summary>
-	public float minRange;
-	public float maxRange;
+	//private float range;
+	///// <summary>
+	/////	Defines min and max range at max charge level
+	///// </summary>
+	//public float minRange;
+	//public float maxRange;
 
 	/// <summary>
 	///	Defines min and max size at max charge level
@@ -48,12 +56,14 @@ public class EarthBall : MonoBehaviour
 	private TrajectoryCalculator trajectoryCalculator;
 	private PhysicsSimulator physicsSimulator;
 
+	private ElementaryController elementaryController;
+
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
-
+		elementaryController = earthMortarRef.elementary.GetComponent<ElementaryController>();
 		//physicsSimulator = GetComponent<PhysicsSimulator>();
 		//physicsSimulator.Init();
 
@@ -74,12 +84,14 @@ public class EarthBall : MonoBehaviour
 			//earth ball radius increases with charge level
 			radius = minRadius + charge * (maxRadius - minRadius);
 
-			range = minRange + charge * (maxRange - minRange);
+			//range = minRange + charge * (maxRange - minRange);
 
-			launchVelocity = ((transform.forward+transform.up/2f)*charge) * range;
-
-			trajectoryCalculator.initialVelocity = launchVelocity;
-			trajectoryCalculator.CalculateTrajectory();
+			//launchVelocity = ((transform.forward+transform.up/2f)*charge) * range;
+			launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.GetTarget(), speed);
+			earthMarkerRef.SetMarkerRadius(radius);
+			
+			if(displayTrajectory)
+				trajectoryCalculator.CalculateTrajectory(launchVelocity);
 
 			//physicsSimulator.currentVelocity = launchVelocity;
 			//physicsSimulator.Init();
@@ -103,7 +115,7 @@ public class EarthBall : MonoBehaviour
 
 		GetComponent<LineRenderer>().enabled = false;
 		launched = true;
-		Debug.Log("Range : " + range);
+		//Debug.Log("Range : " + range);
 		Debug.Log("launchVelocity : " + launchVelocity);
 		//Vector3 launchDirection = target - elementary.transform.position;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;

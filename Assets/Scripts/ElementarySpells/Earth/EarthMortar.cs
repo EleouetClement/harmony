@@ -6,10 +6,11 @@ public class EarthMortar : AbstractSpell
 {
 	public GameObject earthBall;
 	private GameObject ball;
+	private EarthBallMarker earthMarker;
 	public Vector3 lastBallCoord;
-
 	[Min(1)] public float maxSpellLength;
-
+	public float maxRange;
+	
 
 	
 
@@ -22,16 +23,18 @@ public class EarthMortar : AbstractSpell
 	public override void init(GameObject elemRef, Vector3 target)
 	{
 		base.init(elemRef, target);
+		earthMarker = GetComponent<EarthBallMarker>();
+		earthMarker.Init(maxRange, earthMarker.transform.GetChild(0).gameObject);
 		elementary.GetComponent<MeshRenderer>().enabled = false;
 		//elementary.GetComponent<SphereCollider>().enabled = false;
 		ball = Instantiate(earthBall, elementary.transform.position, Quaternion.identity);
 		ball.GetComponent<EarthBall>().earthMortarRef = this;
+		ball.GetComponent<EarthBall>().earthMarkerRef = earthMarker;
 	}
 
 	public override void FixedUpdate()
 	{
 		base.FixedUpdate();
-
 		if (ball == null)
 		{
 			elementary.transform.position = lastBallCoord;
@@ -49,7 +52,7 @@ public class EarthMortar : AbstractSpell
 	}
 	protected override void onChargeEnd(float chargetime)
 	{
-		
+		earthMarker.DestroyMarker();
 		ball.GetComponent<EarthBall>().Launch();
 	}
 
