@@ -9,6 +9,7 @@ public class EarthWall : AbstractSpell
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
+    [Range(0, 50)]
     public float maxDistance;
 
     private PositionningMarker posMark;
@@ -38,7 +39,7 @@ public class EarthWall : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
-        marker.Init(2000, PosMarkerPrefab);
+        marker.Init(maxDistance, PosMarkerPrefab);
     }
 
     public override void Terminate()
@@ -50,7 +51,19 @@ public class EarthWall : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        Instantiate(earthPlatform, marker.transform.position, Quaternion.identity);
+        RaycastHit hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
+        Debug.Log("HIT SPELL = " + hit.normal);
+        if (hit.normal.y > 0.70)
+        {
+            Debug.Log("SPAWN PILLAR");
+            Instantiate(earthPillar, marker.transform.position, Quaternion.identity);
+        }
+        else if (hit.normal.y >= 0)
+        {
+            Debug.Log("SPAWN PLATFORM");
+            Instantiate(earthPlatform, marker.transform.position, Quaternion.identity);
+        }
+        
         Destroy(marker.gameObject);
         Terminate();
     }

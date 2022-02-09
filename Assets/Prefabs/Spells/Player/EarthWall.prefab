@@ -46,8 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
+  cameraController: {fileID: 0}
   earthPillar: {fileID: 4237598137324749565, guid: dee6da28747da0043aa87e47d2a4e20d,
     type: 3}
   earthPlatform: {fileID: 7815377421612240700, guid: 4ef5299f9c541a84895bf45935be84c8,
     type: 3}
-  maxDistance: 5
+  maxDistance: 20
