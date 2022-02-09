@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,6 +10,7 @@ namespace Harmony.AI
 {
     public abstract class Decision : ScriptableObject
     {
+        public virtual void Initialize(AIAgent controller) { }
         public abstract bool Decide(AIAgent controller);
 
 #if UNITY_EDITOR

@@ -75,7 +75,6 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
-        Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
         if(!isReleased())
         {

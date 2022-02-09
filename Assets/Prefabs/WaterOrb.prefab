@@ -124,6 +124,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5111962948575131130}
     m_Modifications:
+    - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
+        type: 3}
+      propertyPath: m_shaderPropertyID
+      value: 780
+      objectReference: {fileID: 0}
+    - target: {fileID: 2332048440410813850, guid: 8ca2cdb55dfa370408d80107d6193f08,
+        type: 3}
+      propertyPath: m_AdditionalLightsShadowResolutionTier
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3841384982787575142, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_RootOrder
