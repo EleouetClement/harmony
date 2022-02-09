@@ -9,6 +9,7 @@ public class PlayerGameplayController : MonoBehaviour
     [SerializeField] GameObject elementaryObjectReference;
     [SerializeField] GameObject playerMeshReference;
     [SerializeField] private CameraController playerCameraController;
+    [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
 
     private void Awake()
@@ -58,7 +59,16 @@ public class PlayerGameplayController : MonoBehaviour
             if (value.isPressed)
             {
                 AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-                spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
+                if (playerCinemachineCameraController)
+                {
+                    spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
+
+                }
+                else
+                {
+                    spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
+
+                }
                 elementaryController.CastSpell(spell);
             }
         }
