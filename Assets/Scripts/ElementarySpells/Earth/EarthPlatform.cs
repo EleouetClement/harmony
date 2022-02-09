@@ -1,16 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EarthPlatform : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static EarthPlatform instance;
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Debug.LogWarning("There is more than one instance of EarthPlatform in the scene, the old one is destroyed");
+            Destroy(instance.gameObject);
+        }
+
+        instance = this;
+    }
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         

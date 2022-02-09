@@ -894,6 +894,18 @@ Transform:
   m_Father: {fileID: 1826865498}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1319038836 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6677204177119343019, guid: c0001743059dc444a9041dac6d20511d,
+    type: 3}
+  m_PrefabInstance: {fileID: 901735106}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e1f16f4707a4a54baad53dd4acfbe9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1319228323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1157,7 +1169,7 @@ GameObject:
   - component: {fileID: 2076524187}
   - component: {fileID: 2076524186}
   - component: {fileID: 2076524185}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1271,6 +1283,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769,
         type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: playerCameraController
+      value: 
+      objectReference: {fileID: 1319038836}
     - target: {fileID: 824288169518036413, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: m_RootOrder
