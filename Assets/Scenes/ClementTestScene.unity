@@ -243,7 +243,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &237249799
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1070,6 +1070,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf9e1cab28c7fd34880611e7bbc7efc6, type: 3}
+--- !u!1 &989384561 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677204177286177703, guid: c0001743059dc444a9041dac6d20511d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1121864995}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &993146529 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677204177119343018, guid: c0001743059dc444a9041dac6d20511d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1121864995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1007527843
 GameObject:
   m_ObjectHideFlags: 0
@@ -1356,7 +1368,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1121864995}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 993146529}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e1f16f4707a4a54baad53dd4acfbe9b, type: 3}
@@ -1488,6 +1500,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23f17d204236084bb1fca63db636f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerReference: {fileID: 989384561}
+  elementaryReference: {fileID: 354688132}
+  playerCameraReference: {fileID: 993146529}
+  playerHUD: {fileID: 151561539}
+  playerCrossAir: {fileID: 237249798}
 --- !u!4 &1240591703
 Transform:
   m_ObjectHideFlags: 0

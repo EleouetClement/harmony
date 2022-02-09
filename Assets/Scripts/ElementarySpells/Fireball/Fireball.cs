@@ -47,6 +47,12 @@ public class Fireball : AbstractSpell
     /// factor that is add to gravity each frame when forces are on.
     /// </summary>
     [SerializeField] [Min(0)] private float gravityIncreaseFactor;
+
+    [Header("CrossAir infos")]
+    [SerializeField] [Range(50, 250)] private float reticleSize;
+    [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
+    [SerializeField] private GameObject crossAirPrefab;
+
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
     /// </summary>
@@ -116,6 +122,13 @@ public class Fireball : AbstractSpell
         
     }
 
+    private void LateUpdate()
+    {
+        Vector2 size = new Vector2(reticleSize, reticleSize);
+        marker.DisplayTarget(Vector3.zero, Vector3.zero);
+        reticleSize -= reticleDiminutionSpeed * Time.deltaTime;
+
+    }
     /// <summary>
     /// Apply custom gravity on y direction axis
     /// </summary>
@@ -149,7 +162,10 @@ public class Fireball : AbstractSpell
                 speedStep = projectileTopSpeed / maxSpeedDistance;
                 currentSpeed = projectileStartSpeed;
             }
-            
+
+            GameObject tmp = Instantiate(crossAirPrefab, Vector3.zero, Quaternion.identity);
+            marker = tmp.GetComponent<CrossAir>();
+
         }
     }
     /// <summary>
@@ -174,5 +190,6 @@ public class Fireball : AbstractSpell
             isExplosive = true;
             Debug.Log("Fire ball is now explosive!");
         }
+        Destroy(marker.gameObject);
     }
 }

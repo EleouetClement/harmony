@@ -5,10 +5,10 @@ using UnityEngine;
 public class PositionningMarker : AbstractMarker
 {
     public Vector3 targetPosition { get; private set; }
-
+    private RaycastHit hit;
     public override void DisplayTarget(Vector3 direction, Vector3 origin)
     {
-        RaycastHit hit;
+       
         int layers = 1 << HarmonyLayers.LAYER_GROUND;
         layers += 1 << HarmonyLayers.LAYER_DEFAULT;
         if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layers))
@@ -26,6 +26,14 @@ public class PositionningMarker : AbstractMarker
     public override void Init(float maxRayCastDistance, GameObject prefab)
     {
         base.Init(maxRayCastDistance, prefab);
+    }
+
+    public RaycastHit GetRayCastInfo
+    {
+        get
+        {
+            return hit;
+        }
     }
 
     public override void OnDestroy()
