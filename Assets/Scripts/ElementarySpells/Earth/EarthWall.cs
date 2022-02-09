@@ -12,11 +12,9 @@ public class EarthWall : AbstractSpell
     [Range(0, 50)]
     public float maxDistance;
 
-    private PositionningMarker posMark;
-
     void Start()
     {
-        posMark = (PositionningMarker)marker;
+
     }
 
     void Update()
@@ -52,18 +50,33 @@ public class EarthWall : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         RaycastHit hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
-        Debug.Log("HIT SPELL = " + hit.normal);
-        if (hit.normal.y > 0.70)
+
+        // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
+        if (hit.normal.y > 0.70) // If the slope is not too hard
         {
             Debug.Log("SPAWN PILLAR");
-            Instantiate(earthPillar, marker.transform.position, Quaternion.identity);
+
+            // Avoid to rotate the pillar on X axis when it spawns
+            Vector3 v = cameraController.GetViewPosition - hit.transform.position;
+            v.y = 0f;
+            v.Normalize();
+            Quaternion rot = Quaternion.LookRotation(v);
+
+            Instantiate(earthPillar, marker.transform.position, rot);
         }
         else if (hit.normal.y >= 0)
         {
             Debug.Log("SPAWN PLATFORM");
-            Instantiate(earthPlatform, marker.transform.position, Quaternion.identity);
+
+            // Avoid to rotate the platform on X axis when it spawns
+            Vector3 v = cameraController.GetViewPosition - hit.transform.position;
+            v.y = 0f;
+            v.Normalize();
+            Quaternion rot = Quaternion.LookRotation(v);
+
+            Instantiate(earthPlatform, marker.transform.position, rot);
         }
-        
+
         Destroy(marker.gameObject);
         Terminate();
     }

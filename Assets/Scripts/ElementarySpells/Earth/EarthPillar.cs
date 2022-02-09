@@ -11,7 +11,7 @@ public class EarthPillar : MonoBehaviour
             Debug.LogWarning("There is more than one instance of EarthPillar in the scene, the old one is destroyed");
             Destroy(instance.gameObject);
         }
-        else if (EarthPlatform.instance != null)
+        else if(EarthPlatform.instance != null)
         {
             Debug.LogWarning("There is more than one instance of EarthPlatform in the scene, the old one is destroyed");
             Destroy(EarthPlatform.instance.gameObject);
