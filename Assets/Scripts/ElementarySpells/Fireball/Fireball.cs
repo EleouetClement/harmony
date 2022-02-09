@@ -50,6 +50,7 @@ public class Fireball : AbstractSpell
 
     [Header("CrossAir infos")]
     [SerializeField] [Range(50, 250)] private float reticleSize;
+    [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
     [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
     [SerializeField] private GameObject crossAirPrefab;
 
@@ -125,8 +126,12 @@ public class Fireball : AbstractSpell
     private void LateUpdate()
     {
         Vector2 size = new Vector2(reticleSize, reticleSize);
-        marker.DisplayTarget(Vector3.zero, Vector3.zero);
-        reticleSize -= reticleDiminutionSpeed * Time.deltaTime;
+        marker.DisplayTarget(size, Vector3.zero);
+        if(reticleSize > reticleMinimumSize)
+        {
+            reticleSize -= reticleDiminutionSpeed * Time.deltaTime;
+        }
+        
 
     }
     /// <summary>
