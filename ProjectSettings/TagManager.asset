@@ -16,8 +16,13 @@ TagManager:
   - Targetable
   - Interactable
   - PlayerTrigger
+<<<<<<< HEAD
   - Wall
   - Ground
+=======
+  - Ground
+  - 
+>>>>>>> dev
   - 
   - 
   - 

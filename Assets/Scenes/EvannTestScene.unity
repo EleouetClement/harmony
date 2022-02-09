@@ -1061,8 +1061,53 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}
+      propertyPath: parameter.name
+      value: param
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameter.serializedValue
+      value: i425
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
       propertyPath: intParameters.keys.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.data[0]
+      value: test float
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.data[1]
+      value: test bool
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.data[2]
+      value: test int
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.data[3]
+      value: test none
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.keys.Array.data[4]
+      value: test Vector
       objectReference: {fileID: 0}
     - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}
@@ -1128,6 +1173,31 @@ PrefabInstance:
         type: 3}
       propertyPath: vectorParameters.keys.Array.data[0]
       value: test
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.data[0].serializedValue
+      value: f421,54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.data[1].serializedValue
+      value: bTrue
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.data[2].serializedValue
+      value: i3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.data[3].serializedValue
+      value: n
+      objectReference: {fileID: 0}
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: parameters.values.Array.data[4].serializedValue
+      value: v1|0|0
       objectReference: {fileID: 0}
     - target: {fileID: 1006983962636285125, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}
