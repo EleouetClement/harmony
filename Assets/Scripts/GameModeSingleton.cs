@@ -12,6 +12,7 @@ public class GameModeSingleton : MonoBehaviour
     private GameObject elementaryReference;
     private GameObject playerCameraReference;
     private GameObject playerHUD;
+    private GameObject playerCrossAir;
 
     public static GameModeSingleton _instance;
 
@@ -22,6 +23,9 @@ public class GameModeSingleton : MonoBehaviour
         playerReference = GameObject.Find("Player");
         elementaryReference = GameObject.Find("Elementary");
         playerCameraReference = GameObject.Find("CameraRig");
+        playerHUD = GameObject.Find("ATH");
+        playerCrossAir = GameObject.Find("Reticle");
+        _instance = this;
     }
 
     public static GameModeSingleton GetInstance()
@@ -63,6 +67,13 @@ public class GameModeSingleton : MonoBehaviour
         get
         {
             return playerHUD;
+        }
+    }
+    public GameObject GetPlayerReticle
+    {
+        get
+        {
+            return playerCrossAir;
         }
     }
 
