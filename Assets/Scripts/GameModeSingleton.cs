@@ -11,6 +11,7 @@ public class GameModeSingleton : MonoBehaviour
     private GameObject playerReference;
     private GameObject elementaryReference;
     private GameObject playerCameraReference;
+    private GameObject playerHUD;
 
     public static GameModeSingleton _instance;
 
@@ -54,6 +55,14 @@ public class GameModeSingleton : MonoBehaviour
         get
         {
             return playerCameraReference;
+        }
+    }
+
+    public GameObject GetPlayerHUD
+    {
+        get
+        {
+            return playerHUD;
         }
     }
 

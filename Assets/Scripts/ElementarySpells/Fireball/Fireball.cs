@@ -66,6 +66,8 @@ public class Fireball : AbstractSpell
     private float currentSpeed;
     private bool launched = false;
     private bool isExplosive = false;
+
+    private ElementaryController elem;
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -119,7 +121,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     private void ApplyForces()
     {
-        target += new Vector3(0.0f, gravityForce, 0.0f);
+        target += new Vector3(0.0f, gravityForce * Time.fixedDeltaTime, 0.0f);
         target.Normalize();
         gravityForce -= gravityIncreaseFactor;
     }
@@ -135,8 +137,9 @@ public class Fireball : AbstractSpell
         {
             fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
             origin = fireOrbInstance.transform.position;
-            elementary.GetComponent<ElementaryController>().computePosition = false;
-            if(projectileStartSpeed > projectileTopSpeed)
+            elem = elementary.GetComponent<ElementaryController>();
+            elem.computePosition = false;
+            if (projectileStartSpeed > projectileTopSpeed)
             {
                 Debug.LogWarning("Fireball.init : projectileStartSpeed > projectiletTopSpeed");
                 currentSpeed = projectileTopSpeed;
@@ -155,9 +158,8 @@ public class Fireball : AbstractSpell
     public override void Terminate()
     {
         Destroy(fireOrbInstance);
-        ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
-        elemCtrl.currentSpell = null;
-        elemCtrl.computePosition = true;
+        elem.currentSpell = null;
+        elem.computePosition = true;
         Destroy(gameObject);
     }
 
@@ -165,7 +167,8 @@ public class Fireball : AbstractSpell
     {
         launched = true;
         float timing = Mathf.Abs(perfectCastTiming - chargetime);
-        Debug.Log(timing);
+        target = elem.playerCameraController.GetViewDirection;
+        //Debug.Log(timing);
         if (timing <= 0.2)
         {
             isExplosive = true;
