@@ -30,8 +30,12 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum cast charge duration
     /// </summary>
-    protected float maxCastTime = 4f;
+    protected float maxCastTime = 5f;
 
+    /// <summary>
+    /// if the spell input at the blinkTiming time, isBlinked is true
+    /// </summary>
+    protected float blinkTiming = 3f;
 
     /// <summary>
     /// Maximum living time for the spell
@@ -41,6 +45,11 @@ public abstract class AbstractSpell : MonoBehaviour
     private float currentCastTime = 0f;
 
     private float currentLivingTime = 0f;
+
+    /// <summary>
+    /// true if the player release the input with the right timing
+    /// </summary>
+    protected bool isBlinked = false;
 
 
     private bool chargeend = false;
@@ -105,7 +114,16 @@ public abstract class AbstractSpell : MonoBehaviour
     /// Do note that there is no garentee that this event is ever called, as the player might not ever release the key.
     /// </summary>
     /// <param name="chargetime">The time this spell has been charged for, in seconds. Because this is abstract, this is the duration of the key press.</param>
-    protected abstract void onChargeEnd(float chargetime);
+    protected virtual void onChargeEnd(float chargetime)
+    {
+        float blink = Mathf.Abs(blinkTiming - chargetime);
+        Debug.Log(blink);
+        if(blink <= 0.5f)
+        {
+            Debug.Log("Blink!");
+            isBlinked = true;
+        }
+    }
 
 
 
