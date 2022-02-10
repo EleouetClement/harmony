@@ -5,20 +5,30 @@ using UnityEngine;
 public class EarthBall : MonoBehaviour
 {
 	public EarthMortar earthMortarRef;
+	public EarthBallMarker earthMarkerRef;
 	private bool launched;
+
+	public bool displayTrajectory;
 	public float charge;
 
-	private float range;
+	private Vector3 launchVelocity;
+
+	/// <summary>
+	/// Defines the time it takes for the ball to reach target
+	/// </summary>
+	public float speed;
+
 	/// <summary>
 	///	Defines max mass of elementary at max charge level
 	/// </summary>
 	public float maxMass;
 
-	/// <summary>
-	///	Defines min and max range at max charge level
-	/// </summary>
-	public float minRange;
-	public float maxRange;
+	//private float range;
+	///// <summary>
+	/////	Defines min and max range at max charge level
+	///// </summary>
+	//public float minRange;
+	//public float maxRange;
 
 	/// <summary>
 	///	Defines min and max size at max charge level
@@ -43,9 +53,20 @@ public class EarthBall : MonoBehaviour
 
 	private float impactforce;
 
+	private TrajectoryCalculator trajectoryCalculator;
+	private PhysicsSimulator physicsSimulator;
+
+	private ElementaryController elementaryController;
+
+
 	// Start is called before the first frame update
 	void Start()
 	{
+		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
+		elementaryController = earthMortarRef.elementary.GetComponent<ElementaryController>();
+		//physicsSimulator = GetComponent<PhysicsSimulator>();
+		//physicsSimulator.Init();
+
 		launched = false;
 		minSize = earthMortarRef.elementary.transform.localScale;
 		maxSize += minSize;
@@ -63,30 +84,45 @@ public class EarthBall : MonoBehaviour
 			//earth ball radius increases with charge level
 			radius = minRadius + charge * (maxRadius - minRadius);
 
+			//range = minRange + charge * (maxRange - minRange);
+
+			//launchVelocity = ((transform.forward+transform.up/2f)*charge) * range;
+			launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.GetTarget(), speed);
+			earthMarkerRef.SetMarkerRadius(radius);
+			
+			if(displayTrajectory)
+				trajectoryCalculator.CalculateTrajectory(launchVelocity);
+
+			//physicsSimulator.currentVelocity = launchVelocity;
+			//physicsSimulator.Init();
+
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);
+
 		}
 		else
 		{
 
 		}
+		
 	}
 
 	public void Launch()
 	{
-		Debug.Log("oui");
 
 		//bug
 		//float mass = (charge / 100.0f) * maxMass; 
 		//GetComponent<Rigidbody>().mass = mass;
 
-		range = minRange + charge * (maxRange - minRange);
-		Debug.Log(range);
+		GetComponent<LineRenderer>().enabled = false;
 		launched = true;
+		//Debug.Log("Range : " + range);
+		Debug.Log("launchVelocity : " + launchVelocity);
 		//Vector3 launchDirection = target - elementary.transform.position;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
 		GetComponent<Rigidbody>().isKinematic = false;
 		GetComponent<SphereCollider>().isTrigger = false;
-		GetComponent<Rigidbody>().AddForce(earthMortarRef.elementary.transform.forward * range, ForceMode.Impulse);
+		//GetComponent<Rigidbody>().AddForce(transform.forward * range, ForceMode.Impulse);
+		GetComponent<Rigidbody>().velocity = launchVelocity;
 	}
 
 	private void OnCollisionEnter(Collision collision)

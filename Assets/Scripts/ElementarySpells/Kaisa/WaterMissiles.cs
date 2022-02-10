@@ -57,6 +57,7 @@ public class WaterMissiles : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
+        base.onChargeEnd(chargetime);
         balls.ForEach(e => { e.launched = true; });
     }
 
