@@ -164,7 +164,7 @@ public class PlayerMotionController : MonoBehaviour
 
     private void OnDodge()
     {
-        if(isMoving || !isDodging)
+        if(isMoving && !isDodging)
         {
             //Debug.Log(velocity);
             isDodging = true;
