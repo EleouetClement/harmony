@@ -84,7 +84,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
-        Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
+        //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
         if(!isReleased())
         {
@@ -186,15 +186,15 @@ public class Fireball : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
+        base.onChargeEnd(chargetime);
         launched = true;
-        float timing = Mathf.Abs(perfectCastTiming - chargetime);
-        target = elem.playerCameraController.GetViewDirection;
-        //Debug.Log(timing);
-        if (timing <= 0.2)
-        {
-            isExplosive = true;
-            Debug.Log("Fire ball is now explosive!");
-        }
+        target = elem.playerCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
+        if(isBlinked)
+        {
+            Debug.Log("Molotov à appliquer");
+            isExplosive = true;
+            
+        }
     }
 }
