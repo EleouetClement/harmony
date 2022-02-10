@@ -16,8 +16,8 @@ TagManager:
   - Targetable
   - Interactable
   - PlayerTrigger
+  - WallEnable
   - Ground
-  - 
   - 
   - 
   - 

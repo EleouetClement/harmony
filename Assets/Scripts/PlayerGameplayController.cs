@@ -87,7 +87,7 @@ public class PlayerGameplayController : MonoBehaviour
 		{
             if (value.isPressed)
             {
-                Debug.Log("EarthMortar");
+                //Debug.Log("EarthMortar");
                 AbstractSpell spell = Instantiate(elementaryController.spells[2], elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
                 elementaryController.currentSpell = spell;
@@ -109,6 +109,7 @@ public class PlayerGameplayController : MonoBehaviour
         else
         {
             elementaryController = elementaryObjectReference.GetComponent<ElementaryController>();
+            elementaryController.playerCameraController = playerCameraController;
             if (elementaryController == null)
             {
                 Debug.LogError("PlayerMotionController : Current elementary hasn't any ElementaryController component");

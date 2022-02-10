@@ -47,6 +47,13 @@ public class Fireball : AbstractSpell
     /// factor that is add to gravity each frame when forces are on.
     /// </summary>
     [SerializeField] [Min(0)] private float gravityIncreaseFactor;
+
+    [Header("CrossAir infos")]
+    [SerializeField] [Range(50, 250)] private float reticleSize;
+    [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
+    [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
+    [SerializeField] private GameObject crossAirPrefab;
+
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
     /// </summary>
@@ -66,6 +73,8 @@ public class Fireball : AbstractSpell
     private float currentSpeed;
     private bool launched = false;
     private bool isExplosive = false;
+
+    private ElementaryController elem;
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -75,6 +84,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
+        //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
         if(!isReleased())
         {
@@ -113,12 +123,23 @@ public class Fireball : AbstractSpell
         
     }
 
+    private void LateUpdate()
+    {
+        Vector2 size = new Vector2(reticleSize, reticleSize);
+        marker.DisplayTarget(size, Vector3.zero);
+        if(reticleSize > reticleMinimumSize)
+        {
+            reticleSize -= reticleDiminutionSpeed * Time.deltaTime;
+        }
+        
+
+    }
     /// <summary>
     /// Apply custom gravity on y direction axis
     /// </summary>
     private void ApplyForces()
     {
-        target += new Vector3(0.0f, gravityForce, 0.0f);
+        target += new Vector3(0.0f, gravityForce * Time.fixedDeltaTime, 0.0f);
         target.Normalize();
         gravityForce -= gravityIncreaseFactor;
     }
@@ -134,8 +155,9 @@ public class Fireball : AbstractSpell
         {
             fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
             origin = fireOrbInstance.transform.position;
-            elementary.GetComponent<ElementaryController>().computePosition = false;
-            if(projectileStartSpeed > projectileTopSpeed)
+            elem = elementary.GetComponent<ElementaryController>();
+            elem.computePosition = false;
+            if (projectileStartSpeed > projectileTopSpeed)
             {
                 Debug.LogWarning("Fireball.init : projectileStartSpeed > projectiletTopSpeed");
                 currentSpeed = projectileTopSpeed;
@@ -145,7 +167,10 @@ public class Fireball : AbstractSpell
                 speedStep = projectileTopSpeed / maxSpeedDistance;
                 currentSpeed = projectileStartSpeed;
             }
-            
+
+            GameObject tmp = Instantiate(crossAirPrefab, Vector3.zero, Quaternion.identity);
+            marker = tmp.GetComponent<CrossAir>();
+
         }
     }
     /// <summary>
@@ -154,21 +179,22 @@ public class Fireball : AbstractSpell
     public override void Terminate()
     {
         Destroy(fireOrbInstance);
-        ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
-        elemCtrl.currentSpell = null;
-        elemCtrl.computePosition = true;
+        elem.currentSpell = null;
+        elem.computePosition = true;
         Destroy(gameObject);
     }
 
     protected override void onChargeEnd(float chargetime)
     {
+        base.onChargeEnd(chargetime);
         launched = true;
-        float timing = Mathf.Abs(perfectCastTiming - chargetime);
-        Debug.Log(timing);
-        if (timing <= 0.2)
+        target = elem.playerCameraController.GetViewDirection;        
+        Destroy(marker.gameObject);
+        if(isBlinked)
         {
+            Debug.Log("Molotov à appliquer");
             isExplosive = true;
-            Debug.Log("Fire ball is now explosive!");
+            
         }
     }
 }
