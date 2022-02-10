@@ -1293,6 +1293,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6677204176360241019, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: field of view
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177119343019, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: fovReductionPerFrame
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
         type: 3}
       propertyPath: dodgeSpeed
@@ -1301,7 +1311,7 @@ PrefabInstance:
     - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
         type: 3}
       propertyPath: dodgeCoolDown
-      value: 0.5
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
         type: 3}

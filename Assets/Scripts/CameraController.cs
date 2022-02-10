@@ -16,9 +16,16 @@ public class CameraController : MonoBehaviour
     [Min(0)] public float sensibility = 0.25f;
     public LayerMask collisionMask;
 
+    [SerializeField] [Min(0)]private float fovReductionPerFrame;
     private Vector3 targetPosition;
     private Vector2 lookInput;
     private Vector2 rotation;
+    /// <summary>
+    /// true if a spll needs a zoom to aim
+    /// </summary>
+    private bool isAiming = false;
+    private float fovZoomValue;
+    private float fovBaseValue;
 
     private Vector3 CameraHalfExtends
     {
@@ -72,6 +79,7 @@ public class CameraController : MonoBehaviour
             cam = GetComponentInChildren<Camera>();
 
         targetPosition = target.position;
+        fovBaseValue = cam.fieldOfView;
     }
 
     public void LateUpdate()
@@ -104,6 +112,19 @@ public class CameraController : MonoBehaviour
         cam.transform.localPosition = camRotation * camOffset;
 
         transform.rotation = Quaternion.Euler(0,rotation.y,0);
+        #region Aiming
+        if (isAiming)
+        {
+            Zoom();
+        }
+        else
+        {
+            if(cam.fieldOfView < fovBaseValue)
+            {
+                DeZoom();
+            }
+        }
+        #endregion
     }
 
     public void UpdateTargetPosition()
@@ -131,4 +152,41 @@ public class CameraController : MonoBehaviour
     {
         lookInput = value.Get<Vector2>()*100;
     }
+
+    private void Zoom()
+    {
+        if(cam.fieldOfView > fovZoomValue)
+        {
+            cam.fieldOfView -= fovReductionPerFrame;
+        }
+    }
+
+    private void DeZoom()
+    {
+        if (cam.fieldOfView < fovBaseValue)
+        {
+            cam.fieldOfView += fovReductionPerFrame;
+        }
+    }
+
+    /// <summary>
+    /// Reduces fov while aiming for spell
+    /// </summary>
+    public void Aim(float newFovValue)
+    {
+        isAiming = true;
+        fovZoomValue = newFovValue;
+    }
+
+    ///<summary>
+    /// recover base fov
+    /// </summary>
+    public void StopAim()
+    {
+        isAiming = false;
+    }
+
+
+
+
 }
