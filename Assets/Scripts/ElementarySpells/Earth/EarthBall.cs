@@ -9,8 +9,15 @@ public class EarthBall : MonoBehaviour
 	private bool launched;
 
 	public bool displayTrajectory;
+
+	/// <summary>
+	/// current charge level of the spell
+	/// </summary>
 	public float charge;
 
+	/// <summary>
+	/// Initial earth ball velocity
+	/// </summary>
 	private Vector3 launchVelocity;
 
 	/// <summary>
@@ -54,18 +61,13 @@ public class EarthBall : MonoBehaviour
 	private float impactforce;
 
 	private TrajectoryCalculator trajectoryCalculator;
-	private PhysicsSimulator physicsSimulator;
 
-	private ElementaryController elementaryController;
 
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
-		elementaryController = earthMortarRef.elementary.GetComponent<ElementaryController>();
-		//physicsSimulator = GetComponent<PhysicsSimulator>();
-		//physicsSimulator.Init();
 
 		launched = false;
 		minSize = earthMortarRef.elementary.transform.localScale;
