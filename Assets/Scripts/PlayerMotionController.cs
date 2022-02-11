@@ -24,6 +24,7 @@ public class PlayerMotionController : MonoBehaviour
 
 
     public CameraController cameraController;
+    public CinemachineCameraController cinemachineCamera;
     
     private CharacterController controller;
     private Vector3 forwardDirection;
@@ -61,8 +62,17 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!sliding)
         {
-            forwardDirection = inputAxis.y * cameraController.GetViewForward;
-            rightDirection = inputAxis.x * cameraController.GetViewRight;
+            if (cinemachineCamera)
+            {
+                forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+                rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
+            }
+            else
+            {
+                forwardDirection = inputAxis.y * cameraController.GetViewForward;
+                rightDirection = inputAxis.x * cameraController.GetViewRight;
+            }
+            
             Vector3 movement = forwardDirection + rightDirection;
             movement.Normalize();
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
@@ -106,7 +116,6 @@ public class PlayerMotionController : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
-        
     }
 
     /// <summary>
