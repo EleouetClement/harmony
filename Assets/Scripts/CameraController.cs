@@ -16,9 +16,19 @@ public class CameraController : MonoBehaviour
     [Min(0)] public float sensibility = 0.25f;
     public LayerMask collisionMask;
 
+    [Header("Aiming setups")]
+    [SerializeField] [Min(0)]private float fovReductionPerFrame;
+
     private Vector3 targetPosition;
     private Vector2 lookInput;
     private Vector2 rotation;
+    /// <summary>
+    /// true if a spll needs a zoom to aim
+    /// </summary>
+    private bool isAiming = false;
+    private float fovZoomValue;
+    private float fovBaseValue;
+    private bool needView;
 
     private Vector3 CameraHalfExtends
     {
@@ -72,6 +82,7 @@ public class CameraController : MonoBehaviour
             cam = GetComponentInChildren<Camera>();
 
         targetPosition = target.position;
+        fovBaseValue = cam.fieldOfView;
     }
 
     public void LateUpdate()
@@ -104,6 +115,32 @@ public class CameraController : MonoBehaviour
         cam.transform.localPosition = camRotation * camOffset;
 
         transform.rotation = Quaternion.Euler(0,rotation.y,0);
+        #region Aiming
+        if (isAiming)
+        {
+            Zoom();
+        }
+        else
+        {
+            if(cam.fieldOfView < fovBaseValue)
+            {
+                DeZoom();
+            }
+        }
+        #endregion
+
+        #region View
+        if(needView)
+        {
+            SetGlobalView();
+        }
+        else
+        {
+            //TO DO...
+            SetBaseView();
+        }
+
+        #endregion
     }
 
     public void UpdateTargetPosition()
@@ -131,4 +168,71 @@ public class CameraController : MonoBehaviour
     {
         lookInput = value.Get<Vector2>()*100;
     }
+
+    #region Crossair Aim
+
+    private void Zoom()
+    {
+        if(cam.fieldOfView > fovZoomValue)
+        {
+            cam.fieldOfView -= fovReductionPerFrame;
+        }
+    }
+
+    private void DeZoom()
+    {
+        if (cam.fieldOfView < fovBaseValue)
+        {
+            cam.fieldOfView += fovReductionPerFrame;
+        }
+    }
+
+    /// <summary>
+    /// Reduces fov while aiming for spell
+    /// </summary>
+    public void Aim(float newFovValue)
+    {
+        isAiming = true;
+        fovZoomValue = newFovValue;
+    }
+
+    ///<summary>
+    /// recover base fov
+    /// </summary>
+    public void StopAim()
+    {
+        isAiming = false;
+    }
+    #endregion
+
+    #region Camera Global view
+    /// <summary>
+    /// Translate the camera upper end further from the player to get a global view
+    /// </summary>
+    public void GloabView()
+    {
+        needView = true;
+    }
+    /// <summary>
+    /// Returns the camera to its base setup
+    /// </summary>
+    public void ResetView()
+    {
+        needView = false;
+    }
+
+    private void SetGlobalView()
+    {
+        //Debug.Log("Global view enabled");
+        
+    }
+
+    private void SetBaseView()
+    {
+        //TO DO...
+        //Debug.Log("Global view disabled");
+    }
+
+    #endregion
+
 }
