@@ -88,7 +88,7 @@ public class PlayerMotionController : MonoBehaviour
                 rightDirection = inputAxis.x * cameraController.GetViewRight;
             }
             
-            Vector3 movement = forwardDirection + rightDirection;
+            movement = forwardDirection + rightDirection;
             movement.Normalize();
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
@@ -100,8 +100,9 @@ public class PlayerMotionController : MonoBehaviour
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log(velocity);
+                Debug.Log("Velocity avant : " + velocity);
                 velocity += movement * dodgeSpeed * Time.fixedDeltaTime;
+                Debug.Log("Velocity apres : " + velocity);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
             else
@@ -154,6 +155,7 @@ public class PlayerMotionController : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
+        isMoving = true;
     }
 
     /// <summary>
@@ -172,9 +174,8 @@ public class PlayerMotionController : MonoBehaviour
 
     private void OnDodge()
     {
-        if(isMoving && !isDodging)
+        if (isMoving && !isDodging)
         {
-            //Debug.Log(velocity);
             isDodging = true;
         }
     }
