@@ -47,6 +47,7 @@ public class PlayerMotionController : MonoBehaviour
     private float dodgeTimer;
     private Vector3 dodgeDirection = Vector3.zero;
     private Vector3 movement;
+    private Vector3 rodgeVelocity;
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -61,10 +62,18 @@ public class PlayerMotionController : MonoBehaviour
     void Update()
     {
 
-        controller.Move(velocity * Time.deltaTime);
+        
         if(dodgeTimer > Mathf.Epsilon)
         {
             dodgeTimer -= Time.deltaTime;
+        }
+        if(isDodging)
+        {
+            controller.Move(velocity * Time.deltaTime);
+        }
+        else
+        {
+            controller.Move(velocity * Time.deltaTime);
         }
     }
 
@@ -101,7 +110,7 @@ public class PlayerMotionController : MonoBehaviour
             if(currentDodgeDuration < dodgeDuration)
             {
                 Debug.Log("Velocity avant : " + velocity);
-                velocity += movement * dodgeSpeed * Time.fixedDeltaTime;
+                rodgeVelocity = velocity + (movement * dodgeSpeed * Time.fixedDeltaTime);
                 Debug.Log("Velocity apres : " + velocity);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
