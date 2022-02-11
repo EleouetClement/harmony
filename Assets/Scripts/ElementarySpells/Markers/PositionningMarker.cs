@@ -17,7 +17,6 @@ public class PositionningMarker : AbstractMarker
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
-
                 Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
                 
             }
@@ -25,7 +24,6 @@ public class PositionningMarker : AbstractMarker
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
-
                 Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
                 
             }
