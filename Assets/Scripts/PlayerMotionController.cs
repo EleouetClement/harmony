@@ -16,6 +16,12 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = -9.81f;
 
+    [Header("Dodge settings")]
+    [SerializeField] [Min(0)] private float dodgeSpeed;
+    [SerializeField] [Min(0)] private float dodgeDuration;
+    [SerializeField] [Min(0)] private float dodgeCoolDown;
+    [SerializeField] private bool isInvincible;
+
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
@@ -24,6 +30,7 @@ public class PlayerMotionController : MonoBehaviour
 
 
     public CameraController cameraController;
+    public CinemachineCameraController cinemachineCamera;
     
     private CharacterController controller;
     private Vector3 forwardDirection;
@@ -33,8 +40,13 @@ public class PlayerMotionController : MonoBehaviour
     private bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private bool isMoving = false;
+    private bool isDodging = false;
 
-
+    private float currentDodgeDuration = Mathf.Epsilon;
+    private float dodgeTimer;
+    private Vector3 dodgeDirection = Vector3.zero;
+    private Vector3 movement;
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -50,6 +62,10 @@ public class PlayerMotionController : MonoBehaviour
     {
 
         controller.Move(velocity * Time.deltaTime);
+        if(dodgeTimer > Mathf.Epsilon)
+        {
+            dodgeTimer -= Time.deltaTime;
+        }
     }
 
     private void FixedUpdate()
@@ -59,13 +75,42 @@ public class PlayerMotionController : MonoBehaviour
 
         #region Apply Direction Input
 
-        if (!sliding)
+        if (!sliding && !isDodging)
         {
-            forwardDirection = inputAxis.y * cameraController.GetViewForward;
-            rightDirection = inputAxis.x * cameraController.GetViewRight;
+            if (cinemachineCamera)
+            {
+                forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+                rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
+            }
+            else
+            {
+                forwardDirection = inputAxis.y * cameraController.GetViewForward;
+                rightDirection = inputAxis.x * cameraController.GetViewRight;
+            }
+            
             Vector3 movement = forwardDirection + rightDirection;
             movement.Normalize();
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        }
+
+        #endregion
+
+        #region Dodge force
+        if(isDodging && dodgeTimer <= Mathf.Epsilon)
+        {
+            if(currentDodgeDuration < dodgeDuration)
+            {
+                Debug.Log(velocity);
+                velocity += movement * dodgeSpeed * Time.fixedDeltaTime;
+                currentDodgeDuration += Time.fixedDeltaTime;
+            }
+            else
+            {
+                currentDodgeDuration = Mathf.Epsilon;
+                isDodging = false;
+                dodgeTimer = dodgeCoolDown;
+            }
+            
         }
 
         #endregion
@@ -96,7 +141,10 @@ public class PlayerMotionController : MonoBehaviour
         velocity += dragForce;
 
         #endregion
+
+
         
+
     }
 
     /// <summary>
@@ -106,7 +154,6 @@ public class PlayerMotionController : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
-        
     }
 
     /// <summary>
@@ -120,7 +167,16 @@ public class PlayerMotionController : MonoBehaviour
             onGround = false;
             velocity.y = jumpForce;
         }
-        
+    }
+
+
+    private void OnDodge()
+    {
+        if(isMoving && !isDodging)
+        {
+            //Debug.Log(velocity);
+            isDodging = true;
+        }
     }
 
     /// <summary>

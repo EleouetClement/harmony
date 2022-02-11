@@ -8,19 +8,32 @@ using UnityEngine;
 /// </summary>
 public class GameModeSingleton : MonoBehaviour
 {
-    private GameObject playerReference;
-    private GameObject elementaryReference;
-    private GameObject playerCameraReference;
+    [SerializeField] private GameObject playerReference;
+    [SerializeField] private GameObject elementaryReference;
+    [SerializeField] private GameObject playerCameraReference;
+    [SerializeField] private GameObject playerHUD;
+    [SerializeField] private GameObject playerCrossAir;
+    private CameraController playerCameraController;
 
-    public static GameModeSingleton _instance;
+    private static GameModeSingleton _instance;
 
     private GameModeSingleton() { }
 
     private void Awake()
     {
-        playerReference = GameObject.Find("Player");
-        elementaryReference = GameObject.Find("Elementary");
-        playerCameraReference = GameObject.Find("CameraRig");
+        Debug.Log("Initialisation du singleton");
+        if(playerReference == null)
+            playerReference = GameObject.Find("Player");
+        if(elementaryReference == null)
+            elementaryReference = GameObject.Find("Elementary");
+        if(playerCameraReference == null)
+            playerCameraReference = GameObject.Find("CameraRig");
+        if(playerHUD == null)
+            playerHUD = GameObject.Find("ATH");
+        if(playerCrossAir == null)
+            playerCrossAir = GameObject.Find("Reticle");
+        playerCameraController = playerCameraReference.GetComponent<CameraController>();
+        _instance = this;
     }
 
     public static GameModeSingleton GetInstance()
@@ -54,6 +67,29 @@ public class GameModeSingleton : MonoBehaviour
         get
         {
             return playerCameraReference;
+        }
+    }
+
+    public GameObject GetPlayerHUD
+    {
+        get
+        {
+            return playerHUD;
+        }
+    }
+    public GameObject GetPlayerReticle
+    {
+        get
+        {
+            return playerCrossAir;
+        }
+    }
+
+    public CameraController GetPlayerCameraController
+    {
+        get
+        {
+            return playerCameraController;
         }
     }
 

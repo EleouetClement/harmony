@@ -18,6 +18,7 @@ public class MarkerTestSpell : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
+        cameraController.GloabView();
         marker.Init(2000, PosMarkerPrefab);
     }
 
@@ -45,6 +46,7 @@ public class MarkerTestSpell : AbstractSpell
     {
         PositionningMarker posMark= (PositionningMarker)marker;
         Debug.Log("Position locked : " + posMark.targetPosition);
+        cameraController.ResetView();
         Destroy(marker.gameObject);
     }
 }
