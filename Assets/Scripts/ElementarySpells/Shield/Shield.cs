@@ -9,7 +9,7 @@ public class Shield : AbstractSpell
     [Range(0f, 20f)] public float walkSpeedInShield;
     
     private GameObject player;
-    private float initialWalkSpeed;
+    private float initialWalkSpeed; // Storage of the initial speed of the player
     private bool canPerfectShield = true;
     private float timer = 0; // Start from 0 to maxDelayToPerfectShield
 
@@ -17,25 +17,29 @@ public class Shield : AbstractSpell
     {
         //player = GameModeSingleton._instance.GetPlayerReference;
         player = GameObject.Find("Player");
-        transform.position = player.transform.position;
+        transform.position = player.transform.position; // place the shield on the position of the player
         initialWalkSpeed = player.GetComponent<PlayerMotionController>().walkSpeed;
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        transform.position = player.transform.position;
+        transform.position = player.transform.position; // The shield follows the player
     }
 
     private void Update()
     {
+        // Determine the period during which the player can make a perfect shield
         timer += Time.deltaTime;
+
+        // If the shield has been activated for too long time, it can no longer maker a perfect shield
         if (timer > maxDelayToPerfectShield && canPerfectShield)
         {
             Debug.Log("You can not do perfect shield anymore");
             canPerfectShield = false;
         }
 
+        // The player is slowed if his shield is activated
         if (!isReleased())
         {
             player.GetComponent<PlayerMotionController>().walkSpeed = walkSpeedInShield;
@@ -59,5 +63,20 @@ public class Shield : AbstractSpell
     {
         player.GetComponent<PlayerMotionController>().walkSpeed = initialWalkSpeed;
         Terminate();
+    }
+
+    private void OnTriggerEnter(Collider collider)
+    {
+        if(collider.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
+        {
+            if(canPerfectShield)
+            {
+                Debug.Log("PERFECT SHIELD !");
+            }
+            else
+            {
+                Debug.Log("TOO LATE TO PERFECT SHIELD !");
+            }
+        }
     }
 }
