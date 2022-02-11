@@ -19,7 +19,7 @@ public class PositionningMarker : AbstractMarker
                 transform.position = hit.point;
 
                 Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
-                Debug.Log("Spawn of Pillar is possible --> hit.normal : " + hit.normal);
+                
             }
             else if(hit.normal.y >= 0)
             {
@@ -27,12 +27,11 @@ public class PositionningMarker : AbstractMarker
                 transform.position = hit.point;
 
                 Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
-                Debug.Log("Spawn of Platform is possible --> hit.normal : " + hit.normal);
+                
             }
             else
             {
-                Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);
-                Debug.Log("You can not spawn any object --> hit.normal : " + hit.normal);
+                Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
             }
         }
         else

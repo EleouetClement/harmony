@@ -53,10 +53,7 @@ public class Fireball : AbstractSpell
     [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
     [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
     [SerializeField] private GameObject crossAirPrefab;
-    /// <summary>
-    /// New fov value during aiming
-    /// </summary>
-    [SerializeField] [Min(0)] private float zoomPower;
+    
 
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
@@ -174,7 +171,7 @@ public class Fireball : AbstractSpell
 
             GameObject tmp = Instantiate(crossAirPrefab, Vector3.zero, Quaternion.identity);
             marker = tmp.GetComponent<CrossAir>();
-            elem.playerCameraController.Aim(zoomPower);
+            
 
         }
     }
@@ -200,6 +197,6 @@ public class Fireball : AbstractSpell
             Debug.Log("Molotov à appliquer");
             isExplosive = true;
         }
-        elem.playerCameraController.StopAim();
+        
     }
 }
