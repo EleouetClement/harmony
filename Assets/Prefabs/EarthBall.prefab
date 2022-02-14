@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5871701047162345706}
   - component: {fileID: 435881935620873486}
   - component: {fileID: 8015282631206224251}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EarthBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

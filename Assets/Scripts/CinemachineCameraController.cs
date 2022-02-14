@@ -6,6 +6,10 @@ using UnityEngine.InputSystem;
 public class CinemachineCameraController : MonoBehaviour
 {
     public Transform PlayerMesh;
+
+    [SerializeField] GameObject defaultCam;
+    [SerializeField] GameObject aimingCam;
+
     [Range(0, 90)] public float verticalMaxAngle = 85.0f;
     [Min(0)] public float sensibility = 0.25f;
 
@@ -39,11 +43,18 @@ public class CinemachineCameraController : MonoBehaviour
         }
     }
 
-    private void Update()
+    public void ZoomIn()
     {
-        //PlayerMesh.rotation = Quaternion.Euler(0, rotation.y, 0);
+        defaultCam.SetActive(false);
+        aimingCam.SetActive(true);
     }
-    // Update is called once per frame
+
+    public void ZoomOut()
+    {
+        aimingCam.SetActive(false);
+        defaultCam.SetActive(true);
+    }
+
     void LateUpdate()
     {
         AddYaw(lookInput.x * Time.deltaTime);
