@@ -117,7 +117,7 @@ public abstract class AbstractSpell : MonoBehaviour
     protected virtual void onChargeEnd(float chargetime)
     {
         float blink = Mathf.Abs(blinkTiming - chargetime);
-        Debug.Log(blink);
+        //Debug.Log(blink);
         if(blink <= 0.5f)
         {
             Debug.Log("Blink!");

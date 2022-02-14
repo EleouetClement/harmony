@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class FireOrb : MonoBehaviour
 {
+    [SerializeField] private GameObject firePrefab;
+    private bool blinked = false;
+    private bool environment = false;
+    private bool hasExplode = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +23,34 @@ public class FireOrb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        switch(collision.gameObject.layer)
+        if(!environment && !hasExplode)
         {
-            case 6:
-                Debug.Log("FireBallCollision");
-                break;
-            default:
-                break;
-        }
+            Explode();
+        }       
     }
+
+    /// <summary>
+    /// Activate blinked spell stats
+    /// </summary>
+    public void SetBlinkBehaviour()
+    {
+        blinked = true;
+    }
+
+    public void IsEnvironmentSpell(bool environment)
+    {
+        this.environment = environment;
+    }
+    private void Explode()
+    {
+        Debug.Log("Explosion");
+        Instantiate(firePrefab, transform.position, Quaternion.identity);
+        hasExplode = true;
+    }
+
+    private void BlinkBehaviour()
+    {
+        //TO DO...
+    }
+
 }

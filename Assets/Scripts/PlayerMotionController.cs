@@ -47,6 +47,7 @@ public class PlayerMotionController : MonoBehaviour
     private float dodgeTimer;
     private Vector3 dodgeDirection = Vector3.zero;
     private Vector3 movement;
+    private Vector3 dodgeVelocity;
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -61,10 +62,18 @@ public class PlayerMotionController : MonoBehaviour
     void Update()
     {
 
-        controller.Move(velocity * Time.deltaTime);
+        
         if(dodgeTimer > Mathf.Epsilon)
         {
             dodgeTimer -= Time.deltaTime;
+        }
+        if(isDodging)
+        {
+            controller.Move(velocity * Time.deltaTime);
+        }
+        else
+        {
+            controller.Move(velocity * Time.deltaTime);
         }
     }
 
@@ -88,7 +97,7 @@ public class PlayerMotionController : MonoBehaviour
                 rightDirection = inputAxis.x * cameraController.GetViewRight;
             }
             
-            Vector3 movement = forwardDirection + rightDirection;
+            movement = forwardDirection + rightDirection;
             movement.Normalize();
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
@@ -100,8 +109,9 @@ public class PlayerMotionController : MonoBehaviour
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log(velocity);
-                velocity += movement * dodgeSpeed * Time.fixedDeltaTime;
+                Debug.Log("Velocity avant : " + velocity);
+                velocity += (movement * dodgeSpeed * Time.fixedDeltaTime);
+                Debug.Log("Velocity apres : " + velocity);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
             else
@@ -154,6 +164,7 @@ public class PlayerMotionController : MonoBehaviour
     void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
+        isMoving = true;
     }
 
     /// <summary>
@@ -172,9 +183,8 @@ public class PlayerMotionController : MonoBehaviour
 
     private void OnDodge()
     {
-        if(isMoving && !isDodging)
+        if (isMoving && !isDodging)
         {
-            //Debug.Log(velocity);
             isDodging = true;
         }
     }
