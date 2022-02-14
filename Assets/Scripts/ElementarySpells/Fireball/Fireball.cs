@@ -74,7 +74,7 @@ public class Fireball : AbstractSpell
     private float currentSpeed;
     private bool launched = false;
     private bool isExplosive = false;
-
+    private GameModeSingleton gameManager;
     private ElementaryController elem;
     public Fireball()
     {
@@ -158,6 +158,7 @@ public class Fireball : AbstractSpell
             origin = fireOrbInstance.transform.position;
             elem = elementary.GetComponent<ElementaryController>();
             elem.computePosition = false;
+            gameManager = GameModeSingleton.GetInstance();
             if (projectileStartSpeed > projectileTopSpeed)
             {
                 Debug.LogWarning("Fireball.init : projectileStartSpeed > projectiletTopSpeed");
@@ -190,7 +191,7 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
-        target = elem.playerCameraController.GetViewDirection;        
+        target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
