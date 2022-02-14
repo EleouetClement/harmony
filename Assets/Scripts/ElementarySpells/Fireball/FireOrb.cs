@@ -18,13 +18,6 @@ public class FireOrb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        switch(collision.gameObject.layer)
-        {
-            case 6:
-                Debug.Log("FireBallCollision");
-                break;
-            default:
-                break;
-        }
+        Debug.Log("pouet");
     }
 }

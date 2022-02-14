@@ -34,6 +34,8 @@ public class GameModeSingleton : MonoBehaviour
         if(playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
         playerCameraController = playerCameraReference.GetComponent<CameraController>();
+        if(playerCameraController == null)
+            Debug.LogWarning("no camera controller");
         if(cinemachineCameraControl == null)
         {
             cinemachineCameraControl = playerCameraController.GetComponent<CinemachineCameraController>();
@@ -105,7 +107,5 @@ public class GameModeSingleton : MonoBehaviour
             return cinemachineCameraControl;
         }
     }
-
-
 
 }

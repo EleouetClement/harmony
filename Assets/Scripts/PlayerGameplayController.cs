@@ -76,7 +76,7 @@ public class PlayerGameplayController : MonoBehaviour
         
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
         {
-            Debug.Log("liberation tim�e");
+            //Debug.Log("liberation tim�e");
             elementaryController.currentSpell?.OnRelease();
         }
     }

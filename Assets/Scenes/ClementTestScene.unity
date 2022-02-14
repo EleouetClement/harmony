@@ -236,7 +236,6 @@ GameObject:
   - component: {fileID: 237249799}
   - component: {fileID: 237249801}
   - component: {fileID: 237249800}
-  - component: {fileID: 237249802}
   m_Layer: 5
   m_Name: Reticle
   m_TagString: Untagged
@@ -306,18 +305,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 237249798}
   m_CullTransparentMesh: 1
---- !u!114 &237249802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 237249798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffed4f92eacbfe64aa81128f7185381c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &243924325
 GameObject:
   m_ObjectHideFlags: 0
@@ -394,6 +381,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243924325}
   m_CullTransparentMesh: 1
+--- !u!114 &255233970 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1212469516, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+    type: 3}
+  m_PrefabInstance: {fileID: 1946495922}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ead8a214b292b54b80e53bb6b92a7c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &354688132 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 824288169518036289, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
@@ -1797,7 +1796,8 @@ PrefabInstance:
       propertyPath: elementaryObjectReference
       value: 
       objectReference: {fileID: 354688132}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 6677204177119343019, guid: 6bb18bdb3babd9b43b1b7f446398f301, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6bb18bdb3babd9b43b1b7f446398f301, type: 3}
 --- !u!1 &2058957101
 GameObject:
@@ -1995,6 +1995,11 @@ PrefabInstance:
       propertyPath: playerCameraReference
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
+        type: 3}
+      propertyPath: cinemachineCameraControl
+      value: 
+      objectReference: {fileID: 255233970}
     - target: {fileID: 2036988911515475153, guid: a5db3117df428cd48b89f01b16ca7a5e,
         type: 3}
       propertyPath: m_RootOrder
