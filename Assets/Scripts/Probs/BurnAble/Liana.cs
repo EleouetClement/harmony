@@ -4,19 +4,30 @@ using UnityEngine;
 
 public sealed class Liana : BurnableItem
 {
+    [SerializeField] [Min(0)] private float delay;
     [SerializeField] [Min(0)] private float transformSpeed;
     [SerializeField] [Min(0)] private float scaleReductionSpeed;
+
+    private float time = Mathf.Epsilon;
     protected override void Update()
     {
+        
         if (triggered)
         {
-            if(transform.localScale.y > Mathf.Epsilon)
+            if(time >= delay)
             {
-                Burn();
+                if (transform.localScale.y > Mathf.Epsilon)
+                {
+                    Burn();
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
             }
             else
             {
-                Destroy(gameObject);
+                time += Time.deltaTime;
             }
         }     
     }
@@ -24,6 +35,7 @@ public sealed class Liana : BurnableItem
     public override void Consume()
     {
         base.Consume();
+        transformSpeed = scaleReductionSpeed + 0.6f;
         Debug.Log("Lianas on fire!");
     }
 

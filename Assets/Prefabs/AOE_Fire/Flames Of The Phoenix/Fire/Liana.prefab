@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 175593473}
   - component: {fileID: 175593472}
   - component: {fileID: 175593474}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Liana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e63fb14ac740a24cbba89d89a06f92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  delay: 1
+  transformSpeed: 0.9
+  scaleReductionSpeed: 0.4
 --- !u!199 &175593473
 ParticleSystemRenderer:
   serializedVersion: 6
@@ -357,15 +360,15 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     startSize:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 1.5
+      minMaxState: 0
+      scalar: 9.46
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
+          value: 0
           inSlope: 0
           outSlope: 0
           tangentMode: 0
@@ -392,8 +395,8 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeY:
       serializedVersion: 2
-      minMaxState: 3
-      scalar: 1
+      minMaxState: 0
+      scalar: 15.77
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -445,7 +448,7 @@ ParticleSystem:
         m_RotationOrder: 4
     startSizeZ:
       serializedVersion: 2
-      minMaxState: 3
+      minMaxState: 0
       scalar: 1
       minScalar: 1
       maxCurve:
@@ -640,7 +643,7 @@ ParticleSystem:
     randomizeRotationDirection: 0
     maxNumParticles: 1000
     customEmitterVelocity: {x: 0, y: 0, z: 0}
-    size3D: 0
+    size3D: 1
     rotation3D: 0
     gravityModifier:
       serializedVersion: 2
@@ -3194,7 +3197,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
   SizeBySpeedModule:
-    enabled: 0
+    enabled: 1
     curve:
       serializedVersion: 2
       minMaxState: 1
@@ -3205,22 +3208,22 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 1
-          inSlope: 0
-          outSlope: 0
+          value: 0
+          inSlope: 1.9591838
+          outSlope: 1.9591838
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0
+          outWeight: 0.12760416
         - serializedVersion: 3
           time: 1
           value: 1
-          inSlope: 0
-          outSlope: 0
+          inSlope: 3.4427617
+          outSlope: 3.4427617
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
-          outWeight: 0.33333334
+          inWeight: 0.06510419
+          outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
@@ -4744,7 +4747,7 @@ GameObject:
   - component: {fileID: 5874092748551944541}
   - component: {fileID: 5874092748551944539}
   - component: {fileID: 5874092748551944538}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rod_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4827,7 +4830,7 @@ GameObject:
   - component: {fileID: 5874092749287888578}
   - component: {fileID: 5874092749287888581}
   - component: {fileID: 5874092749287888580}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4910,7 +4913,7 @@ GameObject:
   - component: {fileID: 5874092749857488405}
   - component: {fileID: 5874092749857488403}
   - component: {fileID: 5874092749857488402}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rod_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4993,7 +4996,7 @@ GameObject:
   - component: {fileID: 5874092750042359584}
   - component: {fileID: 5874092750042359598}
   - component: {fileID: 5874092750042359585}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rod_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5076,7 +5079,7 @@ GameObject:
   - component: {fileID: 5874092750119080965}
   - component: {fileID: 5874092750119080963}
   - component: {fileID: 5874092750119080962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: rod_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
