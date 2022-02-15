@@ -16,6 +16,11 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
     private CameraController playerCameraController;
 
+    /// <summary>
+    /// True if the player enters in an arena or any fight area.
+    /// </summary>
+    public bool InFight { get; private set; } = false;
+
     private static GameModeSingleton _instance;
 
     private GameModeSingleton() { }
@@ -36,7 +41,7 @@ public class GameModeSingleton : MonoBehaviour
         playerCameraController = playerCameraReference.GetComponent<CameraController>();
         if (playerCameraController == null)
             Debug.LogWarning("no camera controller");
-        if (cinemachineCameraControl == null && playerCameraReference != null)
+        if(cinemachineCameraControl == null && playerCameraReference != null)
         {
             cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
         }
@@ -53,6 +58,7 @@ public class GameModeSingleton : MonoBehaviour
         return _instance;
     }
 
+    #region Getters
     public GameObject GetPlayerReference
     {
         get
@@ -107,5 +113,7 @@ public class GameModeSingleton : MonoBehaviour
             return cinemachineCameraControl;
         }
     }
+    #endregion
+
 
 }
