@@ -37,7 +37,6 @@ public class FireOrb : MonoBehaviour
             
             if (collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
             {
-                Debug.Log("Pouet");
                 hasExplode = true;
             }
             else

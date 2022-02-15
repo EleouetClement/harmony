@@ -2,20 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Torch : MonoBehaviour
+public abstract class BurnableItem : MonoBehaviour
 {
-    private bool triggered = false;
-    private ParticleSystem fireSystem;
 
-    // Start is called before the first frame update
+    protected ParticleSystem fireSystem;
+    private bool triggered = false;
+
     private void Awake()
     {
         fireSystem = GetComponent<ParticleSystem>();
         fireSystem.Stop();
     }
-
-    private void OnCollisionEnter(Collision collision)
+    
+    public virtual void Consume()
     {
         fireSystem.Play();
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Consume();
+    }
+
 }
