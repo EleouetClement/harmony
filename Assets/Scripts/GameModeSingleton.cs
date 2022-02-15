@@ -16,6 +16,11 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
     private CameraController playerCameraController;
 
+    /// <summary>
+    /// True if the player enters in an arena or any fight area.
+    /// </summary>
+    public bool InFight { get; private set; } = false;
+
     private static GameModeSingleton _instance;
 
     private GameModeSingleton() { }
@@ -23,22 +28,22 @@ public class GameModeSingleton : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Initialisation du singleton");
-        if(playerReference == null)
+        if (playerReference == null)
             playerReference = GameObject.Find("Player");
-        if(elementaryReference == null)
+        if (elementaryReference == null)
             elementaryReference = GameObject.Find("Elementary");
-        if(playerCameraReference == null)
+        if (playerCameraReference == null)
             playerCameraReference = GameObject.Find("CameraRig");
-        if(playerHUD == null)
+        if (playerHUD == null)
             playerHUD = GameObject.Find("ATH");
-        if(playerCrossAir == null)
+        if (playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
         playerCameraController = playerCameraReference.GetComponent<CameraController>();
-        if(playerCameraController == null)
+        if (playerCameraController == null)
             Debug.LogWarning("no camera controller");
-        if(cinemachineCameraControl == null)
+        if(cinemachineCameraControl == null && playerCameraReference != null)
         {
-            cinemachineCameraControl = playerCameraController.GetComponent<CinemachineCameraController>();
+            cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
         }
         _instance = this;
     }
@@ -53,6 +58,7 @@ public class GameModeSingleton : MonoBehaviour
         return _instance;
     }
 
+    #region Getters
     public GameObject GetPlayerReference
     {
         get
@@ -107,5 +113,7 @@ public class GameModeSingleton : MonoBehaviour
             return cinemachineCameraControl;
         }
     }
+    #endregion
+
 
 }

@@ -87,6 +87,11 @@ public class Fireball : AbstractSpell
     {
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
+        if(fireOrbInstance.GetComponent<FireOrb>().hasExplode)
+        {
+            Terminate();
+        }
+
         if(!isReleased())
         {
             if(fireOrbInstance.transform.localScale.x < projectileMaxSize)

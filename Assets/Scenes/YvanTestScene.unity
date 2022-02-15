@@ -511,6 +511,12 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466916941}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &519238133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677204176360241018, guid: c0001743059dc444a9041dac6d20511d,
+    type: 3}
+  m_PrefabInstance: {fileID: 901735106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &756185605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1341,6 +1347,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23f17d204236084bb1fca63db636f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerReference: {fileID: 1985373461}
+  elementaryReference: {fileID: 1044575870}
+  playerCameraReference: {fileID: 519238133}
+  playerHUD: {fileID: 0}
+  playerCrossAir: {fileID: 0}
+  cinemachineCameraControl: {fileID: 0}
 --- !u!4 &1476733759
 Transform:
   m_ObjectHideFlags: 0
@@ -1396,6 +1408,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1985373461 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677204177286177703, guid: c0001743059dc444a9041dac6d20511d,
+    type: 3}
+  m_PrefabInstance: {fileID: 901735106}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2076524184
 GameObject:
   m_ObjectHideFlags: 0
