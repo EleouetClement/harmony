@@ -7,7 +7,8 @@ public class Shield : AbstractSpell
 {
     [Range(0f, 2f)] public float maxDelayToPerfectShield;
     [Range(0f, 20f)] public float walkSpeedInShield;
-    
+
+    private GameModeSingleton gms;
     private GameObject player;
     private float initialWalkSpeed; // Storage of the initial speed of the player
     private bool canPerfectShield = true;
@@ -15,8 +16,6 @@ public class Shield : AbstractSpell
 
     private void Start()
     {
-        //player = GameModeSingleton._instance.GetPlayerReference;
-        player = GameObject.Find("Player");
         transform.position = player.transform.position; // place the shield on the position of the player
         initialWalkSpeed = player.GetComponent<PlayerMotionController>().walkSpeed;
     }
@@ -49,6 +48,9 @@ public class Shield : AbstractSpell
     public override void init(GameObject elemRef, Vector3 target)
     {
         base.init(elemRef, target.normalized);
+        gms = GameModeSingleton.GetInstance();
+        player = gms.GetPlayerReference;
+        
     }
 
     public override void Terminate()
@@ -67,9 +69,9 @@ public class Shield : AbstractSpell
 
     private void OnTriggerEnter(Collider collider)
     {
-        if(collider.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
+        if (collider.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
         {
-            if(canPerfectShield)
+            if (canPerfectShield)
             {
                 Debug.Log("PERFECT SHIELD !");
             }
