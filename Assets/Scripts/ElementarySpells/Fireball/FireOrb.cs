@@ -32,12 +32,17 @@ public class FireOrb : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!hasExplode && manager.InFight)
+        if(!hasExplode)
         {
-            Explode();
-            if(collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
+            
+            if (collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
             {
                 Debug.Log("Pouet");
+                hasExplode = true;
+            }
+            else
+            {
+                Explode();
             }
         }
         
