@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -35,35 +36,124 @@ public class PlayerGameplayController : MonoBehaviour
 	/// <param name="value"></param>
 	private void OnElementSelect(InputValue value)
 	{
-		if(value.Get<Vector2>() == Vector2.left)
+		if (value.Get<Vector2>() == Vector2.left)
+		{
 			elementaryController.SetElement(AbstractSpell.Element.Fire);
+			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.red;
+		}
 		if (value.Get<Vector2>() == Vector2.up)
+		{
 			elementaryController.SetElement(AbstractSpell.Element.Water);
+			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.blue;
+		}
 		if (value.Get<Vector2>() == Vector2.right)
+		{
 			elementaryController.SetElement(AbstractSpell.Element.Earth);
+			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
+		}
 		print("Element sélectionné : "+elementaryController.currentElement);
 	}
 
 	private void OnSpellLeft(InputValue value)
 	{
-		if (value.isPressed)
+		if (elementaryController.readyToCast)
 		{
-			AbstractSpell spell = Instantiate(elementaryController.GetOffensiveSpell(), elementaryController.transform.position, Quaternion.identity);
-			switch (elementaryController.currentElement)
+			if (value.isPressed)
 			{
-				case AbstractSpell.Element.Fire:
-					CastFireBall(spell);
-					break;
-				case AbstractSpell.Element.Water:
-					CastWaterMissiles(spell);
-					break;
-				case AbstractSpell.Element.Earth:
-					CastEarthMortar(spell);
-					break;
-				default:
-					break;
+				AbstractSpell spell = null;
+				if (elementaryController.inCombat)
+				{
+					spell = Instantiate(elementaryController.GetOffensiveSpell(), elementaryController.transform.position, Quaternion.identity);
+					CastOffensiveSpell(spell);
+				}
+				else
+				{
+					spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
+					CastExploratorySpell(spell);
+				}
+
+				
+				elementaryController.CastSpell(spell);
 			}
 		}
+		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+			elementaryController.currentSpell?.OnRelease();
+
+	}
+
+	private void CastOffensiveSpell(AbstractSpell spell)
+	{
+		switch (elementaryController.currentElement)
+		{
+			case AbstractSpell.Element.Fire:
+				CastFireBall(spell);
+				break;
+			case AbstractSpell.Element.Water:
+				CastWaterMissiles(spell);
+				break;
+			case AbstractSpell.Element.Earth:
+				CastEarthMortar(spell);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void CastExploratorySpell(AbstractSpell spell)
+	{
+		switch (elementaryController.currentElement)
+		{
+			case AbstractSpell.Element.Fire:
+				CastFireOrb(spell);
+				break;
+			case AbstractSpell.Element.Water:
+
+				break;
+			case AbstractSpell.Element.Earth:
+				CastEarthWall(spell);
+				break;
+			default:
+				break;
+		}
+	}
+
+	private void OnSpellRight(InputValue value)
+	{
+		if (elementaryController.readyToCast)
+		{
+			if (value.isPressed)
+			{
+				AbstractSpell spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
+				switch (elementaryController.currentElement)
+				{
+					case AbstractSpell.Element.Fire:
+						CastFireOrb(spell);
+						break;
+					case AbstractSpell.Element.Water:
+						
+						break;
+					case AbstractSpell.Element.Earth:
+						CastEarthWall(spell);
+						break;
+					default:
+						break;
+				}
+				elementaryController.CastSpell(spell);
+				Debug.Log("Spell cast : " + spell);
+			}
+		}
+		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+			elementaryController.currentSpell?.OnRelease();
+	}
+
+	private void CastFireOrb(AbstractSpell spell)
+	{
+		throw new NotImplementedException();
+	}
+
+	private void CastEarthWall(AbstractSpell spell)
+	{
+		spell.init(elementaryController.gameObject, Vector3.zero);
 	}
 
 	private void CastWaterMissiles(AbstractSpell spell)

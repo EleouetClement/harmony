@@ -435,6 +435,40 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elementary
       objectReference: {fileID: 0}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: offensiveSpells.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: exploratorySpells.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: offensiveSpells.Array.data[0]
+      value: 
+      objectReference: {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: offensiveSpells.Array.data[1]
+      value: 
+      objectReference: {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: offensiveSpells.Array.data[2]
+      value: 
+      objectReference: {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: exploratorySpells.Array.data[2]
+      value: 
+      objectReference: {fileID: 4142513819557297703, guid: d1619f3ee4375d942bbe4ce791038383,
+        type: 3}
     - target: {fileID: 824288169518036412, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -751,6 +785,7 @@ MonoBehaviour:
   playerCameraReference: {fileID: 0}
   playerHUD: {fileID: 1083792452}
   playerCrossAir: {fileID: 0}
+  cinemachineCameraControl: {fileID: 0}
 --- !u!4 &558977535
 Transform:
   m_ObjectHideFlags: 0
@@ -1943,7 +1978,7 @@ GameObject:
   - component: {fileID: 1855907340}
   - component: {fileID: 1855907339}
   - component: {fileID: 1855907342}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -37,6 +37,7 @@ public class EarthWall : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
+        print(cameraController);
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 
@@ -44,6 +45,7 @@ public class EarthWall : AbstractSpell
     {
         elementary.GetComponent<ElementaryController>().currentSpell = null;
         elementary.GetComponent<ElementaryController>().computePosition = true;
+        elementary.GetComponent<ElementaryController>().readyToCast = true;
         Destroy(gameObject);
     }
 

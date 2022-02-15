@@ -20,6 +20,8 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] public AbstractSpell[] offensiveSpells;
     [SerializeField] public AbstractSpell[] exploratorySpells;
 
+    public bool inCombat = false;
+
     /// <summary>
     /// true if the element handles itself
     /// </summary>
@@ -29,12 +31,13 @@ public class ElementaryController : MonoBehaviour
     private Transform shoulder;
 
     public AbstractSpell currentSpell;
+    public bool readyToCast = true;
     public AbstractSpell.Element currentElement;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        currentSpell = offensiveSpells[(int)currentElement];
     }
 
     // Update is called once per frame
@@ -72,6 +75,7 @@ public class ElementaryController : MonoBehaviour
     public void CastSpell(AbstractSpell spell)
     {
         currentSpell = spell;
+        readyToCast = false;
         computePosition = false;
     }
 

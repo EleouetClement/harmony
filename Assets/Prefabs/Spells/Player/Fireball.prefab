@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8144106587585980996
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7408664511664242130}
+  - component: {fileID: -7462466440931504070}
+  m_Layer: 6
+  m_Name: Fireball
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7408664511664242130
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144106587585980996}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-7462466440931504070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8144106587585980996}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 708d89fa2e991f640a6aeb013bb227b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
+    type: 3}
+  maxDistance: 20
+  livingTime: 0
+  maxSpeedDistance: 5
+  projectileTopSpeed: 20
+  projectileStartSpeed: 2
+  projectileGrowth: 0.0056
+  projectileMaxSize: 1.51
+  projectileTopSpeedGrowth: 0
+  projectileMaxDistanceGrowth: 0
+  perfectCastTiming: 2
+  gravityForce: -0.1
+  gravityIncreaseFactor: 0.01
+  reticleSize: 129
+  reticleMinimumSize: 50
+  reticleDiminutionSpeed: 40.18
+  crossAirPrefab: {fileID: 7798260335137212722, guid: 04d1c281dd3d70141a4a619b6d0929bf,
+    type: 3}
