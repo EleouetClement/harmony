@@ -13,6 +13,7 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private GameObject playerCameraReference;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
+    [SerializeField] private CinemachineCameraController cinemachineCameraControl;
     private CameraController playerCameraController;
 
     private static GameModeSingleton _instance;
@@ -33,6 +34,12 @@ public class GameModeSingleton : MonoBehaviour
         if(playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
         playerCameraController = playerCameraReference.GetComponent<CameraController>();
+        if(playerCameraController == null)
+            Debug.LogWarning("no camera controller");
+        if(cinemachineCameraControl == null)
+        {
+            cinemachineCameraControl = playerCameraController.GetComponent<CinemachineCameraController>();
+        }
         _instance = this;
     }
 
@@ -93,6 +100,12 @@ public class GameModeSingleton : MonoBehaviour
         }
     }
 
-
+    public CinemachineCameraController GetCinemachineCameraController
+    {
+        get
+        {
+            return cinemachineCameraControl;
+        }
+    }
 
 }

@@ -44,6 +44,8 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    #region Getters
+
     public Vector3 GetViewDirection
     {
         get
@@ -76,6 +78,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
+    #endregion
     void Awake()
     {
         if (!cam)
