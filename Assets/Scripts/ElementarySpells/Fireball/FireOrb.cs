@@ -7,26 +7,40 @@ public class FireOrb : MonoBehaviour
     [SerializeField] private GameObject firePrefab;
     private bool blinked = false;
     private bool environment = false;
-    private bool hasExplode = false;
+
+    /// <summary>
+    /// True if the orb already hit something.
+    /// </summary>
+    public bool hasExplode { get; private set; } = false;
+
+    private GameModeSingleton manager;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        manager = GameModeSingleton.GetInstance();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(blinked)
+        {
+            BlinkBehaviour();
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(!environment && !hasExplode)
+        if(!hasExplode && manager.InFight)
         {
             Explode();
-        }       
+            if(collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
+            {
+                Debug.Log("Pouet");
+            }
+        }
+        
     }
 
     /// <summary>
@@ -43,7 +57,7 @@ public class FireOrb : MonoBehaviour
     }
     private void Explode()
     {
-        Debug.Log("Explosion");
+        //Debug.Log("Explosion");
         Instantiate(firePrefab, transform.position, Quaternion.identity);
         hasExplode = true;
     }
@@ -52,5 +66,7 @@ public class FireOrb : MonoBehaviour
     {
         //TO DO...
     }
+
+
 
 }
