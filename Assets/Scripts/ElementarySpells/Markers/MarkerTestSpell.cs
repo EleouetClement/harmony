@@ -10,15 +10,14 @@ using UnityEngine;
 public class MarkerTestSpell : AbstractSpell
 {
     public GameObject PosMarkerPrefab;
-    private CameraController cameraController;
+    private CinemachineCameraController cameraController;
     //private PositionningMarker posMark;
     public override void init(GameObject elemRef, Vector3 target)
     {
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
-        cameraController.GloabView();
+        cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         marker.Init(2000, PosMarkerPrefab);
     }
 
@@ -38,7 +37,7 @@ public class MarkerTestSpell : AbstractSpell
     {
         if (!isReleased())
         {
-            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.GetViewPosition);
+            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.transform.position);
             marker.transform.LookAt(cameraController.transform);
         }
     }
@@ -46,7 +45,6 @@ public class MarkerTestSpell : AbstractSpell
     {
         PositionningMarker posMark= (PositionningMarker)marker;
         Debug.Log("Position locked : " + posMark.targetPosition);
-        cameraController.ResetView();
         Destroy(marker.gameObject);
     }
 }

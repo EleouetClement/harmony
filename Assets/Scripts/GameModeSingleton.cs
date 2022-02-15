@@ -14,7 +14,6 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
-    private CameraController playerCameraController;
 
     /// <summary>
     /// True if the player enters in an arena or any fight area.
@@ -38,9 +37,6 @@ public class GameModeSingleton : MonoBehaviour
             playerHUD = GameObject.Find("ATH");
         if (playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
-        playerCameraController = playerCameraReference.GetComponent<CameraController>();
-        if (playerCameraController == null)
-            Debug.LogWarning("no camera controller");
         if(cinemachineCameraControl == null && playerCameraReference != null)
         {
             cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
@@ -95,14 +91,6 @@ public class GameModeSingleton : MonoBehaviour
         get
         {
             return playerCrossAir;
-        }
-    }
-
-    public CameraController GetPlayerCameraController
-    {
-        get
-        {
-            return playerCameraController;
         }
     }
 
