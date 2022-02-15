@@ -8,12 +8,12 @@ using UnityEditor;
 namespace Harmony.AI
 {
     [CreateAssetMenu(menuName = "Harmony/AI/Decisions/Look")]
-    public class LookDecision : Decision
+    public class LookDecision
     {
         [Layer] public int searchLayer;
         public LayerMask blockMask;
 
-        public override bool Decide(AIAgent controller)
+        public bool Decide(AIAgent controller)
         {
             bool targetVisible = Look(controller);
             return targetVisible;
@@ -45,7 +45,7 @@ namespace Harmony.AI
         }
 
 #if UNITY_EDITOR
-        public override void DrawGizmos(AIAgent controller)
+        public void DrawGizmos(AIAgent controller)
         {
             float radius = controller.lookRange * Mathf.Tan(Mathf.Deg2Rad * controller.lookAngle);
             Vector3 viewDir = controller.eyes.forward * controller.lookRange;

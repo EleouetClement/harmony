@@ -15,12 +15,8 @@ namespace Harmony.AI
         public bool aiActive = true;
         [Range(0, 180)] public float lookAngle;
         [Min(0)] public float lookRange;
-        public State startState;
-        public State remainState;
-        public UDictionary<string, AIParameter> parameters;
         public List<Transform> wayPointList;
-
-        public State CurrentState { get; private set; }
+        
 
 
         [HideInInspector] public NavMeshAgent navMeshAgent;
@@ -34,7 +30,6 @@ namespace Harmony.AI
         void Awake()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            CurrentState = startState;
         }
 
         void Update()
@@ -43,18 +38,7 @@ namespace Harmony.AI
                 return;
 
             foreach (int key in timers.Keys) { timers[key] -= Time.deltaTime; }
-
-            CurrentState.UpdateState(this);
-        }
-
-        public void TransitionToState(State nextState)
-        {
-            if (nextState != remainState)
-            {
-                if(CurrentState) CurrentState.ExitState(this);
-                CurrentState = nextState;
-                if(CurrentState) CurrentState.EnterState(this);
-            }
+            
         }
 
         public void OnDamage(DamageHit hit)
@@ -62,39 +46,12 @@ namespace Harmony.AI
             Debug.Log(hit);
         }
 
-        public void RegisterTimer(int id, float duration)
-        {
-            if(!timers.ContainsKey(id))
-                timers.Add(id,duration);
-        }
-
-        public bool CheckTimer(int id)
-        {
-            if (!timers.ContainsKey(id) || timers[id] > 0)
-                return false;
-
-            timers.Remove(id);
-            return true;
-        }
-
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (CurrentState != null && eyes != null)
+            if (eyes != null)
             {
-                Gizmos.color = CurrentState.sceneGizmoColor;
-                Handles.color = CurrentState.sceneGizmoColor;
-                Handles.Label(transform.position + Vector3.up, CurrentState.name);
-
-                foreach (Transition currentStateTransition in CurrentState.transitions)
-                {
-                    currentStateTransition.decision.DrawGizmos(this);
-                }
-
-                foreach (Action currentStateAction in CurrentState.updateActions)
-                {
-                    currentStateAction.DrawGizmos(this);
-                }
+                
 
                 if (navMeshAgent.hasPath)
                 {
@@ -113,7 +70,7 @@ namespace Harmony.AI
 
             float height = 0.1f;
 
-            for (int i = 0; i < parameters.Count; i++)
+            /*for (int i = 0; i < parameters.Count; i++)
             {
                 height += 0.075f;
                 switch (parameters[parameters.Keys[i]].ParameterType)
@@ -139,7 +96,7 @@ namespace Harmony.AI
                 }
 
                 Handles.Label(transform.position + Vector3.up + new Vector3(0, height, 0), parameters.Keys[i] + " : " +parameters[parameters.Keys[i]]);
-            }
+            }*/
         }
 #endif
 
