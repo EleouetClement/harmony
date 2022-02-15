@@ -28,6 +28,7 @@ public class EarthMortar : AbstractSpell
 	public override void init(GameObject elemRef, Vector3 target)
 	{
 		base.init(elemRef, target);
+		element = Element.Earth;
 		earthMarker = GetComponent<EarthBallMarker>();
 		earthMarker.Init(maxRange, earthMarker.transform.GetChild(0).gameObject);
 		elementary.GetComponent<MeshRenderer>().enabled = false;

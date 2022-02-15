@@ -17,7 +17,8 @@ public class ElementaryController : MonoBehaviour
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
-    [SerializeField] public AbstractSpell[] spells;
+    [SerializeField] public AbstractSpell[] offensiveSpells;
+    [SerializeField] public AbstractSpell[] exploratorySpells;
 
     /// <summary>
     /// true if the element handles itself
@@ -28,6 +29,7 @@ public class ElementaryController : MonoBehaviour
     private Transform shoulder;
 
     public AbstractSpell currentSpell;
+    public AbstractSpell.Element currentElement;
 
     // Start is called before the first frame update
     void Start()
@@ -47,6 +49,21 @@ public class ElementaryController : MonoBehaviour
     private void FixedUpdate()
     {
         
+    }
+
+    public void SetElement(AbstractSpell.Element element)
+    {
+        currentElement = element;
+    }
+
+    public AbstractSpell GetOffensiveSpell()
+    {
+        return offensiveSpells[(int)currentElement];
+    }
+
+    public AbstractSpell GetExploratorySpell()
+    {
+        return exploratorySpells[(int)currentElement];
     }
 
     /// <summary>
