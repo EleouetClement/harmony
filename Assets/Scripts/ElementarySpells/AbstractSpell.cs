@@ -49,8 +49,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false;
-
+    protected bool isBlinked = false; 
 
     private bool chargeend = false;
 
