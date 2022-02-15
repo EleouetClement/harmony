@@ -11,6 +11,7 @@ public class EarthMortar : AbstractSpell
 	public Vector3 lastBallCoord;
 	[Min(1)] public float maxSpellLength;
 	public float maxRange;
+	private bool launched;
 
 	GameObject hud;
 	
@@ -20,6 +21,8 @@ public class EarthMortar : AbstractSpell
 		maxCastTime = 1.5f;
 		blinkTiming = 1f;
 		hud = GameObject.Find("GameManager").GetComponent<GameModeSingleton>().GetPlayerHUD;
+		hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = true;
+		launched = false;
 	}
 
 	public override void init(GameObject elemRef, Vector3 target)
@@ -44,16 +47,20 @@ public class EarthMortar : AbstractSpell
 			elementary.GetComponent<MeshRenderer>().enabled = true;
 			elementary.GetComponent<ElementaryController>().currentSpell = null;
 			elementary.GetComponent<ElementaryController>().computePosition = true;
-			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = false;
 			Destroy(gameObject);
 		}
-		else 
+		else if(!launched)
 		{
 			//refreshes charge level to earth ball
 			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
-			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = true;
 			print("non");
 			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().value = charge / maxCastTime;
+		}
+		else
+		{
+			print("yesyes");
+			//hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = false;
+			hud.GetComponent<Canvas>().enabled = false;
 		}
 
 		
@@ -67,8 +74,8 @@ public class EarthMortar : AbstractSpell
 		if (chargetime >= 1.05f || chargetime <= 9.95f)
 			print("Blink!");
 		Debug.Log("yes");
-		//hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = false;
 		ball.GetComponent<EarthBall>().Launch();
+		launched = true;
 	}
 
 	public override void Terminate()

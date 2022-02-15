@@ -306,6 +306,51 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: friction
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: walkSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: dodgeSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: acceleration
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: deceleration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: dodgeDuration
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: timeZeroToMax
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: accelerationFriction
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: c0001743059dc444a9041dac6d20511d,
+        type: 3}
+      propertyPath: decelerationFriction
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: c0001743059dc444a9041dac6d20511d,
         type: 3}
       propertyPath: m_RootOrder

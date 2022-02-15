@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotionController : MonoBehaviour
 {
+    public float currentSpeed;
+
     [Header("Character settings")]
-    [Range(0, 20)] public float walkSpeed = 1f;
+    [Range(0, 100)] public float walkSpeed = 1f;
     [Range(0, 10)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     [Header("Character Physics settings")]
@@ -40,7 +42,7 @@ public class PlayerMotionController : MonoBehaviour
     private bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isDodging = false;
 
     private float currentDodgeDuration = Mathf.Epsilon;
@@ -48,6 +50,10 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 dodgeDirection = Vector3.zero;
     private Vector3 movement;
     private Vector3 dodgeVelocity;
+
+    public float accelerationFriction;
+    public float decelerationFriction;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -61,26 +67,30 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
-
-        
+        controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
         {
-            dodgeTimer -= Time.deltaTime;
+           dodgeTimer -= Time.deltaTime;
         }
-        if(isDodging)
-        {
-            controller.Move(velocity * Time.deltaTime);
-        }
-        else
-        {
-            controller.Move(velocity * Time.deltaTime);
-        }
+
+        currentSpeed = controller.velocity.magnitude;
+        isMoving =(Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+
     }
 
     private void FixedUpdate()
     {
+        if (isMoving)
+        {
+            friction = accelerationFriction;
+        }
+		else
+		{
+            friction = decelerationFriction;
+		}
         UpdateGroundState();
         bool sliding = floorAngle > maxFloorAngle;
+        
 
         #region Apply Direction Input
 
@@ -102,10 +112,11 @@ public class PlayerMotionController : MonoBehaviour
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
-        #endregion
+		#endregion
 
-        #region Dodge force
-        if(isDodging && dodgeTimer <= Mathf.Epsilon)
+
+		#region Dodge force
+		if (isDodging && dodgeTimer <= Mathf.Epsilon)
         {
             if(currentDodgeDuration < dodgeDuration)
             {
@@ -141,21 +152,19 @@ public class PlayerMotionController : MonoBehaviour
             }
         }
 
-        #endregion
+		#endregion
 
-        #region Apply Friction
+		#region Apply Friction
 
-        Vector3 dragForce = -velocity * Time.fixedDeltaTime;
-        dragForce *= onGround && !sliding ? friction : airFriction;
-        dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
-        velocity += dragForce;
+		Vector3 dragForce = -velocity * Time.fixedDeltaTime;
+		dragForce *= onGround && !sliding ? friction : airFriction;
+		dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
+		velocity += dragForce;
 
-        #endregion
+		#endregion
 
 
-        
-
-    }
+	}
 
     /// <summary>
     /// Handles moving inputs using InputSystem
