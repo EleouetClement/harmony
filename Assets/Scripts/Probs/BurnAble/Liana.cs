@@ -2,12 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public sealed class Torch : BurnableItem
+public sealed class Liana : BurnableItem
 {
-
     protected override void Update()
     {
-        if(triggered)
+        if (triggered)
         {
             
         }
@@ -16,6 +15,6 @@ public sealed class Torch : BurnableItem
     public override void Consume()
     {
         base.Consume();
-        Debug.Log("Torche lighted On!");
+        Debug.Log("Lianas on fire!");
     }
 }

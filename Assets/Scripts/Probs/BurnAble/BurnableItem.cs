@@ -6,7 +6,7 @@ public abstract class BurnableItem : MonoBehaviour
 {
 
     protected ParticleSystem fireSystem;
-    private bool triggered = false;
+    protected bool triggered = false;
 
     private void Awake()
     {
@@ -17,11 +17,14 @@ public abstract class BurnableItem : MonoBehaviour
     public virtual void Consume()
     {
         fireSystem.Play();
+        triggered = true;
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         Consume();
     }
+
+    protected abstract void Update();
 
 }
