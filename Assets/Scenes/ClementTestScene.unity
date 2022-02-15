@@ -1732,12 +1732,12 @@ PrefabInstance:
     - target: {fileID: 4622065927964020469, guid: dd084de04a7206744af37bece07be1f8,
         type: 3}
       propertyPath: transformSpeed
-      value: 1.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4622065927964020469, guid: dd084de04a7206744af37bece07be1f8,
         type: 3}
       propertyPath: scaleReductionSpeed
-      value: 0.5
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 5874092748506577641, guid: dd084de04a7206744af37bece07be1f8,
         type: 3}
@@ -1798,6 +1798,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Liana
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092748506577643, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092748551944540, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092749287888582, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092749857488404, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092750042359587, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5874092750119080964, guid: dd084de04a7206744af37bece07be1f8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dd084de04a7206744af37bece07be1f8, type: 3}

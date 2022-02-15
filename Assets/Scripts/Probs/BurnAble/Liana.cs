@@ -32,5 +32,6 @@ public sealed class Liana : BurnableItem
         transform.Translate(Vector3.up * transformSpeed * Time.deltaTime);
         Vector3 newScale = Vector3.down * scaleReductionSpeed * Time.deltaTime;
         transform.localScale += newScale;
+
     }
 }
