@@ -435,6 +435,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Elementary
       objectReference: {fileID: 0}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: offensiveSpells.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 824288169518036412, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -751,6 +756,7 @@ MonoBehaviour:
   playerCameraReference: {fileID: 0}
   playerHUD: {fileID: 1083792452}
   playerCrossAir: {fileID: 0}
+  cinemachineCameraControl: {fileID: 0}
 --- !u!4 &558977535
 Transform:
   m_ObjectHideFlags: 0
