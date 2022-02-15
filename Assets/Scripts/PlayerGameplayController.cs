@@ -12,6 +12,7 @@ public class PlayerGameplayController : MonoBehaviour
     [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
 
+    public bool InFight { get; private set; } = false;
     private void Awake()
     {
         InitializeElementary();
