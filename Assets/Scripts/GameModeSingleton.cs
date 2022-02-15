@@ -36,9 +36,9 @@ public class GameModeSingleton : MonoBehaviour
         playerCameraController = playerCameraReference.GetComponent<CameraController>();
         if(playerCameraController == null)
             Debug.LogWarning("no camera controller");
-        if(cinemachineCameraControl == null)
+        if(cinemachineCameraControl == null && playerCameraReference != null)
         {
-            cinemachineCameraControl = playerCameraController.GetComponent<CinemachineCameraController>();
+            cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
         }
         _instance = this;
     }
