@@ -7,6 +7,9 @@ public class FireOrb : MonoBehaviour
     [SerializeField] private GameObject firePrefab;
     private bool blinked = false;
     private bool environment = false;
+    private List<GameObject> fragments = new List<GameObject>(20);
+
+    public GameObject shrapnelPrefab;
 
     /// <summary>
     /// True if the orb already hit something.
@@ -24,17 +27,22 @@ public class FireOrb : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(blinked)
+        if (blinked)
         {
             BlinkBehaviour();
         }
     }
 
+    private void FixedUpdate()
+    {
+
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
-        if(!hasExplode)
+        if (!hasExplode)
         {
-            
+
             if (collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
             {
                 hasExplode = true;
@@ -44,7 +52,7 @@ public class FireOrb : MonoBehaviour
                 Explode();
             }
         }
-        
+
     }
 
     /// <summary>
@@ -71,6 +79,17 @@ public class FireOrb : MonoBehaviour
         //TO DO...
     }
 
+    // Adds 1 shrapnel to the fireball, effectively increasing its size.
+    public void addShrapnel()
+    {
+        GameObject shrapnel = Instantiate(shrapnelPrefab, transform.position + randomVector(), Random.rotation, transform);
+        fragments.Add(shrapnel);
+    }
 
+    private static float expense = 0.25f;
+    private Vector3 randomVector()
+    {
+        return new Vector3(Random.Range(-expense, expense), Random.Range(-expense, expense), Random.Range(-expense, expense));
+    }
 
 }
