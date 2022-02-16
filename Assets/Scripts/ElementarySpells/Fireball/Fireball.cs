@@ -53,7 +53,11 @@ public class Fireball : AbstractSpell
     [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
     [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
     [SerializeField] private GameObject crossAirPrefab;
-    
+
+
+    [Header("Debug")]
+    [SerializeField] bool debug = false;
+    [SerializeField] GameObject virtualTargetPrefab;
 
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
@@ -69,7 +73,7 @@ public class Fireball : AbstractSpell
     /// Store the current fire ball object reference to apply the transforms
     /// </summary>
     private GameObject fireOrbInstance;
-
+    private GameObject virtualTargetReference;
     private float speedStep;
     private float currentSpeed;
     private bool launched = false;
@@ -190,23 +194,50 @@ public class Fireball : AbstractSpell
 
         if(Physics.Raycast(gameManager.GetCinemachineCameraController.GetViewPosition, gameManager.GetCinemachineCameraController.GetViewDirection, out hit, Mathf.Infinity))
         {
-            Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
+            if(debug)
+                Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
                 gameManager.GetCinemachineCameraController.GetViewDirection * 20, 
                 Color.green, 
                 5);
+
             Vector3 newDirection = hit.point - elementary.transform.position;
             newDirection.Normalize();
             return newDirection;
         }
         else
         {
-            Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
-                gameManager.GetCinemachineCameraController.GetViewDirection * 20, 
-                Color.red, 
+            
+            Vector3 virtualTarget = gameManager.GetCinemachineCameraController.GetViewPosition + 
+                gameManager.GetCinemachineCameraController.GetViewDirection * 
+                maxDistance;
+            if(debug)
+            {
+                if(virtualTargetReference == null)
+                {
+                    virtualTargetReference = Instantiate(virtualTargetPrefab, virtualTarget, Quaternion.identity);
+                }
+                else
+                {
+                    virtualTargetReference.transform.position = virtualTarget;
+                }
+                Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition,
+                virtualTarget * maxDistance,
+                Color.red,
                 5);
+            }
+            
+            virtualTarget = virtualTarget - elementary.transform.position;
+            virtualTarget.Normalize();
+            if(debug)
+            {
+                Debug.DrawRay(elementary.transform.position,
+                virtualTarget * 20,
+                Color.blue,
+                5);
+            }
+            
+            return virtualTarget;
         }
-        
-        return Vector3.zero;
     }
 
 
@@ -232,6 +263,13 @@ public class Fireball : AbstractSpell
             Debug.Log("Molotov à appliquer");
             isExplosive = true;
         }
+        if(debug)
+        {
+            Destroy(virtualTargetReference);
+        }
         
     }
+
+
+
 }
