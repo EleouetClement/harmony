@@ -63,6 +63,6 @@ MonoBehaviour:
   reticleDiminutionSpeed: 40.18
   crossAirPrefab: {fileID: 7798260335137212722, guid: 04d1c281dd3d70141a4a619b6d0929bf,
     type: 3}
-  debug: 1
+  debug: 0
   virtualTargetPrefab: {fileID: 3086534299113521334, guid: adf4f8cab21cacc4a88dd53300aa7802,
     type: 3}

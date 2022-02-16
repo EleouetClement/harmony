@@ -213,11 +213,14 @@ public class Fireball : AbstractSpell
             newDirection.Normalize();
 
             if (debug)
+            {
                 Debug.Log("Target spotted : " + hit.collider.gameObject.name);
                 Debug.DrawRay(elementary.transform.position,
                 newDirection * 20,
                 Color.blue,
                 5);
+            }
+                
             return newDirection;
         }
         else
