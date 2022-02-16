@@ -191,9 +191,16 @@ public class Fireball : AbstractSpell
     private Vector3 CalculateTrajectory()
     {
         RaycastHit hit;
+        int ignoreLayers = 1 << HarmonyLayers.LAYER_PLAYERSPELL;
+        ignoreLayers = ~ignoreLayers;
+        bool cast = Physics.Raycast(gameManager.GetCinemachineCameraController.GetViewPosition,
+            gameManager.GetCinemachineCameraController.GetViewDirection,
+            out hit,
+            Mathf.Infinity,
+            ignoreLayers
+            );
 
-
-        if(Physics.Raycast(gameManager.GetCinemachineCameraController.GetViewPosition, gameManager.GetCinemachineCameraController.GetViewDirection, out hit, Mathf.Infinity))
+        if (cast)
         {
             if(debug)
                 Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
@@ -201,8 +208,16 @@ public class Fireball : AbstractSpell
                 Color.green, 
                 5);
 
+
             Vector3 newDirection = hit.point - elementary.transform.position;
             newDirection.Normalize();
+
+            if (debug)
+                Debug.Log("Target spotted : " + hit.collider.gameObject.name);
+                Debug.DrawRay(elementary.transform.position,
+                newDirection * 20,
+                Color.blue,
+                5);
             return newDirection;
         }
         else
