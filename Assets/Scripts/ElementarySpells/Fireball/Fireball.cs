@@ -53,6 +53,7 @@ public class Fireball : AbstractSpell
     [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
     [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
     [SerializeField] private GameObject crossAirPrefab;
+    
 
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
@@ -73,7 +74,7 @@ public class Fireball : AbstractSpell
     private float currentSpeed;
     private bool launched = false;
     private bool isExplosive = false;
-
+    private GameModeSingleton gameManager;
     private ElementaryController elem;
     public Fireball()
     {
@@ -86,6 +87,11 @@ public class Fireball : AbstractSpell
     {
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
+        if(fireOrbInstance.GetComponent<FireOrb>().hasExplode)
+        {
+            Terminate();
+        }
+
         if(!isReleased())
         {
             if(fireOrbInstance.transform.localScale.x < projectileMaxSize)
@@ -157,6 +163,7 @@ public class Fireball : AbstractSpell
             origin = fireOrbInstance.transform.position;
             elem = elementary.GetComponent<ElementaryController>();
             elem.computePosition = false;
+            gameManager = GameModeSingleton.GetInstance();
             if (projectileStartSpeed > projectileTopSpeed)
             {
                 Debug.LogWarning("Fireball.init : projectileStartSpeed > projectiletTopSpeed");
@@ -170,6 +177,7 @@ public class Fireball : AbstractSpell
 
             GameObject tmp = Instantiate(crossAirPrefab, Vector3.zero, Quaternion.identity);
             marker = tmp.GetComponent<CrossAir>();
+            
 
         }
     }
@@ -188,13 +196,13 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
-        target = elem.playerCameraController.GetViewDirection;        
+        target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
             Debug.Log("Molotov à appliquer");
             isExplosive = true;
-            
         }
+        
     }
 }

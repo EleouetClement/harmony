@@ -8,11 +8,14 @@ public class PlayerGameplayController : MonoBehaviour
     [Header("Elementary")]
     [SerializeField] GameObject elementaryObjectReference;
     [SerializeField] GameObject playerMeshReference;
-    [SerializeField] private CameraController playerCameraController;
+    [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
 
+    public bool InFight { get; private set; } = false;
     private void Awake()
     {
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         InitializeElementary();
     }
     // Start is called before the first frame update
@@ -58,7 +61,8 @@ public class PlayerGameplayController : MonoBehaviour
             if (value.isPressed)
             {
                 AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-                spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
+                if (playerCinemachineCameraController)
+                    spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
                 elementaryController.CastSpell(spell);
             }
         }
@@ -66,7 +70,7 @@ public class PlayerGameplayController : MonoBehaviour
         
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
         {
-            Debug.Log("liberation tim�e");
+            //Debug.Log("liberation tim�e");
             elementaryController.currentSpell?.OnRelease();
         }
     }
@@ -99,7 +103,6 @@ public class PlayerGameplayController : MonoBehaviour
         else
         {
             elementaryController = elementaryObjectReference.GetComponent<ElementaryController>();
-            elementaryController.playerCameraController = playerCameraController;
             if (elementaryController == null)
             {
                 Debug.LogError("PlayerMotionController : Current elementary hasn't any ElementaryController component");

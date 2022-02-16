@@ -8,7 +8,10 @@ public class CrossAir : AbstractMarker
     private RectTransform reticle;
 
     [Range(50, 250)] public float size;
-
+    /// <summary>
+    /// New fov value during aiming
+    /// </summary>
+    [SerializeField] [Min(0)] private float zoomPower;
     GameModeSingleton manager;
 
     private void Awake()
@@ -18,6 +21,7 @@ public class CrossAir : AbstractMarker
         if (reticle == null)
             Debug.LogError("Recticle reference is null");
         manager.GetPlayerReticle.SetActive(true);
+        manager.GetCinemachineCameraController.ZoomIn();
     }
 
     // Start is called before the first frame update
@@ -34,6 +38,7 @@ public class CrossAir : AbstractMarker
 
     public override void OnDestroy()
     {
+        manager.GetCinemachineCameraController.ZoomOut();
         manager.GetPlayerReticle.SetActive(false);
     }
 

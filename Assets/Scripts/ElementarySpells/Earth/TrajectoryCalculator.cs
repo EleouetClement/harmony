@@ -4,8 +4,14 @@ using UnityEngine;
 
 public class TrajectoryCalculator : MonoBehaviour
 {
-
+	/// <summary>
+	/// Defines the number of points calculated to draw the preview trajectory
+	/// </summary>
 	public int accuracy;
+
+	/// <summary>
+	/// represents the time needed to reach max height in trajectory
+	/// </summary>
 	private float timeFlight;
 
 
@@ -35,7 +41,7 @@ public class TrajectoryCalculator : MonoBehaviour
 	}
 
 	/// <summary>
-	/// Returns vector velocity needed to reach target
+	/// Returns vector velocity needed to reach target in time seconds
 	/// </summary>
 	/// <param name="origin"></param>
 	/// <param name="target"></param>

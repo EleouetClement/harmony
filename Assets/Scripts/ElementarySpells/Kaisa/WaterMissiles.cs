@@ -14,14 +14,23 @@ public class WaterMissiles : AbstractSpell
 
     public float maxSpellTime;
 
+    /// <summary>
+    /// New fov value during aiming
+    /// </summary>
+    [SerializeField] [Min(0)] private float zoomPower;
+
     private List<WaterBall> balls = new List<WaterBall>(20);
     private int spawnedballs = 0;
+
+    private GameModeSingleton gameManager;
 
     public override void init(GameObject elemRef, Vector3 target)
     {
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
-        
+        gameManager = GameModeSingleton.GetInstance();
+        gameManager.GetCinemachineCameraController.ZoomIn();
+
     }
 
     public override void FixedUpdate()
@@ -58,6 +67,7 @@ public class WaterMissiles : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         base.onChargeEnd(chargetime);
+        gameManager.GetCinemachineCameraController.ZoomOut();
         balls.ForEach(e => { e.launched = true; });
     }
 

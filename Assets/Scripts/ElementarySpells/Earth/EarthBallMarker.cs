@@ -18,20 +18,11 @@ public class EarthBallMarker : AbstractMarker
         
     }
 
-    public Vector3 GetTarget(Vector3 origin, Vector3 direction)
-    {
-        RaycastHit hit;
 
-        if (Physics.Raycast(origin + direction * 0.1f, direction, out hit, maxRayCastDistance))
-        {
-            markerPrefab.transform.position = hit.point + hit.normal * 0.1f;
-        }
-
-        Debug.DrawRay(origin + direction * 0.1f, hit.point,Color.red,5);
-
-        return hit.point;
-    }
-
+    /// <summary>
+    /// Returns the position where to launch the earth ball 
+    /// </summary>
+    /// <returns></returns>
     public Vector3 GetTarget()
     {
         RaycastHit hit;
@@ -60,9 +51,6 @@ public class EarthBallMarker : AbstractMarker
             target.y = transform.position.y;
             return target;
         }
-
-        
-
         
     }
 

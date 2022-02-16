@@ -51,7 +51,7 @@ MonoBehaviour:
   maxSpeedDistance: 5
   projectileTopSpeed: 20
   projectileStartSpeed: 2
-  projectileGrowth: 0
+  projectileGrowth: 0.0056
   projectileMaxSize: 1.51
   projectileTopSpeedGrowth: 0
   projectileMaxDistanceGrowth: 0
