@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Torch
   - Elementary
+  - Platform
   layers:
   - Default
   - TransparentFX

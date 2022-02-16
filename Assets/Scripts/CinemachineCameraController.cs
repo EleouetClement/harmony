@@ -27,6 +27,14 @@ public class CinemachineCameraController : MonoBehaviour
         }
     }
 
+    public Vector3 GetViewPosition
+    {
+        get
+        {
+            return defaultCam.activeInHierarchy? defaultCam.transform.position : aimingCam.transform.position;
+        }
+    }
+
     public Vector3 GetViewForward
     {
         get

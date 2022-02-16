@@ -94,7 +94,8 @@ public class Fireball : AbstractSpell
 
         if(!isReleased())
         {
-            if(fireOrbInstance.transform.localScale.x < projectileMaxSize)
+            target = CalculateTrajectory();
+            if (fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
                 fireOrbInstance.transform.localScale += new Vector3(projectileGrowth, projectileGrowth, projectileGrowth);
             }
@@ -181,6 +182,34 @@ public class Fireball : AbstractSpell
 
         }
     }
+
+    private Vector3 CalculateTrajectory()
+    {
+        RaycastHit hit;
+
+
+        if(Physics.Raycast(gameManager.GetCinemachineCameraController.GetViewPosition, gameManager.GetCinemachineCameraController.GetViewDirection, out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
+                gameManager.GetCinemachineCameraController.GetViewDirection * 20, 
+                Color.green, 
+                5);
+            Vector3 newDirection = hit.point - elementary.transform.position;
+            newDirection.Normalize();
+            return newDirection;
+        }
+        else
+        {
+            Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
+                gameManager.GetCinemachineCameraController.GetViewDirection * 20, 
+                Color.red, 
+                5);
+        }
+        
+        return Vector3.zero;
+    }
+
+
     /// <summary>
     /// Detroys fire Orbs and resets Elementary
     /// </summary>
@@ -196,7 +225,7 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
-        target = gameManager.GetCinemachineCameraController.GetViewDirection;        
+        //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
