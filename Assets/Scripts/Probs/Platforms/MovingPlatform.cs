@@ -7,52 +7,70 @@ public class MovingPlatform : AbstractPlatform
     [SerializeField] private float minHeight;
     [SerializeField] private float maxHeight;
     [SerializeField] [Min(0)] private float activationDelay;
-    [SerializeField] [Min(0)] private float lerpInterpolationValue = 2f;
-    private GameObject platform;
+    [SerializeField] [Min(0)] private float lerpInterpolationValue = 0.2f;
+    [SerializeField] private GameObject platform;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float delay = 1f;
     private int direction = 1;
     Vector3 newPosition;
-
+    
     private float borneMin;
     private float borneMax;
-    private void Awake()
-    {
-        platform = transform.GetChild(0).gameObject;
-        //borneMax = maxHeight - transform.position.y;
-        //borneMin = minHeight + transform.position.y;
-       
-    }
-
+    private ElementaryController elem;
+    private float coolDown = Mathf.Epsilon;
     protected override void TriggeredAction()
     {
+        if(elem.transform.position != transform.position)
+        {
+            elem.transform.position = Vector3.MoveTowards(elem.transform.position, transform.position, Time.deltaTime);
+        }
         if(direction == 1 && Mathf.Abs(platform.transform.localPosition.y - maxHeight) <= 0.1f)
         {
             direction = -1;
-            Debug.Log("Max height reached");
+            coolDown = Mathf.Epsilon;
+            //Debug.Log("Max height reached");
         }
         else
         {
             if(direction == -1 && Mathf.Abs(platform.transform.localPosition.y - minHeight) <= 0.1f)
             {
-                direction = 1;
-                Debug.Log("Min height reached");
+                direction = 1; 
+                coolDown = Mathf.Epsilon;
+                //Debug.Log("Min height reached");
             }
         }
-
-        if(direction == 1)
+        if(coolDown >= delay)
         {
-            newPosition = new Vector3(platform.transform.localPosition.x, maxHeight, platform.transform.localPosition.z);
+            platform.transform.localPosition += Vector3.up * direction * speed * Time.deltaTime;
         }
         else
         {
-            newPosition = new Vector3(platform.transform.localPosition.x, minHeight, platform.transform.localPosition.z);
+            coolDown += Time.deltaTime;
         }
-
-        platform.transform.localPosition = Vector3.Lerp(platform.transform.localPosition, newPosition, Time.deltaTime);
-
+        
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        triggered = true;
+        
+        if(other.gameObject.tag.Equals("Elementary"))
+        {
+            triggered = true;
+            LockElementary(other.gameObject);
+        }    
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        this.elem = null;
+        triggered = false;
+    }
+
+    private void LockElementary(GameObject elem)
+    {
+        Debug.Log("Stop spell");
+        this.elem = elem.GetComponent<ElementaryController>();
+        this.elem.currentSpell.Terminate();
+        this.elem.computePosition = false;
     }
 }
