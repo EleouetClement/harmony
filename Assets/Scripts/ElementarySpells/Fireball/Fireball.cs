@@ -58,6 +58,7 @@ public class Fireball : AbstractSpell
     [Header("Debug")]
     [SerializeField] bool debug = false;
     [SerializeField] GameObject virtualTargetPrefab;
+    private float aimDistance = 2000;
 
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
@@ -208,8 +209,8 @@ public class Fireball : AbstractSpell
         {
             
             Vector3 virtualTarget = gameManager.GetCinemachineCameraController.GetViewPosition + 
-                gameManager.GetCinemachineCameraController.GetViewDirection * 
-                maxDistance;
+                gameManager.GetCinemachineCameraController.GetViewDirection *
+                aimDistance;
             if(debug)
             {
                 if(virtualTargetReference == null)
@@ -221,7 +222,7 @@ public class Fireball : AbstractSpell
                     virtualTargetReference.transform.position = virtualTarget;
                 }
                 Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition,
-                virtualTarget * maxDistance,
+                virtualTarget * aimDistance,
                 Color.red,
                 5);
             }
@@ -231,7 +232,7 @@ public class Fireball : AbstractSpell
             if(debug)
             {
                 Debug.DrawRay(elementary.transform.position,
-                virtualTarget * 20,
+                virtualTarget * aimDistance,
                 Color.blue,
                 5);
             }
