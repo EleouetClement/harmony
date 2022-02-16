@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 5831fb381d9b91e478a6c79cb4b5d81e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,12 +127,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c753045bd8a8b4d87179b81ba0b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerCameraController: {fileID: 0}
   verticalOffset: 2
   horizontalOffset: 0.95
   forwardOffset: 0.81
   lerpInterpolationValue: 4
-  maxDistance: 10
-  travellingSpeed: 5
   layerMask: 0
   spells:
   - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
