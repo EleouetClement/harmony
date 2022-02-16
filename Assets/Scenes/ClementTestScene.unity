@@ -1155,6 +1155,7 @@ MonoBehaviour:
   lerpInterpolationValue: 0.2
   platform: {fileID: 1624675970}
   speed: 6
+  delay: 1
 --- !u!1 &1319228323
 GameObject:
   m_ObjectHideFlags: 0
@@ -1486,6 +1487,7 @@ GameObject:
   - component: {fileID: 1624675971}
   - component: {fileID: 1624675974}
   - component: {fileID: 1624675973}
+  - component: {fileID: 1624675975}
   - component: {fileID: 1624675972}
   m_Layer: 0
   m_Name: platform
@@ -1572,6 +1574,22 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1624675970}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &1624675975
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624675970}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
 --- !u!1001 &1641060451
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1739,7 +1757,7 @@ GameObject:
   - component: {fileID: 2076524187}
   - component: {fileID: 2076524186}
   - component: {fileID: 2076524185}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
