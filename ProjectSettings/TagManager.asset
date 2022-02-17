@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Torch
+  - Elementary
+  - Platform
   layers:
   - Default
   - TransparentFX

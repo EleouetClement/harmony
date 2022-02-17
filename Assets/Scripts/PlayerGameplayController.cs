@@ -160,6 +160,22 @@ public class PlayerGameplayController : MonoBehaviour
 	{
 		throw new NotImplementedException();
 	}
+    /// <summary>
+    /// Input reserved for the shield that always needs to be available as a spell
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnBlock(InputValue value)
+    {
+        if (elementaryController.currentSpell == null)
+        {
+            Debug.Log("Blocking");
+            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+            spell.init(elementaryController.gameObject, Vector3.zero);
+            elementaryController.currentSpell = spell;   
+        }
+        if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+            elementaryController.currentSpell?.OnRelease();
+    }
 
 	private void CastEarthWall(AbstractSpell spell)
 	{

@@ -53,7 +53,12 @@ public class Fireball : AbstractSpell
     [SerializeField] [Range(50, 250)] private float reticleMinimumSize;
     [SerializeField] [Min(0)] private float reticleDiminutionSpeed;
     [SerializeField] private GameObject crossAirPrefab;
-    
+
+
+    [Header("Debug")]
+    [SerializeField] bool debug = false;
+    [SerializeField] GameObject virtualTargetPrefab;
+    private float aimDistance = 2000;
 
     /// <summary>
     /// Store the origin position of the fireOrb before any translation
@@ -69,7 +74,7 @@ public class Fireball : AbstractSpell
     /// Store the current fire ball object reference to apply the transforms
     /// </summary>
     private GameObject fireOrbInstance;
-
+    private GameObject virtualTargetReference;
     private float speedStep;
     private float currentSpeed;
     private bool launched = false;
@@ -94,7 +99,8 @@ public class Fireball : AbstractSpell
 
         if(!isReleased())
         {
-            if(fireOrbInstance.transform.localScale.x < projectileMaxSize)
+            target = CalculateTrajectory();
+            if (fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
                 fireOrbInstance.transform.localScale += new Vector3(projectileGrowth, projectileGrowth, projectileGrowth);
             }
@@ -181,6 +187,79 @@ public class Fireball : AbstractSpell
 
         }
     }
+
+    private Vector3 CalculateTrajectory()
+    {
+        RaycastHit hit;
+        int ignoreLayers = 1 << HarmonyLayers.LAYER_PLAYERSPELL;
+        ignoreLayers = ~ignoreLayers;
+        bool cast = Physics.Raycast(gameManager.GetCinemachineCameraController.GetViewPosition,
+            gameManager.GetCinemachineCameraController.GetViewDirection,
+            out hit,
+            Mathf.Infinity,
+            ignoreLayers
+            );
+
+        if (cast)
+        {
+            if(debug)
+                Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition, 
+                gameManager.GetCinemachineCameraController.GetViewDirection * 20, 
+                Color.green, 
+                5);
+
+
+            Vector3 newDirection = hit.point - elementary.transform.position;
+            newDirection.Normalize();
+
+            if (debug)
+            {
+                Debug.Log("Target spotted : " + hit.collider.gameObject.name);
+                Debug.DrawRay(elementary.transform.position,
+                newDirection * 20,
+                Color.blue,
+                5);
+            }
+                
+            return newDirection;
+        }
+        else
+        {
+            
+            Vector3 virtualTarget = gameManager.GetCinemachineCameraController.GetViewPosition + 
+                gameManager.GetCinemachineCameraController.GetViewDirection *
+                aimDistance;
+            if(debug)
+            {
+                if(virtualTargetReference == null)
+                {
+                    virtualTargetReference = Instantiate(virtualTargetPrefab, virtualTarget, Quaternion.identity);
+                }
+                else
+                {
+                    virtualTargetReference.transform.position = virtualTarget;
+                }
+                Debug.DrawRay(gameManager.GetCinemachineCameraController.GetViewPosition,
+                virtualTarget * aimDistance,
+                Color.red,
+                5);
+            }
+            
+            virtualTarget = virtualTarget - elementary.transform.position;
+            virtualTarget.Normalize();
+            if(debug)
+            {
+                Debug.DrawRay(elementary.transform.position,
+                virtualTarget * aimDistance,
+                Color.blue,
+                5);
+            }
+            
+            return virtualTarget;
+        }
+    }
+
+
     /// <summary>
     /// Detroys fire Orbs and resets Elementary
     /// </summary>
@@ -197,13 +276,20 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
-        target = gameManager.GetCinemachineCameraController.GetViewDirection;        
+        //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
             Debug.Log("Molotov à appliquer");
             isExplosive = true;
         }
+        if(debug)
+        {
+            Destroy(virtualTargetReference);
+        }
         
     }
+
+
+
 }

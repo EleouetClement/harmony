@@ -26,7 +26,7 @@ public class FIreArea : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.layer);
+        //Debug.Log(other.gameObject.layer);
         //TO DO...
     }
 
