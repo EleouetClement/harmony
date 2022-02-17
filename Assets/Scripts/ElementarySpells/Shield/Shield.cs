@@ -31,15 +31,18 @@ public class Shield : AbstractSpell
 
     private void Update()
     {  
-        if (!elemController.IsElementaryAway() && shieldCollider.enabled == false)
+        if (!elemController.IsElementaryAway())
         {
-            shieldCollider.enabled = true;
-            shieldVisual.enabled = true;
-        }
-        else
-        {
-            // Determine the period during which the player can make a perfect shield
-            timer += Time.deltaTime;
+            if(shieldCollider.enabled == false)
+            {
+                shieldCollider.enabled = true;
+                shieldVisual.enabled = true;
+            }
+            else
+            {
+                //Debug.Log("Timer On");
+                timer += Time.deltaTime;
+            }   
         }
         // If the shield has been activated for too long time, it can no longer maker a perfect shield
         if (timer > maxDelayToPerfectShield && canPerfectShield)
