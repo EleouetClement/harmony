@@ -537,6 +537,7 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 1
+  fovReductionPerFrame: 0
 --- !u!114 &1212469516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,6 +614,10 @@ MonoBehaviour:
   airFriction: 1
   airControl: 0.25
   gravity: -9.81
+  dodgeSpeed: 0
+  dodgeDuration: 0
+  dodgeCoolDown: 0
+  isInvincible: 0
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
   layerMask: 3
