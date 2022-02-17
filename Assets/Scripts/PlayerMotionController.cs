@@ -30,8 +30,6 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
-
-    public CameraController cameraController;
     public CinemachineCameraController cinemachineCamera;
     
     private CharacterController controller;
@@ -96,16 +94,8 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!sliding && !isDodging)
         {
-            if (cinemachineCamera)
-            {
-                forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
-                rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
-            }
-            else
-            {
-                forwardDirection = inputAxis.y * cameraController.GetViewForward;
-                rightDirection = inputAxis.x * cameraController.GetViewRight;
-            }
+            forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+            rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
             
             movement = forwardDirection + rightDirection;
             movement.Normalize();

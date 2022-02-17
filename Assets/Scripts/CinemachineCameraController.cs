@@ -83,7 +83,6 @@ public class CinemachineCameraController : MonoBehaviour
 
     public void OnLook(InputValue value)
     {
-        
         lookInput = value.Get<Vector2>() * 100;
     }
 
