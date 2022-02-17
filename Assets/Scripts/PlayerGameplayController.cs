@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField][Min(0)] private int maxHitNumber = 2;
     [SerializeField][Min(0)] private float timeBeforeLifeReset = 10;
 
+    private GameModeSingleton gm;
 
     public bool InFight { get; private set; } = false;
 
@@ -26,6 +28,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        gm = GameModeSingleton.GetInstance();
         InitializeElementary();
     }
     // Start is called before the first frame update
@@ -179,11 +182,20 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="hit"></param>
     public void OnDamage(DamageHit hit)
     {
+        CinemachineCameraController cam = gm.GetCinemachineCameraController;
         hits += 1;
         if(hits >= maxHitNumber)
         {
             Debug.Log("Player Death");
         }
-
+        else
+        {
+            Debug.Log("Player hurt");
+            wounded = true; 
+            CinemachineImpulseSource source = GetComponent<CinemachineImpulseSource>();
+            source.GenerateImpulse();
+        }
     }
+
+
 }
