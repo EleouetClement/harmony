@@ -56,7 +56,7 @@ public class PlayerGameplayController : MonoBehaviour
 
     private void OnSpellRight(InputValue value)
     {
-        if(elementaryController.currentSpell == null)
+        if (elementaryController.currentSpell == null)
         {
             if (value.isPressed)
             {
@@ -90,6 +90,23 @@ public class PlayerGameplayController : MonoBehaviour
 		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
 			elementaryController.currentSpell?.OnRelease();
 	}
+
+    /// <summary>
+    /// Input reserved for the shield that always needs to be available as a spell
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnBlock(InputValue value)
+    {
+        if (elementaryController.currentSpell == null)
+        {
+            Debug.Log("Blocking");
+            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+            spell.init(elementaryController.gameObject, Vector3.zero);
+            elementaryController.currentSpell = spell;   
+        }
+        if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+            elementaryController.currentSpell?.OnRelease();
+    }
 
     /// <summary>
     /// Set the Elementary shoulder reference
