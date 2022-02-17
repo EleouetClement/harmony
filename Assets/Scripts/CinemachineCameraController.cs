@@ -7,19 +7,27 @@ public class CinemachineCameraController : MonoBehaviour
 {
     public Transform PlayerMesh;
 
-    [SerializeField] GameObject defaultCam;
+    [SerializeField] public GameObject defaultCam;
     [SerializeField] GameObject aimingCam;
+    [SerializeField] GameObject combatCam;
+
+    private GameObject currentCam;
 
     [Range(0, 90)] public float verticalMaxAngle = 85.0f;
     [Min(0)] public float sensibility = 0.25f;
 
     private Vector3 targetPosition;
     private Vector2 lookInput;
-    private Vector2 rotation;
+    public Vector2 rotation;
 
     static private Vector3 groundVector = new Vector3(0, 1, 0);
 
-    public Vector3 GetViewDirection
+	private void Start()
+	{
+        currentCam = defaultCam;
+	}
+
+	public Vector3 GetViewDirection
     {
         get
         {
@@ -53,14 +61,30 @@ public class CinemachineCameraController : MonoBehaviour
 
     public void ZoomIn()
     {
-        defaultCam.SetActive(false);
+        currentCam.SetActive(false);
         aimingCam.SetActive(true);
+        currentCam = aimingCam;
     }
 
     public void ZoomOut()
     {
-        aimingCam.SetActive(false);
+        currentCam.SetActive(false);
         defaultCam.SetActive(true);
+        currentCam = defaultCam;
+    }
+
+    public void CombatCam()
+    {
+        currentCam.SetActive(false);
+        combatCam.SetActive(true);
+        currentCam = combatCam;
+    }
+
+    public void ExploCam()
+    {
+        currentCam.SetActive(false);
+        defaultCam.SetActive(true);
+        currentCam = defaultCam;
     }
 
     void LateUpdate()

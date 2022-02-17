@@ -28,6 +28,7 @@ public class EarthMortar : AbstractSpell
 	public override void init(GameObject elemRef, Vector3 target)
 	{
 		base.init(elemRef, target);
+		element = Element.Earth;
 		earthMarker = GetComponent<EarthBallMarker>();
 		earthMarker.Init(maxRange, earthMarker.transform.GetChild(0).gameObject);
 		elementary.GetComponent<MeshRenderer>().enabled = false;
@@ -43,22 +44,17 @@ public class EarthMortar : AbstractSpell
 
 		if (ball == null)
 		{
-			elementary.transform.position = lastBallCoord;
-			elementary.GetComponent<MeshRenderer>().enabled = true;
-			elementary.GetComponent<ElementaryController>().currentSpell = null;
-			elementary.GetComponent<ElementaryController>().computePosition = true;
-			Destroy(gameObject);
+			Terminate();
 		}
 		else if(!launched)
 		{
 			//refreshes charge level to earth ball
 			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
-			print("non");
+			elementary.GetComponent<ElementaryController>().computePosition = true;
 			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().value = charge / maxCastTime;
 		}
 		else
 		{
-			print("yesyes");
 			//hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = false;
 			hud.GetComponent<Canvas>().enabled = false;
 		}
@@ -72,14 +68,18 @@ public class EarthMortar : AbstractSpell
 		earthMarker.DestroyMarker();
 
 		if (chargetime >= 1.05f || chargetime <= 9.95f)
-			print("Blink!");
-		Debug.Log("yes");
+			//print("Blink!");
 		ball.GetComponent<EarthBall>().Launch();
 		launched = true;
 	}
 
 	public override void Terminate()
 	{
-		
+		elementary.transform.position = lastBallCoord;
+		elementary.GetComponent<MeshRenderer>().enabled = true;
+		elementary.GetComponent<ElementaryController>().currentSpell = null;
+		elementary.GetComponent<ElementaryController>().computePosition = true;
+		elementary.GetComponent<ElementaryController>().readyToCast = true;
+		Destroy(gameObject);
 	}
 }

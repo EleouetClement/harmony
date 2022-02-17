@@ -31,7 +31,8 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
-    
+    public Transform playerMesh;
+
     private CharacterController controller;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
@@ -73,7 +74,6 @@ public class PlayerMotionController : MonoBehaviour
 
         currentSpeed = controller.velocity.magnitude;
         isMoving =(Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
-
     }
 
     private void FixedUpdate()
@@ -102,16 +102,15 @@ public class PlayerMotionController : MonoBehaviour
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
-		#endregion
+
+        #endregion
 
 
-		#region Dodge force
-		if (isDodging && dodgeTimer <= Mathf.Epsilon)
+        #region Dodge force
+        if (isDodging && dodgeTimer <= Mathf.Epsilon)
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log("Velocity avant : " + velocity);
-                velocity += (movement * dodgeSpeed * Time.fixedDeltaTime);
                 Debug.Log("Velocity apres : " + velocity);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
@@ -155,6 +154,12 @@ public class PlayerMotionController : MonoBehaviour
 
 
 	}
+
+    void LateUpdate()
+    {
+        if(isMoving)
+            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0);
+    }
 
     /// <summary>
     /// Handles moving inputs using InputSystem
