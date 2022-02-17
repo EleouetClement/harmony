@@ -8,6 +8,15 @@ using UnityEngine;
 public abstract class AbstractSpell : MonoBehaviour
 {
 
+    public enum Element
+    {
+        Fire,
+        Water,
+        Earth
+    }
+
+    public Element element;
+
     /// <summary>
     /// The target location of the spell. Contains an arbitrary value that may differ spell to spell, but usually corresponds to where the spell is aimed at.
     /// </summary>
@@ -49,8 +58,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false;
-
+    protected bool isBlinked = false; 
 
     private bool chargeend = false;
 
@@ -124,6 +132,7 @@ public abstract class AbstractSpell : MonoBehaviour
             isBlinked = true;
         }
     }
+
 
 
 

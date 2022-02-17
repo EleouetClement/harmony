@@ -10,13 +10,13 @@ public class EarthBall : MonoBehaviour
 
 	public bool displayTrajectory;
 
-	/// <summary>
-	/// current charge level of the spell
+	/// <summary>
+	/// current charge level of the spell
 	/// </summary>
 	public float charge;
 
-	/// <summary>
-	/// Initial earth ball velocity
+	/// <summary>
+	/// Initial earth ball velocity
 	/// </summary>
 	private Vector3 launchVelocity;
 
@@ -118,7 +118,7 @@ public class EarthBall : MonoBehaviour
 		GetComponent<LineRenderer>().enabled = false;
 		launched = true;
 		//Debug.Log("Range : " + range);
-		Debug.Log("launchVelocity : " + launchVelocity);
+		//Debug.Log("launchVelocity : " + launchVelocity);
 		//Vector3 launchDirection = target - elementary.transform.position;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
 		GetComponent<Rigidbody>().isKinematic = false;

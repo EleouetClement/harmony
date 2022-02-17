@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_shaderPropertyID
-      value: 780
+      value: 803
       objectReference: {fileID: 0}
     - target: {fileID: 2332048440410813850, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
@@ -187,6 +187,11 @@ PrefabInstance:
     - target: {fileID: 3841384982787575142, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4418970382018424771, guid: 8ca2cdb55dfa370408d80107d6193f08,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8782145736878327818, guid: 8ca2cdb55dfa370408d80107d6193f08,

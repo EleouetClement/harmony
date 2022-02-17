@@ -5,19 +5,25 @@ using UnityEngine;
 public class ElementaryController : MonoBehaviour
 {
 
-
-    [SerializeField] public CameraController playerCameraController;
     [Header("Elementary positionning")]
-    [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
+    [SerializeField] private GameObject virtualShoulder;
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;
+    [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float forwardOffset = 0;
     [SerializeField][Min(0)]       private float lerpInterpolationValue= 4;
+    [SerializeField]               private float isAwayDistance;
     [Header("Elementary stats")]
     //[SerializeField] [Range(0, 50)] private float maxDistance = 10;
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
-    [SerializeField] public AbstractSpell[] spells;
+    [SerializeField] public AbstractSpell shieldPrefab;
+    [SerializeField] public AbstractSpell[] offensiveSpells;
+    [SerializeField] public AbstractSpell[] exploratorySpells;
+
+    private Vector3 shoulderOffset;
+
+    public bool inCombat = false;
 
     /// <summary>
     /// true if the element handles itself
@@ -27,26 +33,66 @@ public class ElementaryController : MonoBehaviour
 
     private Transform shoulder;
 
-    public AbstractSpell currentSpell;
+    public bool isAway { get; private set; } = false;
 
-    // Start is called before the first frame update
-    void Start()
+    [HideInInspector]
+    public AbstractSpell currentSpell;
+    public bool readyToCast = true;
+    public AbstractSpell.Element currentElement;
+
+	private void Awake()
+	{
+		shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
+    }
+
+	// Start is called before the first frame update
+	void Start()
     {
-        
+        SetElement(AbstractSpell.Element.Fire);
+        currentSpell = offensiveSpells[(int)currentElement];
+        virtualShoulder.transform.localPosition += shoulderOffset;
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
+        //Testing purposes
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            inCombat ^= true;
+        }
+    }
+
+	private void LateUpdate()
+	{
+        shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition)
         {
+            
             Orbit();
         }
     }
 
-    private void FixedUpdate()
+	private void FixedUpdate()
     {
         
+    }
+
+    public void SetElement(AbstractSpell.Element element)
+    {
+        currentElement = element;
+    }
+
+    public AbstractSpell GetOffensiveSpell()
+    {
+        return offensiveSpells[(int)currentElement];
+    }
+
+    public AbstractSpell GetExploratorySpell()
+    {
+        return exploratorySpells[(int)currentElement];
     }
 
     /// <summary>
@@ -55,6 +101,7 @@ public class ElementaryController : MonoBehaviour
     public void CastSpell(AbstractSpell spell)
     {
         currentSpell = spell;
+        readyToCast = false;
         computePosition = false;
     }
 
@@ -67,8 +114,10 @@ public class ElementaryController : MonoBehaviour
     {
         if(hasShoulder)
         {
-            Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
-            transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
+            //Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
+            //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
+
+            transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, /*Time.deltaTime **/ lerpInterpolationValue);
         }     
     }
 
@@ -86,5 +135,23 @@ public class ElementaryController : MonoBehaviour
         
         hasShoulder = true;
         shoulder = shouldersTransform;
+    }
+
+    /// <summary>
+    /// If the elementary is away from the character
+    /// </summary>
+    public void Recall()
+    {
+        computePosition = true;
+    }
+
+    /// <summary>
+    /// returns true if the elementary isn't close to the summoner
+    /// </summary>
+    /// <returns></returns>
+    public bool IsElementaryAway()
+    {
+        Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
+        return Vector3.Distance(transform.position, basePosition) > isAwayDistance ? true : false;
     }
 }

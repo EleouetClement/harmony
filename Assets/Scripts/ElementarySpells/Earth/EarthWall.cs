@@ -5,7 +5,7 @@ using UnityEngine;
 public class EarthWall : AbstractSpell
 {
     public GameObject PosMarkerPrefab;
-    public CameraController cameraController;
+    public CinemachineCameraController cameraController;
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
@@ -26,7 +26,7 @@ public class EarthWall : AbstractSpell
     {
         if (!isReleased())
         {
-            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.GetViewPosition);                       
+            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.transform.position);                       
             marker.transform.LookAt(cameraController.transform);
         }
     }
@@ -36,7 +36,7 @@ public class EarthWall : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
+        cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 
@@ -44,6 +44,7 @@ public class EarthWall : AbstractSpell
     {
         elementary.GetComponent<ElementaryController>().currentSpell = null;
         elementary.GetComponent<ElementaryController>().computePosition = true;
+        elementary.GetComponent<ElementaryController>().readyToCast = true;
         Destroy(gameObject);
     }
 
@@ -57,7 +58,7 @@ public class EarthWall : AbstractSpell
             Debug.Log("SPAWN PILLAR");
 
             // Avoid to rotate the pillar on X axis when it spawns
-            Vector3 v = cameraController.GetViewPosition - hit.transform.position;
+            Vector3 v = cameraController.transform.position - hit.transform.position;
             v.y = 0f;
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
@@ -69,7 +70,7 @@ public class EarthWall : AbstractSpell
             Debug.Log("SPAWN PLATFORM");
 
             // Avoid to rotate the platform on X axis when it spawns
-            Vector3 v = cameraController.GetViewPosition - hit.transform.position;
+            Vector3 v = cameraController.transform.position - hit.transform.position;
             v.y = 0f;
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
