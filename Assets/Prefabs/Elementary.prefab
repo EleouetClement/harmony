@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 824288169518036411}
   m_Layer: 6
   m_Name: Elementary
-  m_TagString: Untagged
+  m_TagString: Elementary
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,16 +128,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c753045bd8a8b4d87179b81ba0b7e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCameraController: {fileID: 0}
   verticalOffset: 2
-  horizontalOffset: 0.95
-  forwardOffset: 0.81
+  horizontalOffset: 1.78
+  forwardOffset: 0.65
   lerpInterpolationValue: 4
+  isAwayDistance: 1
   layerMask: 0
   spells:
   - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
   - {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769, type: 3}
   - {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210, type: 3}
+  shieldPrefab: {fileID: 7339081501565071671, guid: fbc42c22b43c4954ab798722a5cf2399,
+    type: 3}
   computePosition: 1
   currentSpell: {fileID: 0}
 --- !u!1 &9222845230712954300
