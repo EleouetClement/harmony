@@ -9,6 +9,8 @@ public class FireOrb : MonoBehaviour
     private bool environment = false;
     private List<GameObject> fragments = new List<GameObject>(20);
 
+    public GameObject explosion;
+
     public GameObject shrapnelPrefab;
 
     /// <summary>
