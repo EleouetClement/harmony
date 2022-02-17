@@ -53,7 +53,6 @@ public class GameModeSingleton : MonoBehaviour
         }
         return _instance;
     }
-
     #region Getters
     public GameObject GetPlayerReference
     {
