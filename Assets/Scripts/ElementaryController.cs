@@ -117,7 +117,7 @@ public class ElementaryController : MonoBehaviour
             //Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
             //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
 
-            transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, /*Time.deltaTime **/ lerpInterpolationValue);
+            transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
     }
 

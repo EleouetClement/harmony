@@ -8,6 +8,8 @@ public class EarthBall : MonoBehaviour
 	public EarthBallMarker earthMarkerRef;
 	private bool launched;
 
+	GameObject gameManager;
+
 	public bool displayTrajectory;
 
 	/// <summary>
@@ -72,6 +74,8 @@ public class EarthBall : MonoBehaviour
 		launched = false;
 		minSize = earthMortarRef.elementary.transform.localScale;
 		maxSize += minSize;
+
+		gameManager = GameObject.Find("GameManager");
 	}
 
 	// Update is called once per frame
@@ -139,8 +143,8 @@ public class EarthBall : MonoBehaviour
 				{
 					rig.AddExplosionForce(impactforce, transform.position, radius, 1f, ForceMode.Impulse);
 				}
-
 			}
+			gameManager.GetComponent<GameModeSingleton>().GetCinemachineCameraController.ShakeCamera(1, 0.5f);
 			earthMortarRef.lastBallCoord = transform.position;
 			Destroy(gameObject);
 		}
