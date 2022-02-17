@@ -9,8 +9,7 @@ public class FireOrb : MonoBehaviour
     private bool environment = false;
     private List<GameObject> fragments = new List<GameObject>(20);
 
-    public GameObject explosion;
-
+    public GameObject explosionEffect;
     public GameObject shrapnelPrefab;
 
     /// <summary>
@@ -72,6 +71,7 @@ public class FireOrb : MonoBehaviour
     private void Explode()
     {
         //Debug.Log("Explosion");
+        Instantiate(explosionEffect, transform.position + Vector3.up, transform.rotation);
         Instantiate(firePrefab, transform.position, Quaternion.identity);
         hasExplode = true;
     }
