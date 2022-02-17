@@ -15,25 +15,26 @@ public class Shield : AbstractSpell
     private float timer = 0; // Start from 0 to maxDelayToPerfectShield
     private ElementaryController elemController;
     private GameObject shieldReference;
-    private void Start()
+    private Collider shieldCollider;
+    private MeshRenderer shieldVisual;
+    private void Awake()
     {
-        transform.position = player.transform.position; // place the shield on the position of the player
-        initialWalkSpeed = player.GetComponent<PlayerMotionController>().walkSpeed;
+        
     }
 
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-        //transform.position = player.transform.position;
-        if(shieldReference != null)
-            shieldReference.transform.position = player.transform.position;
+        transform.position = player.transform.position;
+        //shieldReference.transform.position = player.transform.position;
     }
 
     private void Update()
     {  
-        if (!elemController.IsElementaryAway() && shieldReference == null)
+        if (!elemController.IsElementaryAway() && shieldCollider.enabled == false)
         {
-            shieldReference = Instantiate(shieldPrefab, player.transform.position, Quaternion.identity);
+            shieldCollider.enabled = true;
+            shieldVisual.enabled = true;
         }
         else
         {
@@ -63,7 +64,16 @@ public class Shield : AbstractSpell
             elemController.Recall();
         }
         gms = GameModeSingleton.GetInstance();
-        player = gms.GetPlayerReference;    
+        player = gms.GetPlayerReference;
+        transform.position = player.transform.position; // place the shield on the position of the player
+        initialWalkSpeed = player.GetComponent<PlayerMotionController>().walkSpeed;
+        shieldCollider = GetComponent<Collider>();
+        shieldVisual = GetComponent<MeshRenderer>();
+        if (elemController.IsElementaryAway())
+        {
+            shieldCollider.enabled = false;
+            shieldVisual.enabled = false;
+        }
     }
 
     public override void Terminate()
@@ -71,7 +81,7 @@ public class Shield : AbstractSpell
         ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
         elemCtrl.currentSpell = null;
         elemCtrl.computePosition = true;
-        Destroy(shieldReference);
+        //Destroy(shieldReference);
         Destroy(gameObject);
     }
 

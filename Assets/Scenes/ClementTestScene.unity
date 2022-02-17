@@ -600,7 +600,7 @@ PrefabInstance:
         type: 3}
       propertyPath: shieldPrefab
       value: 
-      objectReference: {fileID: 7312986197255078441, guid: 1e56618b2c85e94469d34c6ebc80386b,
+      objectReference: {fileID: 7339081501565071671, guid: fbc42c22b43c4954ab798722a5cf2399,
         type: 3}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
