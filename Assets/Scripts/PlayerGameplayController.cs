@@ -3,13 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerGameplayController : MonoBehaviour
+public class PlayerGameplayController : MonoBehaviour, IDamageable
 {
     [Header("Elementary")]
     [SerializeField] GameObject elementaryObjectReference;
     [SerializeField] GameObject playerMeshReference;
     [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
+
+    [Header("Health stats")]
+    [SerializeField][Min(0)] private int maxHitNumber = 2;
+    [SerializeField][Min(0)] private float timeBeforeLifeReset = 10;
+
 
     public bool InFight { get; private set; } = false;
     private void Awake()
@@ -138,5 +143,19 @@ public class PlayerGameplayController : MonoBehaviour
 
         }
 
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL))
+        {
+
+        }
+    }
+
+    //Behaviour when hit by an EnnemySpell
+    public void OnDamage(DamageHit hit)
+    {
+        
     }
 }
