@@ -189,6 +189,7 @@ public class Fireball : AbstractSpell
         Destroy(fireOrbInstance);
         elem.currentSpell = null;
         elem.computePosition = true;
+        elementary.GetComponent<ElementaryController>().readyToCast = true;
         Destroy(gameObject);
     }
 

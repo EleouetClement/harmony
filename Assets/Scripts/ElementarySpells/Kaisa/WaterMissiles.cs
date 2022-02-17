@@ -83,6 +83,7 @@ public class WaterMissiles : AbstractSpell
         elementary.transform.position = getDestination();
         elementary.GetComponent<ElementaryController>().computePosition = true;
         elementary.GetComponent<MeshRenderer>().enabled = true;
+        elementary.GetComponent<ElementaryController>().readyToCast = true;
         Destroy(gameObject);
     }
 }
