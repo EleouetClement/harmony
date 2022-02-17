@@ -17,6 +17,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
 
     public bool InFight { get; private set; } = false;
+
+    private int hits = 0;
+    private float hitTimer = Mathf.Epsilon;
+    private bool wounded = false;
+
     private void Awake()
     {
         Cursor.visible = false;
@@ -32,6 +37,21 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     // Update is called once per frame
     void Update()
     {
+        #region Health timer managment
+        if (wounded)
+        {
+            if(hitTimer < timeBeforeLifeReset)
+            {
+                hitTimer += Time.deltaTime;
+            }
+            else
+            {
+                wounded = false;
+                hits = 0;
+            }
+        }
+        #endregion
+
 
     }
 
@@ -153,9 +173,17 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
     }
 
-    //Behaviour when hit by an EnnemySpell
+    /// <summary>
+    /// Behaviour when hit by an EnnemySpell
+    /// </summary>
+    /// <param name="hit"></param>
     public void OnDamage(DamageHit hit)
     {
-        
+        hits += 1;
+        if(hits >= maxHitNumber)
+        {
+            Debug.Log("Player Death");
+        }
+
     }
 }
