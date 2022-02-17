@@ -50,7 +50,6 @@ public class Shield : AbstractSpell
         base.init(elemRef, target.normalized);
         gms = GameModeSingleton.GetInstance();
         player = gms.GetPlayerReference;
-        
     }
 
     public override void Terminate()
@@ -79,6 +78,8 @@ public class Shield : AbstractSpell
             {
                 Debug.Log("TOO LATE TO PERFECT SHIELD !");
             }
+
+            Destroy(collider.gameObject);
         }
     }
 }

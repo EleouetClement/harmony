@@ -35,6 +35,7 @@ public class PositionningMarker : AbstractMarker
         else
         {
             Debug.DrawRay(origin, direction * maxRayCastDistance, Color.red, 10);
+            targetPosition = Vector3.zero;
             Debug.Log("No valid target");
         }
     }
