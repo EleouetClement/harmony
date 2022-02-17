@@ -22,11 +22,14 @@ public class WaterMissiles : AbstractSpell
     private List<WaterBall> balls = new List<WaterBall>(20);
     private int spawnedballs = 0;
 
+    private GameModeSingleton gameManager;
+
     public override void init(GameObject elemRef, Vector3 target)
     {
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
-        elementary.GetComponent<ElementaryController>().playerCameraController.Aim(zoomPower);
+        gameManager = GameModeSingleton.GetInstance();
+        gameManager.GetCinemachineCameraController.ZoomIn();
 
     }
 
@@ -64,7 +67,7 @@ public class WaterMissiles : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         base.onChargeEnd(chargetime);
-        elementary.GetComponent<ElementaryController>().playerCameraController.StopAim();
+        gameManager.GetCinemachineCameraController.ZoomOut();
         balls.ForEach(e => { e.launched = true; });
     }
 

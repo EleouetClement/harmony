@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Torch
+  - Elementary
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -18,7 +21,7 @@ TagManager:
   - PlayerTrigger
   - WallEnable
   - Ground
-  - 
+  - InvisibleWall
   - 
   - 
   - 

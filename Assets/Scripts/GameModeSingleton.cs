@@ -13,7 +13,12 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private GameObject playerCameraReference;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
-    private CameraController playerCameraController;
+    [SerializeField] private CinemachineCameraController cinemachineCameraControl;
+
+    /// <summary>
+    /// True if the player enters in an arena or any fight area.
+    /// </summary>
+    public bool InFight { get; private set; } = false;
 
     private static GameModeSingleton _instance;
 
@@ -22,17 +27,20 @@ public class GameModeSingleton : MonoBehaviour
     private void Awake()
     {
         Debug.Log("Initialisation du singleton");
-        if(playerReference == null)
+        if (playerReference == null)
             playerReference = GameObject.Find("Player");
-        if(elementaryReference == null)
+        if (elementaryReference == null)
             elementaryReference = GameObject.Find("Elementary");
-        if(playerCameraReference == null)
+        if (playerCameraReference == null)
             playerCameraReference = GameObject.Find("CameraRig");
-        if(playerHUD == null)
+        if (playerHUD == null)
             playerHUD = GameObject.Find("ATH");
-        if(playerCrossAir == null)
+        if (playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
-        playerCameraController = playerCameraReference.GetComponent<CameraController>();
+        if(cinemachineCameraControl == null && playerCameraReference != null)
+        {
+            cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
+        }
         _instance = this;
     }
 
@@ -46,6 +54,7 @@ public class GameModeSingleton : MonoBehaviour
         return _instance;
     }
 
+    #region Getters
     public GameObject GetPlayerReference
     {
         get
@@ -85,14 +94,14 @@ public class GameModeSingleton : MonoBehaviour
         }
     }
 
-    public CameraController GetPlayerCameraController
+    public CinemachineCameraController GetCinemachineCameraController
     {
         get
         {
-            return playerCameraController;
+            return cinemachineCameraControl;
         }
     }
-
+    #endregion
 
 
 }

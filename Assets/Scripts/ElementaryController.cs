@@ -5,19 +5,19 @@ using UnityEngine;
 public class ElementaryController : MonoBehaviour
 {
 
-
-    [SerializeField] public CameraController playerCameraController;
     [Header("Elementary positionning")]
     [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;
     [SerializeField][Range(-2, 2)] private float forwardOffset = 0;
     [SerializeField][Min(0)]       private float lerpInterpolationValue= 4;
+    [SerializeField]               private float isAwayDistance;
     [Header("Elementary stats")]
     //[SerializeField] [Range(0, 50)] private float maxDistance = 10;
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
     [SerializeField] public AbstractSpell[] spells;
+    [SerializeField] public AbstractSpell shieldPrefab;
 
     /// <summary>
     /// true if the element handles itself
@@ -27,6 +27,9 @@ public class ElementaryController : MonoBehaviour
 
     private Transform shoulder;
 
+    public bool isAway { get; private set; } = false;
+
+    [HideInInspector]
     public AbstractSpell currentSpell;
 
     // Start is called before the first frame update
@@ -40,6 +43,7 @@ public class ElementaryController : MonoBehaviour
     {
         if (computePosition)
         {
+            
             Orbit();
         }
     }
@@ -86,5 +90,23 @@ public class ElementaryController : MonoBehaviour
         
         hasShoulder = true;
         shoulder = shouldersTransform;
+    }
+
+    /// <summary>
+    /// If the elementary is away from the character
+    /// </summary>
+    public void Recall()
+    {
+        computePosition = true;
+    }
+
+    /// <summary>
+    /// returns true if the elementary isn't close to the summoner
+    /// </summary>
+    /// <returns></returns>
+    public bool IsElementaryAway()
+    {
+        Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
+        return Vector3.Distance(transform.position, basePosition) > isAwayDistance ? true : false;
     }
 }

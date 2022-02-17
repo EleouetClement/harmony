@@ -35,13 +35,15 @@ public class EarthBallMarker : AbstractMarker
                 markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
                 markerInstance.GetComponent<MeshRenderer>().enabled = true;
             }
-                
+
+            markerInstance.GetComponent<MeshRenderer>().enabled = true;
             markerInstance.transform.position = hit.point + hit.normal*0.1f;
             markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
-            print("target : "+hit.collider);
+            //print("target : "+hit.collider);
             //Debug.DrawRay(origin, hit.point - ray.origin, Color.red, 5);
             return hit.point;
         }
+        //out of range
 		else
 		{
             if (markerInstance != null)
@@ -56,8 +58,11 @@ public class EarthBallMarker : AbstractMarker
 
     public void SetMarkerRadius(float radius)
     {
-        Vector3 currentScale = markerInstance.transform.localScale;
-        markerInstance.transform.localScale = new Vector3(2f * radius, currentScale.y,2f * radius);
+        if (markerInstance != null)
+        {
+            Vector3 currentScale = markerInstance.transform.localScale;
+            markerInstance.transform.localScale = new Vector3(2f * radius, 2f * radius , 2f * radius);
+        }
     }
 
     public void DestroyMarker()

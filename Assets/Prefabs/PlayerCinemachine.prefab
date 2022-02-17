@@ -232,7 +232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5647346032591812616}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.5, y: 0.6500001, z: -2}
+  m_LocalPosition: {x: 0.5, y: 0.65, z: -0.916394}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -269,7 +269,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7781385, y: 1}
+    m_SensorSize: {x: 2.1541157, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -490,7 +490,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6677204177119343016}
-  - component: {fileID: 6677204177119343019}
   - component: {fileID: 1212469516}
   m_Layer: 0
   m_Name: CameraRig
@@ -514,30 +513,6 @@ Transform:
   m_Father: {fileID: 6677204177286177699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6677204177119343019
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6677204177119343018}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e1f16f4707a4a54baad53dd4acfbe9b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 6677204177286177699}
-  cam: {fileID: 0}
-  cameraRigOffet: {x: 0, y: 0.5, z: 0}
-  baseHorizontalDistance: 1
-  baseDistance: 3
-  leftSide: 0
-  verticalMaxAngle: 85
-  sensibility: 1
-  collisionMask:
-    serializedVersion: 2
-    m_Bits: 1
-  fovReductionPerFrame: 0
 --- !u!114 &1212469516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -554,7 +529,7 @@ MonoBehaviour:
   defaultCam: {fileID: 5647346032591812616}
   aimingCam: {fileID: 2093330017194327939}
   verticalMaxAngle: 85
-  sensibility: 0.25
+  sensibility: 1
 --- !u!1 &6677204177286177703
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,15 +589,15 @@ MonoBehaviour:
   airFriction: 1
   airControl: 0.25
   gravity: -9.81
-  dodgeSpeed: 0
-  dodgeDuration: 0
-  dodgeCoolDown: 0
+  dodgeSpeed: 46
+  dodgeDuration: 0.1
+  dodgeCoolDown: 0.8
   isInvincible: 0
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
   layerMask: 3
   debug: 1
-  cameraController: {fileID: 6677204177119343019}
+  cameraController: {fileID: 0}
   cinemachineCamera: {fileID: 1212469516}
 --- !u!114 &6957681519607846577
 MonoBehaviour:
@@ -638,7 +613,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   elementaryObjectReference: {fileID: 0}
   playerMeshReference: {fileID: 6677204177534006692}
-  playerCameraController: {fileID: 6677204177119343019}
   playerCinemachineCameraController: {fileID: 1212469516}
 --- !u!143 &6677204177286177701
 CharacterController:
@@ -809,7 +783,7 @@ MonoBehaviour:
   IgnoreTag: 
   CameraRadius: 0.268
   DampingIntoCollision: 0
-  DampingFromCollision: 2
+  DampingFromCollision: 0.2
 --- !u!1 &9004212960852081129
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,4 +852,4 @@ MonoBehaviour:
   IgnoreTag: 
   CameraRadius: 0.268
   DampingIntoCollision: 0
-  DampingFromCollision: 2
+  DampingFromCollision: 0.2

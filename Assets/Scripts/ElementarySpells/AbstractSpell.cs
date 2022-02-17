@@ -49,8 +49,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false;
-
+    protected bool isBlinked = false; 
 
     private bool chargeend = false;
 
@@ -117,7 +116,7 @@ public abstract class AbstractSpell : MonoBehaviour
     protected virtual void onChargeEnd(float chargetime)
     {
         float blink = Mathf.Abs(blinkTiming - chargetime);
-        Debug.Log(blink);
+        //Debug.Log(blink);
         if(blink <= 0.5f)
         {
             Debug.Log("Blink!");

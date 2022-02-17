@@ -21,7 +21,7 @@ public class CrossAir : AbstractMarker
         if (reticle == null)
             Debug.LogError("Recticle reference is null");
         manager.GetPlayerReticle.SetActive(true);
-        manager.GetPlayerCameraController.Aim(zoomPower);
+        manager.GetCinemachineCameraController.ZoomIn();
     }
 
     // Start is called before the first frame update
@@ -38,7 +38,7 @@ public class CrossAir : AbstractMarker
 
     public override void OnDestroy()
     {
-        manager.GetPlayerCameraController.StopAim();
+        manager.GetCinemachineCameraController.ZoomOut();
         manager.GetPlayerReticle.SetActive(false);
     }
 
