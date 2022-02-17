@@ -2,7 +2,6 @@ using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -56,7 +55,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             }
         }
         #endregion
-		if (elementaryController.inCombat)
+        #region Status management
+        if (elementaryController.inCombat)
 		{
 			playerCinemachineCameraController.CombatCam();
 		}
@@ -64,15 +64,16 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		{
 			playerCinemachineCameraController.ExploCam();
 		}
-	}
-	// Update is called once per frame
+        #endregion
+    }
+    // Update is called once per frame
 
-	/// <summary>
-	/// Modify the current spell of the elementary based on input pressed
-	/// 1 : fire || 2 : water || 3 : earth
-	/// </summary>
-	/// <param name="value"></param>
-	private void OnElementSelect(InputValue value)
+    /// <summary>
+    /// Modify the current spell of the elementary based on input pressed
+    /// 1 : fire || 2 : water || 3 : earth
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnElementSelect(InputValue value)
 	{
 		if (value.Get<Vector2>() == Vector2.left)
 		{
@@ -221,8 +222,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		}
 	}
 
-    }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL))
@@ -271,74 +270,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 	{
 		spell.init(elementaryController.gameObject, Vector3.zero);
 	}
-
-	//private void OnSpellLeft(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			// TODO : Find a smarter way to instanciate the right spell here.
-	//			AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
-	//			s.init(elementaryController.gameObject, Vector3.zero);
-	//			if (s is WaterMissiles)
-	//			{
-	//				Collider[] enemies = Physics.OverlapSphere(Vector3.zero, 200f, 1 << HarmonyLayers.LAYER_TARGETABLE);
-	//				if (enemies.Length >= 1)
-	//					((WaterMissiles)s).targetTransform = enemies[0].gameObject.transform;
-	//			}
-	//			elementaryController.CastSpell(s);
-	//		}
-
-	//	}
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//		elementaryController.currentSpell?.OnRelease();
-	//}
-
-	//private void OnSpellRight(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-	//			if (playerCinemachineCameraController)
-	//			{
-	//				spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-
-	//			}
-	//			else
-	//			{
-	//				spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
-
-	//			}
-	//			elementaryController.CastSpell(spell);
-	//		}
-	//	}
-	//	//Debug.Log(value.isPressed);
-
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//	{
-	//		//Debug.Log("liberation tim�e");
-	//		elementaryController.currentSpell?.OnRelease();
-	//	}
-	//}
-
-	//private void OnInteract(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			//Debug.Log("EarthMortar");
-	//			AbstractSpell spell = Instantiate(elementaryController.spells[2], elementaryController.transform.position, Quaternion.identity);
-	//			spell.init(elementaryController.gameObject, Vector3.zero);
-	//			elementaryController.currentSpell = spell;
-	//		}
-	//	}
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//		elementaryController.currentSpell?.OnRelease();
-	//}
 
 	/// <summary>
 	/// Set the Elementary shoulder reference

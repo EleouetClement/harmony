@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41af346954b99694aa381ec2538aa83c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 2
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
   cameraController: {fileID: 0}
