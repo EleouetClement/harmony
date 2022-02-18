@@ -24,7 +24,6 @@ public class CinemachineCameraController : MonoBehaviour
     static private Vector3 groundVector = new Vector3(0, 1, 0);
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
-    private float shakeTimer;
 
 	private void Start()
 	{
@@ -35,20 +34,7 @@ public class CinemachineCameraController : MonoBehaviour
 
 	private void Update()
 	{
-        cinemachineVirtualCamera = currentCam.GetComponent<CinemachineVirtualCamera>();
-        if (currentCam == combatCam)
-        {
-            if (shakeTimer > 0f)
-            {
-                shakeTimer -= Time.deltaTime;
-            }
-            else if (shakeTimer <= 0f)
-            {
-                CinemachineBasicMultiChannelPerlin multiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
-                multiChannelPerlin.m_AmplitudeGain = 0f;
-            }
-        }
 
 	}
 
@@ -120,14 +106,6 @@ public class CinemachineCameraController : MonoBehaviour
         Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
         transform.localRotation = camRotation;
         
-    }
-
-    public void ShakeCamera(float intensity, float time)
-    {
-        CinemachineBasicMultiChannelPerlin multiChannelPerlin = cinemachineVirtualCamera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
-
-        multiChannelPerlin.m_AmplitudeGain = intensity;
-        shakeTimer = time;
     }
 
     public void AddYaw(float yaw)
