@@ -117,7 +117,7 @@ public class PlayerGameplayController : MonoBehaviour
 				CastFireOrb(spell);
 				break;
 			case AbstractSpell.Element.Water:
-
+				CastWaterBeam(spell);
 				break;
 			case AbstractSpell.Element.Earth:
 				CastEarthWall(spell);
@@ -140,7 +140,7 @@ public class PlayerGameplayController : MonoBehaviour
 						CastFireOrb(spell);
 						break;
 					case AbstractSpell.Element.Water:
-						
+						CastWaterBeam(spell);
 						break;
 					case AbstractSpell.Element.Earth:
 						CastEarthWall(spell);
@@ -192,6 +192,12 @@ public class PlayerGameplayController : MonoBehaviour
 				((WaterMissiles)spell).targetTransform = enemies[0].gameObject.transform;
 		}
 	}
+
+	private void CastWaterBeam(AbstractSpell spell)
+    {
+		Debug.LogWarning(GameModeSingleton.GetInstance().GetCinemachineCameraController);
+		spell.init(elementaryController.gameObject, Vector3.zero);
+    }
 
 	private void CastFireBall(AbstractSpell spell)
 	{

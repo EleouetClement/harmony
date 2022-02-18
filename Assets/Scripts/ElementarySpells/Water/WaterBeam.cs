@@ -8,16 +8,10 @@ public class WaterBeam : AbstractSpell
     [Min(1)] public float acceleration;
 
     public GameObject PosMarkerPrefab;
-    public CameraController cameraController;
+    public CinemachineCameraController cameraController;
 
+    public ElementaryController elemCtrl;
     private RaycastHit hit;
-
-
-    void Update()
-    {
-
-
-    }
 
     public void LateUpdate()
     {
@@ -37,27 +31,24 @@ public class WaterBeam : AbstractSpell
 
             transform.LookAt(hit.point);
         }
-
-
     }
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        base.init(elemRef, target.normalized);
+        //base.init(elemRef, target.normalized);
+        base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        cameraController = elementary.GetComponent<ElementaryController>().playerCameraController;
+        elemCtrl = elemRef.GetComponent<ElementaryController>();
+        cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         marker.Init(maxDistance, PosMarkerPrefab);
-
     }
 
     public override void Terminate()
     {
-        ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
-        //elemCtrl.currentSpell = null;
-        //elemCtrl.computePosition = true;
-        elementary.GetComponent<ElementaryController>().currentSpell = null;
-        elementary.GetComponent<ElementaryController>().computePosition = true;
+        elemCtrl.currentSpell = null;
+        elemCtrl.computePosition = true;
+        elemCtrl.readyToCast = true;
         Destroy(gameObject);
     }
 
