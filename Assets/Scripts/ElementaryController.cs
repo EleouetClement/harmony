@@ -24,6 +24,7 @@ public class ElementaryController : MonoBehaviour
     private Vector3 shoulderOffset;
 
     public bool inCombat = false;
+    public bool isAiming = false;
 
     /// <summary>
     /// true if the element handles itself
@@ -59,7 +60,7 @@ public class ElementaryController : MonoBehaviour
         
 
         //Testing purposes
-        if (Input.GetKeyDown(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.C))
         {
             inCombat ^= true;
         }

@@ -72,6 +72,7 @@ public class EarthBall : MonoBehaviour
 	void Start()
 	{
 		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
+		
 
 		launched = false;
 		minSize = earthMortarRef.elementary.transform.localScale;
@@ -97,42 +98,32 @@ public class EarthBall : MonoBehaviour
 			//range = minRange + charge * (maxRange - minRange);
 
 			//launchVelocity = ((transform.forward+transform.up/2f)*charge) * range;
+			trajectoryCalculator.SetInitialVelocity(launchVelocity);
 			launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.GetTarget(), speed);
 			earthMarkerRef.SetMarkerRadius(radius);
-			
-			if(displayTrajectory)
-				trajectoryCalculator.CalculateTrajectory(launchVelocity);
-
-			//physicsSimulator.currentVelocity = launchVelocity;
-			//physicsSimulator.Init();
 
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);
-
-		}
-		else
-		{
 
 		}
 		
 	}
 
+	private void Update()
+	{
+		if (displayTrajectory)
+			earthMarkerRef.trajectoryCalculator = trajectoryCalculator;
+		else
+			earthMarkerRef.trajectoryCalculator = null;
+	}
+
 	public void Launch()
 	{
-
-		//bug
-		//float mass = (charge / 100.0f) * maxMass; 
-		//GetComponent<Rigidbody>().mass = mass;
-
 		GetComponent<LineRenderer>().enabled = false;
-		launched = true;
-		//Debug.Log("Range : " + range);
-		//Debug.Log("launchVelocity : " + launchVelocity);
-		//Vector3 launchDirection = target - elementary.transform.position;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
 		GetComponent<Rigidbody>().isKinematic = false;
 		GetComponent<SphereCollider>().isTrigger = false;
-		//GetComponent<Rigidbody>().AddForce(transform.forward * range, ForceMode.Impulse);
 		GetComponent<Rigidbody>().velocity = launchVelocity;
+		launched = true;
 	}
 
 	private void OnCollisionEnter(Collision collision)

@@ -142,7 +142,8 @@ MonoBehaviour:
   - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
   - {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210, type: 3}
   exploratorySpells: []
-  inCombat: 0
+  inCombat: 1
+  aiming: 0
   computePosition: 1
   currentSpell: {fileID: 0}
   readyToCast: 1

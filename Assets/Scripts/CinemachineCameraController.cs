@@ -80,7 +80,7 @@ public class CinemachineCameraController : MonoBehaviour
     public void ZoomOut()
     {
         currentCam.SetActive(false);
-        exploCam.SetActive(true);
+        combatCam.SetActive(true);
         currentCam = exploCam;
     }
 

@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.73, y: 0.6500001, z: -1.8099995}
+  m_LocalPosition: {x: 0.73, y: 0.65, z: -1.81}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7781385, y: 1}
+    m_SensorSize: {x: 1.2437159, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -728,6 +728,7 @@ MonoBehaviour:
   walkSpeed: 15
   jumpForce: 10
   maxFloorAngle: 45
+  turnSpeed: 4
   friction: 5
   airFriction: 1
   airControl: 0.25
@@ -760,6 +761,7 @@ MonoBehaviour:
   elementaryObjectReference: {fileID: 0}
   playerMeshReference: {fileID: 6677204177534006692}
   playerCinemachineCameraController: {fileID: 1212469516}
+  castingTurnSpeed: 4
 --- !u!143 &6677204177286177701
 CharacterController:
   m_ObjectHideFlags: 0

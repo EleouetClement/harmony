@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4960547291252644676}
   - component: {fileID: -653086949367603919}
   - component: {fileID: 3343081906532645494}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: EarthMortar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410a38ed7fac3d74bae7284a763c6e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 0
   earthBall: {fileID: 7776788703797642333, guid: c1e636e570abb9f47b14be1647c6ea80,
     type: 3}
   lastBallCoord: {x: 0, y: 0, z: 0}
@@ -74,6 +75,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EarthBallDecal
+      objectReference: {fileID: 0}
+    - target: {fileID: 1367995955367225572, guid: 3cbf0ee5dfa4daf4c90f58de6b99c039,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5419319839320331777, guid: 3cbf0ee5dfa4daf4c90f58de6b99c039,
         type: 3}

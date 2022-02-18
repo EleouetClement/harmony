@@ -12,8 +12,12 @@ public class PlayerGameplayController : MonoBehaviour
     [SerializeField] GameObject playerMeshReference;
     [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
+	private Transform playerMesh;
+	private CinemachineCameraController cinemachineCamera;
 
-    public bool InFight { get; private set; } = false;
+	public float castingTurnSpeed = 5f;
+
+	public bool InFight { get; private set; } = false;
     private void Awake()
     {
         Cursor.visible = false;
@@ -23,13 +27,33 @@ public class PlayerGameplayController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+		playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+		cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
 	}
 
 	// Update is called once per frame
-	void Update()
+	void LateUpdate()
 	{
-		if (elementaryController.inCombat)
+		cameraCheck();
+
+		//improvement needed : do this only when aiming or charging a spell
+		if (!GetComponent<PlayerMotionController>().isMoving && !elementaryController.readyToCast)
+		{
+			playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
+		}
+	}
+
+
+	/// <summary>
+	/// Makes sure the right camera is active depending on elementary state
+	/// </summary>
+	private void cameraCheck()
+	{
+		if (elementaryController.inCombat && elementaryController.isAiming)
+		{
+			playerCinemachineCameraController.ZoomIn();
+		}
+		else if (elementaryController.inCombat)
 		{
 			playerCinemachineCameraController.CombatCam();
 		}
@@ -88,7 +112,6 @@ public class PlayerGameplayController : MonoBehaviour
 		}
 		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
 			elementaryController.currentSpell?.OnRelease();
-
 	}
 
 	private void CastOffensiveSpell(AbstractSpell spell)
@@ -133,6 +156,7 @@ public class PlayerGameplayController : MonoBehaviour
 		{
 			if (value.isPressed)
 			{
+				playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
 				AbstractSpell spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
 				switch (elementaryController.currentElement)
 				{
@@ -212,73 +236,10 @@ public class PlayerGameplayController : MonoBehaviour
 		spell.init(elementaryController.gameObject, Vector3.zero);
 	}
 
-	//private void OnSpellLeft(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			// TODO : Find a smarter way to instanciate the right spell here.
-	//			AbstractSpell s = Instantiate(elementaryController.spells[0], elementaryController.transform.position, Quaternion.identity);
-	//			s.init(elementaryController.gameObject, Vector3.zero);
-	//			if (s is WaterMissiles)
-	//			{
-	//				Collider[] enemies = Physics.OverlapSphere(Vector3.zero, 200f, 1 << HarmonyLayers.LAYER_TARGETABLE);
-	//				if (enemies.Length >= 1)
-	//					((WaterMissiles)s).targetTransform = enemies[0].gameObject.transform;
-	//			}
-	//			elementaryController.CastSpell(s);
-	//		}
-
-	//	}
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//		elementaryController.currentSpell?.OnRelease();
-	//}
-
-	//private void OnSpellRight(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			AbstractSpell spell = Instantiate(elementaryController.spells[1], elementaryController.transform.position, Quaternion.identity);
-	//			if (playerCinemachineCameraController)
-	//			{
-	//				spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-
-	//			}
-	//			else
-	//			{
-	//				spell.init(elementaryController.gameObject, playerCameraController.GetViewDirection);
-
-	//			}
-	//			elementaryController.CastSpell(spell);
-	//		}
-	//	}
-	//	//Debug.Log(value.isPressed);
-
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//	{
-	//		//Debug.Log("liberation tim�e");
-	//		elementaryController.currentSpell?.OnRelease();
-	//	}
-	//}
-
-	//private void OnInteract(InputValue value)
-	//{
-	//	if (elementaryController.currentSpell == null)
-	//	{
-	//		if (value.isPressed)
-	//		{
-	//			//Debug.Log("EarthMortar");
-	//			AbstractSpell spell = Instantiate(elementaryController.spells[2], elementaryController.transform.position, Quaternion.identity);
-	//			spell.init(elementaryController.gameObject, Vector3.zero);
-	//			elementaryController.currentSpell = spell;
-	//		}
-	//	}
-	//	if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-	//		elementaryController.currentSpell?.OnRelease();
-	//}
+	private void OnAim(InputValue value)
+	{
+		elementaryController.isAiming = value.isPressed;
+	}
 
 	/// <summary>
 	/// Set the Elementary shoulder reference
