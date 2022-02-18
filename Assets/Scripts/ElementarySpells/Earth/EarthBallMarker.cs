@@ -9,6 +9,8 @@ public class EarthBallMarker : AbstractMarker
     /// </summary>
     GameObject markerInstance;
 
+    public TrajectoryCalculator trajectoryCalculator;
+
 	public override void Init(float maxRayCastDistance, GameObject prefab)
 	{
         base.Init(maxRayCastDistance, prefab);
@@ -20,7 +22,7 @@ public class EarthBallMarker : AbstractMarker
 
 
     /// <summary>
-    /// Returns the position where to launch the earth ball 
+    /// Returns the position where to launch the earth ball and draws markers
     /// </summary>
     /// <returns></returns>
     public Vector3 GetTarget()
@@ -28,8 +30,8 @@ public class EarthBallMarker : AbstractMarker
         RaycastHit hit;
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, maxRayCastDistance));
         Vector3 origin = ray.origin + 0.1f * ray.direction;
-        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance))
-        {
+        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, (1 << HarmonyLayers.LAYER_DEFAULT) + (1 << HarmonyLayers.LAYER_GROUND)))
+            {
             if (markerInstance == null)
             {
                 markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
@@ -37,15 +39,18 @@ public class EarthBallMarker : AbstractMarker
             }
 
             markerInstance.GetComponent<MeshRenderer>().enabled = true;
-            markerInstance.transform.position = hit.point + hit.normal*0.1f;
+            markerInstance.transform.position = hit.point + hit.normal * 0.1f;
             markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
-            //print("target : "+hit.collider);
-            //Debug.DrawRay(origin, hit.point - ray.origin, Color.red, 5);
+
+            trajectoryCalculator.CalculateTrajectory();
+            trajectoryCalculator.DisplayTrajectory(true);
+            
             return hit.point;
         }
         //out of range
 		else
 		{
+            trajectoryCalculator.DisplayTrajectory(false);
             if (markerInstance != null)
                 markerInstance.GetComponent<MeshRenderer>().enabled = false;
 

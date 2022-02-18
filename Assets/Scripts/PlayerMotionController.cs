@@ -12,6 +12,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float walkSpeed = 1f;
     [Range(0, 10)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
+    public float turnSpeed;
     [Header("Character Physics settings")]
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
@@ -31,7 +32,8 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
-    
+    public Transform playerMesh;
+
     private CharacterController controller;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
@@ -73,7 +75,6 @@ public class PlayerMotionController : MonoBehaviour
 
         currentSpeed = controller.velocity.magnitude;
         isMoving =(Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
-
     }
 
     private void FixedUpdate()
@@ -102,16 +103,15 @@ public class PlayerMotionController : MonoBehaviour
             velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
-		#endregion
+
+        #endregion
 
 
-		#region Dodge force
-		if (isDodging && dodgeTimer <= Mathf.Epsilon)
+        #region Dodge force
+        if (isDodging && dodgeTimer <= Mathf.Epsilon)
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log("Velocity avant : " + velocity);
-                velocity += (movement * dodgeSpeed * Time.fixedDeltaTime);
                 Debug.Log("Velocity apres : " + velocity);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
@@ -156,11 +156,20 @@ public class PlayerMotionController : MonoBehaviour
 
 	}
 
-    /// <summary>
-    /// Handles moving inputs using InputSystem
-    /// </summary>
-    /// <param name="value"></param>
-    void OnMove(InputValue value)
+    void LateUpdate()
+    {
+		//smooth turning when moving
+		if (isMoving)
+		{
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+		}
+	}
+
+	/// <summary>
+	/// Handles moving inputs using InputSystem
+	/// </summary>
+	/// <param name="value"></param>
+	void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
         isMoving = true;
