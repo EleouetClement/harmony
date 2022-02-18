@@ -81,6 +81,8 @@ public class Fireball : AbstractSpell
     private bool isExplosive = false;
     private GameModeSingleton gameManager;
     private ElementaryController elem;
+    private int lastshrapnelspawn = 3;
+
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -97,12 +99,18 @@ public class Fireball : AbstractSpell
             Terminate();
         }
 
+        // Update when the fireball is charging
         if(!isReleased())
         {
             target = CalculateTrajectory();
             if (fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
                 fireOrbInstance.transform.localScale += new Vector3(projectileGrowth, projectileGrowth, projectileGrowth);
+                lastshrapnelspawn--;
+                if(lastshrapnelspawn <= 0) { 
+                    fireOrbInstance.GetComponent<FireOrb>()?.addShrapnel();
+                    lastshrapnelspawn = 3;
+                }                
             }
             projectileTopSpeed += projectileTopSpeedGrowth;
             maxDistance += projectileMaxDistanceGrowth;
