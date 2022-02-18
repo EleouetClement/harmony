@@ -64,6 +64,8 @@ public class EarthBall : MonoBehaviour
 
 	private TrajectoryCalculator trajectoryCalculator;
 
+	Cinemachine.CinemachineImpulseSource shakeSource;
+
 
 
 	// Start is called before the first frame update
@@ -76,6 +78,8 @@ public class EarthBall : MonoBehaviour
 		maxSize += minSize;
 
 		gameManager = GameObject.Find("GameManager");
+
+		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
 	}
 
 	// Update is called once per frame
@@ -144,7 +148,7 @@ public class EarthBall : MonoBehaviour
 					rig.AddExplosionForce(impactforce, transform.position, radius, 1f, ForceMode.Impulse);
 				}
 			}
-			gameManager.GetComponent<GameModeSingleton>().GetCinemachineCameraController.ShakeCamera(1, 0.5f);
+			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			earthMortarRef.lastBallCoord = transform.position;
 			Destroy(gameObject);
 		}
