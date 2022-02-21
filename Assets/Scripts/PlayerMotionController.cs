@@ -112,7 +112,10 @@ public class PlayerMotionController : MonoBehaviour
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log("Velocity apres : " + velocity);
+                //Vector3 newDir = new Vector3(inputAxis.x, Mathf.Epsilon, inputAxis.y);
+                Vector3 newDir = velocity.normalized * dodgeSpeed * Time.fixedDeltaTime;
+                newDir.y = Mathf.Epsilon;
+                transform.Translate(newDir);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
             else

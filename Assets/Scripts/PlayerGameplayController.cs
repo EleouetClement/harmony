@@ -268,6 +268,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		elementaryController.isAiming = value.isPressed;
 	}
 
+	private void OnSwitchPlayMode(InputValue value)
+    {
+		elementaryController.inCombat = !elementaryController.inCombat;
+    }
+
 	/// <summary>
 	/// Set the Elementary shoulder reference
 	/// </summary>
@@ -309,7 +314,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
 			Debug.Log("Player dead");
         }
-
+		//DEAD SCENE TO LOAD...
 
     }
 }
