@@ -9,11 +9,13 @@ using UnityEngine;
 public class GameModeSingleton : MonoBehaviour
 {
     [SerializeField] private GameObject playerReference;
+    [SerializeField] private Transform playerMesh;
     [SerializeField] private GameObject elementaryReference;
     [SerializeField] private GameObject playerCameraReference;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
+    
 
     /// <summary>
     /// True if the player enters in an arena or any fight area.
@@ -62,7 +64,15 @@ public class GameModeSingleton : MonoBehaviour
         }
     }
 
-    public GameObject GetEmentaryReference
+    public Transform GetPlayerMesh
+    {
+        get
+        {
+            return playerMesh;
+        }
+    }
+
+    public GameObject GetElementaryReference
     {
         get
         {

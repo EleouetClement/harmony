@@ -1,62 +1,59 @@
-using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerGameplayController : MonoBehaviour, IDamageable
+public class PlayerGameplayController : MonoBehaviour
 {
     [Header("Elementary")]
     [SerializeField] GameObject elementaryObjectReference;
     [SerializeField] GameObject playerMeshReference;
     [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
     private ElementaryController elementaryController;
+	private Transform playerMesh;
+	private CinemachineCameraController cinemachineCamera;
 
-    [Header("Health stats")]
-    [SerializeField][Min(0)] private int maxHitNumber = 2;
-    [SerializeField][Min(0)] private float timeBeforeLifeReset = 10;
+	public float castingTurnSpeed = 5f;
 
-    private GameModeSingleton gm;
-
-    public bool InFight { get; private set; } = false;
-
-    private int hits = 0;
-    private float hitTimer = Mathf.Epsilon;
-    private bool wounded = false;
-
+	public bool InFight { get; private set; } = false;
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        gm = GameModeSingleton.GetInstance();
         InitializeElementary();
     }
     // Start is called before the first frame update
     void Start()
     {
-
+		playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+		cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
 	}
 
-    // Update is called once per frame
-    void Update()
-    {
-        #region Health timer managment
-        if (wounded)
-        {
-            if(hitTimer < timeBeforeLifeReset)
-            {
-                hitTimer += Time.deltaTime;
-            }
-            else
-            {
-                wounded = false;
-                hits = 0;
-            }
-        }
-        #endregion
-        #region Status management
-        if (elementaryController.inCombat)
+	// Update is called once per frame
+	void LateUpdate()
+	{
+		cameraCheck();
+
+		//improvement needed : do this only when aiming or charging a spell
+		if (!GetComponent<PlayerMotionController>().isMoving && !elementaryController.readyToCast)
+		{
+			playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
+		}
+	}
+
+
+	/// <summary>
+	/// Makes sure the right camera is active depending on elementary state
+	/// </summary>
+	private void cameraCheck()
+	{
+		if (elementaryController.inCombat && elementaryController.isAiming)
+		{
+			playerCinemachineCameraController.ZoomIn();
+		}
+		else if (elementaryController.inCombat)
 		{
 			playerCinemachineCameraController.CombatCam();
 		}
@@ -64,16 +61,14 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		{
 			playerCinemachineCameraController.ExploCam();
 		}
-        #endregion
-    }
-    // Update is called once per frame
+	}
 
-    /// <summary>
-    /// Modify the current spell of the elementary based on input pressed
-    /// 1 : fire || 2 : water || 3 : earth
-    /// </summary>
-    /// <param name="value"></param>
-    private void OnElementSelect(InputValue value)
+	/// <summary>
+	/// Modify the current spell of the elementary based on input pressed
+	/// 1 : fire || 2 : water || 3 : earth
+	/// </summary>
+	/// <param name="value"></param>
+	private void OnElementSelect(InputValue value)
 	{
 		if (value.Get<Vector2>() == Vector2.left)
 		{
@@ -117,7 +112,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		}
 		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
 			elementaryController.currentSpell?.OnRelease();
-
 	}
 
 	private void CastOffensiveSpell(AbstractSpell spell)
@@ -162,6 +156,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		{
 			if (value.isPressed)
 			{
+				playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
 				AbstractSpell spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
 				switch (elementaryController.currentElement)
 				{
@@ -222,36 +217,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		}
 	}
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL))
-        {
-
-        }
-    }
-
-    /// <summary>
-    /// Behaviour when hit by an EnnemySpell
-    /// </summary>
-    /// <param name="hit"></param>
-    public void OnDamage(DamageHit hit)
-    {
-        CinemachineCameraController cam = gm.GetCinemachineCameraController;
-        hits += 1;
-        if(hits >= maxHitNumber)
-        {
-            Debug.Log("Player Death");
-        }
-        else
-        {
-            Debug.Log("Player hurt");
-            wounded = true; 
-            CinemachineImpulseSource source = GetComponent<CinemachineImpulseSource>();
-            source.GenerateImpulse();
-        }
-    }
-
-
 	private void CastFireBall(AbstractSpell spell)
 	{
 		if (playerCinemachineCameraController)
@@ -269,6 +234,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 	private void CastEarthMortar(AbstractSpell spell)
 	{
 		spell.init(elementaryController.gameObject, Vector3.zero);
+	}
+
+	private void OnAim(InputValue value)
+	{
+		elementaryController.isAiming = value.isPressed;
 	}
 
 	/// <summary>

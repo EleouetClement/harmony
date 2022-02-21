@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -7,7 +8,7 @@ public class CinemachineCameraController : MonoBehaviour
 {
     public Transform PlayerMesh;
 
-    [SerializeField] public GameObject defaultCam;
+    [SerializeField] public GameObject exploCam;
     [SerializeField] GameObject aimingCam;
     [SerializeField] GameObject combatCam;
 
@@ -22,9 +23,19 @@ public class CinemachineCameraController : MonoBehaviour
 
     static private Vector3 groundVector = new Vector3(0, 1, 0);
 
+    private CinemachineVirtualCamera cinemachineVirtualCamera;
+
 	private void Start()
 	{
-        currentCam = defaultCam;
+        currentCam = exploCam;
+        cinemachineVirtualCamera = currentCam.GetComponent<CinemachineVirtualCamera>();
+
+    }
+
+	private void Update()
+	{
+
+
 	}
 
 	public Vector3 GetViewDirection
@@ -39,7 +50,7 @@ public class CinemachineCameraController : MonoBehaviour
     {
         get
         {
-            return defaultCam.activeInHierarchy? defaultCam.transform.position : aimingCam.transform.position;
+            return exploCam.activeInHierarchy? exploCam.transform.position : aimingCam.transform.position;
         }
     }
 
@@ -69,8 +80,8 @@ public class CinemachineCameraController : MonoBehaviour
     public void ZoomOut()
     {
         currentCam.SetActive(false);
-        defaultCam.SetActive(true);
-        currentCam = defaultCam;
+        combatCam.SetActive(true);
+        currentCam = exploCam;
     }
 
     public void CombatCam()
@@ -83,8 +94,8 @@ public class CinemachineCameraController : MonoBehaviour
     public void ExploCam()
     {
         currentCam.SetActive(false);
-        defaultCam.SetActive(true);
-        currentCam = defaultCam;
+        exploCam.SetActive(true);
+        currentCam = exploCam;
     }
 
     void LateUpdate()
