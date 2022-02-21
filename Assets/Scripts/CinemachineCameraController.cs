@@ -50,7 +50,7 @@ public class CinemachineCameraController : MonoBehaviour
     {
         get
         {
-            return exploCam.activeInHierarchy? exploCam.transform.position : aimingCam.transform.position;
+            return exploCam.activeInHierarchy? exploCam.transform.position : combatCam.transform.position;
         }
     }
 
@@ -80,7 +80,7 @@ public class CinemachineCameraController : MonoBehaviour
     public void ZoomOut()
     {
         currentCam.SetActive(false);
-        exploCam.SetActive(true);
+        combatCam.SetActive(true);
         currentCam = exploCam;
     }
 

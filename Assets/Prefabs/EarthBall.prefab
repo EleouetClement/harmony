@@ -53,7 +53,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   earthMortarRef: {fileID: 0}
   earthMarkerRef: {fileID: 0}
-  displayTrajectory: 0
+  displayTrajectory: 1
   charge: 0
   speed: 1.5
   maxMass: 0
@@ -74,7 +74,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b01d23392ebf414abacb6ac20e265d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accuracy: 10
+  length: 2
+  accuracy: 20
 --- !u!54 &-9212745950971948318
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float walkSpeed = 1f;
     [Range(0, 10)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
+    public float turnSpeed;
     [Header("Character Physics settings")]
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
@@ -157,15 +158,18 @@ public class PlayerMotionController : MonoBehaviour
 
     void LateUpdate()
     {
-        if(isMoving)
-            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0);
-    }
+		//smooth turning when moving
+		if (isMoving)
+		{
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+		}
+	}
 
-    /// <summary>
-    /// Handles moving inputs using InputSystem
-    /// </summary>
-    /// <param name="value"></param>
-    void OnMove(InputValue value)
+	/// <summary>
+	/// Handles moving inputs using InputSystem
+	/// </summary>
+	/// <param name="value"></param>
+	void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
         isMoving = true;

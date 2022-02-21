@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class TrajectoryCalculator : MonoBehaviour
 {
+
+	[Range(0f,2f)]
+	public float length = 1f;
+
 	/// <summary>
 	/// Defines the number of points calculated to draw the preview trajectory
 	/// </summary>
@@ -14,6 +18,7 @@ public class TrajectoryCalculator : MonoBehaviour
 	/// </summary>
 	private float timeFlight;
 
+	Vector3 initialVelocity;
 
 	public void Start()
 	{
@@ -22,11 +27,10 @@ public class TrajectoryCalculator : MonoBehaviour
 	/// <summary>
 	/// Calculate and Draws a preview trajectory of projectile
 	/// </summary>
-	/// <param name="initialVelocity"></param>
-	public void CalculateTrajectory(Vector3 initialVelocity)
+	public void CalculateTrajectory()
 	{
-		timeFlight = (-1f * initialVelocity.y) / Physics.gravity.y;
-		timeFlight = 1f * timeFlight;
+		timeFlight = (-1f * (initialVelocity.y + transform.position.y)) / Physics.gravity.y;
+		timeFlight = length * timeFlight;
 		//Debug.Log(timeFlight);
 		GetComponent<LineRenderer>().positionCount = accuracy;
 		Vector3 trajectoryPoint;
@@ -64,5 +68,15 @@ public class TrajectoryCalculator : MonoBehaviour
 		result.y = Vy;
 
 		return result;
+	}
+
+	public void DisplayTrajectory(bool active)
+	{
+		GetComponent<LineRenderer>().enabled = active;
+	}
+
+	public void SetInitialVelocity(Vector3 velocity)
+	{
+		initialVelocity = velocity;
 	}
 }
