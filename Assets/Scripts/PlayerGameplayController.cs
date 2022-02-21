@@ -5,7 +5,7 @@ using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerGameplayController : MonoBehaviour
+public class PlayerGameplayController : MonoBehaviour, IDamageable
 {
     [Header("Elementary")]
     [SerializeField] GameObject elementaryObjectReference;
@@ -273,4 +273,10 @@ public class PlayerGameplayController : MonoBehaviour
 		}
 
 	}
+
+    public void OnDamage(DamageHit hit)
+    {
+		CinemachineImpulseSource source = GetComponent<CinemachineImpulseSource>();
+		source.GenerateImpulse();
+    }
 }
