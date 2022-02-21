@@ -74,7 +74,14 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         currentSpeed = controller.velocity.magnitude;
-        isMoving =(Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+        isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+
+        //smooth turning when moving
+        if (isMoving)
+        {
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+        }
+
     }
 
     private void FixedUpdate()
@@ -151,18 +158,14 @@ public class PlayerMotionController : MonoBehaviour
 		dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
 		velocity += dragForce;
 
-		#endregion
+        #endregion
 
-
-	}
+        
+    }
 
     void LateUpdate()
     {
-		//smooth turning when moving
-		if (isMoving)
-		{
-            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
-		}
+		
 	}
 
 	/// <summary>

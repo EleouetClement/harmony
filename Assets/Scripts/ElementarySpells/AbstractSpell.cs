@@ -62,10 +62,22 @@ public abstract class AbstractSpell : MonoBehaviour
 
     private bool chargeend = false;
 
+    private Transform playerMesh;
+
+
+	private void Update()
+	{
+        //smooth turning when charging a spell and not moving
+        if(!chargeend)
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
+
+    }
+
     public virtual void FixedUpdate()
     {
         if (!chargeend)
-            charge += Time.fixedDeltaTime;
+            charge += Time.fixedDeltaTime;            
+        
         //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
         if (isReleased())
         {
@@ -97,6 +109,7 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         this.target = target;
         elementary = elemRef;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
     }
 
     public void OnRelease()
