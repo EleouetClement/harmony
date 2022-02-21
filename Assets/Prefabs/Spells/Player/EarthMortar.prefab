@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bff5e3ce5ffb7d4d8e97020dbf175ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trajectoryCalculator: {fileID: 0}
 --- !u!1001 &7716136553234323843
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -74,7 +75,7 @@ PrefabInstance:
     - target: {fileID: 1367995955367225572, guid: 3cbf0ee5dfa4daf4c90f58de6b99c039,
         type: 3}
       propertyPath: m_Name
-      value: EarthBallDecal
+      value: EarthBallMarkerDecal
       objectReference: {fileID: 0}
     - target: {fileID: 1367995955367225572, guid: 3cbf0ee5dfa4daf4c90f58de6b99c039,
         type: 3}

@@ -8,7 +8,7 @@ public class EarthBall : MonoBehaviour
 	public EarthBallMarker earthMarkerRef;
 	private bool launched;
 
-	GameObject gameManager;
+	public GameObject decalPrefab;
 
 	public bool displayTrajectory;
 
@@ -43,9 +43,11 @@ public class EarthBall : MonoBehaviour
 	///	Defines min and max size at max charge level
 	/// </summary>
 	private Vector3 minSize;
-	public Vector3 maxSize;
+	private Vector3 maxSize;
 
-	
+	//public Vector3 sizeGrowth;
+
+
 	/// <summary>
 	///	Defines min and max radius of impact at max charge level
 	/// </summary>
@@ -62,6 +64,9 @@ public class EarthBall : MonoBehaviour
 
 	private float impactforce;
 
+	private Quaternion markerRotation;
+	private Vector3 markerScale;
+
 	private TrajectoryCalculator trajectoryCalculator;
 
 	Cinemachine.CinemachineImpulseSource shakeSource;
@@ -75,10 +80,10 @@ public class EarthBall : MonoBehaviour
 		
 
 		launched = false;
-		minSize = earthMortarRef.elementary.transform.localScale;
-		maxSize += minSize;
+		minSize = transform.localScale;
+		//maxSize = minSize + sizeGrowth;
+		maxSize = minSize*2f;
 
-		gameManager = GameObject.Find("GameManager");
 
 		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
 	}
@@ -104,6 +109,11 @@ public class EarthBall : MonoBehaviour
 
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);
 
+			if (launched)
+			{
+				transform.rotation.SetLookRotation(GetComponent<Rigidbody>().velocity);
+			}
+
 		}
 		
 	}
@@ -114,6 +124,13 @@ public class EarthBall : MonoBehaviour
 			earthMarkerRef.trajectoryCalculator = trajectoryCalculator;
 		else
 			earthMarkerRef.trajectoryCalculator = null;
+		if (earthMarkerRef && earthMarkerRef.markerInstance)
+		{
+			markerScale = earthMarkerRef.markerInstance.transform.localScale;
+			markerRotation = earthMarkerRef.markerInstance.transform.rotation;
+		}
+		
+					
 	}
 
 	public void Launch()
@@ -121,7 +138,7 @@ public class EarthBall : MonoBehaviour
 		GetComponent<LineRenderer>().enabled = false;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
 		GetComponent<Rigidbody>().isKinematic = false;
-		GetComponent<SphereCollider>().isTrigger = false;
+		//GetComponent<SphereCollider>().isTrigger = false;
 		GetComponent<Rigidbody>().velocity = launchVelocity;
 		launched = true;
 	}
@@ -139,6 +156,9 @@ public class EarthBall : MonoBehaviour
 					rig.AddExplosionForce(impactforce, transform.position, radius, 1f, ForceMode.Impulse);
 				}
 			}
+
+			GameObject decalInstance = Instantiate(decalPrefab, collision.transform.position - GetComponent<Rigidbody>().velocity*0.01f, markerRotation);
+			decalInstance.transform.localScale = markerScale;
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			earthMortarRef.lastBallCoord = transform.position;
 			Destroy(gameObject);

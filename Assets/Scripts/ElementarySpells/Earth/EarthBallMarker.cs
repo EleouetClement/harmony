@@ -7,7 +7,7 @@ public class EarthBallMarker : AbstractMarker
     /// <summary>
     /// Actual marker shown in game
     /// </summary>
-    GameObject markerInstance;
+    public GameObject markerInstance;
 
     public TrajectoryCalculator trajectoryCalculator;
 
@@ -66,7 +66,7 @@ public class EarthBallMarker : AbstractMarker
         if (markerInstance != null)
         {
             Vector3 currentScale = markerInstance.transform.localScale;
-            markerInstance.transform.localScale = new Vector3(2f * radius, 2f * radius , 2f * radius);
+            markerInstance.transform.localScale = new Vector3(2f * radius, currentScale.y , 2f * radius);
         }
     }
 
