@@ -130,6 +130,7 @@ public class EarthBall : MonoBehaviour
 	{
 		if (collision.gameObject.name != earthMortarRef.elementary.gameObject.name)
 		{
+			// Knockback computations
 			Collider[] near = Physics.OverlapSphere(transform.position, radius);
 			foreach (var collider in near)
 			{
@@ -141,6 +142,15 @@ public class EarthBall : MonoBehaviour
 			}
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			earthMortarRef.lastBallCoord = transform.position;
+			// Idamageable computations
+			Debug.Log("Earth mortal shockwave at : " + transform.position + " / radius : " + radius);
+			Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position, radius, 1 << HarmonyLayers.LAYER_TARGETABLE);
+			if (enemies.Length >= 1)
+				foreach (Collider c in enemies)
+				{
+					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth));
+				}
+			// Destroy the ball
 			Destroy(gameObject);
 		}
 	}
