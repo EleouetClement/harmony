@@ -95,12 +95,8 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!sliding && !isDodging)
         {
-            forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
-            rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
             
-            movement = forwardDirection + rightDirection;
-            movement.Normalize();
-            velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+            velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
 
@@ -112,8 +108,8 @@ public class PlayerMotionController : MonoBehaviour
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                //Vector3 newDir = new Vector3(inputAxis.x, Mathf.Epsilon, inputAxis.y);
-                Vector3 newDir = velocity.normalized * dodgeSpeed * Time.fixedDeltaTime;
+                //Vector3 newDir = new Vector3(inputAxis.x, Mathf.Epsilon, inputAxis.y);               
+                Vector3 newDir = GetDirection() * dodgeSpeed * Time.fixedDeltaTime;
                 newDir.y = Mathf.Epsilon;
                 transform.Translate(newDir);
                 currentDodgeDuration += Time.fixedDeltaTime;
@@ -234,6 +230,16 @@ public class PlayerMotionController : MonoBehaviour
             Gizmos.DrawLine(transform.position, end);
             
         }
+    }
+
+    private Vector3 GetDirection()
+    {
+        forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+        rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
+        Vector3 direction = forwardDirection + rightDirection;
+        direction.Normalize();
+
+        return direction;
     }
 
 }
