@@ -388,7 +388,7 @@ PrefabInstance:
         type: 3}
       propertyPath: exploratorySpells.Array.data[1]
       value: 
-      objectReference: {fileID: 209660303719141882, guid: 097be151588f95b408b8a4172d629296,
+      objectReference: {fileID: 209660303719141882, guid: 2ffae2c690326de4c8418b68921e3076,
         type: 3}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}

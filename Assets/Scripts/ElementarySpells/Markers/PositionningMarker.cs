@@ -17,24 +17,24 @@ public class PositionningMarker : AbstractMarker
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
-                Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
+                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
                 
             }
             else if(hit.normal.y >= 0)
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
-                Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
+                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
                 
             }
             else
             {
-                Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
+                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
             }
         }
         else
         {
-            Debug.DrawRay(origin, direction * maxRayCastDistance, Color.red, 10);
+            //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.red, 10);
             targetPosition = Vector3.zero;
             Debug.Log("No valid target");
         }

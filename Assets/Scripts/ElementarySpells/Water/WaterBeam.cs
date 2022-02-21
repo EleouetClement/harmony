@@ -5,13 +5,31 @@ using UnityEngine;
 public class WaterBeam : AbstractSpell
 {
     [Min(1)] public float maxDistance;
-    [Min(1)] public float acceleration;
+    [Min(1)] public float beamAcceleration;
 
     public GameObject PosMarkerPrefab;
     public CinemachineCameraController cameraController;
     public ElementaryController elemCtrl;
     public ParticleSystem impactEffect;
+
     private RaycastHit hit;
+    private bool isAccelerationBeamFinished = false;
+
+    public override void FixedUpdate()
+    {
+        if (!isReleased())
+        {
+            if (!isAccelerationBeamFinished)
+            {
+                transform.localScale += new Vector3(0, 0, beamAcceleration * Time.fixedDeltaTime);
+
+                if (transform.localScale.z >= maxDistance)
+                {
+                    isAccelerationBeamFinished = true;
+                }
+            }
+        }
+    }
 
     public void LateUpdate()
     {
@@ -29,7 +47,6 @@ public class WaterBeam : AbstractSpell
                 hit.point = virtualPointDistanceMax;
             }
 
-            //impactEffect.transform.rotation = Quaternion.LookRotation()
             impactEffect.transform.position = hit.point;
             impactEffect.transform.LookAt(elemCtrl.transform.position);
             transform.LookAt(hit.point);
@@ -38,7 +55,6 @@ public class WaterBeam : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        //base.init(elemRef, target.normalized);
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();

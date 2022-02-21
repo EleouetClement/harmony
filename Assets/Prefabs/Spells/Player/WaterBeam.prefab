@@ -4887,7 +4887,7 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 10}
+  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -4952,7 +4952,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 209660303719141884}
-  - component: {fileID: 209660303719141883}
   - component: {fileID: 209660303719141882}
   - component: {fileID: 627015841}
   m_Layer: 0
@@ -4979,22 +4978,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &209660303719141883
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 209660303719141885}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 376f56dc3f1341843974f33d5706ff83, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
-  firePoint: {fileID: 209660303719141885}
-  lr: {fileID: 209660303498517546}
-  maximumLength: 80
 --- !u!114 &209660303719141882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5008,8 +4991,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 1
-  maxDistance: 30
-  acceleration: 5
+  maxDistance: 60
+  beamAcceleration: 10
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
   cameraController: {fileID: 0}
@@ -5026,9 +5009,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.48411036
-  m_Height: 10.028691
+  m_Height: 1.0216012
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 5}
+  m_Center: {x: 0, y: 0, z: 0.49645543}
 --- !u!1001 &1489093066
 PrefabInstance:
   m_ObjectHideFlags: 0
