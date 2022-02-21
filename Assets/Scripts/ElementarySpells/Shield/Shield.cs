@@ -30,8 +30,9 @@ public class Shield : AbstractSpell
     }
 
     private void Update()
-    {  
-        if (!elemController.IsElementaryAway())
+    {
+        bool debug = elemController.IsElementaryAway();
+        if (!debug)
         {
             if(shieldCollider.enabled == false)
             {

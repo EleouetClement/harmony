@@ -50,7 +50,7 @@ public class CinemachineCameraController : MonoBehaviour
     {
         get
         {
-            return exploCam.activeInHierarchy? exploCam.transform.position : aimingCam.transform.position;
+            return exploCam.activeInHierarchy? exploCam.transform.position : combatCam.transform.position;
         }
     }
 

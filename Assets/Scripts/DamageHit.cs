@@ -50,6 +50,4 @@ public class DamageHit
     {
         return "[Damage : " + damage + " / Type : " + type + " / Direction : " + direction + "]";
     }
-
-
 }

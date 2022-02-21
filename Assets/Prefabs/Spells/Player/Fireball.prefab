@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708d89fa2e991f640a6aeb013bb227b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 0
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
   maxDistance: 20
@@ -63,6 +64,6 @@ MonoBehaviour:
   reticleDiminutionSpeed: 40.18
   crossAirPrefab: {fileID: 7798260335137212722, guid: 04d1c281dd3d70141a4a619b6d0929bf,
     type: 3}
-  debug: 0
+  debug: 1
   virtualTargetPrefab: {fileID: 3086534299113521334, guid: adf4f8cab21cacc4a88dd53300aa7802,
     type: 3}
