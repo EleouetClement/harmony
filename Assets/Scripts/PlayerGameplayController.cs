@@ -315,6 +315,5 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 			Debug.Log("Player dead");
         }
 		//DEAD SCENE TO LOAD...
-
     }
 }
