@@ -148,7 +148,7 @@ public class EarthBall : MonoBehaviour
 			if (enemies.Length >= 1)
 				foreach (Collider c in enemies)
 				{
-					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth));
+					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth, Vector3.up));
 				}
 			// Destroy the ball
 			Destroy(gameObject);
