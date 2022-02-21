@@ -97,7 +97,12 @@ public class Shield : AbstractSpell
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
         {
             if (canPerfectShield)
             {

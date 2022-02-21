@@ -7,15 +7,23 @@ using UnityEngine.InputSystem;
 
 public class PlayerGameplayController : MonoBehaviour, IDamageable
 {
-    [Header("Elementary")]
-    [SerializeField] GameObject elementaryObjectReference;
-    [SerializeField] GameObject playerMeshReference;
-    [SerializeField] private CinemachineCameraController playerCinemachineCameraController;
-    private ElementaryController elementaryController;
+	[Header("Elementary")]
+	[SerializeField] GameObject elementaryObjectReference;
+	[SerializeField] GameObject playerMeshReference;
+	[SerializeField] private CinemachineCameraController playerCinemachineCameraController;
+	private ElementaryController elementaryController;
 	private Transform playerMesh;
 	private CinemachineCameraController cinemachineCamera;
 
 	public float castingTurnSpeed = 5f;
+
+	[Header("Health settings")]
+	[SerializeField] [Min(0)] private int maxHitsNumber = 1;
+	[SerializeField] [Min(0)] private float hitResetTimer = 10;
+
+	private float hitTimer = 0.0f;
+	private int hitAmount = 0;
+
 
 	public bool InFight { get; private set; } = false;
     private void Awake()
@@ -31,8 +39,26 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
 	}
 
-	// Update is called once per frame
-	void LateUpdate()
+    private void Update()
+    {
+        #region HealthManagement
+		if(hitAmount > 0)
+        {
+			if(hitTimer >= hitResetTimer)
+            {
+				hitAmount = 0;
+				Debug.Log("hit reset");
+            }
+			else
+            {
+				hitTimer += Time.deltaTime;
+            }
+        }
+        #endregion
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
 	{
 		cameraCheck();
 
@@ -190,7 +216,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="value"></param>
     private void OnBlock(InputValue value)
     {
-		Debug.Log("Blocking");
+		//Debug.Log("Blocking");
 		if (elementaryController.currentSpell == null)
         {
 			Debug.Log("shield activation");
@@ -278,5 +304,12 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
 		CinemachineImpulseSource source = GetComponent<CinemachineImpulseSource>();
 		source.GenerateImpulse();
+		hitAmount++;
+		if(hitAmount > maxHitsNumber)
+        {
+			Debug.Log("Player dead");
+        }
+
+
     }
 }
