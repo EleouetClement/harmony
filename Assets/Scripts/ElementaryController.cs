@@ -37,7 +37,7 @@ public class ElementaryController : MonoBehaviour
     public bool isAway { get; private set; } = false;
 
     [HideInInspector]
-    public AbstractSpell currentSpell;
+    public AbstractSpell currentSpell = null;
     public bool readyToCast = true;
     public AbstractSpell.Element currentElement;
 
@@ -50,7 +50,6 @@ public class ElementaryController : MonoBehaviour
 	void Start()
     {
         SetElement(AbstractSpell.Element.Fire);
-        currentSpell = offensiveSpells[(int)currentElement];
         virtualShoulder.transform.localPosition += shoulderOffset;
     }
 
@@ -152,7 +151,7 @@ public class ElementaryController : MonoBehaviour
     /// <returns></returns>
     public bool IsElementaryAway()
     {
-        Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
-        return Vector3.Distance(transform.position, basePosition) > isAwayDistance ? true : false;
+        //Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
+        return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
 }

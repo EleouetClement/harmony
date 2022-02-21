@@ -190,10 +190,11 @@ public class PlayerGameplayController : MonoBehaviour
     /// <param name="value"></param>
     private void OnBlock(InputValue value)
     {
-        if (elementaryController.currentSpell == null)
+		Debug.Log("Blocking");
+		if (elementaryController.currentSpell == null)
         {
-            Debug.Log("Blocking");
-            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+			Debug.Log("shield activation");
+			AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
             spell.init(elementaryController.gameObject, Vector3.zero);
             elementaryController.currentSpell = spell;   
         }
