@@ -94,8 +94,7 @@ public class PlayerMotionController : MonoBehaviour
         #region Apply Direction Input
 
         if (!sliding && !isDodging)
-        {
-            
+        {           
             velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
