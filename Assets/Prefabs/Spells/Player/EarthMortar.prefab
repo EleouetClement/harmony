@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 0
-  earthBall: {fileID: 7776788703797642333, guid: c1e636e570abb9f47b14be1647c6ea80,
+  earthBall: {fileID: 7776788703797642333, guid: 1b085446e808e00478b51c738000033b,
     type: 3}
   lastBallCoord: {x: 0, y: 0, z: 0}
   maxSpellLength: 0
@@ -64,6 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bff5e3ce5ffb7d4d8e97020dbf175ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  markerInstance: {fileID: 0}
   trajectoryCalculator: {fileID: 0}
 --- !u!1001 &7716136553234323843
 PrefabInstance:

@@ -67,6 +67,10 @@ public class EarthBall : MonoBehaviour
 	private Quaternion markerRotation;
 	private Vector3 markerScale;
 
+	private Rigidbody rig;
+
+
+
 	private TrajectoryCalculator trajectoryCalculator;
 
 	Cinemachine.CinemachineImpulseSource shakeSource;
@@ -77,13 +81,12 @@ public class EarthBall : MonoBehaviour
 	void Start()
 	{
 		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
-		
+		rig = GetComponent<Rigidbody>();
 
 		launched = false;
 		minSize = transform.localScale;
 		//maxSize = minSize + sizeGrowth;
-		maxSize = minSize*2f;
-
+		maxSize = minSize * 2f;
 
 		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
 	}
@@ -109,13 +112,14 @@ public class EarthBall : MonoBehaviour
 
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);
 
-			if (launched)
-			{
-				transform.rotation.SetLookRotation(GetComponent<Rigidbody>().velocity);
-			}
 
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(launchVelocity) , Time.deltaTime * 5);
 		}
-		
+		else
+		{
+			transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(rig.velocity.normalized),Time.deltaTime * 5);
+		}
+
 	}
 
 	private void Update()
@@ -129,17 +133,16 @@ public class EarthBall : MonoBehaviour
 			markerScale = earthMarkerRef.markerInstance.transform.localScale;
 			markerRotation = earthMarkerRef.markerInstance.transform.rotation;
 		}
-		
-					
+
 	}
 
 	public void Launch()
 	{
 		GetComponent<LineRenderer>().enabled = false;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
-		GetComponent<Rigidbody>().isKinematic = false;
+		rig.isKinematic = false;
 		//GetComponent<SphereCollider>().isTrigger = false;
-		GetComponent<Rigidbody>().velocity = launchVelocity;
+		rig.velocity = launchVelocity;
 		launched = true;
 	}
 
@@ -158,7 +161,7 @@ public class EarthBall : MonoBehaviour
 				}
 			}
 
-			GameObject decalInstance = Instantiate(decalPrefab, collision.transform.position - GetComponent<Rigidbody>().velocity*0.01f, markerRotation);
+			GameObject decalInstance = Instantiate(decalPrefab, transform.position - transform.up * 2f, markerRotation);
 			decalInstance.transform.localScale = markerScale;
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			earthMortarRef.lastBallCoord = transform.position;

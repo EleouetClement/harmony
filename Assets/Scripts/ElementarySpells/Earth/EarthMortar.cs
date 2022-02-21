@@ -32,11 +32,10 @@ public class EarthMortar : AbstractSpell
 		earthMarker = GetComponent<EarthBallMarker>();
 		earthMarker.Init(maxRange, earthMarker.transform.GetChild(0).gameObject);
 		elementary.GetComponent<MeshRenderer>().enabled = false;
-		//elementary.GetComponent<SphereCollider>().enabled = false;
+		
 		ball = Instantiate(earthBall, elementary.transform.position, Quaternion.identity);
-		ball.transform.rotation.SetLookRotation(Quaternion.LookRotation(GameModeSingleton.GetInstance().GetPlayerMesh.forward, GameModeSingleton.GetInstance().GetPlayerMesh.up).eulerAngles);
-		ball.GetComponent<EarthBall>().earthMortarRef = this;
-		ball.GetComponent<EarthBall>().earthMarkerRef = earthMarker;
+		ball.GetComponentInChildren<EarthBall>().earthMortarRef = this;
+		ball.GetComponentInChildren<EarthBall>().earthMarkerRef = earthMarker;
 	}
 
 	public override void FixedUpdate()
@@ -49,13 +48,8 @@ public class EarthMortar : AbstractSpell
 		}
 		else if(!launched)
 		{
-			if (earthMarker.markerInstance)
-			{
-				ball.transform.rotation.SetLookRotation(earthMarker.markerInstance.transform.position - ball.transform.position);
-				print("ici");
-			}
 			//refreshes charge level to earth ball
-			ball.GetComponent<EarthBall>().charge = charge / maxCastTime;
+			ball.GetComponentInChildren<EarthBall>().charge = charge / maxCastTime;
 			elementary.GetComponent<ElementaryController>().computePosition = true;
 			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().value = charge / maxCastTime;
 		}
