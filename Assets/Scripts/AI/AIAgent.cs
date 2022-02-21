@@ -16,15 +16,11 @@ namespace Harmony.AI
         [Range(0, 180)] public float lookAngle;
         [Min(0)] public float lookRange;
         public List<Transform> wayPointList;
-        
-
 
         [HideInInspector] public NavMeshAgent navMeshAgent;
         [HideInInspector] public int nextWayPoint;
         [HideInInspector] public Transform chaseTarget;
         [HideInInspector] public float stateTimeElapsed;
-
-        private Dictionary<int, float> timers = new Dictionary<int, float>();
 
 
         void Awake()
@@ -36,8 +32,6 @@ namespace Harmony.AI
         {
             if (!aiActive)
                 return;
-
-            foreach (int key in timers.Keys) { timers[key] -= Time.deltaTime; }
             
         }
 
@@ -49,7 +43,7 @@ namespace Harmony.AI
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (eyes != null)
+            if (eyes != null && navMeshAgent != null)
             {
                 
 
