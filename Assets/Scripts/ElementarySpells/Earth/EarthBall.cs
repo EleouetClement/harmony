@@ -8,7 +8,7 @@ public class EarthBall : MonoBehaviour
 	public EarthBallMarker earthMarkerRef;
 	private bool launched;
 
-	GameObject gameManager;
+	public GameObject decalPrefab;
 
 	public bool displayTrajectory;
 
@@ -43,9 +43,11 @@ public class EarthBall : MonoBehaviour
 	///	Defines min and max size at max charge level
 	/// </summary>
 	private Vector3 minSize;
-	public Vector3 maxSize;
+	private Vector3 maxSize;
 
-	
+	//public Vector3 sizeGrowth;
+
+
 	/// <summary>
 	///	Defines min and max radius of impact at max charge level
 	/// </summary>
@@ -62,6 +64,13 @@ public class EarthBall : MonoBehaviour
 
 	private float impactforce;
 
+	private Quaternion markerRotation;
+	private Vector3 markerScale;
+
+	private Rigidbody rig;
+
+
+
 	private TrajectoryCalculator trajectoryCalculator;
 
 	Cinemachine.CinemachineImpulseSource shakeSource;
@@ -72,13 +81,12 @@ public class EarthBall : MonoBehaviour
 	void Start()
 	{
 		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
-		
+		rig = GetComponent<Rigidbody>();
 
 		launched = false;
-		minSize = earthMortarRef.elementary.transform.localScale;
-		maxSize += minSize;
-
-		gameManager = GameObject.Find("GameManager");
+		minSize = transform.localScale;
+		//maxSize = minSize + sizeGrowth;
+		maxSize = minSize * 2f;
 
 		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
 	}
@@ -104,8 +112,14 @@ public class EarthBall : MonoBehaviour
 
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);
 
+
+			transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(launchVelocity) , Time.deltaTime * 5);
 		}
-		
+		else
+		{
+			transform.rotation = Quaternion.Slerp(transform.rotation,Quaternion.LookRotation(rig.velocity.normalized),Time.deltaTime * 5);
+		}
+
 	}
 
 	private void Update()
@@ -114,15 +128,21 @@ public class EarthBall : MonoBehaviour
 			earthMarkerRef.trajectoryCalculator = trajectoryCalculator;
 		else
 			earthMarkerRef.trajectoryCalculator = null;
+		if (earthMarkerRef && earthMarkerRef.markerInstance)
+		{
+			markerScale = earthMarkerRef.markerInstance.transform.localScale;
+			markerRotation = earthMarkerRef.markerInstance.transform.rotation;
+		}
+
 	}
 
 	public void Launch()
 	{
 		GetComponent<LineRenderer>().enabled = false;
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
-		GetComponent<Rigidbody>().isKinematic = false;
-		GetComponent<SphereCollider>().isTrigger = false;
-		GetComponent<Rigidbody>().velocity = launchVelocity;
+		rig.isKinematic = false;
+		//GetComponent<SphereCollider>().isTrigger = false;
+		rig.velocity = launchVelocity;
 		launched = true;
 	}
 
@@ -130,6 +150,7 @@ public class EarthBall : MonoBehaviour
 	{
 		if (collision.gameObject.name != earthMortarRef.elementary.gameObject.name)
 		{
+			// Knockback computations
 			Collider[] near = Physics.OverlapSphere(transform.position, radius);
 			foreach (var collider in near)
 			{
@@ -139,8 +160,20 @@ public class EarthBall : MonoBehaviour
 					rig.AddExplosionForce(impactforce, transform.position, radius, 1f, ForceMode.Impulse);
 				}
 			}
+
+			GameObject decalInstance = Instantiate(decalPrefab, transform.position - transform.up * 2f, markerRotation);
+			decalInstance.transform.localScale = markerScale;
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			earthMortarRef.lastBallCoord = transform.position;
+			// Idamageable computations
+			Debug.Log("Earth mortal shockwave at : " + transform.position + " / radius : " + radius);
+			Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position, radius, 1 << HarmonyLayers.LAYER_TARGETABLE);
+			if (enemies.Length >= 1)
+				foreach (Collider c in enemies)
+				{
+					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth, Vector3.up));
+				}
+			// Destroy the ball
 			Destroy(gameObject);
 		}
 	}

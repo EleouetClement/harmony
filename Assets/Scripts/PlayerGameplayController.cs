@@ -35,12 +35,6 @@ public class PlayerGameplayController : MonoBehaviour
 	void LateUpdate()
 	{
 		cameraCheck();
-
-		//improvement needed : do this only when aiming or charging a spell
-		if (!GetComponent<PlayerMotionController>().isMoving && !elementaryController.readyToCast)
-		{
-			playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
-		}
 	}
 
 

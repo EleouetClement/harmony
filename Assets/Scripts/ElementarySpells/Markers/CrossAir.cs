@@ -39,7 +39,7 @@ public class CrossAir : AbstractMarker
     public override void OnDestroy()
     {
         manager.GetCinemachineCameraController.ZoomOut();
-        manager.GetPlayerReticle.SetActive(false);
+        manager.GetPlayerReticle?.SetActive(false);
     }
 
 }

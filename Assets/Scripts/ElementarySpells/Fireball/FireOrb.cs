@@ -43,15 +43,15 @@ public class FireOrb : MonoBehaviour
     {
         if (!hasExplode)
         {
-
-            if (collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
+            Explode();
+            /*if (collision.gameObject.layer == HarmonyLayers.LAYER_TARGETABLE)
             {
                 hasExplode = true;
             }
             else
             {
                 Explode();
-            }
+            }*/
         }
 
     }
@@ -70,7 +70,15 @@ public class FireOrb : MonoBehaviour
     }
     private void Explode()
     {
-        //Debug.Log("Explosion");
+        float explosionradius = 2f;
+        // Idamageable behavior
+        Debug.Log("Fireball expolosion at : " + transform.position + " / radius : " + explosionradius);
+        Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position + Vector3.up * 3, explosionradius, 1 << HarmonyLayers.LAYER_TARGETABLE);
+        if (enemies.Length >= 1)
+            foreach(Collider c in enemies){
+                c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Fire, (transform.position - manager.GetPlayerReference.transform.position).normalized));
+            }
+        // VFX
         Instantiate(explosionEffect, transform.position + Vector3.up, transform.rotation);
         Instantiate(firePrefab, transform.position, Quaternion.identity);
         hasExplode = true;
