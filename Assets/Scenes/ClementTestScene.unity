@@ -1974,6 +1974,41 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2854035829985062481, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035829985062481, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 122
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035829985062481, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_IsKinematic
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035829985062481, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035829985062482, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 2.1015584
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035829985062482, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.5507792
+      objectReference: {fileID: 0}
+    - target: {fileID: 2854035830446452462, guid: 2e6f075ed4754834cb8d55669a58b830,
+        type: 3}
+      propertyPath: speed
+      value: 0.66
+      objectReference: {fileID: 0}
     - target: {fileID: 2854035830712351712, guid: 2e6f075ed4754834cb8d55669a58b830,
         type: 3}
       propertyPath: m_RootOrder

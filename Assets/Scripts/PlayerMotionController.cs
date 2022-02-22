@@ -51,6 +51,7 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 movement;
     private Vector3 dodgeVelocity;
 
+    private bool onPlatform = false;
     public float accelerationFriction;
     public float decelerationFriction;
 
@@ -213,23 +214,33 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-
-    void OnDrawGizmosSelected()
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (debug && Application.isPlaying)
+        if(hit.gameObject.tag.Equals("Platform"))
         {
-            Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
-
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.DrawLine(transform.position, end);
-            
+            transform.parent = hit.transform;
+            Debug.Log(transform.parent.gameObject.name);
         }
     }
+
+    
+
+    //void OnDrawGizmosSelected()
+    //{
+    //    if (debug && Application.isPlaying)
+    //    {
+    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
+
+    //        Gizmos.color = Color.white;
+    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.color = Color.gray;
+    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.DrawLine(transform.position, end);
+
+    //    }
+    //}
 
     private Vector3 GetDirection()
     {
