@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class EarthBall : MonoBehaviour
 {
@@ -158,13 +159,13 @@ public class EarthBall : MonoBehaviour
 				if (rig != null)
 				{
 					rig.AddExplosionForce(impactforce, transform.position, radius, 1f, ForceMode.Impulse);
-				}
+				} 
 			}
+			//Apply decal
+			GameObject decalInstance = Instantiate(decalPrefab, collision.GetContact(0).point + collision.GetContact(0).normal.normalized * 0.5f, Quaternion.LookRotation(-1f * earthMarkerRef.hit.normal));
+			decalInstance.transform.GetComponent<DecalProjector>().size = new Vector3(markerScale.x,markerScale.z,Vector3.Distance(decalInstance.transform.position, collision.GetContact(0).point));
 
-			GameObject decalInstance = Instantiate(decalPrefab, transform.position - transform.up * 2f, markerRotation);
-			decalInstance.transform.localScale = markerScale;
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
-			earthMortarRef.lastBallCoord = transform.position;
 			// Idamageable computations
 			Debug.Log("Earth mortal shockwave at : " + transform.position + " / radius : " + radius);
 			Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position, radius, 1 << HarmonyLayers.LAYER_TARGETABLE);
@@ -173,6 +174,8 @@ public class EarthBall : MonoBehaviour
 				{
 					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth, Vector3.up));
 				}
+			//get position to move elementary
+			earthMortarRef.lastBallCoord = transform.position;
 			// Destroy the ball
 			Destroy(gameObject);
 		}
