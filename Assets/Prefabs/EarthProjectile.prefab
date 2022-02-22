@@ -444,12 +444,22 @@ PrefabInstance:
     - target: {fileID: 198279101275435388, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 198279101275435388, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
       value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198279101275435388, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: VelocityModule.speedModifier.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198279101275435388, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
@@ -458,8 +468,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
+      propertyPath: ShapeModule.m_Scale.x
+      value: 10.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 0.025
+      objectReference: {fileID: 0}
+    - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: VelocityModule.speedModifier.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 198308132538285994, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
@@ -474,7 +504,7 @@ PrefabInstance:
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
@@ -483,13 +513,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
+      propertyPath: VelocityModule.speedModifier.scalar
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd92b24e16291044b864a7b1ede8986, type: 3}
