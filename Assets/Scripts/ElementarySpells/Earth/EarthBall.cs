@@ -168,12 +168,13 @@ public class EarthBall : MonoBehaviour
 				} 
 			}
 			//Apply decal
-			GameObject decalInstance = Instantiate(decalPrefab, collision.GetContact(0).point + collision.GetContact(0).normal.normalized * 0.5f, Quaternion.LookRotation(-1f * earthMarkerRef.hit.normal));
-			decalInstance.transform.GetComponent<DecalProjector>().size = new Vector3(markerScale.x,markerScale.z,Vector3.Distance(decalInstance.transform.position, collision.GetContact(0).point));
+			ContactPoint contactPoint = collision.GetContact(0);
+			GameObject decalInstance = Instantiate(decalPrefab, contactPoint.point + contactPoint.normal.normalized * 0.5f, Quaternion.LookRotation(-1f * contactPoint.normal));
+			decalInstance.transform.GetComponent<DecalProjector>().size = new Vector3(markerScale.x,markerScale.z,Vector3.Distance(decalInstance.transform.position, contactPoint.point));
 
 			//Apply explosion
-			GameObject explosionInstance = Instantiate(explosionPrefab, collision.GetContact(0).point, Quaternion.LookRotation(earthMarkerRef.hit.normal));
-			explosionInstance.transform.localScale = Vector3.one * (markerScale.x / 2f);
+			GameObject explosionInstance = Instantiate(explosionPrefab, contactPoint.point, Quaternion.LookRotation(contactPoint.normal));
+			explosionInstance.transform.localScale = Vector3.one * radius;
 
 
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
