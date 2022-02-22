@@ -81,13 +81,21 @@ public class EarthBall : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
 		rig = GetComponent<Rigidbody>();
+		trajectoryCalculator = GetComponent<TrajectoryCalculator>();
+
+		if (displayTrajectory)
+			earthMarkerRef.trajectoryCalculator = trajectoryCalculator;
+		else
+			earthMarkerRef.trajectoryCalculator = null;
+
 
 		launched = false;
 		minSize = transform.localScale;
-		//maxSize = minSize + sizeGrowth;
 		maxSize = minSize * 2f;
+
+		launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.GetTarget(), speed);
+		transform.rotation = Quaternion.LookRotation(launchVelocity);
 
 		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
 	}
@@ -125,10 +133,7 @@ public class EarthBall : MonoBehaviour
 
 	private void Update()
 	{
-		if (displayTrajectory)
-			earthMarkerRef.trajectoryCalculator = trajectoryCalculator;
-		else
-			earthMarkerRef.trajectoryCalculator = null;
+		
 		if (earthMarkerRef && earthMarkerRef.markerInstance)
 		{
 			markerScale = earthMarkerRef.markerInstance.transform.localScale;
