@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 7082544440030677744}
   - component: {fileID: 1100598119200352691}
   - component: {fileID: 2316917201895106729}
+  - component: {fileID: 4495927575696251945}
   m_Layer: 6
   m_Name: EarthProjectile
   m_TagString: Untagged
@@ -151,6 +152,8 @@ MonoBehaviour:
   earthMortarRef: {fileID: 0}
   earthMarkerRef: {fileID: 0}
   decalPrefab: {fileID: 8749130204304388095, guid: f6be893e8c735b442917e3439259597f,
+    type: 3}
+  explosionPrefab: {fileID: 1025285306637258, guid: 4e3607e8004c52d4188a02f238cbb5b0,
     type: 3}
   displayTrajectory: 1
   charge: 0
@@ -342,6 +345,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4495927575696251945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7776788703797642333}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff895b26c3c0ee144bbd73b4cf45a414, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LivingTime: 1
 --- !u!1001 &4856997858317582363
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -498,13 +514,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
+      propertyPath: looping
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: prewarm
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
       propertyPath: lengthInSec
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: CollisionModule.m_Bounce.scalar
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
@@ -519,7 +560,7 @@ PrefabInstance:
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
-      value: 1.5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
         type: 3}
@@ -530,6 +571,66 @@ PrefabInstance:
         type: 3}
       propertyPath: InitialModule.gravityModifier.scalar
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].value
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outSlope
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].tangentMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198821879797037480, guid: ffd92b24e16291044b864a7b1ede8986,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].tangentMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffd92b24e16291044b864a7b1ede8986, type: 3}

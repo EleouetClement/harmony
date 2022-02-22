@@ -734,7 +734,7 @@ MonoBehaviour:
   airControl: 0.25
   gravity: -9.81
   fallGravityMultiplier: 2.5
-  jumpGravityMultiplier: 2
+  jumpGravityMultiplier: 1.5
   dodgeSpeed: 46
   dodgeDuration: 0.1
   dodgeCoolDown: 0.8

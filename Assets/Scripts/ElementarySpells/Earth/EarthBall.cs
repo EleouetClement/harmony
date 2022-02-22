@@ -10,6 +10,7 @@ public class EarthBall : MonoBehaviour
 	private bool launched;
 
 	public GameObject decalPrefab;
+	public GameObject explosionPrefab;
 
 	public bool displayTrajectory;
 
@@ -170,6 +171,11 @@ public class EarthBall : MonoBehaviour
 			GameObject decalInstance = Instantiate(decalPrefab, collision.GetContact(0).point + collision.GetContact(0).normal.normalized * 0.5f, Quaternion.LookRotation(-1f * earthMarkerRef.hit.normal));
 			decalInstance.transform.GetComponent<DecalProjector>().size = new Vector3(markerScale.x,markerScale.z,Vector3.Distance(decalInstance.transform.position, collision.GetContact(0).point));
 
+			//Apply explosion
+			GameObject explosionInstance = Instantiate(explosionPrefab, collision.GetContact(0).point, Quaternion.LookRotation(earthMarkerRef.hit.normal));
+			explosionInstance.transform.localScale = Vector3.one * (markerScale.x / 2f);
+
+
 			shakeSource.GenerateImpulseAt(transform.position,transform.forward);
 			// Idamageable computations
 			Debug.Log("Earth mortal shockwave at : " + transform.position + " / radius : " + radius);
@@ -182,7 +188,12 @@ public class EarthBall : MonoBehaviour
 			//get position to move elementary
 			earthMortarRef.lastBallCoord = transform.position;
 			// Destroy the ball
-			Destroy(gameObject);
+			GetComponent<Rigidbody>().isKinematic = true;
+			GetComponentInChildren<MeshRenderer>().enabled = false;
+			GetComponentInChildren<MeshCollider>().enabled = false;
+			//Destruction handled by component <SelfDestruct>
+			GetComponent<SelfDestruct>().enabled = true;
+			GetComponent<EarthBall>().enabled = false;
 		}
 	}
 }
