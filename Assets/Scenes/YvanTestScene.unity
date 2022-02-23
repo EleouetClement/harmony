@@ -778,7 +778,12 @@ PrefabInstance:
     - target: {fileID: 1552337522080384063, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.2556391
+      value: 1.1174551
+      objectReference: {fileID: 0}
+    - target: {fileID: 4470787766690154400, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4470787766690154400, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
@@ -902,6 +907,16 @@ PrefabInstance:
       objectReference: {fileID: 386165295}
     - target: {fileID: 6985645700235054000, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985645700235054000, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6985645700235054000, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: -2
       objectReference: {fileID: 0}
@@ -933,7 +948,7 @@ PrefabInstance:
     - target: {fileID: 7956407689947622302, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.2556391
+      value: 1.1174551
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bb18bdb3babd9b43b1b7f446398f301, type: 3}
@@ -949,12 +964,18 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 716148125}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 742838581}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ead8a214b292b54b80e53bb6b92a7c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &742838581 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6677204177119343018, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+    type: 3}
+  m_PrefabInstance: {fileID: 716148125}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &756185605
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,6 +1655,11 @@ PrefabInstance:
       objectReference: {fileID: 1760832664}
     - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
         type: 3}
+      propertyPath: playerMesh
+      value: 
+      objectReference: {fileID: 964083452}
+    - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
+        type: 3}
       propertyPath: playerCrossAir
       value: 
       objectReference: {fileID: 1135400377}
@@ -1647,6 +1673,11 @@ PrefabInstance:
       propertyPath: elementaryReference
       value: 
       objectReference: {fileID: 386165295}
+    - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
+        type: 3}
+      propertyPath: playerCameraReference
+      value: 
+      objectReference: {fileID: 742838581}
     - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
         type: 3}
       propertyPath: cinemachineCameraControl
