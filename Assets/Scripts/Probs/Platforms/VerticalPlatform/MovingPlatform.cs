@@ -41,7 +41,9 @@ public class MovingPlatform : AbstractPlatform
         }
         if(coolDown >= delay)
         {
-            platform.transform.localPosition += Vector3.up * direction * speed * Time.deltaTime;
+            Vector3 movement = Vector3.up * (direction == 1? maxHeight : -maxHeight) * speed * Time.fixedDeltaTime;
+            
+            platform.GetComponent<Rigidbody>().MovePosition(platform.transform.position + movement);
         }
         else
         {
@@ -68,7 +70,7 @@ public class MovingPlatform : AbstractPlatform
 
     private void LockElementary(GameObject elem)
     {
-        Debug.Log("Stop spell");
+        //Debug.Log("Stop spell");
         this.elem = elem.GetComponent<ElementaryController>();
         this.elem.currentSpell.Terminate();
         this.elem.computePosition = false;

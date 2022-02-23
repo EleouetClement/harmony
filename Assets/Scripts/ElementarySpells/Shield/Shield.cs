@@ -85,6 +85,7 @@ public class Shield : AbstractSpell
         ElementaryController elemCtrl = elementary.GetComponent<ElementaryController>();
         elemCtrl.currentSpell = null;
         elemCtrl.computePosition = true;
+        player.GetComponent<PlayerMotionController>().walkSpeed = initialWalkSpeed;
         //Destroy(shieldReference);
         Destroy(gameObject);
     }
@@ -97,7 +98,12 @@ public class Shield : AbstractSpell
 
     private void OnTriggerEnter(Collider collider)
     {
-        if (collider.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
+        
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == HarmonyLayers.LAYER_ENEMYSPELL)
         {
             if (canPerfectShield)
             {
@@ -107,6 +113,8 @@ public class Shield : AbstractSpell
             {
                 Debug.Log("TOO LATE TO PERFECT SHIELD !");
             }
+
+            Destroy(collision.gameObject);
         }
     }
 }
