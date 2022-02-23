@@ -31,7 +31,7 @@ namespace TheKiwiCoder {
             if (boolParameters.ContainsKey(paramName))
                 boolParameters[paramName] = value;
             else
-                boolParameters.Add(paramName,value);
+                Debug.LogError($"Parameter \"{paramName}\" doesn't exists");
         }
 
         public bool GetParameter(string paramName, out bool value)
@@ -47,7 +47,7 @@ namespace TheKiwiCoder {
             if (intParameters.ContainsKey(paramName))
                 intParameters[paramName] = value;
             else
-                intParameters.Add(paramName, value);
+                Debug.LogError($"Parameter \"{paramName}\" doesn't exists");
         }
 
         public bool GetParameter(string paramName, out int value)
@@ -63,7 +63,7 @@ namespace TheKiwiCoder {
             if (floatParameters.ContainsKey(paramName))
                 floatParameters[paramName] = value;
             else
-                floatParameters.Add(paramName, value);
+                Debug.LogError($"Parameter \"{paramName}\" doesn't exists");
         }
 
         public bool GetParameter(string paramName, out float value)
@@ -79,7 +79,7 @@ namespace TheKiwiCoder {
             if (vectorParameters.ContainsKey(paramName))
                 vectorParameters[paramName] = value;
             else
-                vectorParameters.Add(paramName, value);
+                Debug.LogError($"Parameter \"{paramName}\" doesn't exists");
         }
 
         public bool GetParameter(string paramName, out Vector3 value)
@@ -95,7 +95,7 @@ namespace TheKiwiCoder {
             if (transformParameters.ContainsKey(paramName))
                 transformParameters[paramName] = value;
             else
-                transformParameters.Add(paramName, value);
+                Debug.LogError($"Parameter \"{paramName}\" doesn't exists");
         }
 
         public bool GetParameter(string paramName, out Transform value)
