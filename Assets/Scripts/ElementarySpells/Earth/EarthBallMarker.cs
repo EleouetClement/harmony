@@ -11,7 +11,11 @@ public class EarthBallMarker : AbstractMarker
 
     public TrajectoryCalculator trajectoryCalculator;
 
-	public override void Init(float maxRayCastDistance, GameObject prefab)
+    public RaycastHit hit;
+    public Vector3 target;
+    public bool targetAcquired;
+
+    public override void Init(float maxRayCastDistance, GameObject prefab)
 	{
         base.Init(maxRayCastDistance, prefab);
     }
@@ -27,11 +31,12 @@ public class EarthBallMarker : AbstractMarker
     /// <returns></returns>
     public Vector3 GetTarget()
     {
-        RaycastHit hit;
+        
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, maxRayCastDistance));
         Vector3 origin = ray.origin + 0.1f * ray.direction;
         if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, (1 << HarmonyLayers.LAYER_DEFAULT) + (1 << HarmonyLayers.LAYER_GROUND)))
             {
+            targetAcquired = true;
             if (markerInstance == null)
             {
                 markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
@@ -44,12 +49,14 @@ public class EarthBallMarker : AbstractMarker
 
             trajectoryCalculator.CalculateTrajectory();
             trajectoryCalculator.DisplayTrajectory(true);
-            
+
+            target = hit.point;
             return hit.point;
         }
         //out of range
 		else
 		{
+            targetAcquired = false;
             trajectoryCalculator.DisplayTrajectory(false);
             if (markerInstance != null)
                 markerInstance.GetComponent<MeshRenderer>().enabled = false;

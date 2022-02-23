@@ -300,7 +300,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2437159, y: 1}
+    m_SensorSize: {x: 1.1431694, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -408,7 +408,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.2437159, y: 1}
+    m_SensorSize: {x: 1.1431694, y: 1}
   m_Transitions:
     m_BlendHint: 1
     m_InheritPosition: 0
@@ -726,13 +726,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentSpeed: 0
   walkSpeed: 15
-  jumpForce: 10
+  jumpForce: 20
   maxFloorAngle: 45
   turnSpeed: 4
   friction: 5
   airFriction: 1
   airControl: 0.25
   gravity: -9.81
+  fallGravityMultiplier: 2.5
+  jumpGravityMultiplier: 1.5
   dodgeSpeed: 46
   dodgeDuration: 0.1
   dodgeCoolDown: 0.8
