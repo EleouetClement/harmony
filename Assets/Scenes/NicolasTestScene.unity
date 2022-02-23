@@ -123,6 +123,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 23800000, guid: 14a25eaa20d267e4993299c59250a319, type: 2}
+--- !u!4 &104836884 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6677204177534006693, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+    type: 3}
+  m_PrefabInstance: {fileID: 800913386}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &136262746 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 824288169518036289, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
@@ -1007,6 +1013,11 @@ PrefabInstance:
       propertyPath: playerHUD
       value: 
       objectReference: {fileID: 1076697711}
+    - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
+        type: 3}
+      propertyPath: playerMesh
+      value: 
+      objectReference: {fileID: 104836884}
     - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
         type: 3}
       propertyPath: playerCrossAir

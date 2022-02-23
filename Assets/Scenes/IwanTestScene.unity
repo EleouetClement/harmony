@@ -315,7 +315,7 @@ PrefabInstance:
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: lerpInterpolationValue
-      value: 4
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
@@ -345,6 +345,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210,
         type: 3}
+    - target: {fileID: 824288169518036412, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 824288169518036412, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: m_CollisionDetection
@@ -1941,12 +1946,12 @@ PrefabInstance:
     - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: accelerationFriction
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: decelerationFriction
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}

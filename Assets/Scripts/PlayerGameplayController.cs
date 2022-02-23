@@ -36,12 +36,6 @@ public class PlayerGameplayController : MonoBehaviour
 	void LateUpdate()
 	{
 		cameraCheck();
-
-		//improvement needed : do this only when aiming or charging a spell
-		if (!GetComponent<PlayerMotionController>().isMoving && !elementaryController.readyToCast)
-		{
-			playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
-		}
 	}
 
 
@@ -141,7 +135,7 @@ public class PlayerGameplayController : MonoBehaviour
 				CastFireOrb(spell);
 				break;
 			case AbstractSpell.Element.Water:
-
+				CastWaterBeam(spell);
 				break;
 			case AbstractSpell.Element.Earth:
 				CastEarthWall(spell);
@@ -165,7 +159,7 @@ public class PlayerGameplayController : MonoBehaviour
 						CastFireOrb(spell);
 						break;
 					case AbstractSpell.Element.Water:
-						
+						CastWaterBeam(spell);
 						break;
 					case AbstractSpell.Element.Earth:
 						CastEarthWall(spell);
@@ -218,6 +212,12 @@ public class PlayerGameplayController : MonoBehaviour
 				((WaterMissiles)spell).targetTransform = enemies[0].gameObject.transform;
 		}
 	}
+
+	private void CastWaterBeam(AbstractSpell spell)
+    {
+		Debug.LogWarning(GameModeSingleton.GetInstance().GetCinemachineCameraController);
+		spell.init(elementaryController.gameObject, Vector3.zero);
+    }
 
 	private void CastFireBall(AbstractSpell spell)
 	{

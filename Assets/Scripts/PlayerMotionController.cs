@@ -10,7 +10,7 @@ public class PlayerMotionController : MonoBehaviour
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
-    [Range(0, 10)] public float jumpForce = 1f;
+    [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
     [Header("Character Physics settings")]
@@ -18,6 +18,8 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = -9.81f;
+    [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
+    [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -74,7 +76,14 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         currentSpeed = controller.velocity.magnitude;
-        isMoving =(Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+        isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+
+        //smooth turning when moving
+        if (isMoving)
+        {
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+        }
+
     }
 
     private void FixedUpdate()
@@ -131,6 +140,16 @@ public class PlayerMotionController : MonoBehaviour
         if (!onGround)
         {
             velocity.y += gravity * Time.fixedDeltaTime;
+            //falling
+            if (controller.velocity.y < 0f)
+            {
+                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+            }
+            //rising
+            else if (controller.velocity.y > 0f)
+            {
+                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+            }
         }
         else
         {
@@ -151,18 +170,14 @@ public class PlayerMotionController : MonoBehaviour
 		dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
 		velocity += dragForce;
 
-		#endregion
+        #endregion
 
-
-	}
+        
+    }
 
     void LateUpdate()
     {
-		//smooth turning when moving
-		if (isMoving)
-		{
-            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
-		}
+		
 	}
 
 	/// <summary>
