@@ -142,21 +142,21 @@ namespace TheKiwiCoder {
 
                 var types = TypeCache.GetTypesDerivedFrom<ActionNode>();
                 foreach (var type in types) {
-                    evt.menu.AppendAction($"[Action]/{type.Name}", (a) => CreateNode(type, nodePosition));
+                    evt.menu.AppendAction($"[Action]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
                 }
             }
 
             {
                 var types = TypeCache.GetTypesDerivedFrom<CompositeNode>();
                 foreach (var type in types) {
-                    evt.menu.AppendAction($"[Composite]/{type.Name}", (a) => CreateNode(type, nodePosition));
+                    evt.menu.AppendAction($"[Composite]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
                 }
             }
 
             {
                 var types = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
                 foreach (var type in types) {
-                    evt.menu.AppendAction($"[Decorator]/{type.Name}", (a) => CreateNode(type, nodePosition));
+                    evt.menu.AppendAction($"[Decorator]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
                 }
             }
         }

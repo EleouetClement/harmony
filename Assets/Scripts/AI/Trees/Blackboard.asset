@@ -27,8 +27,49 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  duration: 1
+--- !u!114 &-6017431300413360691
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: d21e31f56bf0a8f44871dfe61897d4ce
+  position: {x: 641, y: 633}
+  blackboard:
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
       keys: []
       values: []
+    vectorParameters:
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -64,8 +105,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -74,6 +117,50 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   child: {fileID: 5487706086324335765}
+--- !u!114 &-2256689904170634652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4489e3e257543504c8fc9f891246af6c, type: 3}
+  m_Name: MoveToPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 814a46fb5d481a74b8d534b0b947e50f
+  position: {x: 299.99994, y: 632.99994}
+  blackboard:
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: Destination
+  speed: 5
+  stoppingDistance: 0.1
+  updateRotation: 1
+  acceleration: 40
+  tolerance: 1
 --- !u!114 &-1789697121115545240
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,8 +188,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -146,8 +235,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -155,7 +246,51 @@ MonoBehaviour:
       - {fileID: 0}
   description: 
   drawGizmos: 0
-  children: []
+  children:
+  - {fileID: -271588644652509299}
+  - {fileID: -2256689904170634652}
+  - {fileID: -6017431300413360691}
+--- !u!114 &-271588644652509299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
+  m_Name: RandomPosition
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 44281700c90f2764b904c07608866ee7
+  position: {x: 127.48572, y: 632.99994}
+  blackboard:
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: Destination
+  min: {x: -10, y: -10}
+  max: {x: 10, y: 10}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,6 +314,9 @@ MonoBehaviour:
   - {fileID: 1609486716875087578}
   - {fileID: -6956602204622154788}
   - {fileID: -690761647912303445}
+  - {fileID: -271588644652509299}
+  - {fileID: -2256689904170634652}
+  - {fileID: -6017431300413360691}
   blackboard:
     boolParameters:
       keys: []
@@ -190,8 +328,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -224,8 +364,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -266,8 +408,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -305,8 +449,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target
@@ -344,8 +490,10 @@ MonoBehaviour:
       keys: []
       values: []
     vectorParameters:
-      keys: []
-      values: []
+      keys:
+      - Destination
+      values:
+      - {x: 0, y: 0, z: 0}
     transformParameters:
       keys:
       - target

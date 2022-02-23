@@ -27,6 +27,8 @@ namespace TheKiwiCoder {
             context.gameObject = gameObject;
             context.transform = gameObject.transform;
             context.animator = gameObject.GetComponent<Animator>();
+            if (context.animator == null) context.animator = gameObject.GetComponentInChildren<Animator>();
+
             context.physics = gameObject.GetComponent<Rigidbody>();
             context.agent = gameObject.GetComponent<NavMeshAgent>();
             context.sphereCollider = gameObject.GetComponent<SphereCollider>();
