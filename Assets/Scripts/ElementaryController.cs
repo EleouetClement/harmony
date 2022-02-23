@@ -154,4 +154,6 @@ public class ElementaryController : MonoBehaviour
         //Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
         return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
+
+    
 }
