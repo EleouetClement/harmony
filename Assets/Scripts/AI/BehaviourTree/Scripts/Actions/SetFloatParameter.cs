@@ -5,7 +5,8 @@ using TheKiwiCoder;
 
 public class SetFloatParameter : ActionNode
 {
-    public string parameterName = "moveToPosition";
+    [BlackboardParam(Blackboard.ParameterType.Float)]
+    public string parameterName = "";
     public float value;
 
     protected override void OnStart() { }

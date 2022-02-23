@@ -5,6 +5,7 @@ using TheKiwiCoder;
 
 public class WaitBlackboardTime : ActionNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Float)]
     public string durationParameter;
     public float duration;
     float startTime;

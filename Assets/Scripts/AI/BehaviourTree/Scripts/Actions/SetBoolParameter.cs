@@ -5,7 +5,8 @@ using TheKiwiCoder;
 
 public class SetBoolParameter : ActionNode
 {
-    public string parameterName = "moveToPosition";
+    [BlackboardParam(Blackboard.ParameterType.Bool)]
+    public string parameterName = "";
     public bool value;
 
     protected override void OnStart() { }

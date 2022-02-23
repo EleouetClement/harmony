@@ -5,6 +5,7 @@ using TheKiwiCoder;
 
 public class MoveToTarget : ActionNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Transform)]
     public string parameterName = "target";
     public float speed = 5;
     public float stoppingDistance = 0.1f;

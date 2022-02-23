@@ -5,7 +5,8 @@ using TheKiwiCoder;
 
 public class SetIntParameter : ActionNode
 {
-    public string parameterName = "moveToPosition";
+    [BlackboardParam(Blackboard.ParameterType.Int)]
+    public string parameterName = "";
     public int value;
 
     protected override void OnStart() { }

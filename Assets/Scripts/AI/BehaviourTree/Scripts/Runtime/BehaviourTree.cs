@@ -73,6 +73,7 @@ namespace TheKiwiCoder {
             Node node = ScriptableObject.CreateInstance(type) as Node;
             node.name = type.Name;
             node.guid = GUID.Generate().ToString();
+            node.blackboard = blackboard;
 
             Undo.RecordObject(this, "Behaviour Tree (CreateNode)");
             nodes.Add(node);

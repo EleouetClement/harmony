@@ -5,6 +5,7 @@ using TheKiwiCoder;
 
 public class RandomPosition : ActionNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Vector)]
     public string parameterName = "moveToPosition";
     public Vector2 min = Vector2.one * -10;
     public Vector2 max = Vector2.one * 10;

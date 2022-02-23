@@ -5,6 +5,7 @@ using TheKiwiCoder;
 
 public class DistanceToVector : DecoratorNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Vector)]
     public string parameterName;
     public bool greaterThan;
     public float distance;

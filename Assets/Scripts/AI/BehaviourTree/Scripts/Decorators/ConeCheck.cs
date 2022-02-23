@@ -8,6 +8,7 @@ using UnityEditor;
 
 public class ConeCheck : DecoratorNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Transform)]
     public string targetParameter = "target";
     [Layer] public int searchLayer;
     public LayerMask blockMask;

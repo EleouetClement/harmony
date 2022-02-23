@@ -5,7 +5,8 @@ using TheKiwiCoder;
 
 public class SetVectorParameter : ActionNode
 {
-    public string parameterName = "moveToPosition";
+    [BlackboardParam(Blackboard.ParameterType.Vector)]
+    public string parameterName = "";
     public Vector3 value;
 
     protected override void OnStart() { }

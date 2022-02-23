@@ -5,6 +5,7 @@ using TheKiwiCoder;
 
 public class DistanceToTransform : DecoratorNode
 {
+    [BlackboardParam(Blackboard.ParameterType.Transform)]
     public string parameterName;
     public bool greaterThan;
     public float distance;

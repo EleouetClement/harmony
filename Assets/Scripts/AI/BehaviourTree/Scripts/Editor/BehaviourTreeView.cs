@@ -68,10 +68,15 @@ namespace TheKiwiCoder {
             }
 
             // Creates node view
-            tree.nodes.ForEach(n => CreateNodeView(n));
+            tree.nodes.ForEach(n =>
+            {
+                n.blackboard = tree.blackboard;
+                CreateNodeView(n);
+            });
 
             // Create edges
-            tree.nodes.ForEach(n => {
+            tree.nodes.ForEach(n =>
+            {
                 var children = BehaviourTree.GetChildren(n);
                 children.ForEach(c => {
                     NodeView parentView = FindNodeView(n);

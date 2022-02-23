@@ -25,6 +25,9 @@ namespace TheKiwiCoder {
         SerializedObject treeObject;
         SerializedProperty blackboardProperty;
 
+        private Vector2 nodePropertiesScroll;
+        private Vector2 blackboardScroll;
+
         [MenuItem("TheKiwiCoder/BehaviourTreeEditor ...")]
         public static void OpenWindow() {
             BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
@@ -80,7 +83,9 @@ namespace TheKiwiCoder {
             blackboardView.onGUIHandler = () => {
                 if (treeObject != null && treeObject.targetObject != null) {
                     treeObject.Update();
+                    blackboardScroll = EditorGUILayout.BeginScrollView(blackboardScroll);
                     EditorGUILayout.PropertyField(blackboardProperty);
+                    EditorGUILayout.EndScrollView();
                     treeObject.ApplyModifiedProperties();
                 }
             };

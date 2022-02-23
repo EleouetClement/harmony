@@ -30,8 +30,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   duration: 1
@@ -65,8 +67,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   child: {fileID: 5487706086324335765}
@@ -100,8 +104,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   child: {fileID: 1749990605468958222}
@@ -128,7 +134,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: e202cfa3d07058c4ea132027b9db1186
-  position: {x: 0, y: 0}
+  position: {x: 300, y: 450}
   blackboard:
     boolParameters:
       keys: []
@@ -143,8 +149,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   children: []
@@ -173,9 +181,8 @@ MonoBehaviour:
   - {fileID: -690761647912303445}
   blackboard:
     boolParameters:
-      keys:
-      - test
-      values: 00
+      keys: []
+      values: 
     intParameters:
       keys: []
       values: 
@@ -186,8 +193,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
 --- !u!114 &1609486716875087578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,8 +227,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   parameterName: target
@@ -258,8 +269,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   children:
@@ -295,8 +308,10 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   child: {fileID: 6596105910781114254}
@@ -332,9 +347,12 @@ MonoBehaviour:
       keys: []
       values: []
     transformParameters:
-      keys: []
-      values: []
+      keys:
+      - target
+      values:
+      - {fileID: 0}
   description: 
   drawGizmos: 0
   children:
   - {fileID: -1789697121115545240}
+  - {fileID: -690761647912303445}
