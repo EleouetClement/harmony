@@ -4970,11 +4970,12 @@ Transform:
   m_GameObject: {fileID: 209660303719141885}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.929453, y: 5.7456317, z: 2.0362966}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 209660303498517547}
   - {fileID: 5863743421125159430}
+  - {fileID: 5863743419643525030}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4991,7 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 1
-  maxDistance: 60
+  maxDistance: 30
   beamAcceleration: 10
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
@@ -5012,6 +5013,81 @@ CapsuleCollider:
   m_Height: 1.0216012
   m_Direction: 2
   m_Center: {x: 0, y: 0, z: 0.49645543}
+--- !u!1001 &856808554
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 209660303719141884}
+    m_Modifications:
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9858917
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.14170907
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.08817932
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.012674628
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 16.359
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -10.222
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_Name
+      value: WaterBeamImpactEffect (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 73a7d1a61843a88458534a714242882e, type: 3}
+--- !u!4 &5863743419643525030 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5863743419929799628, guid: 73a7d1a61843a88458534a714242882e,
+    type: 3}
+  m_PrefabInstance: {fileID: 856808554}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1489093066
 PrefabInstance:
   m_ObjectHideFlags: 0
