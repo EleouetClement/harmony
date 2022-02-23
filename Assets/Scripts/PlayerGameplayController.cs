@@ -190,7 +190,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 						CastFireOrb(spell);
 						break;
 					case AbstractSpell.Element.Water:
-						
 						break;
 					case AbstractSpell.Element.Earth:
 						CastEarthWall(spell);
@@ -224,6 +223,14 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             spell.init(elementaryController.gameObject, Vector3.zero);
             elementaryController.currentSpell = spell;   
         }
+		else
+        {
+			Debug.Log("Annulation par shield");
+			elementaryController.currentSpell.Terminate();
+			AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+			spell.init(elementaryController.gameObject, Vector3.zero);
+			elementaryController.currentSpell = spell;
+		}
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
     }
@@ -254,7 +261,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 		else
 		{
 			spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-
 		}
 	}
 

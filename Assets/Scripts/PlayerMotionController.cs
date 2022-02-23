@@ -219,7 +219,10 @@ public class PlayerMotionController : MonoBehaviour
         if(hit.gameObject.tag.Equals("Platform"))
         {
             transform.parent = hit.transform;
-            Debug.Log(transform.parent.gameObject.name);
+        }
+        else
+        {
+            transform.parent = null;
         }
     }
 
