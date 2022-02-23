@@ -31,7 +31,7 @@ namespace TheKiwiCoder {
         [MenuItem("TheKiwiCoder/BehaviourTreeEditor ...")]
         public static void OpenWindow() {
             BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
-            wnd.titleContent = new GUIContent("BehaviourTreeEditor");
+            wnd.titleContent = new GUIContent("Behaviour Tree Editor");
             wnd.minSize = new Vector2(800, 600);
         }
 

@@ -70,6 +70,13 @@ internal sealed class BlackboardParamDrawer : PropertyDrawer
                     index = 0;
                 }
 
+                Rect labelRect = position;
+                labelRect.width = EditorGUIUtility.labelWidth+2;
+
+                position.width -= labelRect.width;
+                position.x += labelRect.width;
+
+                EditorGUI.LabelField(labelRect, label);
                 EditorGUI.BeginChangeCheck();
                 index = EditorGUI.Popup(position, index, parameters.ToArray());
                 if (EditorGUI.EndChangeCheck())
