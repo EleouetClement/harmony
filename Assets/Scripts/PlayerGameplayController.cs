@@ -225,11 +225,14 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
 		else
         {
-			Debug.Log("Annulation par shield");
-			elementaryController.currentSpell.Terminate();
-			AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
-			spell.init(elementaryController.gameObject, Vector3.zero);
-			elementaryController.currentSpell = spell;
+			if(!elementaryController.currentSpell.isReleased())
+            {
+				Debug.Log("Annulation par shield");
+				elementaryController.currentSpell.Terminate();
+				AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+				spell.init(elementaryController.gameObject, Vector3.zero);
+				elementaryController.currentSpell = spell;
+			}		
 		}
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
