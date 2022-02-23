@@ -82,3 +82,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0a0fb2b871cb44c9ff6e59cf0eb2f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  notes: Reduces the opacity of the decal projector on this game object gradually
+    based on the living time set up in the self destruct component of the game object
