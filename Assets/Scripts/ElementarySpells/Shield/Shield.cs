@@ -114,7 +114,7 @@ public class Shield : AbstractSpell
                 Debug.Log("TOO LATE TO PERFECT SHIELD !");
             }
 
-            Destroy(collider.gameObject);
+            Destroy(collision.gameObject);
         }
     }
 }
