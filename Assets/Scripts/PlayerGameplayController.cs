@@ -21,6 +21,13 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField] [Min(0)] private int maxHitsNumber = 1;
     [SerializeField] [Min(0)] private float hitResetTimer = 10;
 
+    [Header("Mana settings")]
+    [SerializeField] [Min(0)] private float maxMana = 100f;
+    private float mana = 0;
+    [SerializeField] [Min(0)] private float ManaRegenCooldown = 2f;
+    private float CurrentManaCooldown = 0;
+
+
     private float hitTimer = 0.0f;
     private int hitAmount = 0;
 
