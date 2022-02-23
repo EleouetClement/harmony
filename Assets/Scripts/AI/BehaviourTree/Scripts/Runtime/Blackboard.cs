@@ -10,6 +10,15 @@ namespace TheKiwiCoder {
     [System.Serializable]
     public class Blackboard
     {
+        public enum ParameterType
+        {
+            Bool,
+            Int,
+            Float,
+            Vector,
+            Transform
+        }
+
         public UDictionary<string, bool> boolParameters = new UDictionary<string, bool>();
         public UDictionary<string, int> intParameters = new UDictionary<string, int>();
         public UDictionary<string, float> floatParameters = new UDictionary<string, float>();
