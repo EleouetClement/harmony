@@ -9,12 +9,15 @@ public class EarthWall : AbstractSpell
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
+    public ParticleSystem groundMovingEffect;
     [Range(0, 50)]
     public float maxDistance;
 
     private RaycastHit hit;
     private Vector3 lastMarkerPosition = Vector3.zero; // store the last position of the marker before aiming in the void
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
+    private float possibleSlopeForFloor = 0.7f; // Defines the value of the normal for which a pillar can be built above
+    private float possibleSlopeForWall = 0f; // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built
 
     public void LateUpdate()
     {
@@ -36,6 +39,17 @@ public class EarthWall : AbstractSpell
                 lastMarkerPosition = hit.point;
                 lastMarkerNormal = hit.normal;
             }
+
+            groundMovingEffect.transform.position = marker.transform.position;
+            // The rotation of the particles system is depending on the spawn point of the object object (ground or wall)
+            if(lastMarkerNormal.y > possibleSlopeForFloor)
+            {
+                groundMovingEffect.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
+            }
+            else if(lastMarkerNormal.y > possibleSlopeForWall)
+            {
+                groundMovingEffect.transform.LookAt(cameraController.transform);
+            }
         }
     }
 
@@ -45,6 +59,10 @@ public class EarthWall : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+
+        groundMovingEffect.transform.position = marker.transform.position;
+        groundMovingEffect.Play();
+
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 
@@ -58,10 +76,8 @@ public class EarthWall : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        //RaycastHit hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
-
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
-        if (lastMarkerNormal.y > 0.70) // If the slope is not too hard
+        if (lastMarkerNormal.y > possibleSlopeForFloor) // If the slope is not too hard
         {
             Debug.Log("SPAWN PILLAR");
 
@@ -73,7 +89,7 @@ public class EarthWall : AbstractSpell
 
             Instantiate(earthPillar, marker.transform.position, rot);
         }
-        else if (lastMarkerNormal.y >= 0)
+        else if (lastMarkerNormal.y >= possibleSlopeForWall)
         {
             Debug.Log("SPAWN PLATFORM");
 
@@ -86,6 +102,7 @@ public class EarthWall : AbstractSpell
             Instantiate(earthPlatform, marker.transform.position, rot);
         }
 
+        groundMovingEffect.Stop();
         Destroy(marker.gameObject);
         Terminate();
     }
