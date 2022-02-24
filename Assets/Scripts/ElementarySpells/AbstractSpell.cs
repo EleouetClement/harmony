@@ -10,10 +10,10 @@ public abstract class AbstractSpell : MonoBehaviour
 
     public enum Element
     {
-        Physical,
         Fire,
         Water,
-        Earth
+        Earth,
+        Physical,
     }
 
     public Element element;

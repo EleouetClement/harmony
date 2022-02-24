@@ -127,7 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5395b1b634898f140a98f537adb01e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 0
+  element: 3
+  damagesInfos: {fileID: 0}
   maxDelayToPerfectShield: 0.5
   walkSpeedInShield: 3
   shieldPrefab: {fileID: 6729065792686192302}
