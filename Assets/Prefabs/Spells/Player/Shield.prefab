@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6729065792686192303}
   - component: {fileID: 2156433051197576123}
   - component: {fileID: 7339081501565071671}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6729065792686192302}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -127,6 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5395b1b634898f140a98f537adb01e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 0
   maxDelayToPerfectShield: 0.5
   walkSpeedInShield: 3
   shieldPrefab: {fileID: 6729065792686192302}

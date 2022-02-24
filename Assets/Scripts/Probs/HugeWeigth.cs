@@ -21,7 +21,7 @@ public class HugeWeigth : MonoBehaviour
         
         if(collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYER))
         {
-            IDamageable item = collision.gameObject.GetComponent<PlayerGameplayController>() as IDamageable;
+            IDamageable item = collision.gameObject.GetComponent<IDamageable>();
             
             if(item == null)
             {
