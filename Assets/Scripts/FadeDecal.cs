@@ -4,8 +4,13 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 
     [RequireComponent(typeof(SelfDestruct))]
+    [RequireComponent(typeof(DecalProjector))]
+
 public class FadeDecal : MonoBehaviour
 {
+    [TextArea]
+    public string notes;
+
     private DecalProjector projector;
     private float lifeTime;
     private float timePassed = 0f;
