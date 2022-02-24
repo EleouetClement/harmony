@@ -16,15 +16,19 @@ public class EarthBall : MonoBehaviour
 
 
 
-	/// <summary>
-	/// current charge level of the spell
+	/// <summary>
+
+	/// current charge level of the spell
+
 	/// </summary>
 	public float charge;
 
 
 
-	/// <summary>
-	/// Initial earth ball velocity
+	/// <summary>
+
+	/// Initial earth ball velocity
+
 	/// </summary>
 	private Vector3 launchVelocity;
 
@@ -186,7 +190,7 @@ public class EarthBall : MonoBehaviour
 			if (enemies.Length >= 1)
 				foreach (Collider c in enemies)
 				{
-					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Earth, Vector3.up));
+					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, AbstractSpell.Element.Earth, Vector3.up));
 				}
 			//get position to move elementary
 			earthMortarRef.lastBallCoord = transform.position;

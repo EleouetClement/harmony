@@ -47,4 +47,9 @@ public class MarkerTestSpell : AbstractSpell
         Debug.Log("Position locked : " + posMark.targetPosition);
         Destroy(marker.gameObject);
     }
+
+    protected override void SetDamages()
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -117,4 +117,9 @@ public class Shield : AbstractSpell
             Destroy(collision.gameObject);
         }
     }
+
+    protected override void SetDamages()
+    {
+        throw new NotImplementedException();
+    }
 }

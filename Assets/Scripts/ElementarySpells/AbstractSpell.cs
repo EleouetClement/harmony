@@ -10,13 +10,14 @@ public abstract class AbstractSpell : MonoBehaviour
 
     public enum Element
     {
+        Physical,
         Fire,
         Water,
         Earth
     }
 
     public Element element;
-
+    public Damages damagesInfos;
     /// <summary>
     /// The target location of the spell. Contains an arbitrary value that may differ spell to spell, but usually corresponds to where the spell is aimed at.
     /// </summary>
@@ -63,6 +64,9 @@ public abstract class AbstractSpell : MonoBehaviour
     private bool chargeend = false;
 
     private Transform playerMesh;
+
+
+    protected DamageHit damages;
 
 
 	private void Update()
@@ -146,8 +150,24 @@ public abstract class AbstractSpell : MonoBehaviour
         }
     }
 
-
-
-
+    /// <summary>
+    /// Creates DamageHit instance According to the spell type and chargeTime
+    /// DamageHit direction will be updated when the spell hits
+    /// </summary>
+    protected virtual void SetDamages()
+    {
+        DamageHit damages = new DamageHit(damagesInfos.baseDamages);
+        if(isBlinked)
+        {
+            damages.damage *= damagesInfos.blinkMultiplier;
+        }
+        else
+        {
+            float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge;
+            damages.damage *= multiplier;
+        }
+        this.damages = damages;
+        this.damages.type = element;
+    }
 
 }

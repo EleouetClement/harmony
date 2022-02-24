@@ -76,7 +76,7 @@ public class FireOrb : MonoBehaviour
         Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position + Vector3.up * 3, explosionradius, 1 << HarmonyLayers.LAYER_TARGETABLE);
         if (enemies.Length >= 1)
             foreach(Collider c in enemies){
-                c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, GameEngineInfo.DamageType.Fire, (transform.position - manager.GetPlayerReference.transform.position).normalized));
+                c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, AbstractSpell.Element.Fire, (transform.position - manager.GetPlayerReference.transform.position).normalized));
             }
         // VFX
         Instantiate(explosionEffect, transform.position + Vector3.up, transform.rotation);
