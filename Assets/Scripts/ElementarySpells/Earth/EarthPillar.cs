@@ -6,7 +6,7 @@ public class EarthPillar : MonoBehaviour
     [Min(1)] public float speedSpawn;
 
     private Vector3 finalSpawnPoint;
-    private bool isTotallyOut = false;
+    public bool isTotallyOut { get; private set; } = false;
 
     private void Awake()
     {
