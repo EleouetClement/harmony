@@ -137,7 +137,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
     private void OnSpellLeft(InputValue value)
     {
-        if (elementaryController.readyToCast)
+        if (elementaryController.readyToCast && !manaburnout)
         {
             if (value.isPressed)
             {
@@ -199,7 +199,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
     private void OnSpellRight(InputValue value)
     {
-        if (elementaryController.readyToCast)
+        if (elementaryController.readyToCast && !manaburnout)
         {
             if (value.isPressed)
             {
@@ -363,14 +363,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             Debug.Log("Player dead");
         }
         //DEAD SCENE TO LOAD...
-    }
-
-    /// <summary>
-    /// Predicate that returns true if the player can currently spend said amount of mana (depending on mana burnout and capacity)
-    /// </summary>
-    public Boolean CanSpendMana(float amount)
-    {
-        return !manaburnout;
     }
 
     /// <summary>
