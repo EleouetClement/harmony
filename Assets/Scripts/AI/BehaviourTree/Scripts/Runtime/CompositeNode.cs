@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public abstract class CompositeNode : Node {
         [HideInInspector] public List<Node> children = new List<Node>();
 

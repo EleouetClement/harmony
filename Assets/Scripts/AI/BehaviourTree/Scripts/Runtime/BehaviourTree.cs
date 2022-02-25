@@ -6,8 +6,8 @@ using UnityEditor;
 #endif
 
 
-namespace TheKiwiCoder {
-    [CreateAssetMenu(fileName = "Blackboard", menuName = "Harmony/AI/Behaviour Tree", order = 1)]
+namespace Harmony.AI {
+    [CreateAssetMenu(fileName = "BehaviourTree", menuName = "Harmony/AI/Behaviour Tree", order = 1)]
     public class BehaviourTree : ScriptableObject {
         public Node rootNode;
         public Node.State treeState = Node.State.Running;

@@ -1,20 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class SetFloatParameter : ActionNode
+namespace Harmony.AI
 {
-    [BlackboardParam(Blackboard.ParameterType.Float)]
-    public string parameterName = "";
-    public float value;
-
-    protected override void OnStart() { }
-    protected override void OnStop() { }
-
-    protected override State OnUpdate()
+    public class SetFloatParameter : ActionNode
     {
-        blackboard.SetParameter(parameterName, value);
-        return State.Success;
+        [BlackboardParam(Blackboard.ParameterType.Float)]
+        public string parameterName = "";
+
+        public float value;
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            blackboard.SetParameter(parameterName, value);
+            return State.Success;
+        }
     }
 }

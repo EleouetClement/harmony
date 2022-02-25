@@ -1,19 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class FinishWithResult : ActionNode
+namespace Harmony.AI
 {
-    public State result;
+    public class FinishWithResult : ActionNode
+    {
+        public State result;
 
-    protected override void OnStart() {
-    }
+        protected override void OnStart()
+        {
+        }
 
-    protected override void OnStop() {
-    }
+        protected override void OnStop()
+        {
+        }
 
-    protected override State OnUpdate() {
-        return result;
+        protected override State OnUpdate()
+        {
+            return result;
+        }
     }
 }

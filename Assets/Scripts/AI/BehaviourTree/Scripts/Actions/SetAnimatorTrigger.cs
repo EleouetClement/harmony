@@ -1,29 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class SetAnimatorTrigger : ActionNode
+namespace Harmony.AI
 {
-    public string parameterName;
-
-    private int parameterHash;
-
-    protected override void OnStart()
+    public class SetAnimatorTrigger : ActionNode
     {
-        parameterHash = Animator.StringToHash(parameterName);
-    }
+        public string parameterName;
 
-    protected override void OnStop() { }
+        private int parameterHash;
 
-    protected override State OnUpdate()
-    {
-        if (context.animator)
+        protected override void OnStart()
         {
-            context.animator.SetTrigger(parameterHash);
-            return State.Success;
+            parameterHash = Animator.StringToHash(parameterName);
         }
 
-        return State.Failure;
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            if (context.animator)
+            {
+                context.animator.SetTrigger(parameterHash);
+                return State.Success;
+            }
+
+            return State.Failure;
+        }
     }
 }

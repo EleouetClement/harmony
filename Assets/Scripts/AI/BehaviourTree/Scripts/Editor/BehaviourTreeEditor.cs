@@ -7,7 +7,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor.Callbacks;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
 
     public class BehaviourTreeEditor : EditorWindow {
 

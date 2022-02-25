@@ -1,19 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class SetBoolParameter : ActionNode
+namespace Harmony.AI
 {
-    [BlackboardParam(Blackboard.ParameterType.Bool)]
-    public string parameterName = "";
-    public bool value;
+    public class SetBoolParameter : ActionNode
+    {
+        [BlackboardParam(Blackboard.ParameterType.Bool)]
+        public string parameterName = "";
 
-    protected override void OnStart() { }
-    protected override void OnStop() { }
+        public bool value;
 
-    protected override State OnUpdate() {
-        blackboard.SetParameter(parameterName,value);
-        return State.Success;
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            blackboard.SetParameter(parameterName, value);
+            return State.Success;
+        }
     }
 }

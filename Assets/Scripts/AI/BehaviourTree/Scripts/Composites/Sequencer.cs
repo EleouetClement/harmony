@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public class Sequencer : CompositeNode {
         protected int current;
 

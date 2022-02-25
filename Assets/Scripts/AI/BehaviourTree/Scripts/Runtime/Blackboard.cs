@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
 
     // This is the blackboard container shared between all nodes.
     // Use this to store temporary data that multiple nodes need read and write access to.
@@ -38,6 +38,7 @@ namespace TheKiwiCoder {
         {
             if (boolParameters.TryGetValue(paramName, out value))
                 return true;
+            Debug.LogWarning($"Parameter \"{paramName}\" doesn't exists");
             return false;
         }
 
@@ -54,6 +55,7 @@ namespace TheKiwiCoder {
         {
             if (intParameters.TryGetValue(paramName, out value))
                 return true;
+            Debug.LogWarning($"Parameter \"{paramName}\" doesn't exists");
             return false;
         }
 
@@ -70,6 +72,7 @@ namespace TheKiwiCoder {
         {
             if (floatParameters.TryGetValue(paramName, out value))
                 return true;
+            Debug.LogWarning($"Parameter \"{paramName}\" doesn't exists");
             return false;
         }
 
@@ -86,6 +89,7 @@ namespace TheKiwiCoder {
         {
             if (vectorParameters.TryGetValue(paramName, out value))
                 return true;
+            Debug.LogWarning($"Parameter \"{paramName}\" doesn't exists");
             return false;
         }
 
@@ -102,6 +106,7 @@ namespace TheKiwiCoder {
         {
             if (transformParameters.TryGetValue(paramName, out value))
                 return true;
+            Debug.LogWarning($"Parameter \"{paramName}\" doesn't exists");
             return false;
         }
     }

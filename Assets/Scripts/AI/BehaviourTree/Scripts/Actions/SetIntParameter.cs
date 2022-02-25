@@ -1,20 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class SetIntParameter : ActionNode
+namespace Harmony.AI
 {
-    [BlackboardParam(Blackboard.ParameterType.Int)]
-    public string parameterName = "";
-    public int value;
-
-    protected override void OnStart() { }
-    protected override void OnStop() { }
-
-    protected override State OnUpdate()
+    public class SetIntParameter : ActionNode
     {
-        blackboard.SetParameter(parameterName, value);
-        return State.Success;
+        [BlackboardParam(Blackboard.ParameterType.Int)]
+        public string parameterName = "";
+
+        public int value;
+
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            blackboard.SetParameter(parameterName, value);
+            return State.Success;
+        }
     }
 }

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.Experimental.GraphView;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public class DoubleClickSelection : MouseManipulator {
         double time;
         double doubleClickDuration = 0.3;

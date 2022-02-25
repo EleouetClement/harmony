@@ -9,30 +9,18 @@ using UnityEditor;
 
 namespace Harmony.AI
 {
-    public class AIAgent : MonoBehaviour, IDamageable
+    public class AIAgent : BehaviourTreeRunner, IDamageable
     {
-        public Transform eyes;
         public bool aiActive = true;
-        [Range(0, 180)] public float lookAngle;
-        [Min(0)] public float lookRange;
         public List<Transform> wayPointList;
-
-        [HideInInspector] public NavMeshAgent navMeshAgent;
+        
         [HideInInspector] public int nextWayPoint;
-        [HideInInspector] public Transform chaseTarget;
-        [HideInInspector] public float stateTimeElapsed;
-
-
-        void Awake()
-        {
-            navMeshAgent = GetComponent<NavMeshAgent>();
-        }
 
         void Update()
         {
             if (!aiActive)
                 return;
-            
+            base.Update();
         }
 
         public void OnDamage(DamageHit hit)
@@ -43,17 +31,16 @@ namespace Harmony.AI
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (eyes != null && navMeshAgent != null)
+            if (context != null)
             {
-                
-
-                if (navMeshAgent.hasPath)
+                if (context.agent.hasPath)
                 {
-                    Gizmos.color = navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete ? Color.green : Color.red;
+                    Gizmos.color = context.agent.pathStatus == NavMeshPathStatus.PathComplete ? Color.green : Color.red;
 
-                    for (int i = 1; i < navMeshAgent.path.corners.Length; i++)
+                    for (int i = 1; i < context.agent.path.corners.Length; i++)
                     {
-                        Gizmos.DrawLine(navMeshAgent.path.corners[i-1], navMeshAgent.path.corners[i]);
+                        var path = context.agent.path;
+                        Gizmos.DrawLine(path.corners[i-1], path.corners[i]);
                     }
                 }
             }
@@ -61,7 +48,7 @@ namespace Harmony.AI
 
         private void OnDrawGizmosSelected()
         {
-
+            base.OnDrawGizmosSelected();
             float height = 0.1f;
 
             /*for (int i = 0; i < parameters.Count; i++)

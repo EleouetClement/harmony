@@ -1,25 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public class BehaviourTreeRunner : MonoBehaviour {
 
         // The main behaviour tree asset
         public BehaviourTree tree;
+        public UDictionary<string, UnityEvent> customEvents;
 
         // Storage container object to hold game object subsystems
-        Context context;
+        protected Context context;
 
         // Start is called before the first frame update
-        void Start() {
+        protected virtual void Start() {
             context = CreateBehaviourTreeContext();
             tree = tree.Clone();
             tree.Bind(context);
         }
 
         // Update is called once per frame
-        void Update() {
+        protected virtual void Update() {
             if (tree) {
                 tree.Update();
             }
@@ -29,7 +31,7 @@ namespace TheKiwiCoder {
             return Context.CreateFromGameObject(gameObject);
         }
 
-        private void OnDrawGizmosSelected() {
+        protected virtual void OnDrawGizmosSelected() {
             if (!tree) {
                 return;
             }

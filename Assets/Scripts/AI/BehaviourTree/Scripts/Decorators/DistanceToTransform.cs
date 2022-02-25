@@ -1,28 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class DistanceToTransform : DecoratorNode
+namespace Harmony.AI
 {
-    [BlackboardParam(Blackboard.ParameterType.Transform)]
-    public string parameterName;
-    public bool greaterThan;
-    public float distance;
-
-    protected override void OnStart() { }
-    protected override void OnStop() { }
-
-    protected override State OnUpdate()
+    public class DistanceToTransform : DecoratorNode
     {
-        blackboard.GetParameter(parameterName, out Transform target);
-        bool isLess = Vector3.Distance(context.transform.position, target.position) < distance;
+        [BlackboardParam(Blackboard.ParameterType.Transform)]
+        public string parameterName;
 
-        if (isLess && !greaterThan || !isLess && greaterThan)
+        public bool greaterThan;
+        public float distance;
+
+        protected override void OnStart()
         {
-            return child.Update();
         }
 
-        return State.Failure;
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            blackboard.GetParameter(parameterName, out Transform target);
+            bool isLess = Vector3.Distance(context.transform.position, target.position) < distance;
+
+            if (isLess && !greaterThan || !isLess && greaterThan)
+            {
+                return child.Update();
+            }
+
+            return State.Failure;
+        }
     }
 }

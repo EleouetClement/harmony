@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public class RandomSelector : CompositeNode {
         protected int current;
 

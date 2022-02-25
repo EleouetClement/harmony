@@ -1,31 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class WaitBlackboardTime : ActionNode
+namespace Harmony.AI
 {
-    [BlackboardParam(Blackboard.ParameterType.Float)]
-    public string durationParameter;
-    public float duration;
-    float startTime;
-
-    protected override void OnStart()
+    public class WaitBlackboardTime : ActionNode
     {
-        startTime = Time.time;
-        blackboard.GetParameter(durationParameter, out duration);
-    }
+        [BlackboardParam(Blackboard.ParameterType.Float)]
+        public string durationParameter;
 
-    protected override void OnStop()
-    {
-    }
+        public float duration;
+        float startTime;
 
-    protected override State OnUpdate()
-    {
-        if (Time.time - startTime > duration)
+        protected override void OnStart()
         {
-            return State.Success;
+            startTime = Time.time;
+            blackboard.GetParameter(durationParameter, out duration);
         }
-        return State.Running;
+
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            if (Time.time - startTime > duration)
+            {
+                return State.Success;
+            }
+
+            return State.Running;
+        }
     }
 }

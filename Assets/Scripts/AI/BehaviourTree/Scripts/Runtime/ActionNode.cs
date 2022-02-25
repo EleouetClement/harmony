@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public abstract class ActionNode : Node {
 
     }

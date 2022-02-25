@@ -7,7 +7,7 @@ using UnityEditor.Experimental.GraphView;
 using System;
 using System.Linq;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
     public class BehaviourTreeView : GraphView {
 
         public Action<NodeView> OnNodeSelected;

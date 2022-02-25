@@ -1,30 +1,35 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TheKiwiCoder;
+using Harmony.AI;
 
-public class SetAnimatorFloat : ActionNode
+namespace Harmony.AI
 {
-    public string parameterName;
-    public float value;
-
-    private int parameterHash;
-
-    protected override void OnStart()
+    public class SetAnimatorFloat : ActionNode
     {
-        parameterHash = Animator.StringToHash(parameterName);
-    }
+        public string parameterName;
+        public float value;
 
-    protected override void OnStop() { }
+        private int parameterHash;
 
-    protected override State OnUpdate()
-    {
-        if (context.animator)
+        protected override void OnStart()
         {
-            context.animator.SetFloat(parameterHash, value);
-            return State.Success;
+            parameterHash = Animator.StringToHash(parameterName);
         }
 
-        return State.Failure;
+        protected override void OnStop()
+        {
+        }
+
+        protected override State OnUpdate()
+        {
+            if (context.animator)
+            {
+                context.animator.SetFloat(parameterHash, value);
+                return State.Success;
+            }
+
+            return State.Failure;
+        }
     }
 }

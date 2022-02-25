@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace TheKiwiCoder {
+namespace Harmony.AI {
 
     // The context is a shared object every node has access to.
     // Commonly used components and subsytems should be stored here
@@ -19,6 +19,8 @@ namespace TheKiwiCoder {
         public BoxCollider boxCollider;
         public CapsuleCollider capsuleCollider;
         public CharacterController characterController;
+        public BehaviourTreeRunner treeRunner;
+        public Dictionary<string, MonoBehaviour> components;
         // Add other game specific systems here
 
         public static Context CreateFromGameObject(GameObject gameObject) {
@@ -35,7 +37,27 @@ namespace TheKiwiCoder {
             context.boxCollider = gameObject.GetComponent<BoxCollider>();
             context.capsuleCollider = gameObject.GetComponent<CapsuleCollider>();
             context.characterController = gameObject.GetComponent<CharacterController>();
-            
+            context.treeRunner = gameObject.GetComponent<BehaviourTreeRunner>();
+
+            context.components = new Dictionary<string, MonoBehaviour>();
+            MonoBehaviour[] components = gameObject.GetComponents<MonoBehaviour>();
+            for (int i = 0; i < components.Length; i++)
+            {
+                if (!context.components.ContainsKey(components[i].name))
+                {
+                    context.components.Add(components[i].name,components[i]);
+                }
+                else
+                {
+                    int count = 2;
+                    while (context.components.ContainsKey(components[i].name + count))
+                    {
+                        count++;
+                    }
+                    context.components.Add(components[i].name + count, components[i]);
+                }
+            }
+
             // Add whatever else you need here...
 
             return context;
