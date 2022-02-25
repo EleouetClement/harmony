@@ -75,19 +75,19 @@ namespace Harmony.AI
                     MonoBehaviour[] components = Selection.activeGameObject.GetComponents<MonoBehaviour>();
                     for (int i = 0; i < components.Length; i++)
                     {
-                        if (!componentsList.ContainsKey(components[i].name))
+                        if (!componentsList.ContainsKey(components[i].GetType().Name))
                         {
-                            componentsList.Add(components[i].name, components[i]);
+                            componentsList.Add(components[i].GetType().Name, components[i]);
                         }
                         else
                         {
                             int count = 2;
-                            while (componentsList.ContainsKey(components[i].name + count))
+                            while (componentsList.ContainsKey(components[i].GetType().Name + count))
                             {
                                 count++;
                             }
 
-                            componentsList.Add(components[i].name + count, components[i]);
+                            componentsList.Add(components[i].GetType().Name + count, components[i]);
                         }
                     }
 
@@ -126,6 +126,7 @@ namespace Harmony.AI
                 }
             }
 
+            EditorGUILayout.HelpBox("Select the Gameobject with the tree assigned to see available methods", MessageType.Info);
             EditorGUILayout.PropertyField(component);
             EditorGUILayout.PropertyField(method);
             EditorGUILayout.PropertyField(delay);

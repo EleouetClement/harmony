@@ -81,6 +81,7 @@ namespace Harmony.AI
                 }
             }
 
+            EditorGUILayout.HelpBox("Select the Gameobject with the tree assigned to see available events", MessageType.Info);
             EditorGUILayout.PropertyField(eventName);
 
             serializedObject.ApplyModifiedProperties();

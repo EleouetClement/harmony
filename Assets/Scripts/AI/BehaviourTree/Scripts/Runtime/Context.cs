@@ -43,18 +43,18 @@ namespace Harmony.AI {
             MonoBehaviour[] components = gameObject.GetComponents<MonoBehaviour>();
             for (int i = 0; i < components.Length; i++)
             {
-                if (!context.components.ContainsKey(components[i].name))
+                if (!context.components.ContainsKey(components[i].GetType().Name))
                 {
-                    context.components.Add(components[i].name,components[i]);
+                    context.components.Add(components[i].GetType().Name, components[i]);
                 }
                 else
                 {
                     int count = 2;
-                    while (context.components.ContainsKey(components[i].name + count))
+                    while (context.components.ContainsKey(components[i].GetType().Name + count))
                     {
                         count++;
                     }
-                    context.components.Add(components[i].name + count, components[i]);
+                    context.components.Add(components[i].GetType().Name + count, components[i]);
                 }
             }
 
