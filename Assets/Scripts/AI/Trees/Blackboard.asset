@@ -176,7 +176,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 22b07e8b1b8c41e4ebd814fbe237ada1
-  position: {x: -186, y: 450}
+  position: {x: -186.00003, y: 449.99997}
   blackboard:
     boolParameters:
       keys: []

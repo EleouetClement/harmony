@@ -74,6 +74,7 @@ namespace Harmony.AI {
             // Main treeview
             treeView = root.Q<BehaviourTreeView>();
             treeView.OnNodeSelected = OnNodeSelectionChanged;
+            treeView.SetupEditorWindow(this);
 
             // Inspector View
             inspectorView = root.Q<InspectorView>();

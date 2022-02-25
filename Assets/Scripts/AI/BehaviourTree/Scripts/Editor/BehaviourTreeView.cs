@@ -12,8 +12,10 @@ namespace Harmony.AI {
 
         public Action<NodeView> OnNodeSelected;
         public new class UxmlFactory : UxmlFactory<BehaviourTreeView, GraphView.UxmlTraits> { }
-        BehaviourTree tree;
-        BehaviourTreeSettings settings;
+        private BehaviourTree tree;
+        private BehaviourTreeSettings settings;
+        private NodeSearchWindow searchWindow;
+        private EditorWindow window;
 
         public struct ScriptTemplate {
             public TextAsset templateFile;
@@ -28,7 +30,8 @@ namespace Harmony.AI {
             new ScriptTemplate{ templateFile=BehaviourTreeSettings.GetOrCreateSettings().scriptTemplateDecoratorNode, defaultFileName="ConeCheck.cs", subFolder="Decorators" },
         };
 
-        public BehaviourTreeView() {
+        public BehaviourTreeView()
+        {
             settings = BehaviourTreeSettings.GetOrCreateSettings();
 
             Insert(0, new GridBackground());
@@ -38,11 +41,24 @@ namespace Harmony.AI {
             this.AddManipulator(new DoubleClickSelection());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
+            this.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
+            {
+                UnityEngine.Debug.Log("right click");
+            }));
 
             var styleSheet = settings.behaviourTreeStyle;
             styleSheets.Add(styleSheet);
 
             Undo.undoRedoPerformed += OnUndoRedo;
+        }
+
+        public void SetupEditorWindow(EditorWindow window)
+        {
+            this.window = window;
+            searchWindow = ScriptableObject.CreateInstance<NodeSearchWindow>();
+            searchWindow.Configure(this.window, this);
+            nodeCreationRequest = context =>
+                SearchWindow.Open(new SearchWindowContext(context.screenMousePosition), searchWindow);
         }
 
         private void OnUndoRedo() {
@@ -126,41 +142,7 @@ namespace Harmony.AI {
 
             return graphViewChange;
         }
-
-        public override void BuildContextualMenu(ContextualMenuPopulateEvent evt) {
-
-            //base.BuildContextualMenu(evt);
-
-            // New script functions
-            evt.menu.AppendAction($"Create Script.../New Action Node", (a) => CreateNewScript(scriptFileAssets[0]));
-            evt.menu.AppendAction($"Create Script.../New Composite Node", (a) => CreateNewScript(scriptFileAssets[1]));
-            evt.menu.AppendAction($"Create Script.../New Decorator Node", (a) => CreateNewScript(scriptFileAssets[2]));
-            evt.menu.AppendSeparator();
-
-            Vector2 nodePosition = this.ChangeCoordinatesTo(contentViewContainer, evt.localMousePosition);
-            {
-
-                var types = TypeCache.GetTypesDerivedFrom<ActionNode>();
-                foreach (var type in types) {
-                    evt.menu.AppendAction($"[Action]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<CompositeNode>();
-                foreach (var type in types) {
-                    evt.menu.AppendAction($"[Composite]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
-                }
-            }
-
-            {
-                var types = TypeCache.GetTypesDerivedFrom<DecoratorNode>();
-                foreach (var type in types) {
-                    evt.menu.AppendAction($"[Decorator]/{ObjectNames.NicifyVariableName(type.Name)}", (a) => CreateNode(type, nodePosition));
-                }
-            }
-        }
-
+        
         void SelectFolder(string path) {
             // https://forum.unity.com/threads/selecting-a-folder-in-the-project-via-button-in-editor-window.355357/
             // Check the path has no '/' at the end, if it does remove it,
@@ -180,13 +162,13 @@ namespace Harmony.AI {
             EditorGUIUtility.PingObject(obj);
         }
 
-        void CreateNewScript(ScriptTemplate template) {
+        public void CreateNewScript(ScriptTemplate template) {
             SelectFolder($"{settings.newNodeBasePath}/{template.subFolder}");
             var templatePath = AssetDatabase.GetAssetPath(template.templateFile);
             ProjectWindowUtil.CreateScriptAssetFromTemplateFile(templatePath, template.defaultFileName);
         }
 
-        void CreateNode(System.Type type, Vector2 position) {
+        public void CreateNode(System.Type type, Vector2 position) {
             Node node = tree.CreateNode(type);
             node.position = position;
             CreateNodeView(node);
