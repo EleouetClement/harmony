@@ -40,12 +40,16 @@ namespace Harmony.AI
     [CustomEditor(typeof(CallMethod))]
     public class CallMethodEditor : Editor
     {
+        SerializedProperty description;
+        SerializedProperty drawGizmos;
         SerializedProperty component;
         SerializedProperty method;
         SerializedProperty delay;
 
         void OnEnable()
         {
+            description = serializedObject.FindProperty("description");
+            drawGizmos = serializedObject.FindProperty("drawGizmos");
             component = serializedObject.FindProperty("component");
             method = serializedObject.FindProperty("method");
             delay = serializedObject.FindProperty("delay");
@@ -54,6 +58,9 @@ namespace Harmony.AI
         public override void OnInspectorGUI()
         {
             serializedObject.Update();
+
+            EditorGUILayout.PropertyField(description);
+            EditorGUILayout.PropertyField(drawGizmos);
 
             if (Selection.activeGameObject != null)
             {
