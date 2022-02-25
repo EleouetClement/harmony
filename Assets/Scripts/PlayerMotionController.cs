@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class PlayerMotionController : MonoBehaviour
 {
     public float currentSpeed;
+    private float speedLimit;
+    [Range(0f,1f)] private float percentSpeed;
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
@@ -41,12 +43,21 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 rightDirection;
     private Vector2 inputAxis;
     private Vector3 velocity;
-    private bool onGround;
+    public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
-    public bool isMoving = false;
-    private bool isDodging = false;
 
+    [Header("Animation")]
+    public Animator animator;
+    public bool isMoving;
+    private bool isWalking;
+    private bool isRunning;
+    private bool isDodging;
+    private bool isJumping;
+    private bool isFalling;
+    private bool currentState;
+    public float speedThreshold_walk;
+    
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
     private Vector3 dodgeDirection = Vector3.zero;
@@ -54,18 +65,24 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 dodgeVelocity;
 
     private bool onPlatform = false;
+    [Space]
     public float accelerationFriction;
     public float decelerationFriction;
 
     private void Awake()
     {
+        isMoving = false;
+        isDodging = false;
+        isJumping = false;
+        isFalling = false;
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
+        speedLimit = (walkSpeed/accelerationFriction) -0.3f;
     }
 
     void Start()
     {
-        
+
     }
 
     void Update()
@@ -77,6 +94,9 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         currentSpeed = controller.velocity.magnitude;
+        //Percentage of max speed
+        animator.SetFloat("Speed",Mathf.Clamp(currentSpeed / speedLimit, 0f, 1f));
+
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
 
         //smooth turning when moving
@@ -84,6 +104,30 @@ public class PlayerMotionController : MonoBehaviour
         {
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
+
+        //Animation state
+        if (isMoving)
+        {
+            if (onGround)
+            {
+                if (currentSpeed <= speedThreshold_walk)
+                {
+                    animator.SetBool("isRunning", false);
+                    animator.SetBool("isWalking", true);
+                }
+                else
+                {
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isRunning", true);
+                }
+            }
+        }
+		else
+		{
+            animator.SetBool("isWalking", false);
+            animator.SetBool("isRunning", false);
+        }
+		
 
     }
 
@@ -197,7 +241,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(onGround)
         {
-            onGround = false;
+            //onGround = false;
             velocity.y = jumpForce;
         }
     }
