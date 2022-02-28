@@ -216,9 +216,11 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateGroundState()
     {
+
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
             out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
-
+        Debug.Log(onGround);
+        
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
@@ -241,24 +243,15 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-    
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    if (debug && Application.isPlaying)
-    //    {
-    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
 
-    //        Gizmos.color = Color.white;
-    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
-
-    //        Gizmos.color = Color.gray;
-    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
-
-    //        Gizmos.DrawLine(transform.position, end);
-
-    //    }
-    //}
+    void OnDrawGizmosSelected()
+    {
+        if (debug && Application.isPlaying)
+        {
+            Gizmos.DrawSphere(transform.position, controller.radius * groundTestRadiusFactor);
+        }
+    }
 
     private Vector3 GetDirection()
     {
