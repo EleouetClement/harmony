@@ -106,9 +106,4 @@ public class EarthWall : AbstractSpell
         Destroy(marker.gameObject);
         Terminate();
     }
-
-    protected override void SetDamages()
-    {
-        throw new System.NotImplementedException();
-    }
 }

@@ -190,6 +190,7 @@ public class EarthBall : MonoBehaviour
 			if (enemies.Length >= 1)
 				foreach (Collider c in enemies)
 				{
+					//TO CHANGE
 					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, AbstractSpell.Element.Earth, Vector3.up));
 				}
 			//get position to move elementary

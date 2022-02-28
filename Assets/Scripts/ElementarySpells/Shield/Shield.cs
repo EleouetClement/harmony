@@ -118,8 +118,4 @@ public class Shield : AbstractSpell
         }
     }
 
-    protected override void SetDamages()
-    {
-        throw new NotImplementedException();
-    }
 }
