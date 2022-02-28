@@ -764,7 +764,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a4636c59c6421347be326bfb0fa40c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  elementaryObjectReference: {fileID: 0}
+  elementaryObjectReference: {fileID: 824288169518036289, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+    type: 3}
   playerMeshReference: {fileID: 6677204177534006692}
   playerCinemachineCameraController: {fileID: 1212469516}
   castingTurnSpeed: 4
