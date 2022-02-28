@@ -778,7 +778,7 @@ PrefabInstance:
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: exploratorySpells.Array.size
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
@@ -801,6 +801,18 @@ PrefabInstance:
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: exploratorySpells.Array.data[0]
+      value: 
+      objectReference: {fileID: 209660303719141882, guid: 2ffae2c690326de4c8418b68921e3076,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: exploratorySpells.Array.data[1]
+      value: 
+      objectReference: {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769,
+        type: 3}
+    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
+        type: 3}
+      propertyPath: exploratorySpells.Array.data[2]
       value: 
       objectReference: {fileID: 4142513819557297703, guid: d1619f3ee4375d942bbe4ce791038383,
         type: 3}
@@ -1783,7 +1795,7 @@ GameObject:
   - component: {fileID: 2076524187}
   - component: {fileID: 2076524186}
   - component: {fileID: 2076524185}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
