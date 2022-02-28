@@ -40,8 +40,8 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
     private Vector2 inputAxis;
-    private Vector3 velocity;
-    private bool onGround;
+    [HideInInspector]public Vector3 velocity;
+    [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
     public bool isMoving = false;
