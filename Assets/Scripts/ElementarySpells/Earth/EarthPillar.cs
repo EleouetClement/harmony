@@ -3,17 +3,16 @@ using UnityEngine;
 public class EarthPillar : MonoBehaviour
 {
     public static EarthPillar instance;
-    [Min(1)] public float speedSpawn;
-
-    private Vector3 finalSpawnPoint;
+    [Min(0.1f)] public float timeToSpawn;
     public bool isTotallyOut { get; private set; } = false;
+
+    private float timer = 0f;
+    private Vector3 initialSpawnPoint;
+    private Vector3 finalSpawnPoint;
+    private Cinemachine.CinemachineImpulseSource shakeSource;
 
     private void Awake()
     {
-        // Initial and final point values for moving the pillar from bottom to top
-        finalSpawnPoint = transform.position;
-        transform.position += new Vector3(0f, -transform.localScale.y, 0f);
-
         if (instance != null)
         {
             Debug.LogWarning("There is more than one instance of EarthPillar in the scene, the old one is destroyed");
@@ -26,6 +25,18 @@ public class EarthPillar : MonoBehaviour
         }
 
         instance = this;
+
+        // Initial and final point values for moving the pillar from bottom to top
+        finalSpawnPoint = transform.position;
+        initialSpawnPoint = new Vector3(transform.position.x, -transform.localScale.y, transform.position.z);
+        transform.position += initialSpawnPoint;
+
+        // Definition of the shake system (to have shocks as long as the pillar extends)
+        shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();
+        shakeSource.m_ImpulseDefinition.m_TimeEnvelope.m_AttackTime = timeToSpawn / 4; // Time to start of shaking
+        shakeSource.m_ImpulseDefinition.m_TimeEnvelope.m_SustainTime = timeToSpawn - (timeToSpawn/4); // Time in the highest intensity of shaking
+        shakeSource.m_ImpulseDefinition.m_TimeEnvelope.m_DecayTime = timeToSpawn / 4; // Time to end of shaking
+        shakeSource.GenerateImpulseAt(transform.position, transform.forward);
     }
 
     void FixedUpdate()
@@ -33,10 +44,10 @@ public class EarthPillar : MonoBehaviour
         // Extension of the pillar if it is not totally out of the ground
         if (!isTotallyOut)
         {
-            transform.position += new Vector3(0f, speedSpawn * Time.fixedDeltaTime, 0f);
+            timer += Time.fixedDeltaTime;
+            transform.position = Vector3.Lerp(initialSpawnPoint, finalSpawnPoint, timer/timeToSpawn);
 
-            // If the pillar has finished expanding
-            if (transform.position.y >= finalSpawnPoint.y)
+            if(timer >= timeToSpawn)
             {
                 isTotallyOut = true;
             }
