@@ -12,7 +12,7 @@ public class EarthMortar : AbstractSpell
 	[Min(1)] public float maxSpellLength;
 	public float maxRange;
 	private bool launched;
-
+	
 	GameObject hud;
 	
 
@@ -66,7 +66,6 @@ public class EarthMortar : AbstractSpell
 	protected override void onChargeEnd(float chargetime)
 	{
 		earthMarker.DestroyMarker();
-
 		if (chargetime >= 1.05f || chargetime <= 9.95f)
 			//print("Blink!");
 		ball.GetComponent<EarthBall>().Launch();
@@ -75,7 +74,8 @@ public class EarthMortar : AbstractSpell
 
 	public override void Terminate()
 	{
-		elementary.transform.position = lastBallCoord;
+		if(!canceled)
+			elementary.transform.position = lastBallCoord;
 		elementary.GetComponent<MeshRenderer>().enabled = true;
 		elementary.GetComponent<ElementaryController>().currentSpell = null;
 		elementary.GetComponent<ElementaryController>().computePosition = true;

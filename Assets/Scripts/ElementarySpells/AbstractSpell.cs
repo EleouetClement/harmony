@@ -59,7 +59,12 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false; 
+    protected bool isBlinked = false;
+
+    /// <summary>
+    /// True if the spell has been canceled by the shield cast
+    /// </summary>
+    public bool canceled = false;
 
     private bool chargeend = false;
 
