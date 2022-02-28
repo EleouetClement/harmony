@@ -12,11 +12,12 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         Fire,
         Water,
-        Earth
+        Earth,
+        Physical,
     }
 
     public Element element;
-
+    public Damages damagesInfos;
     /// <summary>
     /// The target location of the spell. Contains an arbitrary value that may differ spell to spell, but usually corresponds to where the spell is aimed at.
     /// </summary>
@@ -58,15 +59,18 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false;
+    protected bool isBlinked = false; 
 
     private bool chargeend = false;
 
     private Transform playerMesh;
 
 
-    private void Update()
-    {
+    protected DamageHit damages;
+
+
+	private void Update()
+	{
         //smooth turning when charging a spell and not moving
         if (!chargeend)
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
@@ -170,6 +174,34 @@ public abstract class AbstractSpell : MonoBehaviour
     protected virtual float GetChannelCost()
     {
         return 5f;
+    }
+
+    /// <summary>
+    /// Creates DamageHit instance According to the spell type and chargeTime
+    /// DamageHit direction will be updated when the spell hits
+    /// </summary>
+    public virtual DamageHit SetDamages(Vector3 direction)
+    {
+        if(this.damages == null)
+        {
+            DamageHit damages = new DamageHit(damagesInfos.baseDamages, element, direction);
+            if (isBlinked)
+            {
+                damages.damage *= damagesInfos.blinkMultiplier;
+            }
+            else
+            {
+                float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge;
+                damages.damage *= multiplier;
+            }
+            this.damages = damages;
+            this.damages.type = element;
+        }
+        else
+        {
+            this.damages.direction = direction;
+        } 
+        return this.damages;
     }
 
 }

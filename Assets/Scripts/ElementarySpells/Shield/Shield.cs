@@ -117,4 +117,5 @@ public class Shield : AbstractSpell
             Destroy(collision.gameObject);
         }
     }
+
 }
