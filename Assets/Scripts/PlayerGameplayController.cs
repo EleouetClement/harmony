@@ -134,6 +134,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         print("Element sélectionné : " + elementaryController.currentElement);
     }
+    #region Spell casting
 
     private void OnSpellLeft(InputValue value)
     {
@@ -141,60 +142,23 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             if (value.isPressed)
             {
-                AbstractSpell spell = null;
-                if (elementaryController.inCombat)
+                AbstractSpell spell = Instantiate(
+                        elementaryController.GetSpell1(),
+                        elementaryController.transform.position,
+                        Quaternion.identity);
+                if (elementaryController.currentElement == AbstractSpell.Element.Water)
                 {
-                    spell = Instantiate(elementaryController.GetOffensiveSpell(), elementaryController.transform.position, Quaternion.identity);
-                    CastOffensiveSpell(spell);
+                    CastWaterMissiles(spell);
                 }
                 else
                 {
-                    spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
-                    CastExploratorySpell(spell);
+                    spell.init(elementaryController.gameObject, Vector3.zero);
                 }
-
-
                 elementaryController.CastSpell(spell);
             }
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
-    }
-
-    private void CastOffensiveSpell(AbstractSpell spell)
-    {
-        switch (elementaryController.currentElement)
-        {
-            case AbstractSpell.Element.Fire:
-                CastFireBall(spell);
-                break;
-            case AbstractSpell.Element.Water:
-                CastWaterMissiles(spell);
-                break;
-            case AbstractSpell.Element.Earth:
-                CastEarthMortar(spell);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void CastExploratorySpell(AbstractSpell spell)
-    {
-        switch (elementaryController.currentElement)
-        {
-            case AbstractSpell.Element.Fire:
-                CastFireOrb(spell);
-                break;
-            case AbstractSpell.Element.Water:
-                CastWaterBeam(spell);
-                break;
-            case AbstractSpell.Element.Earth:
-                CastEarthWall(spell);
-                break;
-            default:
-                break;
-        }
     }
 
     private void OnSpellRight(InputValue value)
@@ -204,32 +168,16 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             if (value.isPressed)
             {
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
-                AbstractSpell spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
-                switch (elementaryController.currentElement)
-                {
-                    case AbstractSpell.Element.Fire:
-                        CastFireOrb(spell);
-                        break;
-                    case AbstractSpell.Element.Water:
-                        CastWaterBeam(spell);
-                        break;
-                    case AbstractSpell.Element.Earth:
-                        CastEarthWall(spell);
-                        break;
-                    default:
-                        break;
-                }
+                AbstractSpell spell = Instantiate(
+                    elementaryController.GetSpell2(), 
+                    elementaryController.transform.position, 
+                    Quaternion.identity);
+                spell.init(elementaryController.gameObject, Vector3.zero);
                 elementaryController.CastSpell(spell);
-                Debug.Log("Spell cast : " + spell);
             }
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
-    }
-
-    private void CastFireOrb(AbstractSpell spell)
-    {
-        spell.init(elementaryController.gameObject, Vector3.zero);
     }
 
     /// <summary>
@@ -261,10 +209,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.currentSpell?.OnRelease();
     }
 
-    private void CastEarthWall(AbstractSpell spell)
-    {
-        spell.init(elementaryController.gameObject, Vector3.zero);
-    }
+
 
     private void CastWaterMissiles(AbstractSpell spell)
     {
@@ -276,30 +221,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                 ((WaterMissiles)spell).targetTransform = enemies[0].gameObject.transform;
         }
     }
-
-    private void CastWaterBeam(AbstractSpell spell)
-    {
-        Debug.LogWarning(GameModeSingleton.GetInstance().GetCinemachineCameraController);
-        spell.init(elementaryController.gameObject, Vector3.zero);
-    }
-
-    private void CastFireBall(AbstractSpell spell)
-    {
-        if (playerCinemachineCameraController)
-        {
-            spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-        }
-        else
-        {
-            spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-        }
-    }
-
-    private void CastEarthMortar(AbstractSpell spell)
-    {
-        spell.init(elementaryController.gameObject, Vector3.zero);
-    }
-
+    #endregion
     private void OnAim(InputValue value)
     {
         elementaryController.isAiming = value.isPressed;

@@ -104,7 +104,11 @@ public class ElementaryController : MonoBehaviour
         currentElement = element;
     }
 
-    public AbstractSpell GetOffensiveSpell()
+    /// <summary>
+    /// Returns the spell 1 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell1()
     {
         AbstractSpell s;
         if (spells1.TryGetValue(currentElement, out s))
@@ -113,7 +117,11 @@ public class ElementaryController : MonoBehaviour
         return null;
     }
 
-    public AbstractSpell GetExploratorySpell()
+    /// <summary>
+    /// Returns the spell 2 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell2()
     {
         AbstractSpell s;
         if(spells2.TryGetValue(currentElement, out s))
