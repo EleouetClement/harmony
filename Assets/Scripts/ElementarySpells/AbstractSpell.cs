@@ -72,9 +72,108 @@ public abstract class AbstractSpell : MonoBehaviour
 	private void Update()
 	{
         //smooth turning when charging a spell and not moving
-        if(!chargeend)
+        if (!chargeend)
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
+    }
 
+    public virtual void FixedUpdate()
+    {
+        if (!chargeend)
+        {
+            charge += Time.fixedDeltaTime;
+            PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+            if (player) {
+                player.OnManaSpend(GetChannelCost() * Time.fixedDeltaTime);
+            }
+        }
+
+        //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
+        if (isReleased())
+        {
+            //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
+            currentLivingTime += Time.fixedDeltaTime;
+            if (currentLivingTime >= maxLivingTime)
+            {
+                // Debug.Log("Terminate");
+                Terminate();
+            }
+        }
+        else
+        {
+            currentCastTime += Time.fixedDeltaTime;
+            if (currentCastTime >= maxCastTime)
+            {
+                //Debug.Log("Liberation forcee");
+                OnRelease();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Common initializer for all player cast spells.
+    /// </summary>
+    /// <param name="elemRef">Reference to the elementaryControler instance</param>
+    /// <param name="target">Hit to the target of the spell. Might or might not be used, and usually determines a direction</param>
+    public virtual void init(GameObject elemRef, Vector3 target)
+    {
+        this.target = target;
+        elementary = elemRef;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+        if (player)
+        {
+            player.OnManaSpend(GetManaCost());
+        }
+    }
+
+    public void OnRelease()
+    {
+        chargeend = true;
+        onChargeEnd(charge);
+    }
+
+    /// <returns>True if this spell has already been released</returns>
+    public bool isReleased()
+    {
+        return chargeend;
+    }
+
+    /// <summary>
+    /// Kills this spell instance, disposes all ressources used by this spell and returns elemntary to 
+    /// the player.
+    /// </summary>
+    public abstract void Terminate();
+
+    /// <summary>
+    /// Event triggered by The player controller to notify that the spell cast button has been released. 
+    /// Do note that there is no garentee that this event is ever called, as the player might not ever release the key.
+    /// </summary>
+    /// <param name="chargetime">The time this spell has been charged for, in seconds. Because this is abstract, this is the duration of the key press.</param>
+    protected virtual void onChargeEnd(float chargetime)
+    {
+        float blink = Mathf.Abs(blinkTiming - chargetime);
+        //Debug.Log(blink);
+        if (blink <= 0.5f)
+        {
+            Debug.Log("Blink!");
+            isBlinked = true;
+        }
+    }
+
+    /// <summary>
+    /// Computes and return this spell's initial mana cost. May be overriden by spells for complex and situational behavior.
+    /// </summary>
+    protected virtual float GetManaCost()
+    {
+        return 20f;
+    }
+
+    /// <summary>
+    /// Computes and return this spell's chanelling mana cost per second. May be overriden by spells for complex and situational behavior.
+    /// </summary>
+    protected virtual float GetChannelCost()
+    {
+        return 5f;
     }
 
     public virtual void FixedUpdate()

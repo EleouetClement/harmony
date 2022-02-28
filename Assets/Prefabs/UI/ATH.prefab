@@ -1093,6 +1093,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1709757610482179038}
   - component: {fileID: 6164904912625911326}
+  - component: {fileID: 349284706387254853}
   m_Layer: 5
   m_Name: Mana
   m_TagString: Untagged
@@ -1174,6 +1175,18 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &349284706387254853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6146856416956191913}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e0cacf1370dd4341b798c0e4937b40d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9031037223360524628
 GameObject:
   m_ObjectHideFlags: 0
