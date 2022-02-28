@@ -49,11 +49,7 @@ public class PlayerMotionController : MonoBehaviour
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
 
-    private bool onPlatform = false;
     public float accelerationFriction;
     public float decelerationFriction;
 
