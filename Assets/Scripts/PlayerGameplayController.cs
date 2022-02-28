@@ -33,6 +33,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private float hitTimer = 0.0f;
     private int hitAmount = 0;
 
+    
     public bool InFight { get; private set; } = false;
     private void Awake()
     {
@@ -199,6 +200,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             if (!elementaryController.currentSpell.isReleased())
             {
                 Debug.Log("Annulation par shield");
+                elementaryController.currentSpell.canceled = true;
                 elementaryController.currentSpell.Terminate();
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);

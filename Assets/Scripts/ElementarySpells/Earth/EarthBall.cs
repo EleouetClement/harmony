@@ -187,11 +187,12 @@ public class EarthBall : MonoBehaviour
 			// Idamageable computations
 			//Debug.Log("Earth mortal shockwave at : " + transform.position + " / radius : " + radius);
 			Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position, radius, 1 << HarmonyLayers.LAYER_TARGETABLE);
+			AbstractSpell currSpell = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
 			if (enemies.Length >= 1)
 				foreach (Collider c in enemies)
 				{
-					//TO CHANGE
-					c.gameObject.GetComponent<IDamageable>()?.OnDamage(new DamageHit(100f, AbstractSpell.Element.Earth, Vector3.up));
+
+					c.gameObject.GetComponent<IDamageable>()?.OnDamage(currSpell.SetDamages(Vector3.up));
 				}
 			//get position to move elementary
 			earthMortarRef.lastBallCoord = transform.position;

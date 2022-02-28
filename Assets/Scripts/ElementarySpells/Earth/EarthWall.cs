@@ -76,6 +76,8 @@ public class EarthWall : AbstractSpell
         elementaryController.currentSpell = null;
         elementaryController.computePosition = true;
         elementaryController.readyToCast = true;
+        if (marker != null)
+            Destroy(marker.gameObject);
         Destroy(gameObject);
     }
 
