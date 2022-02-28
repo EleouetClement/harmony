@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,8 +19,11 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] private int layerMask;
 
     [SerializeField] public AbstractSpell shieldPrefab;
-    [SerializeField] public AbstractSpell[] offensiveSpells;
-    [SerializeField] public AbstractSpell[] exploratorySpells;
+    [SerializeField] private AbstractSpell[] offensiveSpells;
+    [SerializeField] private AbstractSpell[] exploratorySpells;
+
+    public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
+    public Dictionary<AbstractSpell.Element, AbstractSpell> spells2;
 
     private Vector3 shoulderOffset;
 
@@ -44,10 +48,25 @@ public class ElementaryController : MonoBehaviour
 	private void Awake()
 	{
 		shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
+        InitDict();
     }
 
-	// Start is called before the first frame update
-	void Start()
+    private void InitDict()
+    {
+        spells1 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
+        spells2 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
+        foreach(AbstractSpell s in offensiveSpells)
+        {
+            spells1.Add(s.element, s);
+        }
+        foreach (AbstractSpell s in exploratorySpells)
+        {
+            spells2.Add(s.element, s);
+        }
+    }
+
+    // Start is called before the first frame update
+    void Start()
     {
         SetElement(AbstractSpell.Element.Fire);
         virtualShoulder.transform.localPosition += shoulderOffset;
@@ -85,14 +104,30 @@ public class ElementaryController : MonoBehaviour
         currentElement = element;
     }
 
-    public AbstractSpell GetOffensiveSpell()
+    /// <summary>
+    /// Returns the spell 1 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell1()
     {
-        return offensiveSpells[(int)currentElement];
+        AbstractSpell s;
+        if (spells1.TryGetValue(currentElement, out s))
+            return s;
+        Debug.LogError("GetOffensiveSpell : no spell1 found for this element");
+        return null;
     }
 
-    public AbstractSpell GetExploratorySpell()
+    /// <summary>
+    /// Returns the spell 2 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell2()
     {
-        return exploratorySpells[(int)currentElement];
+        AbstractSpell s;
+        if(spells2.TryGetValue(currentElement, out s))
+            return s;
+        Debug.LogError("GetExploratorySpell : no spell2 found for this element");
+        return null;
     }
 
     /// <summary>
