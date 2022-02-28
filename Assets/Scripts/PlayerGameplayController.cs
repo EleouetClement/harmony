@@ -229,7 +229,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
     private void CastFireOrb(AbstractSpell spell)
     {
-        throw new NotImplementedException();
+        spell.init(elementaryController.gameObject, Vector3.zero);
     }
 
     /// <summary>

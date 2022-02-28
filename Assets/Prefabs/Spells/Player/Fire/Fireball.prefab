@@ -45,10 +45,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 0
+  damagesInfos: {fileID: 11400000, guid: 95a3ef57daa9e9d4991f99516213e6b6, type: 2}
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
   maxDistance: 20
-  livingTime: 0
   maxSpeedDistance: 5
   projectileTopSpeed: 20
   projectileStartSpeed: 2

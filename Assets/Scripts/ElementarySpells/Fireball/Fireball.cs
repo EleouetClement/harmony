@@ -13,13 +13,11 @@ public class Fireball : AbstractSpell
     /// <summary>
     /// The maximum distance before applying bullet drop
     /// </summary>
-    [Min(1)]public float maxDistance;
-    [Min(1)]public float livingTime;
+    [SerializeField] [Min(1)] public float maxDistance;
     /// <summary>
     /// Distance from which the projectile reach its max speed
     /// </summary>
     [Min(0)] public float maxSpeedDistance;
-
     [SerializeField] [Min(0)] private float projectileTopSpeed;
     [SerializeField] [Min(0)] private float projectileStartSpeed;
     
@@ -297,7 +295,6 @@ public class Fireball : AbstractSpell
         }
         
     }
-
 
 
 }
