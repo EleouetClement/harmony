@@ -80,6 +80,10 @@ public class EarthMortar : AbstractSpell
 		elementary.GetComponent<ElementaryController>().currentSpell = null;
 		elementary.GetComponent<ElementaryController>().computePosition = true;
 		elementary.GetComponent<ElementaryController>().readyToCast = true;
+		if (ball != null)
+			Destroy(ball);
+		if(earthMarker != null)
+			earthMarker.DestroyMarker();
 		Destroy(gameObject);
 	}
 }
