@@ -134,7 +134,15 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         print("Element sélectionné : " + elementaryController.currentElement);
     }
+<<<<<<< Updated upstream
 
+=======
+    #region Spell casting
+    /// <summary>
+    /// Will cast a spell from se spells1 Dictionnary in the elementatry controller
+    /// </summary>
+    /// <param name="value"></param>
+>>>>>>> Stashed changes
     private void OnSpellLeft(InputValue value)
     {
         if (elementaryController.readyToCast && !manaburnout)
@@ -161,6 +169,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.currentSpell?.OnRelease();
     }
 
+<<<<<<< Updated upstream
     private void CastOffensiveSpell(AbstractSpell spell)
     {
         switch (elementaryController.currentElement)
@@ -197,6 +206,12 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
     }
 
+=======
+    /// <summary>
+    /// Will cast a spell from se spells2 Dictionnary in the elementatry controller
+    /// </summary>
+    /// <param name="value"></param>
+>>>>>>> Stashed changes
     private void OnSpellRight(InputValue value)
     {
         if (elementaryController.readyToCast && !manaburnout)
@@ -261,10 +276,13 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.currentSpell?.OnRelease();
     }
 
+<<<<<<< Updated upstream
     private void CastEarthWall(AbstractSpell spell)
     {
         spell.init(elementaryController.gameObject, Vector3.zero);
     }
+=======
+>>>>>>> Stashed changes
 
     private void CastWaterMissiles(AbstractSpell spell)
     {
@@ -337,9 +355,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                     elementaryController.SetPLayerOrigin(playerMeshReference.transform);
                 }
             }
-
         }
-
     }
 
     /// <returns>A representation of the player current recovery in health value, between 0f and 1f</returns>
