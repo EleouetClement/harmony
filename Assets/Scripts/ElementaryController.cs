@@ -185,15 +185,15 @@ public class ElementaryController : MonoBehaviour
         return Vector3.zero;
     }
 
-	private void OnDrawGizmos()
-	{
-        Vector3 playerRelativePos = new Vector3(playerMesh.position.x, 0f, playerMesh.position.z);
-        Vector3 transformRelativePos = new Vector3(transform.position.x, 0f, transform.position.z);
-        Vector3 repulseSource = transform.position - (transformRelativePos - playerRelativePos);
-        Gizmos.color = Color.red;
-		Gizmos.DrawSphere(repulseSource, 0.05f);
-		Gizmos.color = Color.green;
-        Gizmos.DrawSphere(playerRelativePos, 0.05f);
-    }
+	//private void OnDrawGizmos()
+	//{
+ //       Vector3 playerRelativePos = new Vector3(playerMesh.position.x, 0f, playerMesh.position.z);
+ //       Vector3 transformRelativePos = new Vector3(transform.position.x, 0f, transform.position.z);
+ //       Vector3 repulseSource = transform.position - (transformRelativePos - playerRelativePos);
+ //       Gizmos.color = Color.red;
+	//	Gizmos.DrawSphere(repulseSource, 0.05f);
+	//	Gizmos.color = Color.green;
+ //       Gizmos.DrawSphere(playerRelativePos, 0.05f);
+ //   }
 
 }
