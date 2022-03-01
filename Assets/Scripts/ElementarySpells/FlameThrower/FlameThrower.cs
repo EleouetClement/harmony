@@ -8,18 +8,21 @@ public class FlameThrower : AbstractSpell
     [SerializeField] private GameObject flameEffectPrefab;
     [Header("Stats")]
     [SerializeField] [Min(0)] private float duration;
+    [SerializeField] [Min(0)] private float destroyTimingOffset;
     [SerializeField] [Min(0)] private float SpeedOverTime;
     [SerializeField] [Min(0)] float knockBackPower;
     [SerializeField] [Min(0)] float colliderActivationTime;
 
+
     private Collider coll;
+    private bool setTimer = false;
     private ParticleSystem flamesFlow;
     private GameModeSingleton gm;
     private GameObject flameEffectReference;
     private float timer = Mathf.Epsilon;
 
     private void Awake()
-    {
+    {       
         if (flameEffectPrefab == null)
         {
             Debug.LogError("No Flame Effect linked");
@@ -30,14 +33,19 @@ public class FlameThrower : AbstractSpell
 
     private void Update()
     {
-        if(timer >= colliderActivationTime)
-        {
-            coll.enabled = true;
-        }
-        else
+        if(setTimer)
         {
             timer += Time.deltaTime;
         }
+        if (timer >= colliderActivationTime)
+        {
+            coll.enabled = true;
+        }
+        if (timer > (duration + destroyTimingOffset) && !flamesFlow.isStopped)
+        {
+            Terminate();
+        }
+        
     }
 
     public override void FixedUpdate()
@@ -61,8 +69,9 @@ public class FlameThrower : AbstractSpell
         var pouet = flamesFlow.main;
         pouet.duration = duration;
         pouet.startSpeed = SpeedOverTime;
-        flamesFlow.transform.TransformDirection(CalculateTrajectory()); 
+        flameEffectReference.transform.rotation = CalculateTrajectory();
         flamesFlow.Play();
+        setTimer = true;
     }
 
 
@@ -73,9 +82,12 @@ public class FlameThrower : AbstractSpell
         Destroy(gameObject);
     }
 
-    private Vector3 CalculateTrajectory()
+    private Quaternion CalculateTrajectory()
     {
-        return gm.GetCinemachineCameraController.GetViewDirection;
+        Transform newTransform;
+        newTransform = elementary.transform;
+        newTransform.rotation = Quaternion.LookRotation(gm.GetCinemachineCameraController.GetViewDirection);
+        return newTransform.rotation;
     }
 
 }

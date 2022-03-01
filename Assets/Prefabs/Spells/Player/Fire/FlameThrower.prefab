@@ -50,6 +50,7 @@ MonoBehaviour:
   flameEffectPrefab: {fileID: 5974405271623708784, guid: 82a4f62a3414af64e99c92f54078443a,
     type: 3}
   duration: 0.5
+  destroyTimingOffset: 0.97
   SpeedOverTime: 10
   knockBackPower: 20
   colliderActivationTime: 0.2
