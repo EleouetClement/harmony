@@ -25,6 +25,13 @@ public class FlamesFlowController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        //TO DO...
+        IDamageable collidedItem = collision.gameObject.GetComponent<IDamageable>();
+        if(collidedItem == null)
+        {
+            Debug.LogError("Item not damageable");
+            return;
+        }
+        AbstractSpell spell = gm.GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
+        collidedItem.OnDamage(spell.SetDamages(transform.forward));
     }
 }

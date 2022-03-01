@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 0
-  damagesInfos: {fileID: 0}
+  damagesInfos: {fileID: 11400000, guid: 25bc05e3bc215ea4fbbb87660765108f, type: 2}
   canceled: 0
   flameEffectPrefab: {fileID: 5974405271623708784, guid: 82a4f62a3414af64e99c92f54078443a,
     type: 3}
