@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,9 +18,17 @@ public class ElementaryController : MonoBehaviour
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
+    [Header("Spells (One spell per Array for each element)")]
     [SerializeField] public AbstractSpell shieldPrefab;
-    [SerializeField] public AbstractSpell[] offensiveSpells;
-    [SerializeField] public AbstractSpell[] exploratorySpells;
+    [SerializeField] private AbstractSpell[] spellsLeft;
+    [SerializeField] private AbstractSpell[] spellsRight;
+
+
+    //Contains 1 spell per element
+    public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
+
+    //Idem
+    public Dictionary<AbstractSpell.Element, AbstractSpell> spells2;
 
     private Vector3 shoulderOffset;
 
@@ -44,10 +53,39 @@ public class ElementaryController : MonoBehaviour
 	private void Awake()
 	{
 		shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
+        InitDict();
     }
 
-	// Start is called before the first frame update
-	void Start()
+    private void InitDict()
+    {
+        spells1 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
+        spells2 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
+        if(spellsLeft == null || spellsLeft.Length ==0)
+        {
+            Debug.LogError("InitDict : offensiveSpells not initialized");
+        }
+        else
+        {
+            foreach (AbstractSpell s in spellsLeft)
+            {
+                spells1.Add(s.element, s);
+            }
+        }
+        if(spellsRight == null || spellsRight.Length == 0)
+        {
+            Debug.LogError("InitDict : exploratorySpells not initialized");
+        }
+        else
+        {
+            foreach (AbstractSpell s in spellsRight)
+            {
+                spells2.Add(s.element, s);
+            }
+        }     
+    }
+
+    // Start is called before the first frame update
+    void Start()
     {
         SetElement(AbstractSpell.Element.Fire);
         virtualShoulder.transform.localPosition += shoulderOffset;
@@ -85,14 +123,30 @@ public class ElementaryController : MonoBehaviour
         currentElement = element;
     }
 
-    public AbstractSpell GetOffensiveSpell()
+    /// <summary>
+    /// Returns the spell 1 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell1()
     {
-        return offensiveSpells[(int)currentElement];
+        AbstractSpell s;
+        if (spells1.TryGetValue(currentElement, out s))
+            return s;
+        Debug.LogError("GetOffensiveSpell : no spell1 found for this element");
+        return null;
     }
 
-    public AbstractSpell GetExploratorySpell()
+    /// <summary>
+    /// Returns the spell 2 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell2()
     {
-        return exploratorySpells[(int)currentElement];
+        AbstractSpell s;
+        if(spells2.TryGetValue(currentElement, out s))
+            return s;
+        Debug.LogError("GetExploratorySpell : no spell2 found for this element");
+        return null;
     }
 
     /// <summary>
@@ -154,4 +208,6 @@ public class ElementaryController : MonoBehaviour
         //Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
         return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
+
+    
 }

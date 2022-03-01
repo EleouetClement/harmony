@@ -112,6 +112,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SwitchPlayMode",
+                    "type": "Button",
+                    "id": "90d7314d-df54-4d45-b379-227aa3ee0e3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -327,7 +336,7 @@
                 {
                     "name": "",
                     "id": "7d41791f-df6f-4611-9099-fde4b2415e59",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard&Mouse",
@@ -497,6 +506,17 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse",
                     "action": "Dodge",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ddfdb6b-c44d-4878-9c4b-3eb7459e839c",
+                    "path": "<Keyboard>/backquote",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SwitchPlayMode",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

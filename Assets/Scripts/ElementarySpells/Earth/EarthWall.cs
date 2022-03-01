@@ -5,7 +5,6 @@ using UnityEngine;
 public class EarthWall : AbstractSpell
 {
     public GameObject PosMarkerPrefab;
-    public CinemachineCameraController cameraController;
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
@@ -13,18 +12,23 @@ public class EarthWall : AbstractSpell
     [Range(0, 50)]
     public float maxDistance;
 
+    private ElementaryController elementaryController;
+    private CinemachineCameraController cinemachineCameraController;
     private RaycastHit hit;
     private Vector3 lastMarkerPosition = Vector3.zero; // store the last position of the marker before aiming in the void
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
-    private float possibleSlopeForFloor = 0.7f; // Defines the value of the normal for which a pillar can be built above
-    private float possibleSlopeForWall = 0f; // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built
+
+    // Defines the value of the normal for which a pillar can be built above (between 0 and 1)
+    private float possibleSlopeForFloor = 0.7f;
+    // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built (between 0 and 1)
+    private float possibleSlopeForWall = 0f; 
 
     public void LateUpdate()
     {
         if (!isReleased())
         {
-            marker.DisplayTarget(cameraController.GetViewDirection, cameraController.transform.position);                       
-            marker.transform.LookAt(cameraController.transform);
+            marker.DisplayTarget(cinemachineCameraController.GetViewDirection, cinemachineCameraController.transform.position);                       
+            marker.transform.LookAt(cinemachineCameraController.transform);
 
             hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
 
@@ -48,7 +52,7 @@ public class EarthWall : AbstractSpell
             }
             else if(lastMarkerNormal.y > possibleSlopeForWall)
             {
-                groundMovingEffect.transform.LookAt(cameraController.transform);
+                groundMovingEffect.transform.LookAt(cinemachineCameraController.transform);
             }
         }
     }
@@ -58,7 +62,8 @@ public class EarthWall : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+        cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+        elementaryController = elemRef.GetComponent<ElementaryController>();
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
@@ -68,9 +73,11 @@ public class EarthWall : AbstractSpell
 
     public override void Terminate()
     {
-        elementary.GetComponent<ElementaryController>().currentSpell = null;
-        elementary.GetComponent<ElementaryController>().computePosition = true;
-        elementary.GetComponent<ElementaryController>().readyToCast = true;
+        elementaryController.currentSpell = null;
+        elementaryController.computePosition = true;
+        elementaryController.readyToCast = true;
+        if (marker != null)
+            Destroy(marker.gameObject);
         Destroy(gameObject);
     }
 
@@ -82,7 +89,7 @@ public class EarthWall : AbstractSpell
             Debug.Log("SPAWN PILLAR");
 
             // Avoid to rotate the pillar on X axis when it spawns
-            Vector3 v = cameraController.transform.position - lastMarkerPosition;
+            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
             v.y = 0f;
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
@@ -94,7 +101,7 @@ public class EarthWall : AbstractSpell
             Debug.Log("SPAWN PLATFORM");
 
             // Avoid to rotate the platform on X axis when it spawns
-            Vector3 v = cameraController.transform.position - lastMarkerPosition;
+            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
             v.y = 0f;
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);

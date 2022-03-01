@@ -20,6 +20,7 @@ public class PlayerMotionController : MonoBehaviour
     [Min(0)] public float gravity = -9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    public LayerMask layerMask;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -30,7 +31,6 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
@@ -49,9 +49,6 @@ public class PlayerMotionController : MonoBehaviour
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
 
     public float accelerationFriction;
     public float decelerationFriction;
@@ -60,11 +57,6 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
-    }
-
-    void Start()
-    {
-        
     }
 
     void Update()
@@ -103,13 +95,8 @@ public class PlayerMotionController : MonoBehaviour
         #region Apply Direction Input
 
         if (!sliding && !isDodging)
-        {
-            forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
-            rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
-            
-            movement = forwardDirection + rightDirection;
-            movement.Normalize();
-            velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        {           
+            velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
 
 
@@ -121,7 +108,10 @@ public class PlayerMotionController : MonoBehaviour
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log("Velocity apres : " + velocity);
+                //Vector3 newDir = new Vector3(inputAxis.x, Mathf.Epsilon, inputAxis.y);               
+                Vector3 newDir = GetDirection() * dodgeSpeed * Time.fixedDeltaTime;
+                newDir.y = Mathf.Epsilon;
+                transform.Translate(newDir);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
             else
@@ -230,22 +220,45 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-
-    void OnDrawGizmosSelected()
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (debug && Application.isPlaying)
+        if(hit.gameObject.tag.Equals("Platform"))
         {
-            Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
-
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.DrawLine(transform.position, end);
-            
+            transform.parent = hit.transform;
         }
+        else
+        {
+            transform.parent = null;
+        }
+    }
+
+    
+
+    //void OnDrawGizmosSelected()
+    //{
+    //    if (debug && Application.isPlaying)
+    //    {
+    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
+
+    //        Gizmos.color = Color.white;
+    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.color = Color.gray;
+    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.DrawLine(transform.position, end);
+
+    //    }
+    //}
+
+    private Vector3 GetDirection()
+    {
+        forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+        rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
+        Vector3 direction = forwardDirection + rightDirection;
+        direction.Normalize();
+
+        return direction;
     }
 
 }
