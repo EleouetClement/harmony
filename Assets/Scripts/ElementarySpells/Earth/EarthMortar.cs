@@ -77,9 +77,7 @@ public class EarthMortar : AbstractSpell
 		if(!canceled)
 			elementary.transform.position = lastBallCoord;
 		elementary.GetComponent<MeshRenderer>().enabled = true;
-		elementary.GetComponent<ElementaryController>().currentSpell = null;
-		elementary.GetComponent<ElementaryController>().computePosition = true;
-		elementary.GetComponent<ElementaryController>().readyToCast = true;
+		elementary.GetComponent<ElementaryController>().Reset();
 		if (ball != null)
 			Destroy(ball);
 		if(earthMarker != null)

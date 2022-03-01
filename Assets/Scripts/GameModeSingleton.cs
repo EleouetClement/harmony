@@ -9,9 +9,13 @@ using UnityEngine;
 public class GameModeSingleton : MonoBehaviour
 {
     [SerializeField] private GameObject playerReference;
-    [SerializeField] private Transform playerMesh;
+    
+    private Transform playerMesh;
     [SerializeField] private GameObject elementaryReference;
-    [SerializeField] private GameObject playerCameraReference;
+    /// <summary>
+    /// DEPRECATED, Use cinemachineCameraControl instead
+    /// </summary>
+    private GameObject playerCameraReference;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
@@ -42,6 +46,14 @@ public class GameModeSingleton : MonoBehaviour
         if(cinemachineCameraControl == null && playerCameraReference != null)
         {
             cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
+        }
+        if(playerReference == null)
+        {
+            Debug.LogError("GameModeSingleton : No player reference");
+        }
+        else
+        {
+            playerMesh = playerReference.transform.GetChild(1);
         }
         _instance = this;
     }

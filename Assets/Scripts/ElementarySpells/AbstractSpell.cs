@@ -64,6 +64,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// True if the spell has been canceled by the shield cast
     /// </summary>
+    [HideInInspector]
     public bool canceled = false;
 
     private bool chargeend = false;

@@ -209,5 +209,15 @@ public class ElementaryController : MonoBehaviour
         return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
 
-    
+    /// <summary>
+    /// Restart back the position compute and set the currentSpell to null 
+    /// </summary>
+    public void Reset()
+    {
+        Recall();
+        currentSpell = null;
+        readyToCast = true;
+    }
+
+
 }
