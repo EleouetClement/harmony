@@ -17,7 +17,6 @@ public class FlameThrower : AbstractSpell
     private GameModeSingleton gm;
     private GameObject flameEffectReference;
     private float timer = Mathf.Epsilon;
-    
 
     private void Awake()
     {
@@ -62,6 +61,7 @@ public class FlameThrower : AbstractSpell
         var pouet = flamesFlow.main;
         pouet.duration = duration;
         pouet.startSpeed = SpeedOverTime;
+        flamesFlow.transform.TransformDirection(CalculateTrajectory()); 
         flamesFlow.Play();
     }
 
@@ -71,6 +71,11 @@ public class FlameThrower : AbstractSpell
         elementary.GetComponent<ElementaryController>().Reset();
         Destroy(flameEffectReference);
         Destroy(gameObject);
+    }
+
+    private Vector3 CalculateTrajectory()
+    {
+        return gm.GetCinemachineCameraController.GetViewDirection;
     }
 
 }
