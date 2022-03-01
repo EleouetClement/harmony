@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7235955, y: 1}
+    m_SensorSize: {x: 1.1442623, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -735,10 +735,10 @@ GameObject:
   m_Component:
   - component: {fileID: 6677204177286177699}
   - component: {fileID: 6677204177286177698}
+  - component: {fileID: 1344650967}
   - component: {fileID: 6957681519607846577}
   - component: {fileID: 6677204177286177701}
   - component: {fileID: 6677204177286177700}
-  - component: {fileID: 1344650967}
   m_Layer: 3
   m_Name: PlayerCinemachine
   m_TagString: Player
@@ -802,7 +802,21 @@ MonoBehaviour:
   onGround: 0
   isMoving: 0
   accelerationFriction: 2
-  decelerationFriction: 4
+  decelerationFriction: 8
+--- !u!114 &1344650967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6677204177286177703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c9daf5aa8a9ecc848a84455f0ca9c224, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 2965026262780704971}
+  idlingInterpolationValue: 0
 --- !u!114 &6957681519607846577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,19 +884,6 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &1344650967
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6677204177286177703}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9daf5aa8a9ecc848a84455f0ca9c224, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animator: {fileID: 2965026262780704971}
 --- !u!1 &6677204177534006692
 GameObject:
   m_ObjectHideFlags: 0
