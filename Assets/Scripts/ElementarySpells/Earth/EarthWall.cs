@@ -5,7 +5,6 @@ using UnityEngine;
 public class EarthWall : AbstractSpell
 {
     public GameObject PosMarkerPrefab;
-    public CinemachineCameraController cinemachineCameraController;
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
@@ -13,11 +12,16 @@ public class EarthWall : AbstractSpell
     [Range(0, 50)]
     public float maxDistance;
 
+    private ElementaryController elementaryController;
+    private CinemachineCameraController cinemachineCameraController;
     private RaycastHit hit;
     private Vector3 lastMarkerPosition = Vector3.zero; // store the last position of the marker before aiming in the void
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
-    private float possibleSlopeForFloor = 0.7f; // Defines the value of the normal for which a pillar can be built above
-    private float possibleSlopeForWall = 0f; // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built
+
+    // Defines the value of the normal for which a pillar can be built above (between 0 and 1)
+    private float possibleSlopeForFloor = 0.7f;
+    // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built (between 0 and 1)
+    private float possibleSlopeForWall = 0f; 
 
     public void LateUpdate()
     {
@@ -59,6 +63,7 @@ public class EarthWall : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+        elementaryController = elemRef.GetComponent<ElementaryController>();
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
@@ -68,9 +73,11 @@ public class EarthWall : AbstractSpell
 
     public override void Terminate()
     {
-        elementary.GetComponent<ElementaryController>().currentSpell = null;
-        elementary.GetComponent<ElementaryController>().computePosition = true;
-        elementary.GetComponent<ElementaryController>().readyToCast = true;
+        elementaryController.currentSpell = null;
+        elementaryController.computePosition = true;
+        elementaryController.readyToCast = true;
+        if (marker != null)
+            Destroy(marker.gameObject);
         Destroy(gameObject);
     }
 

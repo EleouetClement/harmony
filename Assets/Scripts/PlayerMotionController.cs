@@ -20,6 +20,7 @@ public class PlayerMotionController : MonoBehaviour
     [Min(0)] public float gravity = -9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    public LayerMask layerMask;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -30,7 +31,6 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
@@ -49,11 +49,7 @@ public class PlayerMotionController : MonoBehaviour
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
 
-    private bool onPlatform = false;
     public float accelerationFriction;
     public float decelerationFriction;
 
@@ -61,11 +57,6 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
-    }
-
-    void Start()
-    {
-        
     }
 
     void Update()
@@ -216,11 +207,9 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateGroundState()
     {
-
-        int layer = 1 << HarmonyLayers.LAYER_GROUND;
-        layer += 1 << HarmonyLayers.LAYER_DEFAULT;
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layer);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
