@@ -91,9 +91,7 @@ public class WaterBeam : AbstractSpell
 
     public override void Terminate()
     {
-        elementaryController.currentSpell = null;
-        elementaryController.computePosition = true;
-        elementaryController.readyToCast = true;
+        elementaryController.Reset();
         Destroy(gameObject);
     }
 
