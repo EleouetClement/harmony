@@ -79,7 +79,6 @@ public class UDictionary
             split = attribute as SplitAttribute;
 
             list = new ReorderableList(property.serializedObject, keys, true, true, true, true);
-
             list.drawHeaderCallback = DrawHeader;
 
             list.onAddCallback = Add;
@@ -195,7 +194,7 @@ public class UDictionary
             SerializedProperty value = values.GetArrayElementAtIndex(index);
 
             var kHeight = GetChildernSingleHeight(key);
-            var vHeight = GetChildernSingleHeight(value);
+            var vHeight = EditorGUI.GetPropertyHeight(value);
 
             var max = Math.Max(kHeight, vHeight);
 
@@ -246,14 +245,22 @@ public class UDictionary
             }
             else
             {
-                rect.x += ElementSpacing / 2f;
-                rect.width -= ElementSpacing;
-
-                foreach (var child in IterateChildern(property))
+                if (property.type == "UnityEvent")
                 {
-                    EditorGUI.PropertyField(rect, child, false);
+                    rect.height = EditorGUI.GetPropertyHeight(property, true);
+                    EditorGUI.PropertyField(rect, property);
+                }
+                else
+                {
+                    rect.x += ElementSpacing / 2f;
+                    rect.width -= ElementSpacing;
 
-                    rect.y += SingleLineHeight + +2f;
+                    foreach (var child in IterateChildern(property))
+                    {
+                        EditorGUI.PropertyField(rect, child, false);
+
+                        rect.y += SingleLineHeight + +2f;
+                    }
                 }
             }
         }

@@ -9,52 +9,18 @@ using UnityEditor;
 
 namespace Harmony.AI
 {
-    public class AIAgent : MonoBehaviour, IDamageable
+    public class AIAgent : BehaviourTreeRunner, IDamageable
     {
-        public Transform eyes;
         public bool aiActive = true;
-        [Range(0, 180)] public float lookAngle;
-        [Min(0)] public float lookRange;
-        public State startState;
-        public State remainState;
-        public UDictionary<string, AIParameter> parameters;
         public List<Transform> wayPointList;
-
-        public State CurrentState { get; private set; }
-
-
-        [HideInInspector] public NavMeshAgent navMeshAgent;
+        
         [HideInInspector] public int nextWayPoint;
-        [HideInInspector] public Transform chaseTarget;
-        [HideInInspector] public float stateTimeElapsed;
-
-        private Dictionary<int, float> timers = new Dictionary<int, float>();
-
-
-        void Awake()
-        {
-            navMeshAgent = GetComponent<NavMeshAgent>();
-            CurrentState = startState;
-        }
 
         void Update()
         {
             if (!aiActive)
                 return;
-
-            foreach (int key in timers.Keys) { timers[key] -= Time.deltaTime; }
-
-            CurrentState.UpdateState(this);
-        }
-
-        public void TransitionToState(State nextState)
-        {
-            if (nextState != remainState)
-            {
-                if(CurrentState) CurrentState.ExitState(this);
-                CurrentState = nextState;
-                if(CurrentState) CurrentState.EnterState(this);
-            }
+            base.Update();
         }
 
         public void OnDamage(DamageHit hit)
@@ -62,47 +28,19 @@ namespace Harmony.AI
             Debug.Log(hit);
         }
 
-        public void RegisterTimer(int id, float duration)
-        {
-            if(!timers.ContainsKey(id))
-                timers.Add(id,duration);
-        }
-
-        public bool CheckTimer(int id)
-        {
-            if (!timers.ContainsKey(id) || timers[id] > 0)
-                return false;
-
-            timers.Remove(id);
-            return true;
-        }
-
 #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            if (CurrentState != null && eyes != null)
+            if (context != null)
             {
-                Gizmos.color = CurrentState.sceneGizmoColor;
-                Handles.color = CurrentState.sceneGizmoColor;
-                Handles.Label(transform.position + Vector3.up, CurrentState.name);
-
-                foreach (Transition currentStateTransition in CurrentState.transitions)
+                if (context.agent.hasPath)
                 {
-                    currentStateTransition.decision.DrawGizmos(this);
-                }
+                    Gizmos.color = context.agent.pathStatus == NavMeshPathStatus.PathComplete ? Color.green : Color.red;
 
-                foreach (Action currentStateAction in CurrentState.updateActions)
-                {
-                    currentStateAction.DrawGizmos(this);
-                }
-
-                if (navMeshAgent.hasPath)
-                {
-                    Gizmos.color = navMeshAgent.pathStatus == NavMeshPathStatus.PathComplete ? Color.green : Color.red;
-
-                    for (int i = 1; i < navMeshAgent.path.corners.Length; i++)
+                    for (int i = 1; i < context.agent.path.corners.Length; i++)
                     {
-                        Gizmos.DrawLine(navMeshAgent.path.corners[i-1], navMeshAgent.path.corners[i]);
+                        var path = context.agent.path;
+                        Gizmos.DrawLine(path.corners[i-1], path.corners[i]);
                     }
                 }
             }
@@ -110,10 +48,10 @@ namespace Harmony.AI
 
         private void OnDrawGizmosSelected()
         {
-
+            base.OnDrawGizmosSelected();
             float height = 0.1f;
 
-            for (int i = 0; i < parameters.Count; i++)
+            /*for (int i = 0; i < parameters.Count; i++)
             {
                 height += 0.075f;
                 switch (parameters[parameters.Keys[i]].ParameterType)
@@ -139,7 +77,7 @@ namespace Harmony.AI
                 }
 
                 Handles.Label(transform.position + Vector3.up + new Vector3(0, height, 0), parameters.Keys[i] + " : " +parameters[parameters.Keys[i]]);
-            }
+            }*/
         }
 #endif
 
