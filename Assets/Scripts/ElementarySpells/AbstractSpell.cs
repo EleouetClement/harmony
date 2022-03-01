@@ -8,6 +8,16 @@ using UnityEngine;
 public abstract class AbstractSpell : MonoBehaviour
 {
 
+    public enum Element
+    {
+        Fire,
+        Water,
+        Earth,
+        Physical,
+    }
+
+    public Element element;
+    public Damages damagesInfos;
     /// <summary>
     /// The target location of the spell. Contains an arbitrary value that may differ spell to spell, but usually corresponds to where the spell is aimed at.
     /// </summary>
@@ -49,14 +59,39 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// true if the player release the input with the right timing
     /// </summary>
-    protected bool isBlinked = false; 
+    protected bool isBlinked = false;
+
+    /// <summary>
+    /// True if the spell has been canceled by the shield cast
+    /// </summary>
+    public bool canceled = false;
 
     private bool chargeend = false;
+
+    private Transform playerMesh;
+
+
+    protected DamageHit damages;
+
+
+	private void Update()
+	{
+        //smooth turning when charging a spell and not moving
+        if (!chargeend)
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
+    }
 
     public virtual void FixedUpdate()
     {
         if (!chargeend)
+        {
             charge += Time.fixedDeltaTime;
+            PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+            if (player) {
+                player.OnManaSpend(GetChannelCost() * Time.fixedDeltaTime);
+            }
+        }
+
         //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
         if (isReleased())
         {
@@ -64,7 +99,7 @@ public abstract class AbstractSpell : MonoBehaviour
             currentLivingTime += Time.fixedDeltaTime;
             if (currentLivingTime >= maxLivingTime)
             {
-               // Debug.Log("Terminate");
+                // Debug.Log("Terminate");
                 Terminate();
             }
         }
@@ -88,6 +123,12 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         this.target = target;
         elementary = elemRef;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+        if (player)
+        {
+            player.OnManaSpend(GetManaCost());
+        }
     }
 
     public void OnRelease()
@@ -117,14 +158,55 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         float blink = Mathf.Abs(blinkTiming - chargetime);
         //Debug.Log(blink);
-        if(blink <= 0.5f)
+        if (blink <= 0.5f)
         {
             Debug.Log("Blink!");
             isBlinked = true;
         }
     }
 
+    /// <summary>
+    /// Computes and return this spell's initial mana cost. May be overriden by spells for complex and situational behavior.
+    /// </summary>
+    protected virtual float GetManaCost()
+    {
+        return 20f;
+    }
 
+    /// <summary>
+    /// Computes and return this spell's chanelling mana cost per second. May be overriden by spells for complex and situational behavior.
+    /// </summary>
+    protected virtual float GetChannelCost()
+    {
+        return 5f;
+    }
 
+    /// <summary>
+    /// Creates DamageHit instance According to the spell type and chargeTime
+    /// DamageHit direction will be updated when the spell hits
+    /// </summary>
+    public virtual DamageHit SetDamages(Vector3 direction)
+    {
+        if(this.damages == null)
+        {
+            DamageHit damages = new DamageHit(damagesInfos.baseDamages, element, direction);
+            if (isBlinked)
+            {
+                damages.damage *= damagesInfos.blinkMultiplier;
+            }
+            else
+            {
+                float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge;
+                damages.damage *= multiplier;
+            }
+            this.damages = damages;
+            this.damages.type = element;
+        }
+        else
+        {
+            this.damages.direction = direction;
+        } 
+        return this.damages;
+    }
 
 }

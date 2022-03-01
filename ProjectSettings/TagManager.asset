@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Torch
+  - Elementary
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - WallEnable
   - Ground
   - InvisibleWall
-  - 
+  - Shield
   - 
   - 
   - 

@@ -15,7 +15,7 @@ public class DamageHit
     /// <summary>
     /// Type of the damage hit. Default is physical.
     /// </summary>
-    public GameEngineInfo.DamageType type = GameEngineInfo.DamageType.Physical;
+    public AbstractSpell.Element type = AbstractSpell.Element.Physical;
     /// <summary>
     /// Hinted direction of the hit. This hints at a direction for knockback, visual effects such as destruction...<br>
     /// Defaults to Vector3.zero.
@@ -27,7 +27,7 @@ public class DamageHit
         this.damage = damage;
     }
 
-    public DamageHit(float damage, GameEngineInfo.DamageType type)
+    public DamageHit(float damage, AbstractSpell.Element type)
     {
         this.damage = damage;
         this.type = type;
@@ -39,7 +39,7 @@ public class DamageHit
         this.direction = direction;
     }
 
-    public DamageHit(float damage, GameEngineInfo.DamageType type, Vector3 direction)
+    public DamageHit(float damage, AbstractSpell.Element type, Vector3 direction)
     {
         this.damage = damage;
         this.type = type;
@@ -50,6 +50,4 @@ public class DamageHit
     {
         return "[Damage : " + damage + " / Type : " + type + " / Direction : " + direction + "]";
     }
-
-
 }

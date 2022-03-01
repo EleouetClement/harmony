@@ -67,8 +67,10 @@ public class WaterBall : MonoBehaviour
 
     private void Hit() {
         if (parent.targetTransform != null) {
+            //TO CHANGE
             GameObject p = parent.targetTransform.gameObject;
-            p.GetComponent<IDamageable>().OnDamage(new DamageHit(10f,GameEngineInfo.DamageType.Water));
+            AbstractSpell currSpell = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
+            p.GetComponent<IDamageable>()?.OnDamage(currSpell.SetDamages(Vector3.zero));
         }
         parent.RemoveBall(this);
        

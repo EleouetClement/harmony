@@ -6,15 +6,21 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotionController : MonoBehaviour
 {
+    public float currentSpeed;
+
     [Header("Character settings")]
-    [Range(0, 20)] public float walkSpeed = 1f;
-    [Range(0, 10)] public float jumpForce = 1f;
+    [Range(0, 100)] public float walkSpeed = 1f;
+    [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
+    public float turnSpeed;
     [Header("Character Physics settings")]
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = -9.81f;
+    [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
+    [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    public LayerMask layerMask;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -25,83 +31,87 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
-    
+    public Transform playerMesh;
+
     private CharacterController controller;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
     private Vector2 inputAxis;
-    private Vector3 velocity;
-    private bool onGround;
+    [HideInInspector]public Vector3 velocity;
+    [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isDodging = false;
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
+
+    public float accelerationFriction;
+    public float decelerationFriction;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-
-        
+        controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
         {
-            dodgeTimer -= Time.deltaTime;
+           dodgeTimer -= Time.deltaTime;
         }
-        if(isDodging)
+
+        currentSpeed = controller.velocity.magnitude;
+        isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+
+        //smooth turning when moving
+        if (isMoving)
         {
-            controller.Move(velocity * Time.deltaTime);
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
-        else
-        {
-            controller.Move(velocity * Time.deltaTime);
-        }
+
     }
 
     private void FixedUpdate()
     {
+        if (isMoving)
+        {
+            friction = accelerationFriction;
+        }
+		else
+		{
+            friction = decelerationFriction;
+		}
         UpdateGroundState();
         bool sliding = floorAngle > maxFloorAngle;
+        
 
         #region Apply Direction Input
 
         if (!sliding && !isDodging)
-        {
-            forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
-            rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
-            
-            movement = forwardDirection + rightDirection;
-            movement.Normalize();
-            velocity += movement * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        {           
+            velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
+
 
         #endregion
 
+
         #region Dodge force
-        if(isDodging && dodgeTimer <= Mathf.Epsilon)
+        if (isDodging && dodgeTimer <= Mathf.Epsilon)
         {
             if(currentDodgeDuration < dodgeDuration)
             {
-                Debug.Log("Velocity avant : " + velocity);
-                velocity += (movement * dodgeSpeed * Time.fixedDeltaTime);
-                Debug.Log("Velocity apres : " + velocity);
+                //Vector3 newDir = new Vector3(inputAxis.x, Mathf.Epsilon, inputAxis.y);               
+                Vector3 newDir = GetDirection() * dodgeSpeed * Time.fixedDeltaTime;
+                newDir.y = Mathf.Epsilon;
+                transform.Translate(newDir);
                 currentDodgeDuration += Time.fixedDeltaTime;
             }
             else
@@ -120,6 +130,16 @@ public class PlayerMotionController : MonoBehaviour
         if (!onGround)
         {
             velocity.y += gravity * Time.fixedDeltaTime;
+            //falling
+            if (controller.velocity.y < 0f)
+            {
+                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+            }
+            //rising
+            else if (controller.velocity.y > 0f)
+            {
+                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+            }
         }
         else
         {
@@ -131,27 +151,30 @@ public class PlayerMotionController : MonoBehaviour
             }
         }
 
+		#endregion
+
+		#region Apply Friction
+
+		Vector3 dragForce = -velocity * Time.fixedDeltaTime;
+		dragForce *= onGround && !sliding ? friction : airFriction;
+		dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
+		velocity += dragForce;
+
         #endregion
-
-        #region Apply Friction
-
-        Vector3 dragForce = -velocity * Time.fixedDeltaTime;
-        dragForce *= onGround && !sliding ? friction : airFriction;
-        dragForce = Vector3.ClampMagnitude(dragForce, velocity.magnitude);
-        velocity += dragForce;
-
-        #endregion
-
 
         
-
     }
 
-    /// <summary>
-    /// Handles moving inputs using InputSystem
-    /// </summary>
-    /// <param name="value"></param>
-    void OnMove(InputValue value)
+    void LateUpdate()
+    {
+		
+	}
+
+	/// <summary>
+	/// Handles moving inputs using InputSystem
+	/// </summary>
+	/// <param name="value"></param>
+	void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
         isMoving = true;
@@ -197,22 +220,45 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-
-    void OnDrawGizmosSelected()
+    private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (debug && Application.isPlaying)
+        if(hit.gameObject.tag.Equals("Platform"))
         {
-            Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
-
-            Gizmos.color = Color.white;
-            Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.color = Color.gray;
-            Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
-
-            Gizmos.DrawLine(transform.position, end);
-            
+            transform.parent = hit.transform;
         }
+        else
+        {
+            transform.parent = null;
+        }
+    }
+
+    
+
+    //void OnDrawGizmosSelected()
+    //{
+    //    if (debug && Application.isPlaying)
+    //    {
+    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
+
+    //        Gizmos.color = Color.white;
+    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.color = Color.gray;
+    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
+
+    //        Gizmos.DrawLine(transform.position, end);
+
+    //    }
+    //}
+
+    private Vector3 GetDirection()
+    {
+        forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
+        rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
+        Vector3 direction = forwardDirection + rightDirection;
+        direction.Normalize();
+
+        return direction;
     }
 
 }
