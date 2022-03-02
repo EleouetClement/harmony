@@ -6,10 +6,10 @@ public class WaterBeam : AbstractSpell
     [Min(1)] public float beamAcceleration; // Extension speed of the beam
 
     public GameObject PosMarkerPrefab;
-    public CinemachineCameraController cameraController;
-    public ElementaryController elemCtrl;
     public ParticleSystem impactEffect;
 
+    private ElementaryController elementaryController;
+    private CinemachineCameraController cameraController;
     private RaycastHit hit;
     private bool isAccelerationBeamFinished = false; // Has the beam finished expanding (false if the beam continues to expand)
     private Vector3 acceleration = Vector3.zero; // Extension of the beam
@@ -29,12 +29,12 @@ public class WaterBeam : AbstractSpell
             // If the player does not hit anything or not the good layer, he can still be aimed at (with a virtual hit point)
             if (hit.point == Vector3.zero)
             {
-                Vector3 virtualPointDistanceMax = elemCtrl.transform.position + cameraController.GetViewDirection * maxDistance;
+                Vector3 virtualPointDistanceMax = elementaryController.transform.position + cameraController.GetViewDirection * maxDistance;
                 hit.point = virtualPointDistanceMax;
             }
 
             possibleDistance = hit.point;
-            currentDistance = elemCtrl.transform.position + cameraController.GetViewDirection * transform.localScale.z;
+            currentDistance = elementaryController.transform.position + cameraController.GetViewDirection * transform.localScale.z;
 
             // If there is an obstacle, the end point of the beam is the hit point (and its extension length is readjusted), else the beam continues to expand
             if(Vector3.Distance(transform.position, currentDistance) >= Vector3.Distance(transform.position, possibleDistance))
@@ -50,7 +50,7 @@ public class WaterBeam : AbstractSpell
 
             // Put the impact effect on the impact area with a slight offset to see this area well
             impactEffect.transform.position = currentDistance - cameraController.GetViewDirection.normalized * 0.2f;
-            impactEffect.transform.LookAt(elemCtrl.transform.position);
+            impactEffect.transform.LookAt(elementaryController.transform.position);
             transform.LookAt(hit.point);
 
             // If the beam does not hit an obstacle, its extension continues
@@ -79,11 +79,11 @@ public class WaterBeam : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        elemCtrl = elemRef.GetComponent<ElementaryController>();
+        elementaryController = elemRef.GetComponent<ElementaryController>();
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
 
         // Init the visual
-        impactEffect.transform.position = elemCtrl.transform.position;
+        impactEffect.transform.position = elementaryController.transform.position;
         marker.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>().enabled = false; // Hide the marker
 
         marker.Init(maxDistance, PosMarkerPrefab);
@@ -91,9 +91,7 @@ public class WaterBeam : AbstractSpell
 
     public override void Terminate()
     {
-        elemCtrl.currentSpell = null;
-        elemCtrl.computePosition = true;
-        elemCtrl.readyToCast = true;
+        elementaryController.Reset();
         Destroy(gameObject);
     }
 

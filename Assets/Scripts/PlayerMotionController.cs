@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -20,6 +21,7 @@ public class PlayerMotionController : MonoBehaviour
     [Min(0)] public float gravity = -9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    public LayerMask layerMask;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -30,7 +32,6 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
@@ -44,16 +45,14 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private Transform groundTranform;
+    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
 
-    private bool onPlatform = false;
     public float accelerationFriction;
     public float decelerationFriction;
 
@@ -63,14 +62,16 @@ public class PlayerMotionController : MonoBehaviour
         controller.slopeLimit = 90;
     }
 
-    void Start()
-    {
-        
-    }
-
     void Update()
     {
-        controller.Move(velocity * Time.deltaTime);
+        Vector3 playerOffset = Vector3.zero;
+        if (onGround && groundTranform)
+        {
+            playerOffset = groundTranform.position - lastGroundPos;
+            lastGroundPos = groundTranform.position;
+        }
+
+        controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -216,18 +217,23 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateGroundState()
     {
-
-        int layer = 1 << HarmonyLayers.LAYER_GROUND;
-        layer += 1 << HarmonyLayers.LAYER_DEFAULT;
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layer);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
+
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+
+            if (groundTranform != surfaceInfo.transform)
+            {
+                groundTranform = surfaceInfo.transform;
+                lastGroundPos = groundTranform.position;
+            }
         }
         else
         {
             floorAngle = 0;
+            groundTranform = null;
         }
     }
 

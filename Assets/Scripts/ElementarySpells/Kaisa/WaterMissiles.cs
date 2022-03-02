@@ -80,10 +80,12 @@ public class WaterMissiles : AbstractSpell
     {
         balls.ForEach(e => { Destroy(e.gameObject); });
         elementary.GetComponent<ElementaryController>().currentSpell = null;
-        elementary.transform.position = getDestination();
-        elementary.GetComponent<ElementaryController>().computePosition = true;
+        if(!canceled)
+        {
+            elementary.transform.position = getDestination();
+        }
         elementary.GetComponent<MeshRenderer>().enabled = true;
-        elementary.GetComponent<ElementaryController>().readyToCast = true;
+        elementary.GetComponent<ElementaryController>().Reset();
         Destroy(gameObject);
     }
 }

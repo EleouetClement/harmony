@@ -18,11 +18,16 @@ public class ElementaryController : MonoBehaviour
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
 
+    [Header("Spells (One spell per Array for each element)")]
     [SerializeField] public AbstractSpell shieldPrefab;
-    [SerializeField] private AbstractSpell[] offensiveSpells;
-    [SerializeField] private AbstractSpell[] exploratorySpells;
+    [SerializeField] private AbstractSpell[] spellsLeft;
+    [SerializeField] private AbstractSpell[] spellsRight;
 
+
+    //Contains 1 spell per element
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
+
+    //Idem
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells2;
 
     private Vector3 shoulderOffset;
@@ -55,14 +60,28 @@ public class ElementaryController : MonoBehaviour
     {
         spells1 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
         spells2 = new Dictionary<AbstractSpell.Element, AbstractSpell>();
-        foreach(AbstractSpell s in offensiveSpells)
+        if(spellsLeft == null || spellsLeft.Length ==0)
         {
-            spells1.Add(s.element, s);
+            Debug.LogError("InitDict : offensiveSpells not initialized");
         }
-        foreach (AbstractSpell s in exploratorySpells)
+        else
         {
-            spells2.Add(s.element, s);
+            foreach (AbstractSpell s in spellsLeft)
+            {
+                spells1.Add(s.element, s);
+            }
         }
+        if(spellsRight == null || spellsRight.Length == 0)
+        {
+            Debug.LogError("InitDict : exploratorySpells not initialized");
+        }
+        else
+        {
+            foreach (AbstractSpell s in spellsRight)
+            {
+                spells2.Add(s.element, s);
+            }
+        }     
     }
 
     // Start is called before the first frame update
@@ -104,7 +123,11 @@ public class ElementaryController : MonoBehaviour
         currentElement = element;
     }
 
-    public AbstractSpell GetOffensiveSpell()
+    /// <summary>
+    /// Returns the spell 1 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell1()
     {
         AbstractSpell s;
         if (spells1.TryGetValue(currentElement, out s))
@@ -113,7 +136,11 @@ public class ElementaryController : MonoBehaviour
         return null;
     }
 
-    public AbstractSpell GetExploratorySpell()
+    /// <summary>
+    /// Returns the spell 2 linked to the current element
+    /// </summary>
+    /// <returns></returns>
+    public AbstractSpell GetSpell2()
     {
         AbstractSpell s;
         if(spells2.TryGetValue(currentElement, out s))
@@ -182,5 +209,15 @@ public class ElementaryController : MonoBehaviour
         return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
 
-    
+    /// <summary>
+    /// Restart back the position compute and set the currentSpell to null 
+    /// </summary>
+    public void Reset()
+    {
+        Recall();
+        currentSpell = null;
+        readyToCast = true;
+    }
+
+
 }
