@@ -7,12 +7,6 @@ using UnityEngine.InputSystem;
 public class PlayerMotionController : MonoBehaviour
 {
     public float currentSpeed;
-    private float maxSpeedApprox;
-
-    /// <summary>
-    /// represents current value of currentSpeed / maxSpeedApprox
-    /// </summary>
-    private float maxSpeedRatio;
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
@@ -23,9 +17,10 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
-    [Min(0)] public float gravity = -9.81f;
+    [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    public LayerMask layerMask;
 
     [Header("Dodge settings")]
     [SerializeField] [Min(0)] private float dodgeSpeed;
@@ -36,7 +31,6 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")] 
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private int layerMask;
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
@@ -46,42 +40,23 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
     private Vector2 inputAxis;
-    private Vector3 velocity;
-    public bool onGround;
+    [HideInInspector]public Vector3 velocity;
+    [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    public bool isMoving = false;
+    private bool isDodging = false;
 
-    public bool isMoving; 
-    private bool isDodging;
-    private bool isJumping;
-    private bool isFalling;
-    
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
-    private Vector3 dodgeDirection = Vector3.zero;
-    private Vector3 movement;
-    private Vector3 dodgeVelocity;
 
-    private bool onPlatform = false;
-    [Space]
     public float accelerationFriction;
     public float decelerationFriction;
 
     private void Awake()
     {
-        isMoving = false;
-        isDodging = false;
-        isJumping = false;
-        isFalling = false;
-
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
-        maxSpeedApprox = walkSpeed / accelerationFriction - 0.3f;
-    }
-
-    void Start()
-    {
-
     }
 
     void Update()
@@ -93,9 +68,6 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         currentSpeed = controller.velocity.magnitude;
-        maxSpeedRatio = currentSpeed / maxSpeedApprox;
-        
-
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
 
         //smooth turning when moving
@@ -103,8 +75,6 @@ public class PlayerMotionController : MonoBehaviour
         {
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
-
-
 
     }
 
@@ -159,27 +129,23 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!onGround)
         {
-            velocity.y += gravity * Time.fixedDeltaTime;
+            velocity.y += -gravity * Time.fixedDeltaTime;
             //falling
             if (controller.velocity.y < 0f)
             {
-                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
-                isJumping = false;
-                isFalling = true;
+                velocity.y += -gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
             //rising
             else if (controller.velocity.y > 0f)
             {
-                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
         }
         else
         {
-            isFalling = false;
-            //isJumping = false;
             if (sliding)
             {
-                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
                 velocity += force;
             }
@@ -222,16 +188,17 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(onGround)
         {
-            isJumping = true;
+            onGround = false;
             velocity.y = jumpForce;
         }
     }
 
 
-    private void OnDodge()
+    private void OnDodge(InputValue value)
     {
-        if (isMoving && !isDodging)
+        if (isMoving && !isDodging && dodgeTimer <= Mathf.Epsilon)
         {
+            Debug.Log("Dodge : " + isDodging);
             isDodging = true;
         }
     }
@@ -295,6 +262,7 @@ public class PlayerMotionController : MonoBehaviour
         return direction;
     }
 
+}
     public Vector2 GetInputAxis()
     {
         return inputAxis;
@@ -319,6 +287,10 @@ public class PlayerMotionController : MonoBehaviour
         return isJumping;
     }
 
+    /// <summary>
+    /// Getter
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsFalling()
     {
         return isFalling;

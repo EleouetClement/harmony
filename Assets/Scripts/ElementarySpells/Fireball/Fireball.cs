@@ -13,13 +13,11 @@ public class Fireball : AbstractSpell
     /// <summary>
     /// The maximum distance before applying bullet drop
     /// </summary>
-    [Min(1)]public float maxDistance;
-    [Min(1)]public float livingTime;
+    [SerializeField] [Min(1)] public float maxDistance;
     /// <summary>
     /// Distance from which the projectile reach its max speed
     /// </summary>
     [Min(0)] public float maxSpeedDistance;
-
     [SerializeField] [Min(0)] private float projectileTopSpeed;
     [SerializeField] [Min(0)] private float projectileStartSpeed;
     
@@ -135,7 +133,7 @@ public class Fireball : AbstractSpell
 
         velocity = target * currentSpeed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
-        elementary.transform.Translate(velocity);
+        elementary.transform.Translate(velocity);   
     }
 
     private void Update()
@@ -274,9 +272,7 @@ public class Fireball : AbstractSpell
     public override void Terminate()
     {
         Destroy(fireOrbInstance);
-        elem.currentSpell = null;
-        elem.computePosition = true;
-        elementary.GetComponent<ElementaryController>().readyToCast = true;
+        elem.Reset();
         Destroy(gameObject);
     }
 
@@ -297,7 +293,6 @@ public class Fireball : AbstractSpell
         }
         
     }
-
 
 
 }

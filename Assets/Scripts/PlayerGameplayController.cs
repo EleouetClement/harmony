@@ -21,9 +21,19 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField] [Min(0)] private int maxHitsNumber = 1;
     [SerializeField] [Min(0)] private float hitResetTimer = 10;
 
+    [Header("Mana settings")]
+    [SerializeField] [Min(0)] private float maxMana = 100f;
+    private float mana = 0;
+    [SerializeField] [Min(0)] private float ManaRegenCooldown = 2f;
+    [SerializeField] [Min(0)] private float ManaRegenPerSecond = 20f;
+    [SerializeField] [Min(0)] private float ManaRegenPerSecondWhileBurnout = 15f;
+    private float CurrentManaCooldown = 0;
+    private Boolean manaburnout = false;
+
     private float hitTimer = 0.0f;
     private int hitAmount = 0;
 
+    
     public bool InFight { get; private set; } = false;
     private void Awake()
     {
@@ -55,155 +65,126 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             }
         }
         #endregion
+        #region ManaManagement
+        // Regens mana when not casting
+        if(!manaburnout)
+            if (CurrentManaCooldown >= 0)
+                CurrentManaCooldown -= Time.deltaTime;
+            else
+                mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecond * Time.deltaTime));
+        // Enables mana burnout if oom
+        if (mana < 0)
+        {
+            mana = 0;
+            manaburnout = true;
+            if(elementaryController.currentSpell)
+            {
+                elementaryController.currentSpell.Terminate();
+            }
+        }
+        if (manaburnout)
+        {
+            mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
+            if (mana >= maxMana * 0.99f) manaburnout = false;
+        }
+        #endregion
     }
 
     // Update is called once per frame
     void LateUpdate()
-	{
-		cameraCheck();
-	}
+    {
+        cameraCheck();
+    }
 
 
-	/// <summary>
-	/// Makes sure the right camera is active depending on elementary state
-	/// </summary>
-	private void cameraCheck()
-	{
-		if (elementaryController.inCombat && elementaryController.isAiming)
-		{
-			playerCinemachineCameraController.ZoomIn();
-		}
-		else if (elementaryController.inCombat)
-		{
-			playerCinemachineCameraController.CombatCam();
-		}
-		else
-		{
-			playerCinemachineCameraController.ExploCam();
-		}
-	}
+    /// <summary>
+    /// Makes sure the right camera is active depending on elementary state
+    /// </summary>
+    private void cameraCheck()
+    {
+        if (elementaryController.inCombat && elementaryController.isAiming)
+        {
+            playerCinemachineCameraController.ZoomIn();
+        }
+        else if (elementaryController.inCombat)
+        {
+            playerCinemachineCameraController.CombatCam();
+        }
+        else
+        {
+            playerCinemachineCameraController.ExploCam();
+        }
+    }
 
-	/// <summary>
-	/// Modify the current spell of the elementary based on input pressed
-	/// 1 : fire || 2 : water || 3 : earth
-	/// </summary>
-	/// <param name="value"></param>
-	private void OnElementSelect(InputValue value)
-	{
-		if (value.Get<Vector2>() == Vector2.left)
-		{
-			elementaryController.SetElement(AbstractSpell.Element.Fire);
-			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.red;
-		}
-		if (value.Get<Vector2>() == Vector2.up)
-		{
-			elementaryController.SetElement(AbstractSpell.Element.Water);
-			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.blue;
-		}
-		if (value.Get<Vector2>() == Vector2.right)
-		{
-			elementaryController.SetElement(AbstractSpell.Element.Earth);
-			elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
-		}
-		print("Element sélectionné : "+elementaryController.currentElement);
-	}
+    /// <summary>
+    /// Modify the current spell of the elementary based on input pressed
+    /// 1 : fire || 2 : water || 3 : earth
+    /// </summary>
+    /// <param name="value"></param>
+    private void OnElementSelect(InputValue value)
+    {
+        if (value.Get<Vector2>() == Vector2.left)
+        {
+            elementaryController.SetElement(AbstractSpell.Element.Fire);
+            elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.red;
+        }
+        if (value.Get<Vector2>() == Vector2.up)
+        {
+            elementaryController.SetElement(AbstractSpell.Element.Water);
+            elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.blue;
+        }
+        if (value.Get<Vector2>() == Vector2.right)
+        {
+            elementaryController.SetElement(AbstractSpell.Element.Earth);
+            elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
+        }
+        print("Element sélectionné : " + elementaryController.currentElement);
+    }
+    #region Spell casting
 
-	private void OnSpellLeft(InputValue value)
-	{
-		if (elementaryController.readyToCast)
-		{
-			if (value.isPressed)
-			{
-				AbstractSpell spell = null;
-				if (elementaryController.inCombat)
-				{
-					spell = Instantiate(elementaryController.GetOffensiveSpell(), elementaryController.transform.position, Quaternion.identity);
-					CastOffensiveSpell(spell);
-				}
-				else
-				{
-					spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
-					CastExploratorySpell(spell);
-				}
+    private void OnSpellLeft(InputValue value)
+    {
+        if (elementaryController.readyToCast && !manaburnout)
+        {
+            if (value.isPressed)
+            {
+                AbstractSpell spell = Instantiate(
+                        elementaryController.GetSpell1(),
+                        elementaryController.transform.position,
+                        Quaternion.identity);
+                if (elementaryController.currentElement == AbstractSpell.Element.Water)
+                {
+                    CastWaterMissiles(spell);
+                }
+                else
+                {
+                    spell.init(elementaryController.gameObject, Vector3.zero);
+                }
+                elementaryController.CastSpell(spell);
+            }
+        }
+        if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+            elementaryController.currentSpell?.OnRelease();
+    }
 
-				
-				elementaryController.CastSpell(spell);
-			}
-		}
-		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-			elementaryController.currentSpell?.OnRelease();
-	}
-
-	private void CastOffensiveSpell(AbstractSpell spell)
-	{
-		switch (elementaryController.currentElement)
-		{
-			case AbstractSpell.Element.Fire:
-				CastFireBall(spell);
-				break;
-			case AbstractSpell.Element.Water:
-				CastWaterMissiles(spell);
-				break;
-			case AbstractSpell.Element.Earth:
-				CastEarthMortar(spell);
-				break;
-			default:
-				break;
-		}
-	}
-
-	private void CastExploratorySpell(AbstractSpell spell)
-	{
-		switch (elementaryController.currentElement)
-		{
-			case AbstractSpell.Element.Fire:
-				CastFireOrb(spell);
-				break;
-			case AbstractSpell.Element.Water:
-				CastWaterBeam(spell);
-				break;
-			case AbstractSpell.Element.Earth:
-				CastEarthWall(spell);
-				break;
-			default:
-				break;
-		}
-	}
-
-	private void OnSpellRight(InputValue value)
-	{
-		if (elementaryController.readyToCast)
-		{
-			if (value.isPressed)
-			{
-				playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
-				AbstractSpell spell = Instantiate(elementaryController.GetExploratorySpell(), elementaryController.transform.position, Quaternion.identity);
-				switch (elementaryController.currentElement)
-				{
-					case AbstractSpell.Element.Fire:
-						CastFireOrb(spell);
-						break;
-					case AbstractSpell.Element.Water:
-						CastWaterBeam(spell);
-						break;
-					case AbstractSpell.Element.Earth:
-						CastEarthWall(spell);
-						break;
-					default:
-						break;
-				}
-				elementaryController.CastSpell(spell);
-				Debug.Log("Spell cast : " + spell);
-			}
-		}
-		if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
-			elementaryController.currentSpell?.OnRelease();
-	}
-
-	private void CastFireOrb(AbstractSpell spell)
-	{
-		throw new NotImplementedException();
-	}
+    private void OnSpellRight(InputValue value)
+    {
+        if (elementaryController.readyToCast && !manaburnout)
+        {
+            if (value.isPressed)
+            {
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * castingTurnSpeed);
+                AbstractSpell spell = Instantiate(
+                    elementaryController.GetSpell2(), 
+                    elementaryController.transform.position, 
+                    Quaternion.identity);
+                spell.init(elementaryController.gameObject, Vector3.zero);
+                elementaryController.CastSpell(spell);
+            }
+        }
+        if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+            elementaryController.currentSpell?.OnRelease();
+    }
 
     /// <summary>
     /// Input reserved for the shield that always needs to be available as a spell
@@ -212,32 +193,36 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnBlock(InputValue value)
     {
         //Debug.Log("Blocking");
-        if (elementaryController.currentSpell == null)
+        if (!manaburnout)
         {
-            Debug.Log("shield activation");
-            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
-            spell.init(elementaryController.gameObject, Vector3.zero);
-            elementaryController.currentSpell = spell;
-        }
-		else
-        {
-			if(!elementaryController.currentSpell.isReleased())
+            if (elementaryController.currentSpell == null)
             {
-				Debug.Log("Annulation par shield");
-				elementaryController.currentSpell.Terminate();
-				AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
-				spell.init(elementaryController.gameObject, Vector3.zero);
-				elementaryController.currentSpell = spell;
-			}		
-		}
+                Debug.Log("shield activation");
+                AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+                spell.init(elementaryController.gameObject, Vector3.zero);
+                elementaryController.currentSpell = spell;
+            }
+            else
+            {
+                if (!elementaryController.currentSpell.isReleased())
+                {
+                    Debug.Log("Annulation par shield");
+                    elementaryController.currentSpell.canceled = true;
+                    OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
+                    elementaryController.currentSpell.Terminate();
+                    AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+                    spell.init(elementaryController.gameObject, Vector3.zero);
+                    elementaryController.currentSpell = spell;
+                }
+            }         
+        }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
+
+
     }
 
-    private void CastEarthWall(AbstractSpell spell)
-    {
-        spell.init(elementaryController.gameObject, Vector3.zero);
-    }
+
 
     private void CastWaterMissiles(AbstractSpell spell)
     {
@@ -249,30 +234,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                 ((WaterMissiles)spell).targetTransform = enemies[0].gameObject.transform;
         }
     }
-
-	private void CastWaterBeam(AbstractSpell spell)
-    {
-		Debug.LogWarning(GameModeSingleton.GetInstance().GetCinemachineCameraController);
-		spell.init(elementaryController.gameObject, Vector3.zero);
-    }
-
-    private void CastFireBall(AbstractSpell spell)
-    {
-        if (playerCinemachineCameraController)
-        {
-            spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-        }
-        else
-        {
-            spell.init(elementaryController.gameObject, playerCinemachineCameraController.GetViewDirection);
-        }
-    }
-
-    private void CastEarthMortar(AbstractSpell spell)
-    {
-        spell.init(elementaryController.gameObject, Vector3.zero);
-    }
-
+    #endregion
     private void OnAim(InputValue value)
     {
         elementaryController.isAiming = value.isPressed;
@@ -322,7 +284,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             return 1f;
         float lifeperhit = 1 / maxHitsNumber;
         float toreturn = (maxHitsNumber - hitAmount) * lifeperhit;
-        float regen = lifeperhit * (hitTimer/hitResetTimer);
+        float regen = lifeperhit * (hitTimer / hitResetTimer);
         return toreturn + regen;
     }
 
@@ -337,4 +299,28 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         //DEAD SCENE TO LOAD...
     }
+
+    /// <summary>
+    /// Event called when the player spends mana
+    /// </summary>
+    public void OnManaSpend(float m)
+    {
+        if (m > 0)
+            CurrentManaCooldown = ManaRegenCooldown;
+        mana -= m;
+    }
+
+    /// <summary>
+    /// Event calld when a spell is cancel and part of the mana needs to be regained
+    /// </summary>
+    /// <param name="m"></param>
+    public void OnManaRegain(float m)
+    {
+        mana = (mana + m > maxMana) ? mana : mana + m;
+    }
+
+    public float getDisplayMana() {
+        return mana / maxMana;
+    }
+
 }

@@ -127,7 +127,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5395b1b634898f140a98f537adb01e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 0
+  element: 3
+  damagesInfos: {fileID: 11400000, guid: 95f116f693f57404fa738f619fc65baa, type: 2}
+  canceled: 0
   maxDelayToPerfectShield: 0.5
   walkSpeedInShield: 3
+  manaRegenWhenPerfect: 20
   shieldPrefab: {fileID: 6729065792686192302}

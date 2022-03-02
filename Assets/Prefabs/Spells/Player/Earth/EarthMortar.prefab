@@ -46,7 +46,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 410a38ed7fac3d74bae7284a763c6e81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  element: 0
+  element: 2
+  damagesInfos: {fileID: 11400000, guid: bccb78db225ca2f419481ac33bf619fa, type: 2}
+  canceled: 0
   earthBall: {fileID: 7776788703797642333, guid: 1b085446e808e00478b51c738000033b,
     type: 3}
   lastBallCoord: {x: 0, y: 0, z: 0}
@@ -66,6 +68,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   markerInstance: {fileID: 0}
   trajectoryCalculator: {fileID: 0}
+  target: {x: 0, y: 0, z: 0}
+  freeAim: 0
 --- !u!1001 &7716136553234323843
 PrefabInstance:
   m_ObjectHideFlags: 0

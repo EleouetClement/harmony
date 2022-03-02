@@ -44,6 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44a27d7df2c590f4dbd81b7bf50149b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  element: 1
+  damagesInfos: {fileID: 11400000, guid: ccb0fe45ba6568b40ac6d97902084a2e, type: 2}
+  canceled: 0
   BallPrefab: {fileID: -3416303769625551740, guid: 9432210ea7945ee4595feddf6288e7ad,
     type: 3}
   TimePerBall: 0.12
