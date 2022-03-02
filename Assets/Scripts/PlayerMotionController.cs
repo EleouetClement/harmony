@@ -8,6 +8,12 @@ using UnityEngine.InputSystem;
 public class PlayerMotionController : MonoBehaviour
 {
     public float currentSpeed;
+    private float maxSpeedApprox;
+
+    /// <summary>
+    /// represents current value of currentSpeed / maxSpeedApprox
+    /// </summary>
+    private float maxSpeedRatio;
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
@@ -50,6 +56,11 @@ public class PlayerMotionController : MonoBehaviour
     public bool isMoving = false;
     private bool isDodging = false;
 
+    public bool isMoving; 
+    private bool isDodging;
+    private bool isJumping;
+    private bool isFalling;
+    
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
 
@@ -58,8 +69,14 @@ public class PlayerMotionController : MonoBehaviour
 
     private void Awake()
     {
+        isMoving = false;
+        isDodging = false;
+        isJumping = false;
+        isFalling = false;
+
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
+        maxSpeedApprox = walkSpeed / accelerationFriction - 0.3f;
     }
 
     void Update()
@@ -78,6 +95,9 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         currentSpeed = controller.velocity.magnitude;
+        maxSpeedRatio = currentSpeed / maxSpeedApprox;
+        
+
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
 
         //smooth turning when moving
@@ -85,6 +105,8 @@ public class PlayerMotionController : MonoBehaviour
         {
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
+
+
 
     }
 
@@ -144,6 +166,8 @@ public class PlayerMotionController : MonoBehaviour
             if (controller.velocity.y < 0f)
             {
                 velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                isJumping = false;
+                isFalling = true;
             }
             //rising
             else if (controller.velocity.y > 0f)
@@ -153,6 +177,8 @@ public class PlayerMotionController : MonoBehaviour
         }
         else
         {
+            isFalling = false;
+            //isJumping = false;
             if (sliding)
             {
                 Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
@@ -198,7 +224,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(onGround)
         {
-            onGround = false;
+            isJumping = true;
             velocity.y = jumpForce;
         }
     }
@@ -278,4 +304,32 @@ public class PlayerMotionController : MonoBehaviour
         return direction;
     }
 
+    public Vector2 GetInputAxis()
+    {
+        return inputAxis;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public float GetMaxSpeedApprox()
+    {
+        return maxSpeedApprox;
+    }
+    public float GetMaxSpeedRatio()
+    {
+        return maxSpeedRatio;
+    }
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
+
+    public bool GetIsFalling()
+    {
+        return isFalling;
+    }
 }
