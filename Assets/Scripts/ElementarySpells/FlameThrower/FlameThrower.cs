@@ -38,7 +38,7 @@ public class FlameThrower : AbstractSpell
         {
             timer += Time.deltaTime;
         }
-        if (timer >= colliderActivationTime)
+        if (timer >= colliderActivationTime && flameEffectReference)
         {
             coll.enabled = true;
         }
