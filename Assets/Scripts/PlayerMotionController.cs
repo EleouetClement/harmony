@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +17,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
-    [Min(0)] public float gravity = -9.81f;
+    [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
     public LayerMask layerMask;
@@ -45,8 +44,6 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
-    private Transform groundTranform;
-    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
 
@@ -64,14 +61,7 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
-        Vector3 playerOffset = Vector3.zero;
-        if (onGround && groundTranform)
-        {
-            playerOffset = groundTranform.position - lastGroundPos;
-            lastGroundPos = groundTranform.position;
-        }
-
-        controller.Move(velocity * Time.deltaTime + playerOffset);
+        controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -139,23 +129,23 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!onGround)
         {
-            velocity.y += gravity * Time.fixedDeltaTime;
+            velocity.y += -gravity * Time.fixedDeltaTime;
             //falling
             if (controller.velocity.y < 0f)
             {
-                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
             //rising
             else if (controller.velocity.y > 0f)
             {
-                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
         }
         else
         {
             if (sliding)
             {
-                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
                 velocity += force;
             }
@@ -204,10 +194,11 @@ public class PlayerMotionController : MonoBehaviour
     }
 
 
-    private void OnDodge()
+    private void OnDodge(InputValue value)
     {
         if (isMoving && !isDodging && dodgeTimer <= Mathf.Epsilon)
         {
+            Debug.Log("Dodge : " + isDodging);
             isDodging = true;
         }
     }
@@ -218,22 +209,15 @@ public class PlayerMotionController : MonoBehaviour
     private void UpdateGroundState()
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
 
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
-
-            if (groundTranform != surfaceInfo.transform)
-            {
-                groundTranform = surfaceInfo.transform;
-                lastGroundPos = groundTranform.position;
-            }
         }
         else
         {
             floorAngle = 0;
-            groundTranform = null;
         }
     }
 
@@ -278,4 +262,37 @@ public class PlayerMotionController : MonoBehaviour
         return direction;
     }
 
+}
+    public Vector2 GetInputAxis()
+    {
+        return inputAxis;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public float GetMaxSpeedApprox()
+    {
+        return maxSpeedApprox;
+    }
+    public float GetMaxSpeedRatio()
+    {
+        return maxSpeedRatio;
+    }
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
+
+    /// <summary>
+    /// Getter
+    /// </summary>
+    /// <returns></returns>
+    public bool GetIsFalling()
+    {
+        return isFalling;
+    }
 }

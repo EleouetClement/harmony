@@ -11,9 +11,12 @@ public class ElementaryController : MonoBehaviour
     [SerializeField][Range(-2, 2)] private float horizontalOffset = 0;
     [SerializeField][Range(-2, 2)] private float verticalOffset = 0;
     [SerializeField][Range(-2, 2)] private float forwardOffset = 0;
-    [SerializeField][Min(0)]       private float lerpInterpolationValue= 4;
-    [SerializeField]               private float isAwayDistance;
-    [Header("Elementary stats")]
+    [SerializeField] [Min(0)] private float lerpInterpolationValue;
+    [SerializeField][Min(0)]  private float awayInterpolationValue = 4;
+    [SerializeField][Min(0)]  private float orbitingInterpolationValue = 4;
+
+	[SerializeField] private float isAwayDistance;
+	[Header("Elementary stats")]
     //[SerializeField] [Range(0, 50)] private float maxDistance = 10;
     //[SerializeField] [Range(0, 50)] private float travellingSpeed = 5;
     [SerializeField] private int layerMask;
@@ -31,6 +34,9 @@ public class ElementaryController : MonoBehaviour
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells2;
 
     private Vector3 shoulderOffset;
+    [Min(0)] public float safetyDistance;
+    [Min(1)] public float repulseStrength;
+    private Vector3 orbitingVelocity;
 
     public bool inCombat = false;
     public bool isAiming = false;
@@ -42,6 +48,7 @@ public class ElementaryController : MonoBehaviour
     private bool hasShoulder = false;
 
     private Transform shoulder;
+    private Transform playerMesh;
 
     public bool isAway { get; private set; } = false;
 
@@ -88,15 +95,19 @@ public class ElementaryController : MonoBehaviour
     void Start()
     {
         SetElement(AbstractSpell.Element.Fire);
-        virtualShoulder.transform.localPosition += shoulderOffset;
+        virtualShoulder.transform.localPosition = shoulderOffset;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        Vector3 shoulderXZ = new Vector3(virtualShoulder.transform.position.x, 0f, virtualShoulder.transform.position.z);
+        Vector3 transformXZ = new Vector3(shoulderOffset.x, 0f, shoulderOffset.z);
+        safetyDistance = Vector3.Distance(shoulderXZ, transformXZ);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
 
         //Testing purposes
+        virtualShoulder.transform.localPosition = shoulderOffset;
         if (Input.GetKeyDown(KeyCode.C))
         {
             inCombat ^= true;
@@ -170,6 +181,7 @@ public class ElementaryController : MonoBehaviour
             //Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
             //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
 
+            //Vector3 shoulderPosition = virtualShoulder.transform.position + Random.insideUnitSphere * 5f;
             transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
     }
