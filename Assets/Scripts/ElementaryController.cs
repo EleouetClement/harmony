@@ -129,7 +129,7 @@ public class ElementaryController : MonoBehaviour
             //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
 
             //Vector3 shoulderPosition = virtualShoulder.transform.position + Random.insideUnitSphere * 5f;
-            transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position /*+ Repulse()*/, Time.deltaTime * lerpInterpolationValue);
+            transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
     }
 
@@ -166,34 +166,5 @@ public class ElementaryController : MonoBehaviour
         //Vector3 basePosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
         return Vector3.Distance(transform.position, virtualShoulder.transform.position) > isAwayDistance ? true : false;
     }
-
-    private Vector3 Repulse()
-    {
-        if (readyToCast)
-        {
-            Vector3 playerRelativePos = new Vector3(playerMesh.position.x, 0f, playerMesh.position.z);
-            Vector3 transformRelativePos = new Vector3(transform.position.x, 0f, transform.position.z);
-            Vector3 repulseSource = transform.position - (transformRelativePos - playerRelativePos);
-            float playerDistance = Vector3.Distance(repulseSource, transform.position);
-            //print("playerRelativePos : "+playerRelativePos+" elem position : "+transform.position+" repulseSource : "+repulseSource+" distance : " + playerDistance);
-            if (playerDistance < safetyDistance)
-            {
-                print("repulsio!");
-                return (transform.position - repulseSource) * safetyDistance/playerDistance;    
-            }
-        }
-        return Vector3.zero;
-    }
-
-	//private void OnDrawGizmos()
-	//{
- //       Vector3 playerRelativePos = new Vector3(playerMesh.position.x, 0f, playerMesh.position.z);
- //       Vector3 transformRelativePos = new Vector3(transform.position.x, 0f, transform.position.z);
- //       Vector3 repulseSource = transform.position - (transformRelativePos - playerRelativePos);
- //       Gizmos.color = Color.red;
-	//	Gizmos.DrawSphere(repulseSource, 0.05f);
-	//	Gizmos.color = Color.green;
- //       Gizmos.DrawSphere(playerRelativePos, 0.05f);
- //   }
 
 }
