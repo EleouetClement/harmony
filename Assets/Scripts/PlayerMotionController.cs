@@ -17,7 +17,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
-    [Min(0)] public float gravity = -9.81f;
+    [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
     public LayerMask layerMask;
@@ -129,23 +129,23 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!onGround)
         {
-            velocity.y += gravity * Time.fixedDeltaTime;
+            velocity.y += -gravity * Time.fixedDeltaTime;
             //falling
             if (controller.velocity.y < 0f)
             {
-                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
             //rising
             else if (controller.velocity.y > 0f)
             {
-                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
         }
         else
         {
             if (sliding)
             {
-                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
                 velocity += force;
             }
@@ -198,6 +198,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         if (isMoving && !isDodging)
         {
+            Debug.Log("Dodge : " + isDodging);
             isDodging = true;
         }
     }
