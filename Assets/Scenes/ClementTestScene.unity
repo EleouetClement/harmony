@@ -587,7 +587,7 @@ MonoBehaviour:
   CameraDistance: 2
   CameraCollisionFilter:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4097
   IgnoreTag: 
   CameraRadius: 0.2
   DampingIntoCollision: 0
@@ -1527,6 +1527,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
       value: 1.0766424
+      objectReference: {fileID: 0}
+    - target: {fileID: 3910929711141523954, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: CameraCollisionFilter.m_Bits
+      value: 4097
       objectReference: {fileID: 0}
     - target: {fileID: 4470787766690154400, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}

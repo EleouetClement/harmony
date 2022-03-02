@@ -310,7 +310,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="m"></param>
     public void OnManaRegain(float m)
     {
-        mana += m;
+        mana = (mana + m > maxMana) ? mana : mana + m;
     }
 
     public float getDisplayMana() {
