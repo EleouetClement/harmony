@@ -263,3 +263,36 @@ public class PlayerMotionController : MonoBehaviour
     }
 
 }
+    public Vector2 GetInputAxis()
+    {
+        return inputAxis;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public float GetMaxSpeedApprox()
+    {
+        return maxSpeedApprox;
+    }
+    public float GetMaxSpeedRatio()
+    {
+        return maxSpeedRatio;
+    }
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
+
+    /// <summary>
+    /// Getter
+    /// </summary>
+    /// <returns></returns>
+    public bool GetIsFalling()
+    {
+        return isFalling;
+    }
+}
