@@ -46,6 +46,11 @@ public class PlayerMotionController : MonoBehaviour
     private RaycastHit surfaceInfo;
     public bool isMoving = false;
     private bool isDodging = false;
+    private bool isFalling = false;
+    private bool isJumping = false;
+
+    private float maxSpeedApprox;
+    private float maxSpeedRatio;
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
@@ -57,10 +62,12 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
+        maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
     }
 
     void Update()
     {
+        maxSpeedRatio = currentSpeed / maxSpeedApprox;
         controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
         {
@@ -133,6 +140,8 @@ public class PlayerMotionController : MonoBehaviour
             //falling
             if (controller.velocity.y < 0f)
             {
+                isFalling = true;
+                isJumping = false;
                 velocity.y += -gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
             //rising
@@ -143,6 +152,8 @@ public class PlayerMotionController : MonoBehaviour
         }
         else
         {
+            isFalling = false;
+            isJumping = false;
             if (sliding)
             {
                 Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
@@ -188,6 +199,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(onGround)
         {
+            isJumping = true;
             onGround = false;
             velocity.y = jumpForce;
         }
@@ -262,7 +274,7 @@ public class PlayerMotionController : MonoBehaviour
         return direction;
     }
 
-}
+
     public Vector2 GetInputAxis()
     {
         return inputAxis;
@@ -287,10 +299,6 @@ public class PlayerMotionController : MonoBehaviour
         return isJumping;
     }
 
-    /// <summary>
-    /// Getter
-    /// </summary>
-    /// <returns></returns>
     public bool GetIsFalling()
     {
         return isFalling;
