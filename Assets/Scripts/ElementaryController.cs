@@ -106,9 +106,8 @@ public class ElementaryController : MonoBehaviour
 	private void LateUpdate()
 	{
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
-        if (computePosition)
+        if (computePosition || (currentSpell != null && currentSpell.elementaryfollow))
         {
-            
             Orbit();
         }
     }

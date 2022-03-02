@@ -92,6 +92,9 @@ public class Fireball : AbstractSpell
     {
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
+        if (elementaryfollow) {
+            fireOrbInstance.transform.position = elementary.transform.position;
+        }
         if(fireOrbInstance.GetComponent<FireOrb>().hasExplode)
         {
             Terminate();
@@ -164,6 +167,7 @@ public class Fireball : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        elementaryfollow = true;
         base.init(elemRef, target.normalized);
         if (FireballPrefab == null)
         {
@@ -280,6 +284,7 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
+        elementaryfollow = false;
         //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
