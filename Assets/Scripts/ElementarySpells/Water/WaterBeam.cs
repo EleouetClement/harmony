@@ -53,6 +53,9 @@ public class WaterBeam : AbstractSpell
             impactEffect.transform.LookAt(elementaryController.transform.position);
             transform.LookAt(hit.point);
 
+            //Affecting manaCost
+            GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerGameplayController>()?.OnManaSpend(GetManaCost() * Time.fixedDeltaTime);
+
             // If the beam does not hit an obstacle, its extension continues
             if (!isAccelerationBeamFinished)
             {

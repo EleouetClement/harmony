@@ -76,6 +76,10 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             mana = 0;
             manaburnout = true;
+            if(elementaryController.currentSpell)
+            {
+                elementaryController.currentSpell.Terminate();
+            }
         }
         if (manaburnout)
         {
