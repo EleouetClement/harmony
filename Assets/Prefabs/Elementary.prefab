@@ -129,23 +129,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   virtualShoulder: {fileID: 0}
-  horizontalOffset: 0.95
+  horizontalOffset: 1.78
   verticalOffset: 2
-  forwardOffset: 0.81
+  forwardOffset: 0.65
   lerpInterpolationValue: 4
-  isAwayDistance: 2
+  isAwayDistance: 1
   layerMask: 0
   shieldPrefab: {fileID: 7339081501565071671, guid: fbc42c22b43c4954ab798722a5cf2399,
     type: 3}
   spellsLeft:
   - {fileID: -653086949367603919, guid: f7ebe56389c8e7a4db90049626e78210, type: 3}
-  - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
   - {fileID: -7462466440931504070, guid: d57ded4e7c22c19409bd8c24b89e3769, type: 3}
+  - {fileID: 6547625095814438233, guid: 9bc407c88be2c6443a3b0593b2dbedc9, type: 3}
   spellsRight:
   - {fileID: 4142513819557297703, guid: d1619f3ee4375d942bbe4ce791038383, type: 3}
-  - {fileID: 2666129901474522574, guid: ed74e6eb07b819c44a67e9b7fe918a51, type: 3}
   - {fileID: 209660303719141882, guid: 2ffae2c690326de4c8418b68921e3076, type: 3}
-  inCombat: 1
+  - {fileID: 2666129901474522574, guid: ed74e6eb07b819c44a67e9b7fe918a51, type: 3}
+  inCombat: 0
   isAiming: 0
   computePosition: 1
   currentSpell: {fileID: 0}

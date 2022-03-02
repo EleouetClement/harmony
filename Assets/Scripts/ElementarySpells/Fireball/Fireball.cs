@@ -133,7 +133,7 @@ public class Fireball : AbstractSpell
 
         velocity = target * currentSpeed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
-        elementary.transform.Translate(velocity);
+        elementary.transform.Translate(velocity);   
     }
 
     private void Update()

@@ -71,8 +71,8 @@ public abstract class AbstractSpell : MonoBehaviour
 
     private Transform playerMesh;
 
-
     protected DamageHit damages;
+
 
 
 	private void Update()
@@ -171,7 +171,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     protected virtual float GetManaCost()
     {
-        return 20f;
+        return damagesInfos.manaCost;
     }
 
     /// <summary>
@@ -179,7 +179,17 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     protected virtual float GetChannelCost()
     {
-        return 5f;
+        return damagesInfos.manaChannelCostPerSec;
+    }
+
+    /// <summary>
+    /// Returns the amount of mana that the player can regain by canceling a spell 
+    /// while channeling
+    /// </summary>
+    /// <returns></returns>
+    public float GetManaRegainAmount()
+    {
+        return damagesInfos.manaCost / 2;
     }
 
     /// <summary>

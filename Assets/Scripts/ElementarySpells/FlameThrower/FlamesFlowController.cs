@@ -23,10 +23,11 @@ public class FlamesFlowController : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        IDamageable collidedItem = collision.gameObject.GetComponent<IDamageable>();
-        if(collidedItem == null)
+        IDamageable collidedItem = other.gameObject.GetComponent<IDamageable>();
+        if (collidedItem == null)
         {
             Debug.LogError("Item not damageable");
             return;

@@ -13,7 +13,8 @@ public class FlameThrower : AbstractSpell
     [SerializeField] [Min(0)] float knockBackPower;
     [SerializeField] [Min(0)] float colliderActivationTime;
 
-
+    
+    
     private Collider coll;
     private bool setTimer = false;
     private ParticleSystem flamesFlow;
@@ -37,15 +38,16 @@ public class FlameThrower : AbstractSpell
         {
             timer += Time.deltaTime;
         }
-        if (timer >= colliderActivationTime)
+        if (timer >= colliderActivationTime && flameEffectReference)
         {
             coll.enabled = true;
         }
-        if (timer > (duration + destroyTimingOffset) && !flamesFlow.isStopped)
-        {
+        //if (timer > (duration + destroyTimingOffset) && !flamesFlow.isStopped)
+        //{
+        //    Terminate();
+        //}
+        if (!flameEffectReference)
             Terminate();
-        }
-        
     }
 
     public override void FixedUpdate()
@@ -69,6 +71,9 @@ public class FlameThrower : AbstractSpell
         var pouet = flamesFlow.main;
         pouet.duration = duration;
         pouet.startSpeed = SpeedOverTime;
+        pouet = flamesFlow.transform.GetChild(0).gameObject.GetComponent<ParticleSystem>().main;
+        pouet.duration = duration;
+
         flameEffectReference.transform.rotation = CalculateTrajectory();
         flamesFlow.Play();
         setTimer = true;
@@ -78,16 +83,13 @@ public class FlameThrower : AbstractSpell
     public override void Terminate()
     {
         elementary.GetComponent<ElementaryController>().Reset();
-        Destroy(flameEffectReference);
+        //Destroy(flameEffectReference);
         Destroy(gameObject);
     }
 
     private Quaternion CalculateTrajectory()
     {
-        Transform newTransform;
-        newTransform = elementary.transform;
-        newTransform.rotation = Quaternion.LookRotation(gm.GetCinemachineCameraController.GetViewDirection);
-        return newTransform.rotation;
+        return Quaternion.LookRotation(gm.GetCinemachineCameraController.GetViewDirection);
     }
 
 }
