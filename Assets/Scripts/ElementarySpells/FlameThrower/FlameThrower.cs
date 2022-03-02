@@ -89,10 +89,7 @@ public class FlameThrower : AbstractSpell
 
     private Quaternion CalculateTrajectory()
     {
-        Transform newTransform;
-        newTransform = elementary.transform;
-        newTransform.rotation = Quaternion.LookRotation(gm.GetCinemachineCameraController.GetViewDirection);
-        return newTransform.rotation;
+        return Quaternion.LookRotation(gm.GetCinemachineCameraController.GetViewDirection);
     }
 
 }
