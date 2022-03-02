@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,8 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private Transform groundTranform;
+    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
 
@@ -61,7 +64,14 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
-        controller.Move(velocity * Time.deltaTime);
+        Vector3 playerOffset = Vector3.zero;
+        if (onGround && groundTranform)
+        {
+            playerOffset = groundTranform.position - lastGroundPos;
+            lastGroundPos = groundTranform.position;
+        }
+
+        controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -208,15 +218,22 @@ public class PlayerMotionController : MonoBehaviour
     private void UpdateGroundState()
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+
+            if (groundTranform != surfaceInfo.transform)
+            {
+                groundTranform = surfaceInfo.transform;
+                lastGroundPos = groundTranform.position;
+            }
         }
         else
         {
             floorAngle = 0;
+            groundTranform = null;
         }
     }
 
