@@ -71,8 +71,8 @@ public abstract class AbstractSpell : MonoBehaviour
 
     private Transform playerMesh;
 
-
     protected DamageHit damages;
+
 
 
 	private void Update()
