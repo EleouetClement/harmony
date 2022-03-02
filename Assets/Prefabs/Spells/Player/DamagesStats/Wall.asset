@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d36ef6e851ff694395e07461cfb9fc9, type: 3}
-  m_Name: FireballDamages
+  m_Name: Wall
   m_EditorClassIdentifier: 
-  baseDamages: 20
-  maxMultiplier: 1.5
-  blinkMultiplier: 2
-  manaCost: 20
+  baseDamages: 0
+  maxMultiplier: 0
+  blinkMultiplier: 0
+  manaCost: 30
   knockback: 0

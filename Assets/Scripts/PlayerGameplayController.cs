@@ -201,6 +201,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             {
                 Debug.Log("Annulation par shield");
                 elementaryController.currentSpell.canceled = true;
+                OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
                 elementaryController.currentSpell.Terminate();
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
@@ -297,6 +298,15 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         if (m > 0)
             CurrentManaCooldown = ManaRegenCooldown;
         mana -= m;
+    }
+
+    /// <summary>
+    /// Event calld when a spell is cancel and part of the mana needs to be regained
+    /// </summary>
+    /// <param name="m"></param>
+    public void OnManaRegain(float m)
+    {
+        mana += m;
     }
 
     public float getDisplayMana() {
