@@ -132,4 +132,5 @@ MonoBehaviour:
   canceled: 0
   maxDelayToPerfectShield: 0.5
   walkSpeedInShield: 3
+  manaRegenWhenPerfect: 20
   shieldPrefab: {fileID: 6729065792686192302}

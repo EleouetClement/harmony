@@ -7,6 +7,7 @@ public class Shield : AbstractSpell
 {
     [Range(0f, 2f)] public float maxDelayToPerfectShield;
     [Range(0f, 20f)] public float walkSpeedInShield;
+    [Min(0)] public float manaRegenWhenPerfect;
     [SerializeField] GameObject shieldPrefab;
     private GameModeSingleton gms;
     private GameObject player;
@@ -106,10 +107,12 @@ public class Shield : AbstractSpell
             if (canPerfectShield)
             {
                 Debug.Log("PERFECT SHIELD !");
+                player.GetComponent<PlayerGameplayController>()?.OnManaRegain(manaRegenWhenPerfect);
             }
             else
             {
                 Debug.Log("TOO LATE TO PERFECT SHIELD !");
+                player.GetComponent<PlayerGameplayController>()?.OnManaSpend(GetManaCost());
             }
 
             Destroy(collision.gameObject);

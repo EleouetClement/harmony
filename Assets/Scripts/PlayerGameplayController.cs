@@ -192,28 +192,33 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnBlock(InputValue value)
     {
         //Debug.Log("Blocking");
-        if (elementaryController.currentSpell == null)
+        if (!manaburnout)
         {
-            Debug.Log("shield activation");
-            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
-            spell.init(elementaryController.gameObject, Vector3.zero);
-            elementaryController.currentSpell = spell;
-        }
-        else
-        {
-            if (!elementaryController.currentSpell.isReleased())
+            if (elementaryController.currentSpell == null)
             {
-                Debug.Log("Annulation par shield");
-                elementaryController.currentSpell.canceled = true;
-                OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
-                elementaryController.currentSpell.Terminate();
+                Debug.Log("shield activation");
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
                 elementaryController.currentSpell = spell;
             }
+            else
+            {
+                if (!elementaryController.currentSpell.isReleased())
+                {
+                    Debug.Log("Annulation par shield");
+                    elementaryController.currentSpell.canceled = true;
+                    OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
+                    elementaryController.currentSpell.Terminate();
+                    AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+                    spell.init(elementaryController.gameObject, Vector3.zero);
+                    elementaryController.currentSpell = spell;
+                }
+            }         
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
+
+
     }
 
 
