@@ -194,9 +194,9 @@ public class PlayerMotionController : MonoBehaviour
     }
 
 
-    private void OnDodge()
+    private void OnDodge(InputValue value)
     {
-        if (isMoving && !isDodging)
+        if (isMoving && !isDodging && dodgeTimer <= Mathf.Epsilon)
         {
             Debug.Log("Dodge : " + isDodging);
             isDodging = true;
