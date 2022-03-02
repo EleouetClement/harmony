@@ -53,10 +53,8 @@ public class PlayerMotionController : MonoBehaviour
     private RaycastHit surfaceInfo;
     private Transform groundTranform;
     private Vector3 lastGroundPos;
-    public bool isMoving = false;
-    private bool isDodging = false;
 
-    public bool isMoving; 
+    public bool isMoving;
     private bool isDodging;
     private bool isJumping;
     private bool isFalling;
