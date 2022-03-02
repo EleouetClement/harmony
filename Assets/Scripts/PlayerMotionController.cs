@@ -319,6 +319,10 @@ public class PlayerMotionController : MonoBehaviour
         return isJumping;
     }
 
+    /// <summary>
+    /// Getter
+    /// </summary>
+    /// <returns></returns>
     public bool GetIsFalling()
     {
         return isFalling;
