@@ -46,9 +46,7 @@ public class EarthPillar : MonoBehaviour
     {
         // Extension of the pillar if it is not totally out of the ground
         if (!isTotallyOut)
-        {
-            Debug.Log("is playing = " + groundPillarMovingEffect.isPlaying);
-            
+        {           
             timer += Time.fixedDeltaTime;
             transform.position = Vector3.Lerp(initialSpawnPoint, finalSpawnPoint, timer/timeToSpawn);
 
@@ -56,7 +54,6 @@ public class EarthPillar : MonoBehaviour
             {
                 isTotallyOut = true;
                 groundPillarMovingEffect.Stop();
-                Debug.Log("is playing FINISHED = " + groundPillarMovingEffect.isPlaying);
             }
         }
     }
