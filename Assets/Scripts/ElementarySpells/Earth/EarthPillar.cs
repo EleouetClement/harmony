@@ -5,6 +5,7 @@ public class EarthPillar : MonoBehaviour
     public static EarthPillar instance;
     [Min(0.1f)] public float timeToSpawn;
     public bool isTotallyOut { get; private set; } = false;
+    public ParticleSystem groundPillarMovingEffect;
 
     private float timer = 0f;
     private Vector3 initialSpawnPoint;
@@ -26,6 +27,8 @@ public class EarthPillar : MonoBehaviour
 
         instance = this;
 
+        groundPillarMovingEffect.Play();
+
         // Initial and final point values for moving the pillar from bottom to top
         finalSpawnPoint = transform.position;
         initialSpawnPoint = new Vector3(transform.position.x, -transform.localScale.y, transform.position.z);
@@ -43,13 +46,14 @@ public class EarthPillar : MonoBehaviour
     {
         // Extension of the pillar if it is not totally out of the ground
         if (!isTotallyOut)
-        {
+        {           
             timer += Time.fixedDeltaTime;
             transform.position = Vector3.Lerp(initialSpawnPoint, finalSpawnPoint, timer/timeToSpawn);
 
             if(timer >= timeToSpawn)
             {
                 isTotallyOut = true;
+                groundPillarMovingEffect.Stop();
             }
         }
     }

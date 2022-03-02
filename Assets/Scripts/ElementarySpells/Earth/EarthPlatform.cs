@@ -4,6 +4,7 @@ public class EarthPlatform : MonoBehaviour
 {
     public static EarthPlatform instance;
     [Min(0.1f)] public float timeToSpawn;
+    public ParticleSystem wallPlatformMovingEffect;
 
     public bool isTotallyOut { get; private set; } = false;
     private float scaleAxeX;
@@ -12,6 +13,7 @@ public class EarthPlatform : MonoBehaviour
     private float timer = 0f;
     private Vector3 initialSpawnScale;
     private Vector3 finalSpawnScale;
+    private ParticleSystem.ShapeModule particleShape;
     private Cinemachine.CinemachineImpulseSource shakeSource;
 
     private void Awake()
@@ -28,6 +30,11 @@ public class EarthPlatform : MonoBehaviour
         }
 
         instance = this;
+
+        // Expand the particle system
+        particleShape = wallPlatformMovingEffect.shape;
+        particleShape.scale = new Vector3(0f, wallPlatformMovingEffect.shape.scale.y, 0f);
+        wallPlatformMovingEffect.Play();
 
         // Store the prefab scale to make it expand (initial and final scale values for expanding the platform)
         scaleAxeX = transform.localScale.x;
@@ -51,10 +58,12 @@ public class EarthPlatform : MonoBehaviour
         {
             timer += Time.fixedDeltaTime;
             transform.localScale = Vector3.Lerp(initialSpawnScale, finalSpawnScale, timer / timeToSpawn);
+            particleShape.scale = Vector3.Lerp(initialSpawnScale, finalSpawnScale, timer / timeToSpawn);
 
             if (timer >= timeToSpawn)
             {
                 isTotallyOut = true;
+                wallPlatformMovingEffect.Stop();
             }
         }
     }
