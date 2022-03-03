@@ -94,8 +94,8 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
 
+        virtualShoulder.transform.localPosition = shoulderOffset;
         //Testing purposes
         if (Input.GetKeyDown(KeyCode.C))
         {
