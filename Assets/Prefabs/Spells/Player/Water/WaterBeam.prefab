@@ -4993,13 +4993,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 1
+  damagesInfos: {fileID: 0}
+  canceled: 0
   maxDistance: 30
-  beamAcceleration: 10
+  beamAcceleration: 15
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
-  cameraController: {fileID: 0}
-  elemCtrl: {fileID: 0}
   impactEffect: {fileID: 5863743421125159431}
+  layersCollision:
+    serializedVersion: 2
+    m_Bits: 32729
 --- !u!136 &627015841
 CapsuleCollider:
   m_ObjectHideFlags: 0
