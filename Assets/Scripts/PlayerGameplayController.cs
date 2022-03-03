@@ -47,6 +47,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+        
     }
 
     private void Update()
@@ -77,6 +78,10 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             mana = 0;
             manaburnout = true;
+            if(elementaryController.currentSpell)
+            {
+                elementaryController.currentSpell.Terminate();
+            }
         }
         if (manaburnout)
         {
@@ -189,27 +194,34 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnBlock(InputValue value)
     {
         //Debug.Log("Blocking");
-        if (elementaryController.currentSpell == null)
+        if (!manaburnout)
         {
-            Debug.Log("shield activation");
-            AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
-            spell.init(elementaryController.gameObject, Vector3.zero);
-            elementaryController.currentSpell = spell;
-        }
-        else
-        {
-            if (!elementaryController.currentSpell.isReleased())
+            if (elementaryController.currentSpell == null)
             {
-                Debug.Log("Annulation par shield");
-                elementaryController.currentSpell.canceled = true;
-                elementaryController.currentSpell.Terminate();
+                Debug.Log("shield activation");
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
                 elementaryController.currentSpell = spell;
             }
+            else
+            {
+                bool tmp = elementaryController.currentSpell is Shield;
+                if (!elementaryController.currentSpell.isReleased() && !(elementaryController.currentSpell is Shield))
+                {
+                    Debug.Log("Annulation par shield");
+                    elementaryController.currentSpell.canceled = true;
+                    OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
+                    elementaryController.currentSpell.Terminate();
+                    AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
+                    spell.init(elementaryController.gameObject, Vector3.zero);
+                    elementaryController.currentSpell = spell;
+                }
+            }         
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
             elementaryController.currentSpell?.OnRelease();
+
+
     }
 
 
@@ -298,6 +310,15 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         if (m > 0)
             CurrentManaCooldown = ManaRegenCooldown;
         mana -= m;
+    }
+
+    /// <summary>
+    /// Event calld when a spell is cancel and part of the mana needs to be regained
+    /// </summary>
+    /// <param name="m"></param>
+    public void OnManaRegain(float m)
+    {
+        mana = (mana + m > maxMana) ? mana : mana + m;
     }
 
     public float getDisplayMana() {

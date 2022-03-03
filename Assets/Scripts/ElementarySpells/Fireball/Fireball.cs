@@ -133,7 +133,7 @@ public class Fireball : AbstractSpell
 
         velocity = target * currentSpeed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
-        elementary.transform.Translate(velocity);
+        elementary.transform.Translate(velocity);   
     }
 
     private void Update()
@@ -272,9 +272,7 @@ public class Fireball : AbstractSpell
     public override void Terminate()
     {
         Destroy(fireOrbInstance);
-        elem.currentSpell = null;
-        elem.computePosition = true;
-        elementary.GetComponent<ElementaryController>().readyToCast = true;
+        elem.Reset();
         Destroy(gameObject);
     }
 

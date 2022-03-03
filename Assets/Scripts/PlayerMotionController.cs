@@ -17,7 +17,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 10)] public float friction = 1f;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
-    [Min(0)] public float gravity = -9.81f;
+    [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
     public LayerMask layerMask;
@@ -46,6 +46,11 @@ public class PlayerMotionController : MonoBehaviour
     private RaycastHit surfaceInfo;
     public bool isMoving = false;
     private bool isDodging = false;
+    private bool isFalling = false;
+    private bool isJumping = false;
+
+    private float maxSpeedApprox;
+    private float maxSpeedRatio;
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
@@ -57,10 +62,12 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
+        maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
     }
 
     void Update()
     {
+        maxSpeedRatio = currentSpeed / maxSpeedApprox;
         controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
         {
@@ -129,23 +136,27 @@ public class PlayerMotionController : MonoBehaviour
 
         if (!onGround)
         {
-            velocity.y += gravity * Time.fixedDeltaTime;
+            velocity.y += -gravity * Time.fixedDeltaTime;
             //falling
             if (controller.velocity.y < 0f)
             {
-                velocity.y += gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                isFalling = true;
+                isJumping = false;
+                velocity.y += -gravity * (fallGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
             //rising
             else if (controller.velocity.y > 0f)
             {
-                velocity.y += gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
+                velocity.y += -gravity * (jumpGravityMultiplier - 1f) * Time.fixedDeltaTime;
             }
         }
         else
         {
+            isFalling = false;
+            isJumping = false;
             if (sliding)
             {
-                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
                 velocity += force;
             }
@@ -188,16 +199,18 @@ public class PlayerMotionController : MonoBehaviour
     {
         if(onGround)
         {
+            isJumping = true;
             onGround = false;
             velocity.y = jumpForce;
         }
     }
 
 
-    private void OnDodge()
+    private void OnDodge(InputValue value)
     {
-        if (isMoving && !isDodging)
+        if (isMoving && !isDodging && dodgeTimer <= Mathf.Epsilon)
         {
+            Debug.Log("Dodge : " + isDodging);
             isDodging = true;
         }
     }
@@ -261,4 +274,33 @@ public class PlayerMotionController : MonoBehaviour
         return direction;
     }
 
+
+    public Vector2 GetInputAxis()
+    {
+        return inputAxis;
+    }
+
+    public Vector3 GetVelocity()
+    {
+        return velocity;
+    }
+
+    public float GetMaxSpeedApprox()
+    {
+        return maxSpeedApprox;
+    }
+    public float GetMaxSpeedRatio()
+    {
+        return maxSpeedRatio;
+    }
+
+    public bool GetIsJumping()
+    {
+        return isJumping;
+    }
+
+    public bool GetIsFalling()
+    {
+        return isFalling;
+    }
 }

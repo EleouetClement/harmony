@@ -73,9 +73,7 @@ public class EarthWall : AbstractSpell
 
     public override void Terminate()
     {
-        elementaryController.currentSpell = null;
-        elementaryController.computePosition = true;
-        elementaryController.readyToCast = true;
+        elementaryController.Reset();
         if (marker != null)
             Destroy(marker.gameObject);
         Destroy(gameObject);
