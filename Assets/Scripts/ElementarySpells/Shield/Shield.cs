@@ -63,7 +63,7 @@ public class Shield : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        //To avoid Mana cost when not hit
+        //To avoid Mana cost when not hit 
         ManaCostPerHit = damagesInfos.manaCost;
         damagesInfos.manaCost = 0;
         base.init(elemRef, target.normalized);
