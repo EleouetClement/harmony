@@ -437,7 +437,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 125aaa9fc5920044e91faf412e0255a0
-  position: {x: 0, y: 141}
+  position: {x: -0.00002861023, y: 122.749504}
   blackboard:
     boolParameters:
       keys: []

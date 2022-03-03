@@ -99,7 +99,11 @@ public class EarthBall : MonoBehaviour
 		minSize = transform.localScale;
 		maxSize = minSize * 2f;
 
-		launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.Aim(), speed);
+		if (earthMarkerRef.freeAim)
+			launchVelocity = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<CharacterController>().velocity + earthMarkerRef.Aim() * range;
+		else
+			launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.Aim(), speed);
+		
 		transform.rotation = Quaternion.LookRotation(launchVelocity);
 
 		shakeSource = GetComponent<Cinemachine.CinemachineImpulseSource>();

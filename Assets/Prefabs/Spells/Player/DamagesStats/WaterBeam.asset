@@ -16,4 +16,5 @@ MonoBehaviour:
   maxMultiplier: 0
   blinkMultiplier: 0
   manaCost: 20
+  manaChannelCostPerSec: 5
   knockback: 1

@@ -127,7 +127,12 @@ PrefabInstance:
     - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_shaderPropertyID
-      value: 803
+      value: 820
+      objectReference: {fileID: 0}
+    - target: {fileID: 1893065722960749156, guid: 8ca2cdb55dfa370408d80107d6193f08,
+        type: 3}
+      propertyPath: m_Time
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2332048440410813850, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
@@ -193,6 +198,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7414027481456132191, guid: 8ca2cdb55dfa370408d80107d6193f08,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.085
       objectReference: {fileID: 0}
     - target: {fileID: 8782145736878327818, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
