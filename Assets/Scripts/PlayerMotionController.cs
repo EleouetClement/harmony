@@ -14,7 +14,9 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
     [Header("Character Physics settings")]
-    [Range(0, 10)] public float friction = 1f;
+    private float friction;
+    [Range(0, 100)] public float accelerationFriction;
+    [Range(0, 100)] public float decelerationFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = 9.81f;
@@ -55,8 +57,9 @@ public class PlayerMotionController : MonoBehaviour
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
 
-    public float accelerationFriction;
-    public float decelerationFriction;
+    
+
+ 
 
     private void Awake()
     {
@@ -105,6 +108,8 @@ public class PlayerMotionController : MonoBehaviour
         {           
             velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
+        if (isMoving && OnSlope())
+            velocity += Vector3.down * gravity * Time.fixedDeltaTime;
 
 
         #endregion
@@ -302,5 +307,24 @@ public class PlayerMotionController : MonoBehaviour
     public bool GetIsFalling()
     {
         return isFalling;
+    }
+
+    /// <summary>
+    /// Returns true if the player is on a slope
+    /// </summary>
+    /// <returns></returns>
+    private bool OnSlope()
+    {
+        if (isJumping)
+            return false;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.down * controller.height / 2, Vector3.down, out hit, 0.1f, layerMask))
+        {
+            return hit.normal != Vector3.up;
+        }
+
+        return false;
     }
 }
