@@ -107,6 +107,8 @@ public class WaterBeam : AbstractSpell
         elementaryPosition = elementaryController.transform.position;
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
 
+        marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
+
         // Init the visual
         impactEffect.transform.position = elementaryController.transform.position;
         marker.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>().enabled = false; // Hide the marker

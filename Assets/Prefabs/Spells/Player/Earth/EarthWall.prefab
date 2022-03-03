@@ -56,6 +56,9 @@ MonoBehaviour:
     type: 3}
   groundMovingEffect: {fileID: 2093974785645372677}
   maxDistance: 20
+  layersCollision:
+    serializedVersion: 2
+    m_Bits: 6144
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0
