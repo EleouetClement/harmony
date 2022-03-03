@@ -29,6 +29,8 @@ public class ElementaryController : MonoBehaviour
     [Header("Dev")]
     [SerializeField][Range(0, 1)] float sphereCastRadius;
     [SerializeField][Range(0, 1)] float sphereCastMaxDistance;
+    [SerializeField] [Range(2, 5)] float yAxisNewValue;
+
 
     //Contains 1 spell per element
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
@@ -123,15 +125,17 @@ public class ElementaryController : MonoBehaviour
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition)
         {
-            RaycastHit hitinfo;
-            if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out hitinfo, sphereCastMaxDistance))
+            Collider[] obstacles = Physics.OverlapSphere(shoulderOffset, sphereCastRadius);
+            if (obstacles != null)
             {
-                AvoidObstacle(hitinfo);
+                Debug.Log("Changement de position d'epaule");
+                virtualShoulder.transform.localPosition = new Vector3(0, yAxisNewValue, 0);
             }
             else
             {
-                Orbit();
+                virtualShoulder.transform.localPosition = shoulderOffset;
             }
+            Orbit();
             
         }
     }
@@ -193,15 +197,6 @@ public class ElementaryController : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
-    }
-
-    /// <summary>
-    /// Calculate the direction the elem needs to take to avoid an obstacle
-    /// </summary>
-    /// <param name="hit"></param>
-    public void AvoidObstacle(RaycastHit hit)
-    {
-
     }
 
     /// <summary>
