@@ -220,10 +220,10 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateGroundState()
     {
-        onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+		onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
+			out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
 
-        if (onGround)
+		if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
         }
