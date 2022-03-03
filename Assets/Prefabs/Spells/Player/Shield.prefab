@@ -128,7 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 3
-  damagesInfos: {fileID: 0}
+  damagesInfos: {fileID: 11400000, guid: 95f116f693f57404fa738f619fc65baa, type: 2}
+  canceled: 0
   maxDelayToPerfectShield: 0.5
   walkSpeedInShield: 3
+  manaRegenWhenPerfect: 20
   shieldPrefab: {fileID: 6729065792686192302}

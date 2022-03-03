@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d36ef6e851ff694395e07461cfb9fc9, type: 3}
   m_Name: FlameThrower
   m_EditorClassIdentifier: 
-  baseDamages: 0
+  baseDamages: 10
   maxMultiplier: 0
   blinkMultiplier: 0
+  manaCost: 30
+  knockback: 1

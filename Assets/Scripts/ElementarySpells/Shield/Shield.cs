@@ -7,6 +7,7 @@ public class Shield : AbstractSpell
 {
     [Range(0f, 2f)] public float maxDelayToPerfectShield;
     [Range(0f, 20f)] public float walkSpeedInShield;
+    [Min(0)] public float manaRegenWhenPerfect;
     [SerializeField] GameObject shieldPrefab;
     private GameModeSingleton gms;
     private GameObject player;
@@ -17,6 +18,7 @@ public class Shield : AbstractSpell
     private GameObject shieldReference;
     private Collider shieldCollider;
     private MeshRenderer shieldVisual;
+    private float ManaCostPerHit;
     private void Awake()
     {
         
@@ -61,7 +63,11 @@ public class Shield : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        //To avoid Mana cost when not hit 
+        ManaCostPerHit = damagesInfos.manaCost;
+        damagesInfos.manaCost = 0;
         base.init(elemRef, target.normalized);
+        damagesInfos.manaCost = ManaCostPerHit;
         elemController = elementary.GetComponent<ElementaryController>();
         if(elemController.IsElementaryAway())
         {
@@ -106,10 +112,12 @@ public class Shield : AbstractSpell
             if (canPerfectShield)
             {
                 Debug.Log("PERFECT SHIELD !");
+                player.GetComponent<PlayerGameplayController>()?.OnManaRegain(manaRegenWhenPerfect);
             }
             else
             {
                 Debug.Log("TOO LATE TO PERFECT SHIELD !");
+                player.GetComponent<PlayerGameplayController>()?.OnManaSpend(GetManaCost());
             }
 
             Destroy(collision.gameObject);
