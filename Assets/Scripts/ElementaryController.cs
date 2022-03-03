@@ -26,6 +26,9 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] private AbstractSpell[] spellsLeft;
     [SerializeField] private AbstractSpell[] spellsRight;
 
+    [Header("Dev")]
+    [SerializeField][Range(0, 1)] float sphereCastRadius;
+    [SerializeField][Range(0, 1)] float sphereCastMaxDistance;
 
     //Contains 1 spell per element
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
@@ -49,6 +52,7 @@ public class ElementaryController : MonoBehaviour
 
     private Transform shoulder;
     private Transform playerMesh;
+    
 
     public bool isAway { get; private set; } = false;
 
@@ -119,8 +123,16 @@ public class ElementaryController : MonoBehaviour
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition)
         {
+            RaycastHit hitinfo;
+            if (Physics.SphereCast(transform.position, sphereCastRadius, transform.forward, out hitinfo, sphereCastMaxDistance))
+            {
+                AvoidObstacle(hitinfo);
+            }
+            else
+            {
+                Orbit();
+            }
             
-            Orbit();
         }
     }
 
@@ -179,12 +191,17 @@ public class ElementaryController : MonoBehaviour
     {
         if(hasShoulder)
         {
-            //Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
-            //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
-
-            //Vector3 shoulderPosition = virtualShoulder.transform.position + Random.insideUnitSphere * 5f;
             transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
+    }
+
+    /// <summary>
+    /// Calculate the direction the elem needs to take to avoid an obstacle
+    /// </summary>
+    /// <param name="hit"></param>
+    public void AvoidObstacle(RaycastHit hit)
+    {
+
     }
 
     /// <summary>
@@ -233,12 +250,29 @@ public class ElementaryController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
-        if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) &&  computePosition)
+
+        if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && computePosition)
         {
             Debug.Log("Changement de position");
-            horizontalOffset = -horizontalOffset;
+            computePosition = false;
         }
     }
 
+
+    private void OnCollisionStay(Collision collision)
+    {
+        float dist = Vector3.Distance(virtualShoulder.transform.position, GameModeSingleton.GetInstance().GetPlayerReference.transform.position);
+        float playerObstacle = Vector3.Distance(GameModeSingleton.GetInstance().GetPlayerReference.transform.position, collision.transform.position);
+        Debug.Log("distance epaule/personnage " + dist + " Distance personnage obstacle " + playerObstacle);
+        if (dist < playerObstacle)
+        {
+            Debug.Log("Compute retablie");
+            computePosition = true;
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        //Gizmos.DrawSphere(transform.position, sphereCastRadius);
+    }
 }
