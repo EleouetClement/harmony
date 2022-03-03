@@ -45,7 +45,7 @@ public class PlayerAnimController : MonoBehaviour
         Vector2 inputAxis = playerMotionController.GetInputAxis();
         Vector3 velocity = playerMotionController.GetVelocity();
 
-        print(inputAxis+" "+velocity);
+        //print(inputAxis+" "+velocity);
 
         
         if (Mathf.Abs(inputAxis.y) > 0f)
@@ -75,7 +75,7 @@ public class PlayerAnimController : MonoBehaviour
         float playerVelocityZ = Mathf.Abs(velocity.z);
         float maxSpeed = playerMotionController.GetMaxSpeedApprox();
         float maxSpeedRatio = playerMotionController.GetMaxSpeedRatio();
-        print(playerVelocityZ + " " + playerVelocityX);
+        //print(playerVelocityZ + " " + playerVelocityX);
 
         if (movingForward && animVelocityZ < maxSpeedRatio)
         {

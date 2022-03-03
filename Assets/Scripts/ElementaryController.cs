@@ -231,5 +231,14 @@ public class ElementaryController : MonoBehaviour
         readyToCast = true;
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        
+        if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) &&  computePosition)
+        {
+            Debug.Log("Changement de position");
+            horizontalOffset = -horizontalOffset;
+        }
+    }
 
 }
