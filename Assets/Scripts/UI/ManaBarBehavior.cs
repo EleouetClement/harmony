@@ -24,7 +24,7 @@ public class ManaBarBehavior : MonoBehaviour
     {
         float fill = 0.2f;
         PlayerGameplayController player = gm?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
-        if(player)
+        if (player)
             fill = player.getDisplayMana();
         sl.value = fill;
     }
