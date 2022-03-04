@@ -11,10 +11,26 @@ namespace Harmony.AI
 {
     public class AIAgent : BehaviourTreeRunner, IDamageable
     {
+        [Header("Components")]
+        public Animator animator;
+        [Space]
         public bool aiActive = true;
+        public float health;
+        public float maxHealth = 30;
         public List<Transform> wayPointList;
         
         [HideInInspector] public int nextWayPoint;
+
+        private void Awake()
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            health = maxHealth;
+        }
 
         void Update()
         {
@@ -25,7 +41,22 @@ namespace Harmony.AI
 
         public void OnDamage(DamageHit hit)
         {
-            Debug.Log(hit);
+            if (health > 0)
+            {
+                health -= hit.damage;
+                Debug.Log(hit);
+
+                if (health <= 0)
+                {
+                    if(animator) animator.SetBool("Dead", true);
+                    Invoke(nameof(Death), 2);
+                }
+            }
+        }
+
+        public void Death()
+        {
+            Destroy(gameObject);
         }
 
 #if UNITY_EDITOR
