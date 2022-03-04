@@ -88,6 +88,24 @@ public class WaterBeam : AbstractSpell
                 currentDistancePoint = possibleDistancePoint;
                 acceleration.z = Vector3.Distance(elementaryPosition, possibleDistancePoint);
                 transform.localScale = acceleration;
+
+                /***** Collision *****/
+                // If the beam hits a movable object, it pushes the object in the direction of the beam
+                if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
+                {
+                    IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
+
+                    if (item == null)
+                    {
+                        Debug.LogError("MovableObject is Not Damageable");
+                    }
+                    else
+                    {
+                        DamageHit damage = new DamageHit(0f, beamDirection.normalized);
+                        item.OnDamage(damage);
+                    }
+                }
+                //if(raycastFromElementary.collider.gameObject.layer ==)
             }
 
             /***** BEAM IMPACT *****/
@@ -95,22 +113,6 @@ public class WaterBeam : AbstractSpell
             impactEffect.transform.position = currentDistancePoint - beamDirection.normalized * 0.2f;
             impactEffect.transform.LookAt(elementaryPosition);
             transform.LookAt(hit.point);
-
-            // Collision when the beam hits a movable object
-            if(isAccelerationBeamFinished && raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
-            {
-                IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
-
-                if (item == null)
-                {
-                    Debug.LogError("MovableObject is Not Damageable");
-                }
-                else
-                {
-                    DamageHit damage = new DamageHit(0f, beamDirection.normalized);
-                    item.OnDamage(damage);
-                }
-            }
         }
     }
 
