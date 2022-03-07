@@ -102,7 +102,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// </summary>
     private void cameraCheck()
     {
-        if (elementaryController.inCombat && elementaryController.isAiming)
+        if (elementaryController.isAiming)
         {
             playerCinemachineCameraController.ZoomIn();
         }
