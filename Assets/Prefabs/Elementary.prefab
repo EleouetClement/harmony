@@ -111,10 +111,10 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!114 &824288169518036411
 MonoBehaviour:
@@ -133,6 +133,8 @@ MonoBehaviour:
   verticalOffset: 2
   forwardOffset: 0.65
   lerpInterpolationValue: 4
+  awayInterpolationValue: 4
+  orbitingInterpolationValue: 4
   isAwayDistance: 1
   layerMask: 0
   shieldPrefab: {fileID: 7339081501565071671, guid: fbc42c22b43c4954ab798722a5cf2399,
@@ -145,6 +147,16 @@ MonoBehaviour:
   - {fileID: 4142513819557297703, guid: d1619f3ee4375d942bbe4ce791038383, type: 3}
   - {fileID: 209660303719141882, guid: 2ffae2c690326de4c8418b68921e3076, type: 3}
   - {fileID: 2666129901474522574, guid: ed74e6eb07b819c44a67e9b7fe918a51, type: 3}
+  debugSpherePrefab: {fileID: 7823540052908470115, guid: ff05f9138a408e54e9ca2c16ddfdffd6,
+    type: 3}
+  sphereCastRadius: 1.89
+  sphereCastMaxDistance: 0.309
+  yAxisNewValue: 2.99
+  layersToIgnore:
+    serializedVersion: 2
+    m_Bits: 6657
+  safetyDistance: 0
+  repulseStrength: 0
   inCombat: 0
   isAiming: 0
   computePosition: 1
