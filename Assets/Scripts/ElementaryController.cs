@@ -27,7 +27,8 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] private AbstractSpell[] spellsRight;
 
     [Header("Dev")]
-    [SerializeField][Range(0, 2)] float sphereCastRadius;
+    [SerializeField] GameObject debugSpherePrefab;
+    [SerializeField][Range(0, 4)] float sphereCastRadius;
     [SerializeField][Range(0, 1)] float sphereCastMaxDistance;
     [SerializeField] [Range(2, 5)] float yAxisNewValue;
     [SerializeField] LayerMask layersToIgnore;
@@ -55,6 +56,7 @@ public class ElementaryController : MonoBehaviour
 
     private Transform shoulder;
     private Transform playerMesh;
+    private GameObject debugSphereReference;
     
 
     public bool isAway { get; private set; } = false;
@@ -67,6 +69,9 @@ public class ElementaryController : MonoBehaviour
 	private void Awake()
 	{
 		shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
+        if(GameModeSingleton.GetInstance().debug)
+            debugSphereReference = Instantiate(debugSpherePrefab, Vector3.zero, Quaternion.identity);
+        
         InitDict();
     }
 
@@ -104,6 +109,11 @@ public class ElementaryController : MonoBehaviour
         SetElement(AbstractSpell.Element.Fire);
         virtualShoulder.transform.localPosition = shoulderOffset;
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        if(GameModeSingleton.GetInstance().debug)
+        {
+            debugSphereReference.transform.parent = playerMesh;
+            debugSphereReference.transform.localPosition = shoulderOffset;
+        }      
         Vector3 shoulderXZ = new Vector3(virtualShoulder.transform.position.x, 0f, virtualShoulder.transform.position.z);
         Vector3 transformXZ = new Vector3(shoulderOffset.x, 0f, shoulderOffset.z);
         safetyDistance = Vector3.Distance(shoulderXZ, transformXZ);
