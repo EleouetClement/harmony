@@ -44,6 +44,8 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private Transform groundTranform;
+    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
     private bool isFalling = false;
@@ -221,15 +223,22 @@ public class PlayerMotionController : MonoBehaviour
     private void UpdateGroundState()
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
         if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+
+            if (groundTranform != surfaceInfo.transform)
+            {
+                groundTranform = surfaceInfo.transform;
+                lastGroundPos = groundTranform.position;
+            }
         }
         else
         {
             floorAngle = 0;
+            groundTranform = null;
         }
     }
 
