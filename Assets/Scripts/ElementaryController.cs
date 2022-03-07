@@ -27,9 +27,10 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] private AbstractSpell[] spellsRight;
 
     [Header("Dev")]
-    [SerializeField][Range(0, 1)] float sphereCastRadius;
+    [SerializeField][Range(0, 2)] float sphereCastRadius;
     [SerializeField][Range(0, 1)] float sphereCastMaxDistance;
     [SerializeField] [Range(2, 5)] float yAxisNewValue;
+    [SerializeField] LayerMask layersToIgnore;
 
 
     //Contains 1 spell per element
@@ -125,10 +126,19 @@ public class ElementaryController : MonoBehaviour
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition)
         {
-            Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius);
-            if (obstacles != null)
+            
+            Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius, layersToIgnore);
+            string debugs = "";
+            foreach(Collider c in obstacles)
             {
-                Debug.Log("Changement de position d'epaule");
+                debugs += c.gameObject.name;
+                debugs += " ";
+            }
+            Debug.Log(debugs);
+            if (obstacles != null && obstacles.Length > 0)
+            {
+                Debug.Log("Changement de position d'epaule nb d'obstacles : " + obstacles.Length);
+
                 virtualShoulder.transform.localPosition = new Vector3(0, yAxisNewValue, 0);
             }
             else
@@ -243,28 +253,28 @@ public class ElementaryController : MonoBehaviour
         readyToCast = true;
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
+    //private void OnCollisionEnter(Collision collision)
+    //{
 
-        if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && computePosition)
-        {
-            Debug.Log("Changement de position");
-            computePosition = false;
-        }
-    }
+    //    if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && computePosition)
+    //    {
+    //        Debug.Log("Changement de position");
+    //        computePosition = false;
+    //    }
+    //}
 
 
-    private void OnCollisionStay(Collision collision)
-    {
-        float dist = Vector3.Distance(virtualShoulder.transform.position, GameModeSingleton.GetInstance().GetPlayerReference.transform.position);
-        float playerObstacle = Vector3.Distance(GameModeSingleton.GetInstance().GetPlayerReference.transform.position, collision.transform.position);
-        Debug.Log("distance epaule/personnage " + dist + " Distance personnage obstacle " + playerObstacle);
-        if (dist < playerObstacle)
-        {
-            Debug.Log("Compute retablie");
-            computePosition = true;
-        }
-    }
+    //private void OnCollisionStay(Collision collision)
+    //{
+    //    float dist = Vector3.Distance(virtualShoulder.transform.position, GameModeSingleton.GetInstance().GetPlayerReference.transform.position);
+    //    float playerObstacle = Vector3.Distance(GameModeSingleton.GetInstance().GetPlayerReference.transform.position, collision.transform.position);
+    //    Debug.Log("distance epaule/personnage " + dist + " Distance personnage obstacle " + playerObstacle);
+    //    if (dist < playerObstacle)
+    //    {
+    //        Debug.Log("Compute retablie");
+    //        computePosition = true;
+    //    }
+    //}
 
     private void OnDrawGizmos()
     {
