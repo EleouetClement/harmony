@@ -130,7 +130,6 @@ public class ElementaryController : MonoBehaviour
         isAway = IsElementaryAway();
         if (!isAway && isReseting)
         {
-            print(currentSpell);
             currentSpell = null;
             readyToCast = true;
             isReseting = false;
@@ -175,7 +174,7 @@ public class ElementaryController : MonoBehaviour
     {
         currentSpell = spell;
         readyToCast = false;
-        computePosition = false;
+        //computePosition = false;
     }
 
     /// <summary>
