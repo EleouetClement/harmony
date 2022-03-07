@@ -125,7 +125,7 @@ public class ElementaryController : MonoBehaviour
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition)
         {
-            Collider[] obstacles = Physics.OverlapSphere(shoulderOffset, sphereCastRadius);
+            Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius);
             if (obstacles != null)
             {
                 Debug.Log("Changement de position d'epaule");
@@ -268,6 +268,6 @@ public class ElementaryController : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        //Gizmos.DrawSphere(transform.position, sphereCastRadius);
+        //Gizmos.DrawSphere((shoulder.position + shoulderOffset), sphereCastRadius);
     }
 }

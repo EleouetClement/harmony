@@ -689,7 +689,7 @@ PrefabInstance:
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
       propertyPath: sphereCastRadius
-      value: 0.436
+      value: 0.214
       objectReference: {fileID: 0}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
