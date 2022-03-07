@@ -673,11 +673,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
         type: 3}
-      propertyPath: yAxisNewValue
-      value: 2.99
-      objectReference: {fileID: 0}
-    - target: {fileID: 824288169518036411, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
-        type: 3}
       propertyPath: virtualShoulder
       value: 
       objectReference: {fileID: 1816867466}
