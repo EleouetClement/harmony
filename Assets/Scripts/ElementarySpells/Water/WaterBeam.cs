@@ -105,7 +105,10 @@ public class WaterBeam : AbstractSpell
                         item.OnDamage(damage);
                     }
                 }
-                //if(raycastFromElementary.collider.gameObject.layer ==)
+                if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
+                {
+                    //raycastFromElementary.collider.gameObject.GetComponents<FIreArea>().isFadingAway = true;
+                }
             }
 
             /***** BEAM IMPACT *****/

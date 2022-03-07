@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 19986726}
   - component: {fileID: -938178736682677066}
   - component: {fileID: -5415289074932053936}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: AOE_fireball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ ParticleSystem:
       m_RotationOrder: 4
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
-  scalingMode: 2
+  scalingMode: 0
   randomSeed: 0
   InitialModule:
     serializedVersion: 3
@@ -4729,3 +4729,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   livingTime: 7
+  timeToChangeScale: 3
+  IsFadingAway: 0
