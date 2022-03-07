@@ -1088,6 +1088,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
+        type: 3}
+      propertyPath: tree
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f0c79949e45cfc45ac76ecaa4421704,
+        type: 2}
     - target: {fileID: 1006983962636285125, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}
       propertyPath: m_RootOrder
@@ -1194,7 +1200,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 80
+  field of view: 70
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -1220,7 +1226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1089438046}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.2, y: 4.34, z: 1.75}
+  m_LocalPosition: {x: -4.3799996, y: 4.285, z: 2.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1679,21 +1685,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.6500001
-      objectReference: {fileID: 0}
-    - target: {fileID: 5421705379638874386, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_Lens.m_SensorSize.x
-      value: 1.5827233
-      objectReference: {fileID: 0}
-    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: slopeForce
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_RootOrder
@@ -1749,10 +1740,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177701, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_StepOffset
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177703, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_Name
       value: PlayerCinemachine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177534006693, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177534006693, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6957681519607846577, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}

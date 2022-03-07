@@ -40,6 +40,7 @@ public class ElementaryController : MonoBehaviour
 
     public bool inCombat = false;
     public bool isAiming = false;
+    private bool isReseting = false;
 
     /// <summary>
     /// true if the element handles itself
@@ -50,7 +51,7 @@ public class ElementaryController : MonoBehaviour
     private Transform shoulder;
     private Transform playerMesh;
 
-    public bool isAway { get; private set; } = false;
+    public bool isAway /*{ get; private set; }*/ = false;
 
     [HideInInspector]
     public AbstractSpell currentSpell = null;
@@ -126,7 +127,14 @@ public class ElementaryController : MonoBehaviour
 
 	private void FixedUpdate()
     {
-        
+        isAway = IsElementaryAway();
+        if (!isAway && isReseting)
+        {
+            print(currentSpell);
+            currentSpell = null;
+            readyToCast = true;
+            isReseting = false;
+        }
     }
 
     public void SetElement(AbstractSpell.Element element)
@@ -227,8 +235,7 @@ public class ElementaryController : MonoBehaviour
     public void Reset()
     {
         Recall();
-        currentSpell = null;
-        readyToCast = true;
+        isReseting = true;
     }
 
 

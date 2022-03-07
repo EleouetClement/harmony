@@ -22,6 +22,7 @@ public class PlayerMotionController : MonoBehaviour
     [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    [SerializeField] private float slopeForce = 9.81f;
     public LayerMask layerMask;
 
     [Header("Dodge settings")]
@@ -30,7 +31,7 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] [Min(0)] private float dodgeCoolDown;
     [SerializeField] private bool isInvincible;
 
-    [Header("SlopeAnglesDetection settings")] 
+    [Header("SlopeAnglesDetection settings")]
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
     [SerializeField] private bool debug = false;
@@ -57,6 +58,7 @@ public class PlayerMotionController : MonoBehaviour
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
 
+
     
 
  
@@ -70,6 +72,12 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
+        //prevent character from bouncing when going down a slope
+        if (isMoving && OnSlope())
+        {
+            velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+        }
+
         maxSpeedRatio = currentSpeed / maxSpeedApprox;
         controller.Move(velocity * Time.deltaTime);
         if(dodgeTimer > Mathf.Epsilon)
@@ -85,6 +93,8 @@ public class PlayerMotionController : MonoBehaviour
         {
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
+
+       
 
     }
 
@@ -108,8 +118,7 @@ public class PlayerMotionController : MonoBehaviour
         {           
             velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
         }
-        if (isMoving && OnSlope())
-            velocity += Vector3.down * gravity * Time.fixedDeltaTime;
+        
 
 
         #endregion

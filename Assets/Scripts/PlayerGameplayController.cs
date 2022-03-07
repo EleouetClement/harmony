@@ -87,7 +87,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
             if (mana >= maxMana * 0.99f) manaburnout = false;
         }
-        Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
+        //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
     }
 
@@ -149,6 +149,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             if (value.isPressed)
             {
+                elementaryController.readyToCast = false;
                 AbstractSpell spell = Instantiate(
                         elementaryController.GetSpell1(),
                         elementaryController.transform.position,
