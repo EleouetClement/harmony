@@ -10,6 +10,7 @@ public class PlayerMotionController : MonoBehaviour
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
+    [Range(0, 100)] public float strafeSpeed = 1f;
     [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
@@ -115,8 +116,11 @@ public class PlayerMotionController : MonoBehaviour
         #region Apply Direction Input
 
         if (!sliding && !isDodging)
-        {           
-            velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        {
+            GetDirection();
+            velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+                + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+ 
         }
         
 
