@@ -69,8 +69,15 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
+        Vector3 playerOffset = Vector3.zero;
+        if (onGround && groundTranform)
+        {
+            playerOffset = groundTranform.position - lastGroundPos;
+            lastGroundPos = groundTranform.position;
+        }
+
         maxSpeedRatio = currentSpeed / maxSpeedApprox;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
