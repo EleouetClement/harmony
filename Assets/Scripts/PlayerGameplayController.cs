@@ -79,7 +79,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
-                elementaryController.currentSpell.Terminate();
+                elementaryController.currentSpell.OnRelease();
             }
         }
         if (manaburnout)
@@ -143,7 +143,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.SetElement(AbstractSpell.Element.Earth);
             elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
         }
-        print("Element sélectionné : " + elementaryController.currentElement);
+        //print("Element sélectionné : " + elementaryController.currentElement);
     }
     #region Spell casting
 
