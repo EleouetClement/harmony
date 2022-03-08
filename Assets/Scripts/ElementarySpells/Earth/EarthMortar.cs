@@ -13,15 +13,11 @@ public class EarthMortar : AbstractSpell
 	public float maxRange;
 	private bool launched;
 	
-	GameObject hud;
-	
 
 	private void Start()
 	{
 		maxCastTime = 1.5f;
 		blinkTiming = 1f;
-		hud = GameObject.Find("GameManager").GetComponent<GameModeSingleton>().GetPlayerHUD;
-		hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = true;
 		launched = false;
 	}
 
@@ -50,14 +46,13 @@ public class EarthMortar : AbstractSpell
 		{
 			//refreshes charge level to earth ball
 			ball.GetComponentInChildren<EarthBall>().charge = charge / maxCastTime;
-			elementary.GetComponent<ElementaryController>().computePosition = true;
-			hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().value = charge / maxCastTime;
+			elementary.GetComponent<ElementaryController>().Recall();
 		}
 		else
 		{
-			//hud.transform.Find("Charge bar").gameObject.GetComponent<Slider>().enabled = false;
-			hud.GetComponent<Canvas>().enabled = false;
+			elementary.transform.position = ball.transform.position;
 		}
+		
 
 		
 			

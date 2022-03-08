@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.55, y: 0.595, z: -0.75}
+  m_LocalPosition: {x: 0.5500002, y: 0.5949998, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.9583334, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -786,12 +786,14 @@ MonoBehaviour:
   jumpForce: 8.5
   maxFloorAngle: 20
   turnSpeed: 4
-  friction: 10
+  accelerationFriction: 10
+  decelerationFriction: 12
   airFriction: 0.5
   airControl: 0.03
   gravity: 9.81
   fallGravityMultiplier: 2
   jumpGravityMultiplier: 2.5
+  slopeForce: 9.81
   layerMask:
     serializedVersion: 2
     m_Bits: 15385
@@ -807,8 +809,6 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   onGround: 0
   isMoving: 0
-  accelerationFriction: 10
-  decelerationFriction: 12
 --- !u!114 &1344650967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -842,7 +842,7 @@ MonoBehaviour:
   maxHitsNumber: 1
   hitResetTimer: 10
   maxMana: 100
-  mana: -1510.3995
+  mana: 0
   ManaRegenCooldown: 2
   ManaRegenPerSecond: 20
   ManaRegenPerSecondWhileBurnout: 15

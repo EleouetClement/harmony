@@ -11,6 +11,7 @@ public class EarthWall : AbstractSpell
     public ParticleSystem groundMovingEffect;
     [Range(0, 50)]
     public float maxDistance;
+    public LayerMask layersCollision;
 
     private ElementaryController elementaryController;
     private CinemachineCameraController cinemachineCameraController;
@@ -64,6 +65,8 @@ public class EarthWall : AbstractSpell
         marker = tmp.GetComponent<PositionningMarker>();
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementaryController = elemRef.GetComponent<ElementaryController>();
+
+        marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
