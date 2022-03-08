@@ -8,10 +8,6 @@ public class PlayerAnimController : MonoBehaviour
 
     private PlayerMotionController playerMotionController;
 
-    private bool movingForward;
-    private bool movingBackward;
-    private bool movingRight;
-    private bool movingLeft;
     private bool isJumping;
     private bool isFalling;
 
@@ -19,16 +15,11 @@ public class PlayerAnimController : MonoBehaviour
     /// adjusts speed to which character goes back to idling animation when
     /// the player no longer press anything
     /// </summary>
-    public float idlingInterpolationValue;
+    public float idlingInterpolationValue = 4f;
 
 	private void Awake()
 	{
         playerMotionController = GetComponent<PlayerMotionController>();
-
-        movingForward = false;
-        movingBackward = false;
-        movingRight = false;
-        movingLeft = false;
 
 
     }
@@ -46,29 +37,13 @@ public class PlayerAnimController : MonoBehaviour
         Vector3 velocity = playerMotionController.GetVelocity();
 
         //print(inputAxis+" "+velocity);
+        bool movingForward = playerMotionController.movingForward;
+        bool movingBackward = playerMotionController.movingBackward;
+        bool movingRight = playerMotionController.movingRight;
+        bool movingLeft = playerMotionController.movingLeft;
 
-        
-        if (Mathf.Abs(inputAxis.y) > 0f)
-        {
-            movingForward = inputAxis.y > float.Epsilon;
-            movingBackward = inputAxis.y < float.Epsilon;
-        }
-        else
-        {
-            movingForward = false;
-            movingBackward = false;
-        }
-        if (Mathf.Abs(inputAxis.x) > float.Epsilon)
-        {
-            movingRight = inputAxis.x > float.Epsilon;
-            movingLeft = inputAxis.x < float.Epsilon;
-        }
-        else
-        {
-            movingRight = false;
-            movingLeft = false;
-        }
-        
+
+
         float animVelocityX = animator.GetFloat("VelocityX");
         float animVelocityZ = animator.GetFloat("VelocityZ");
         float playerVelocityX = Mathf.Abs(velocity.x);

@@ -55,6 +55,11 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
 
+    [HideInInspector] public bool movingForward;
+    [HideInInspector] public bool movingBackward;
+    [HideInInspector] public bool movingRight;
+    [HideInInspector] public bool movingLeft;
+
     private float maxSpeedApprox;
     private float maxSpeedRatio;
 
@@ -71,6 +76,12 @@ public class PlayerMotionController : MonoBehaviour
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
         maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
+
+        movingForward = false;
+        movingBackward = false;
+        movingRight = false;
+        movingLeft = false;
+
     }
 
     void Update()
@@ -113,6 +124,27 @@ public class PlayerMotionController : MonoBehaviour
         if (isMoving)
         {
             friction = accelerationFriction;
+
+            if (Mathf.Abs(inputAxis.y) > 0f)
+            {
+                movingForward = inputAxis.y > float.Epsilon;
+                movingBackward = inputAxis.y < float.Epsilon;
+            }
+            else
+            {
+                movingForward = false;
+                movingBackward = false;
+            }
+            if (Mathf.Abs(inputAxis.x) > float.Epsilon)
+            {
+                movingRight = inputAxis.x > float.Epsilon;
+                movingLeft = inputAxis.x < float.Epsilon;
+            }
+            else
+            {
+                movingRight = false;
+                movingLeft = false;
+            }
         }
 		else
 		{
