@@ -107,7 +107,7 @@ public class WaterBeam : AbstractSpell
                 }
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
                 {
-                    //raycastFromElementary.collider.gameObject.GetComponents<FIreArea>().isFadingAway = true;
+                    raycastFromElementary.collider.gameObject.GetComponent<FIreArea>().isFadingAway = true;
                 }
             }
 
