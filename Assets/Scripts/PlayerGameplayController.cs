@@ -85,7 +85,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         if (manaburnout)
         {
             mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
-            if (mana >= maxMana * 0.99f) manaburnout = false;
+            if (mana >= maxMana) manaburnout = false;
         }
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
