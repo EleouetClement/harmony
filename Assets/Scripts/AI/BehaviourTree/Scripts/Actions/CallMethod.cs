@@ -98,9 +98,9 @@ namespace Harmony.AI
                         {
                             if (compMethod.GetParameters().Length == 0)
                             {
-                                string methodName = componentPair.Key + " - " + compMethod.Name;
+                                string methodName = componentPair.Key + " / " + compMethod.Name;
                                 methodList.Add(methodName);
-                                if (methodName == (component.stringValue + " - " + method.stringValue))
+                                if (methodName == (component.stringValue + " / " + method.stringValue))
                                     selectedMethod = methodList.Count - 1;
                             }
                         }
@@ -111,7 +111,7 @@ namespace Harmony.AI
                     if (EditorGUI.EndChangeCheck())
                     {
                         string selectedMethodStr = methodList[selectedMethod];
-                        string[] methodInfos = selectedMethodStr.Split(" - ");
+                        string[] methodInfos = selectedMethodStr.Split(" / ");
                         if (methodInfos.Length == 2)
                         {
                             component.stringValue = methodInfos[0];
