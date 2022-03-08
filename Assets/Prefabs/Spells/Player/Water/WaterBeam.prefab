@@ -4996,10 +4996,13 @@ MonoBehaviour:
   damagesInfos: {fileID: 11400000, guid: ec7a1c338745244409c4c86c2731fa5f, type: 2}
   canceled: 0
   maxDistance: 30
-  beamAcceleration: 10
+  beamAcceleration: 15
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
   impactEffect: {fileID: 5863743421125159431}
+  layersCollision:
+    serializedVersion: 2
+    m_Bits: 64273
 --- !u!136 &627015841
 CapsuleCollider:
   m_ObjectHideFlags: 0

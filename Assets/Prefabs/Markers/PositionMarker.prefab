@@ -68,3 +68,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae02a2d36c3552946af134e52c363570, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  layersCollisionWithRaycast:
+    serializedVersion: 2
+    m_Bits: 2147483647

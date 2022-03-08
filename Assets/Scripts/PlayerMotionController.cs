@@ -48,6 +48,8 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private Transform groundTranform;
+    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
     private bool isFalling = false;
@@ -73,6 +75,13 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
+        Vector3 playerOffset = Vector3.zero;
+        if (onGround && groundTranform)
+        {
+            playerOffset = groundTranform.position - lastGroundPos;
+            lastGroundPos = groundTranform.position;
+        }
+
         //prevent character from bouncing when going down a slope
         if (isMoving && OnSlope())
         {
@@ -80,7 +89,7 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         maxSpeedRatio = currentSpeed / maxSpeedApprox;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -238,16 +247,23 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateGroundState()
     {
-		onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-			out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+        onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
 		if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+
+            if (groundTranform != surfaceInfo.transform)
+            {
+                groundTranform = surfaceInfo.transform;
+                lastGroundPos = groundTranform.position;
+            }
         }
         else
         {
             floorAngle = 0;
+            groundTranform = null;
         }
     }
 
