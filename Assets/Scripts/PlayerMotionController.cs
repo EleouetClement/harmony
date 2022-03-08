@@ -11,6 +11,7 @@ public class PlayerMotionController : MonoBehaviour
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
     [Range(0, 100)] public float strafeSpeed = 1f;
+    [Range(0, 100)] public float BackWalkSpeed = 1f;
     [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
@@ -55,10 +56,10 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
 
-    [HideInInspector] public bool movingForward;
-    [HideInInspector] public bool movingBackward;
-    [HideInInspector] public bool movingRight;
-    [HideInInspector] public bool movingLeft;
+    private bool movingForward;
+    private bool movingBackward;
+    private bool movingRight;
+    private bool movingLeft;
 
     private float maxSpeedApprox;
     private float maxSpeedRatio;
@@ -124,32 +125,12 @@ public class PlayerMotionController : MonoBehaviour
         if (isMoving)
         {
             friction = accelerationFriction;
-
-            if (Mathf.Abs(inputAxis.y) > 0f)
-            {
-                movingForward = inputAxis.y > float.Epsilon;
-                movingBackward = inputAxis.y < float.Epsilon;
-            }
-            else
-            {
-                movingForward = false;
-                movingBackward = false;
-            }
-            if (Mathf.Abs(inputAxis.x) > float.Epsilon)
-            {
-                movingRight = inputAxis.x > float.Epsilon;
-                movingLeft = inputAxis.x < float.Epsilon;
-            }
-            else
-            {
-                movingRight = false;
-                movingLeft = false;
-            }
         }
 		else
 		{
             friction = decelerationFriction;
 		}
+        CheckMovement();
         UpdateGroundState();
         bool sliding = floorAngle > maxFloorAngle;
         
@@ -159,9 +140,13 @@ public class PlayerMotionController : MonoBehaviour
         if (!sliding && !isDodging)
         {
             GetDirection();
-            velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-                + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
- 
+            if(movingForward)
+                velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+            else
+                velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+
         }
         
 
@@ -370,6 +355,35 @@ public class PlayerMotionController : MonoBehaviour
         return isFalling;
     }
 
+    public bool MovingForward 
+    {
+        get 
+        {
+            return movingForward;
+        }
+    }
+    public bool MovingBackward 
+    {
+        get 
+        {
+            return movingBackward;
+        }
+    }
+    public bool MovingRight 
+    {
+        get 
+        {
+            return movingRight;
+        }
+    }
+    public bool MovingLeft 
+    {
+        get 
+        {
+            return movingLeft;
+        }
+    }
+
     /// <summary>
     /// Returns true if the player is on a slope
     /// </summary>
@@ -387,5 +401,29 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         return false;
+    }
+
+    private void CheckMovement()
+    {
+        if (Mathf.Abs(inputAxis.y) > 0f)
+        {
+            movingForward = inputAxis.y > float.Epsilon;
+            movingBackward = inputAxis.y < float.Epsilon;
+        }
+        else
+        {
+            movingForward = false;
+            movingBackward = false;
+        }
+        if (Mathf.Abs(inputAxis.x) > float.Epsilon)
+        {
+            movingRight = inputAxis.x > float.Epsilon;
+            movingLeft = inputAxis.x < float.Epsilon;
+        }
+        else
+        {
+            movingRight = false;
+            movingLeft = false;
+        }
     }
 }
