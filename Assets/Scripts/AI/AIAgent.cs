@@ -48,6 +48,7 @@ namespace Harmony.AI
 
                 if (health <= 0)
                 {
+                    aiActive = false;
                     if(animator) animator.SetBool("Dead", true);
                     Invoke(nameof(Death), 2);
                 }
