@@ -95,6 +95,7 @@ public class WaterBeam : AbstractSpell
                 {
                     IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
 
+                    // If the collider gameObject does not contain a script with IDamageable
                     if (item == null)
                     {
                         Debug.LogError("MovableObject is Not Damageable");
@@ -105,9 +106,21 @@ public class WaterBeam : AbstractSpell
                         item.OnDamage(damage);
                     }
                 }
+
+                // if the beam hits flames, it will extinguish them
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
                 {
-                    raycastFromElementary.collider.gameObject.GetComponent<FIreArea>().isFadingAway = true;
+                    FIreArea item = raycastFromElementary.collider.gameObject.GetComponent<FIreArea>();
+
+                    // If the collider gameObject does not contain the script FIreArea
+                    if (item == null)
+                    {
+                        Debug.LogError("The collider gameObject does not contain the script FIreArea");
+                    }
+                    else
+                    {
+                        item.isFadingAway = true;
+                    }
                 }
             }
 

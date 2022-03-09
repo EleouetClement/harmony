@@ -22,7 +22,7 @@ public class FIreArea : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        else if (liveTimer >= livingTime - timeToChangeScale)
+        else if (liveTimer >= livingTime - timeToChangeScale) // If it is time to make disappear the flames, we notice that
         {
             // Fade out
             isFadingAway = true;
@@ -38,6 +38,7 @@ public class FIreArea : MonoBehaviour
 
     public void ExtinguishFlames()
     {
+        // Make a scale from initial shape to 0 to make the disappear effect
         scaleTimer += Time.deltaTime;
         transform.localScale = Vector3.Lerp(initialSpawnScale, Vector3.zero, (scaleTimer / timeToChangeScale));
     }
