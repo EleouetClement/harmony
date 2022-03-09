@@ -46,13 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   damagesInfos: {fileID: 11400000, guid: 95a3ef57daa9e9d4991f99516213e6b6, type: 2}
+  canceled: 0
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
   maxDistance: 20
   maxSpeedDistance: 5
   projectileTopSpeed: 20
   projectileStartSpeed: 2
-  projectileGrowth: 0.0056
+  projectileGrowth: 0.0073
   projectileMaxSize: 1.51
   projectileTopSpeedGrowth: 0
   projectileMaxDistanceGrowth: 0

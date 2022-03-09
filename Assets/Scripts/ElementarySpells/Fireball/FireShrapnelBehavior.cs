@@ -8,11 +8,11 @@ public class FireShrapnelBehavior : MonoBehaviour
     /// <summary>
     /// Grow time of the shrapnel, in seconds.
     /// </summary>
-    public float growtime = 0.5f;
+    public float growtime = 0.1f;
     /// <summary>
     /// Target size of the shrapnel, to which it will grow
     /// </summary>
-    public float targetSize = 2f;
+    public float targetSize = 0.1f;
 
     private Vector3 targetposLocale;
     private Vector3 spawnPosLocale;

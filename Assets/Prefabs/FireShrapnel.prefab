@@ -128,6 +128,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2516a803ef53644ca8d46807e6f1ddc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growtime: 1
-  targetSize: 0.2
-  targetposLocale: {x: 0, y: 0, z: 0}
+  growtime: 0.1
+  targetSize: 0.1

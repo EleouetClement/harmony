@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d36ef6e851ff694395e07461cfb9fc9, type: 3}
   m_Name: FireballDamages
   m_EditorClassIdentifier: 
-  baseDamages: 20
-  maxMultiplier: 1.5
-  blinkMultiplier: 2
+  baseDamages: 10
+  maxMultiplier: 2
+  blinkMultiplier: 3
   manaCost: 20
   manaChannelCostPerSec: 5
   knockback: 0

@@ -22,7 +22,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField] [Min(0)] private float hitResetTimer = 10;
 
     [Header("Mana settings")]
-    [SerializeField] [Min(0)] private float maxMana = 100f;
+    [SerializeField] [Min(0)] private float maxMana = 105f;
     [SerializeField] private float mana = 0;
     [SerializeField] [Min(0)] private float ManaRegenCooldown = 2f;
     [SerializeField] [Min(0)] private float ManaRegenPerSecond = 20f;

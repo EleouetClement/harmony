@@ -40,12 +40,12 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum cast charge duration
     /// </summary>
-    protected float maxCastTime = 5f;
+    protected float maxCastTime = 2f;
 
     /// <summary>
     /// if the spell input at the blinkTiming time, isBlinked is true
     /// </summary>
-    protected float blinkTiming = 3f;
+    protected float blinkTiming = 1.85f;
 
     /// <summary>
     /// Maximum living time for the spell
@@ -61,6 +61,8 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     protected bool isBlinked = false;
 
+    protected bool blinkAF = false;
+
     /// <summary>
     /// True if the spell has been canceled by the shield cast
     /// </summary>
@@ -74,8 +76,11 @@ public abstract class AbstractSpell : MonoBehaviour
     protected DamageHit damages;
 
 
+    private void Start()
+    {
 
-	private void Update()
+    }
+    private void Update()
 	{
         //smooth turning when charging a spell and not moving
         if (!chargeend)
@@ -84,6 +89,10 @@ public abstract class AbstractSpell : MonoBehaviour
 
     public virtual void FixedUpdate()
     {
+        if (!blinkAF)
+        {
+            onCharge(charge);
+        }
         if (!chargeend)
         {
             charge += Time.fixedDeltaTime;
@@ -136,6 +145,8 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         chargeend = true;
         onChargeEnd(charge);
+        GameObject dummy = GameObject.Find("Elementary");
+        dummy.GetComponent<Transform>().localScale = new Vector3(0.3f, 0.3f, 0.3f);
     }
 
     /// <returns>True if this spell has already been released</returns>
@@ -150,6 +161,16 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     public abstract void Terminate();
 
+    protected virtual void onCharge(float chargetime)
+    {
+        if(chargetime > blinkTiming - 0.15f)
+        {
+            GameObject dummy = GameObject.Find("Elementary");
+            dummy.transform.GetChild(1).GetComponent<ParticleSystem>().Play(true);
+            blinkAF = true;
+        }
+    }
+
     /// <summary>
     /// Event triggered by The player controller to notify that the spell cast button has been released. 
     /// Do note that there is no garentee that this event is ever called, as the player might not ever release the key.
@@ -159,7 +180,7 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         float blink = Mathf.Abs(blinkTiming - chargetime);
         //Debug.Log(blink);
-        if (blink <= 0.5f)
+        if (blink <= 0.15f)
         {
             Debug.Log("Blink!");
             isBlinked = true;
@@ -203,11 +224,12 @@ public abstract class AbstractSpell : MonoBehaviour
             DamageHit damages = new DamageHit(damagesInfos.baseDamages, element, direction);
             if (isBlinked)
             {
-                damages.damage *= damagesInfos.blinkMultiplier;
+                damages.damage *= (damagesInfos.blinkMultiplier) + 1f;
             }
             else
             {
-                float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge;
+                // Ajout du plus 1 pour avoir les bons baseDamages
+                float multiplier = ((damagesInfos.maxMultiplier / maxCastTime) * charge) + 1f;
                 damages.damage *= multiplier;
             }
             this.damages = damages;
