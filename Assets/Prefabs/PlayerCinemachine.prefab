@@ -784,6 +784,7 @@ MonoBehaviour:
   currentSpeed: 0
   walkSpeed: 40
   strafeSpeed: 40
+  BackWalkSpeed: 20
   jumpForce: 8.5
   maxFloorAngle: 20
   turnSpeed: 4
@@ -823,7 +824,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2965026262780704971}
-  idlingInterpolationValue: 0
+  idlingSpeed: 2
+  animSpeed: 0
 --- !u!114 &6957681519607846577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1046,7 +1048,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6677204177534006692}
-  m_LocalRotation: {x: 0, y: -0.7814459, z: 0, w: 0.6239731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.875, z: 0}
   m_LocalScale: {x: 0.7, y: 0.85, z: 0.7}
   m_ConstrainProportionsScale: 0
