@@ -79,13 +79,13 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
-                elementaryController.currentSpell.Terminate();
+                elementaryController.currentSpell.OnRelease();
             }
         }
         if (manaburnout)
         {
             mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
-            if (mana >= maxMana * 0.99f) manaburnout = false;
+            if (mana >= maxMana) manaburnout = false;
         }
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
@@ -143,7 +143,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.SetElement(AbstractSpell.Element.Earth);
             elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
         }
-        print("Element sélectionné : " + elementaryController.currentElement);
+        //print("Element sélectionné : " + elementaryController.currentElement);
     }
     #region Spell casting
 
