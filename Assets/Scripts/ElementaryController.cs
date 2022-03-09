@@ -58,11 +58,17 @@ public class ElementaryController : MonoBehaviour
     private Transform playerMesh;
     private GameObject debugSphereReference;
     
-
+    /// <summary>
+    /// true if the elementary is away from the player after a spell or inside something
+    /// </summary>
     public bool isAway { get; private set; } = false;
 
     [HideInInspector]
     public AbstractSpell currentSpell = null;
+
+    /// <summary>
+    /// True if the elementary has return next to the player
+    /// </summary>
     public bool readyToCast = true;
     public AbstractSpell.Element currentElement;
 
@@ -122,7 +128,13 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Debug.Log("readyToCast avt: " + readyToCast);
+        if (!readyToCast && currentSpell == null)
+        {
+            
+            readyToCast = !IsElementaryAway();
+            Debug.Log("readyToCast aprs: " + readyToCast);
+        }
         //Testing purposes
         virtualShoulder.transform.localPosition = shoulderOffset;
         if (Input.GetKeyDown(KeyCode.C))
@@ -138,13 +150,16 @@ public class ElementaryController : MonoBehaviour
         {
             
             Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius, layersToIgnore);
-            string debugs = "";
-            foreach(Collider c in obstacles)
+            if(GameModeSingleton.GetInstance().debug)
             {
-                debugs += c.gameObject.name;
-                debugs += " ";
-            }
-            Debug.Log(debugs);
+                string debugs = "";
+                foreach (Collider c in obstacles)
+                {
+                    debugs += c.gameObject.name;
+                    debugs += " ";
+                }
+                Debug.Log(debugs);
+            }         
             if (obstacles != null && obstacles.Length > 0)
             {
                 Debug.Log("Changement de position d'epaule nb d'obstacles : " + obstacles.Length);
@@ -167,7 +182,8 @@ public class ElementaryController : MonoBehaviour
 
     public void SetElement(AbstractSpell.Element element)
     {
-        currentElement = element;
+        if(readyToCast)
+            currentElement = element;
     }
 
     /// <summary>
@@ -204,6 +220,7 @@ public class ElementaryController : MonoBehaviour
         currentSpell = spell;
         readyToCast = false;
         computePosition = false;
+        isAway = true;
     }
 
     /// <summary>
@@ -260,31 +277,9 @@ public class ElementaryController : MonoBehaviour
     {
         Recall();
         currentSpell = null;
-        readyToCast = true;
+        readyToCast = !IsElementaryAway();
+        Debug.Log("readyToCast : " + readyToCast);
     }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-
-    //    if (!collision.gameObject.layer.Equals(HarmonyLayers.LAYER_ENEMYSPELL) && !collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && computePosition)
-    //    {
-    //        Debug.Log("Changement de position");
-    //        computePosition = false;
-    //    }
-    //}
-
-
-    //private void OnCollisionStay(Collision collision)
-    //{
-    //    float dist = Vector3.Distance(virtualShoulder.transform.position, GameModeSingleton.GetInstance().GetPlayerReference.transform.position);
-    //    float playerObstacle = Vector3.Distance(GameModeSingleton.GetInstance().GetPlayerReference.transform.position, collision.transform.position);
-    //    Debug.Log("distance epaule/personnage " + dist + " Distance personnage obstacle " + playerObstacle);
-    //    if (dist < playerObstacle)
-    //    {
-    //        Debug.Log("Compute retablie");
-    //        computePosition = true;
-    //    }
-    //}
 
     private void OnDrawGizmos()
     {
