@@ -133,7 +133,7 @@ public class ElementaryController : MonoBehaviour
         {
             
             readyToCast = !IsElementaryAway();
-            Debug.Log("readyToCast aprs: " + readyToCast);
+            //Debug.Log("readyToCast aprs: " + readyToCast);
         }
         //Testing purposes
         virtualShoulder.transform.localPosition = shoulderOffset;
@@ -162,7 +162,7 @@ public class ElementaryController : MonoBehaviour
             }         
             if (obstacles != null && obstacles.Length > 0)
             {
-                Debug.Log("Changement de position d'epaule nb d'obstacles : " + obstacles.Length);
+                //Debug.Log("Changement de position d'epaule nb d'obstacles : " + obstacles.Length);
 
                 virtualShoulder.transform.localPosition = new Vector3(0, yAxisNewValue, 0);
             }
@@ -278,7 +278,7 @@ public class ElementaryController : MonoBehaviour
         Recall();
         currentSpell = null;
         readyToCast = !IsElementaryAway();
-        Debug.Log("readyToCast : " + readyToCast);
+        //Debug.Log("readyToCast : " + readyToCast);
     }
 
     private void OnDrawGizmos()
