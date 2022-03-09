@@ -33,9 +33,14 @@ public class WaterMissiles : AbstractSpell
 
     }
 
-    public override void FixedUpdate()
+	private void Update()
+	{
+        transform.position = elementary.transform.position;
+    }
+	public override void FixedUpdate()
     {
         base.FixedUpdate();
+        
         // Time locale
         timeLocale += Time.fixedDeltaTime;
         // Ball spawning
