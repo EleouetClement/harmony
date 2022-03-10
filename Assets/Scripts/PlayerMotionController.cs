@@ -9,16 +9,24 @@ public class PlayerMotionController : MonoBehaviour
     public float currentSpeed;
 
     [Header("Character settings")]
-    [Range(0, 100)] public float walkSpeed = 1f;
-    [Range(0, 100)] public float strafeSpeed = 1f;
-    [Range(0, 100)] public float BackWalkSpeed = 1f;
+    [Range(0, 100)] public float walkMaxSpeed;
+    [Range(0, 100)] public float strafeMaxSpeed;
+    [Range(0, 100)] public float BackWalkMaxSpeed;
+    [Range(0, 100)] public float timeToMaxSpeed;
+    public float walkSpeed;
+    public float strafeSpeed;
+    public float backWalkSpeed;
+    public float walkAcceleration;
+    public float strafeAcceleration;
+    public float backWalkAcceleration;
     [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
     [Header("Character Physics settings")]
-    private float friction;
+    public float friction;
     [Range(0, 100)] public float accelerationFriction;
     [Range(0, 100)] public float decelerationFriction;
+    [Range(0, 100)] public float turningFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = 9.81f;
@@ -55,6 +63,8 @@ public class PlayerMotionController : MonoBehaviour
     private bool isDodging = false;
     private bool isFalling = false;
     private bool isJumping = false;
+    public bool isTurning = false;
+    bool sliding = false;
 
     private bool movingForward;
     private bool movingBackward;
@@ -83,10 +93,17 @@ public class PlayerMotionController : MonoBehaviour
         movingRight = false;
         movingLeft = false;
 
+        walkSpeed = 0f;
+        strafeSpeed = 0f;
+        backWalkSpeed = 0f;
     }
 
     void Update()
     {
+        walkAcceleration = walkMaxSpeed / timeToMaxSpeed;
+        strafeAcceleration = strafeMaxSpeed / timeToMaxSpeed;
+        backWalkAcceleration = BackWalkMaxSpeed / timeToMaxSpeed;
+
         Vector3 playerOffset = Vector3.zero;
         if (onGround && groundTranform)
         {
@@ -94,11 +111,8 @@ public class PlayerMotionController : MonoBehaviour
             lastGroundPos = groundTranform.position;
         }
 
-        //prevent character from bouncing when going down a slope
-        if (isMoving && OnSlope())
-        {
-            velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
-        }
+        
+		
 
         maxSpeedRatio = currentSpeed / maxSpeedApprox;
         controller.Move(velocity * Time.deltaTime + playerOffset);
@@ -116,7 +130,10 @@ public class PlayerMotionController : MonoBehaviour
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
 
-       
+        isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0)) > 1f;
+
+
+
 
     }
 
@@ -124,7 +141,11 @@ public class PlayerMotionController : MonoBehaviour
     {
         if (isMoving)
         {
-            friction = accelerationFriction;
+            if (isTurning)
+                friction = turningFriction;
+            else
+                friction = 0f;
+            //friction = accelerationFriction;
         }
 		else
 		{
@@ -132,26 +153,10 @@ public class PlayerMotionController : MonoBehaviour
 		}
         CheckMovement();
         UpdateGroundState();
-        bool sliding = floorAngle > maxFloorAngle;
+        sliding = floorAngle > maxFloorAngle;
         
 
-        #region Apply Direction Input
-
-        if (!sliding && !isDodging)
-        {
-            GetDirection();
-            if(movingForward)
-                velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
-            else
-                velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
-
-        }
-        
-
-
-        #endregion
+       
 
 
         #region Dodge force
@@ -217,7 +222,61 @@ public class PlayerMotionController : MonoBehaviour
 
         #endregion
 
-        
+        #region Apply Direction Input
+
+        if (/*!sliding &&*/ !isDodging)
+        {
+
+            GetDirection();
+            UpdateSpeeds();
+
+            float sqrWalkSpeed = walkSpeed * walkSpeed;
+            float sqrStrafeSpeed = strafeSpeed * strafeSpeed;
+            float sqrBackWalkSpeed = backWalkSpeed * backWalkSpeed;
+
+            if (isMoving)
+            {
+                if (movingForward)
+			    {
+				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime;
+				    if (!isJumping && !isFalling)
+					    velocity = Vector3.ClampMagnitude(velocity, walkMaxSpeed);
+
+                }
+                if (movingRight || movingLeft)
+                {
+
+				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime;
+                    if (!isJumping && !isFalling && !movingForward && !movingForward)
+                        velocity = Vector3.ClampMagnitude(velocity, strafeMaxSpeed);
+
+                }
+                if (movingBackward)
+                {
+                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime;
+                    if (!isJumping && !isFalling)
+                        velocity = Vector3.ClampMagnitude(velocity, BackWalkMaxSpeed);
+                }
+                //prevent character from bouncing when going down a slope
+                if (OnSlope())
+                {
+                    velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+                }
+            }
+           
+
+            //if(movingForward)
+            //    velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+            //else
+            //    velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+
+        }
+
+
+
+        #endregion
     }
 
     void LateUpdate()
@@ -259,9 +318,7 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
+    
     private void UpdateGroundState()
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
@@ -403,6 +460,9 @@ public class PlayerMotionController : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Update moving states based on player inputs
+    /// </summary>
     private void CheckMovement()
     {
         if (Mathf.Abs(inputAxis.y) > 0f)
@@ -425,5 +485,40 @@ public class PlayerMotionController : MonoBehaviour
             movingRight = false;
             movingLeft = false;
         }
+    }
+
+    /// <summary>
+    /// Update each speed variable based on current moving states
+    /// </summary>
+    private void UpdateSpeeds()
+    {
+        if (MovingForward)
+        {
+            walkSpeed = Mathf.MoveTowards(walkSpeed, walkMaxSpeed, walkAcceleration * Time.deltaTime);
+        }
+		else
+		{
+            walkSpeed = Mathf.MoveTowards(walkSpeed, 0f, walkAcceleration * Time.deltaTime);
+        }
+
+        if (movingRight || movingLeft)
+        {
+            strafeSpeed = Mathf.MoveTowards(strafeSpeed, strafeMaxSpeed, strafeAcceleration * Time.deltaTime);
+        }
+		else
+		{
+            strafeSpeed = Mathf.MoveTowards(strafeSpeed, 0f, strafeAcceleration * Time.deltaTime);
+        }
+
+        if (movingBackward)
+        {
+            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, BackWalkMaxSpeed, backWalkAcceleration * Time.deltaTime);
+        }
+		else
+		{
+            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, 0f, backWalkAcceleration * Time.deltaTime);
+
+        }
+
     }
 }
