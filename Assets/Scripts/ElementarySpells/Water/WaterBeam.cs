@@ -107,7 +107,7 @@ public class WaterBeam : AbstractSpell
                     }
                 }
 
-                // if the beam hits flames, it will extinguish them
+                // If the beam hits flames, it will extinguish them
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
                 {
                     FIreArea item = raycastFromElementary.collider.gameObject.GetComponent<FIreArea>();
@@ -121,6 +121,13 @@ public class WaterBeam : AbstractSpell
                     {
                         item.isFadingAway = true;
                     }
+                }
+
+                // If the water beam hits the torch, it will extinguish it
+                if (raycastFromElementary.collider.CompareTag("Torch"))
+                {
+                    ParticleSystem fire = raycastFromElementary.collider.GetComponent<ParticleSystem>();
+                    fire.Stop();
                 }
             }
 
