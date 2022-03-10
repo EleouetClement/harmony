@@ -1840,6 +1840,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 21.590677
       objectReference: {fileID: 0}
+    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.595
+      objectReference: {fileID: 0}
     - target: {fileID: 1776514287178007277, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2228,7 +2238,7 @@ PrefabInstance:
     - target: {fileID: 5421705379638874386, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_Lens.m_SensorSize.x
-      value: 1.9583334
+      value: 2.0870748
       objectReference: {fileID: 0}
     - target: {fileID: 5474802184109698507, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
@@ -2384,6 +2394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: slopeForce
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: strafeSpeed
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
