@@ -89,7 +89,7 @@ public class WaterBeam : AbstractSpell
                 acceleration.z = Vector3.Distance(elementaryPosition, possibleDistancePoint);
                 transform.localScale = acceleration;
 
-                /***** Collision *****/
+                /***** COLLISION WITH THE BEAM *****/
                 // If the beam hits a movable object, it pushes the object in the direction of the beam
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
                 {
