@@ -81,10 +81,11 @@ public class EarthWall : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
+        PositionningMarker pouet = (PositionningMarker)marker;
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
         if (lastMarkerNormal.y > possibleSlopeForFloor) // If the slope is not too hard
         {
-            Debug.Log("SPAWN PILLAR");
+            Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
 
             // Avoid to rotate the pillar on X axis when it spawns
             Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
@@ -92,11 +93,12 @@ public class EarthWall : AbstractSpell
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
 
-            Instantiate(earthPillar, marker.transform.position, rot);
+            //Instantiate(earthPillar, marker.transform.position, rot);          
+            Instantiate(earthPillar, pouet.targetPosition, rot);
         }
         else if (lastMarkerNormal.y >= possibleSlopeForWall)
         {
-            Debug.Log("SPAWN PLATFORM");
+            Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
 
             // Avoid to rotate the platform on X axis when it spawns
             Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
@@ -104,7 +106,7 @@ public class EarthWall : AbstractSpell
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
 
-            Instantiate(earthPlatform, marker.transform.position, rot);
+            Instantiate(earthPlatform, pouet.targetPosition, rot);
         }
 
         groundMovingEffect.Stop();
