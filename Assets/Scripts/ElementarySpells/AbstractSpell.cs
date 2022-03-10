@@ -71,21 +71,21 @@ public abstract class AbstractSpell : MonoBehaviour
 
     private Transform playerMesh;
 
-
     protected DamageHit damages;
+
 
 
 	private void Update()
 	{
-        //smooth turning when charging a spell and not moving
-        if (!chargeend)
-            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
     }
 
     public virtual void FixedUpdate()
-    {
+    {       
         if (!chargeend)
         {
+            // turning when charging a spell and not moving
+            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
+            
             charge += Time.fixedDeltaTime;
             PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
             if (player) {
@@ -171,7 +171,7 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     protected virtual float GetManaCost()
     {
-        return 20f;
+        return damagesInfos.manaCost;
     }
 
     /// <summary>
@@ -179,7 +179,17 @@ public abstract class AbstractSpell : MonoBehaviour
     /// </summary>
     protected virtual float GetChannelCost()
     {
-        return 5f;
+        return damagesInfos.manaChannelCostPerSec;
+    }
+
+    /// <summary>
+    /// Returns the amount of mana that the player can regain by canceling a spell 
+    /// while channeling
+    /// </summary>
+    /// <returns></returns>
+    public float GetManaRegainAmount()
+    {
+        return damagesInfos.manaCost / 2;
     }
 
     /// <summary>

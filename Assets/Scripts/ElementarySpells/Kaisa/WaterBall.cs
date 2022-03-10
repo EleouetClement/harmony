@@ -17,6 +17,7 @@ public class WaterBall : MonoBehaviour
     [HideInInspector]
     public Vector3 targetLocation;
     private Vector3 spawnLocation;
+    private Vector3 initElemLocation;
     private Vector3 hoverLocation;
 
     private Vector3 bezierpointStart;
@@ -40,6 +41,7 @@ public class WaterBall : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        initElemLocation = parent.elementary.transform.position;
         spawnLocation = transform.position;
         Vector3 roffset = randomVector();
         hoverLocation = spawnLocation + roffset;
@@ -50,6 +52,7 @@ public class WaterBall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector3 elemOffset = parent.elementary.transform.position - initElemLocation;
         TimeLocale += Time.deltaTime;
         if (launched)
         {
@@ -59,9 +62,10 @@ public class WaterBall : MonoBehaviour
 
             if (TimeLaunch >= traveltime) Hit();
         }
-        else
+        else 
         {
-            transform.position = Vector3.Lerp(spawnLocation, hoverLocation, Mathf.Clamp(TimeLocale / setuptime, 0, 1));
+            transform.position = Vector3.Lerp(spawnLocation, hoverLocation + elemOffset, Mathf.Clamp(TimeLocale / setuptime, 0, 1));
+
         }
     }
 

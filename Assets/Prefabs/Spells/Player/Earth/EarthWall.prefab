@@ -46,16 +46,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   element: 2
-  damagesInfos: {fileID: 0}
+  damagesInfos: {fileID: 11400000, guid: d1363431101d32c4aa88be45db727a2a, type: 2}
+  canceled: 0
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
-  cameraController: {fileID: 0}
   earthPillar: {fileID: 4237598137324749565, guid: dee6da28747da0043aa87e47d2a4e20d,
     type: 3}
   earthPlatform: {fileID: 7815377421612240700, guid: 4ef5299f9c541a84895bf45935be84c8,
     type: 3}
   groundMovingEffect: {fileID: 2093974785645372677}
   maxDistance: 20
+  layersCollision:
+    serializedVersion: 2
+    m_Bits: 6144
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0
