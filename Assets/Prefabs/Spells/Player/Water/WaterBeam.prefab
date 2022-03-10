@@ -5002,7 +5002,7 @@ MonoBehaviour:
   impactEffect: {fileID: 5863743421125159431}
   layersCollision:
     serializedVersion: 2
-    m_Bits: 64273
+    m_Bits: 129809
 --- !u!136 &627015841
 CapsuleCollider:
   m_ObjectHideFlags: 0
