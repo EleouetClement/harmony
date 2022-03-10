@@ -46,7 +46,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
-        
     }
 
     private void Update()

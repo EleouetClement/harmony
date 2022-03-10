@@ -281,7 +281,7 @@ public class Fireball : AbstractSpell
         base.onChargeEnd(chargetime);
         launched = true;
         if (!trajcalculated)
-            CalculateTrajectory();
+            target = CalculateTrajectory();
         //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
