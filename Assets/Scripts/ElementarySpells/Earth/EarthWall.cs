@@ -8,6 +8,8 @@ public class EarthWall : AbstractSpell
 
     public GameObject earthPillar;
     public GameObject earthPlatform;
+    public GameObject earthPillarPresisu;
+    public GameObject earthPlatformPrevisu;
     public ParticleSystem groundMovingEffect;
     [Range(0, 50)]
     public float maxDistance;
@@ -43,7 +45,6 @@ public class EarthWall : AbstractSpell
                 lastMarkerPosition = hit.point;
                 lastMarkerNormal = hit.normal;
             }
-
             groundMovingEffect.transform.position = marker.transform.position;
             // The rotation of the particles system is depending on the spawn point of the object object (ground or wall)
             if(lastMarkerNormal.y > possibleSlopeForFloor)
@@ -62,6 +63,8 @@ public class EarthWall : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
+        marker.GetComponent<PositionningMarker>()?.SetSlopeLowerTreshold(possibleSlopeForFloor);
+        marker.GetComponent<PositionningMarker>()?.SetSlopeUpperTreshold(possibleSlopeForWall);
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementaryController = elemRef.GetComponent<ElementaryController>();
 
@@ -105,10 +108,9 @@ public class EarthWall : AbstractSpell
             v.y = 0f;
             v.Normalize();
             Quaternion rot = Quaternion.LookRotation(v);
-
+            
             Instantiate(earthPlatform, pouet.targetPosition, rot);
         }
-
         groundMovingEffect.Stop();
         Destroy(marker.gameObject);
         Terminate();

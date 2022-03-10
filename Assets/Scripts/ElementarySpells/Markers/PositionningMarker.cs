@@ -4,13 +4,23 @@ using UnityEngine;
 
 public class PositionningMarker : AbstractMarker
 {
+
+    private enum Status
+    {
+        pillar,
+        platform
+    }
     public Vector3 targetPosition { get; private set; }
     [SerializeField] private GameObject [] markerPrefabs;
     private RaycastHit hit;
-    private bool prefabChanged = false;
 
     private GameObject visuReference;
-    private bool onGround = true;
+    private Status newStatus;
+    private Status currentStatus;
+
+    private float slopeLowerTreshold;
+    private float slopeUpperTreshold;
+    private float currentSlope;
 
     private void Awake()
     {
@@ -22,6 +32,7 @@ public class PositionningMarker : AbstractMarker
         else
         {
             visuReference = Instantiate(markerPrefabs[0], Vector3.zero, Quaternion.identity);
+            newStatus = currentStatus = Status.pillar;
         }
     }
 
@@ -31,37 +42,40 @@ public class PositionningMarker : AbstractMarker
         layers += 1 << HarmonyLayers.LAYER_WALL_ENABLE;
         if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layers))
         {
-            if(!hit.transform.gameObject.layer.Equals(HarmonyLayers.LAYER_GROUND) && onGround)
+            if(hit.normal.y > slopeLowerTreshold)
             {
-                Destroy(visuReference);
-                visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
+                newStatus = Status.pillar;
             }
             else
             {
-                if(hit.transform.gameObject.layer.Equals(HarmonyLayers.LAYER_GROUND) && !onGround)
+                if(hit.normal.y >= slopeUpperTreshold)
                 {
-                    Destroy(visuReference);
-                    visuReference = Instantiate(markerPrefabs[0], hit.point, Quaternion.identity);
+                    newStatus = Status.platform;
                 }
             }
-            if(hit.normal.y > 0.70)
+            if(newStatus != currentStatus && newStatus == Status.pillar)
             {
-                targetPosition = hit.point;
-                visuReference.transform.position = hit.point;
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
-                
-            }
-            else if(hit.normal.y >= 0)
-            {
-                targetPosition = hit.point;
-                visuReference.transform.position = hit.point;
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
-                
+                Destroy(visuReference);
+                currentSlope = hit.normal.y;
+                //Debug.Log("DisplayTarget : hit.normal.y : " + hit.normal.y);
+                visuReference = Instantiate(markerPrefabs[0], hit.point, Quaternion.identity);
+                currentStatus = newStatus;
             }
             else
             {
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
+                if(newStatus != currentStatus && newStatus == Status.platform)
+                {
+                    currentSlope = hit.normal.y;
+                    //Debug.Log("DisplayTarget : hit.normal.y : " + hit.normal.y);
+                    Destroy(visuReference);
+                    visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
+                    currentStatus = newStatus;
+                }
             }
+            targetPosition = hit.point;
+            visuReference.transform.position = hit.point;
+            visuReference.transform.LookAt(GameModeSingleton.GetInstance().GetCinemachineCameraController.transform);
+            visuReference.transform.rotation *= Quaternion.Euler(0, 1, 0);
         }
         else
         {
@@ -82,6 +96,18 @@ public class PositionningMarker : AbstractMarker
         {
             return hit;
         }
+    }
+    /// <summary>
+    /// Allows to Set the treshold for angled surfaces if there is a need of distinction between to types of slope
+    /// </summary>
+    /// <param name="treshold"></param>
+    public void SetSlopeLowerTreshold(float treshold)
+    {
+        slopeLowerTreshold = treshold;
+    }
+    public void SetSlopeUpperTreshold(float treshold)
+    {
+        slopeUpperTreshold = treshold;
     }
 
     public override void OnDestroy()
