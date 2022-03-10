@@ -27,12 +27,14 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float accelerationFriction;
     [Range(0, 100)] public float decelerationFriction;
     [Range(0, 100)] public float turningFriction;
+    [Range(0, 100)] public float sharpTurnFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
     [SerializeField] private float slopeForce = 9.81f;
+    [SerializeField] private float slideForce = 1;
     public LayerMask layerMask;
 
     [Header("Dodge settings")]
@@ -53,7 +55,8 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
     private Vector2 inputAxis;
-    [HideInInspector]public Vector3 velocity;
+    public Vector2 lastInputAxis;
+    public Vector3 velocity;
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
@@ -64,12 +67,13 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
     public bool isTurning = false;
+    public bool alreadyMoving = false;
     bool sliding = false;
 
     private bool movingForward;
     private bool movingBackward;
-    private bool movingRight;
-    private bool movingLeft;
+    public bool movingRight;
+    public bool movingLeft;
 
     private float maxSpeedApprox;
     private float maxSpeedRatio;
@@ -123,6 +127,8 @@ public class PlayerMotionController : MonoBehaviour
 
         currentSpeed = controller.velocity.magnitude;
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
+        if (!isMoving)
+            alreadyMoving = false;
 
         //smooth turning when moving
         if (isMoving)
@@ -139,18 +145,32 @@ public class PlayerMotionController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isMoving)
+        if (onGround)
         {
-            if (isTurning)
-                friction = turningFriction;
-            else
-                friction = 0f;
-            //friction = accelerationFriction;
+            if (isMoving)
+            {
+                if (isTurning)
+                    friction = turningFriction;
+                else if ((lastInputAxis.x * inputAxis.x <= 0f || lastInputAxis.y * inputAxis.y <= 0f) && !alreadyMoving)
+                {
+                    print(Quaternion.Angle(Quaternion.Euler(GetDirection()),playerMesh.localRotation));
+                    friction = sharpTurnFriction;
+                    alreadyMoving = true;
+                }
+                else
+                    friction = 0f;
+                //friction = accelerationFriction;
+            }
+		    else
+		    {
+                friction = decelerationFriction;
+		    }
         }
 		else
 		{
-            friction = decelerationFriction;
-		}
+            friction = airFriction;
+        }
+
         CheckMovement();
         UpdateGroundState();
         sliding = floorAngle > maxFloorAngle;
@@ -207,7 +227,7 @@ public class PlayerMotionController : MonoBehaviour
             {
                 Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
 
-                velocity += force;
+                velocity += force * slideForce;
             }
         }
 
@@ -277,6 +297,9 @@ public class PlayerMotionController : MonoBehaviour
 
 
         #endregion
+
+        if (isMoving)
+            lastInputAxis = inputAxis;
     }
 
     void LateUpdate()
