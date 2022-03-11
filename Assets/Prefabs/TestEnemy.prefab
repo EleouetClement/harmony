@@ -70,7 +70,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1631c9dc01770e4491ac48ed574fb9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 0}
+  tree: {fileID: 11400000, guid: e63afbb465958ab468b6d0b534fd0b5d, type: 2}
   customEvents:
     keys: []
     values: []
@@ -295,22 +295,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 4ce0a1e9a9e151f4084d809b9e90e523, type: 2}
+      objectReference: {fileID: 9100000, guid: ee2b198df224b444fab5a24579a0b7c5, type: 2}
     - target: {fileID: 5866666021909216657, guid: a8136e2350fbeea438374ee029a896ab,
         type: 3}
       propertyPath: m_WarningMessage
-      value: "\nBinding warning: Some generic clip(s) animate transforms that are
-        already bound by a Humanoid avatar. These transforms can only be changed
-        by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
-        'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
-        'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
-        'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
-        'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'Idle'\n\tFrom
-        animation clip 'Walking'\n\tFrom animation clip 'Running'\n\tFrom animation
-        clip 'Right Strafe Walk'\n\tFrom animation clip 'Right Strafe'\n\tFrom animation
-        clip 'Left Strafe Walk'\n\tFrom animation clip 'Left Strafe'\n\tFrom animation
-        clip 'Walking Backwards'\n\tFrom animation clip 'Running Backward'\n\tFrom
-        animation clip 'Jumping Up'\n\tand more ..."
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a8136e2350fbeea438374ee029a896ab, type: 3}

@@ -19,13 +19,17 @@ namespace Harmony.AI {
 
             UnityEngine.Object.DestroyImmediate(editor);
 
-            editor = Editor.CreateEditor(nodeView.node);
-            IMGUIContainer container = new IMGUIContainer(() => {
-                if (editor && editor.target) {
-                    editor.OnInspectorGUI();
-                }
-            });
-            Add(container);
+            if (nodeView != null)
+            {
+                editor = Editor.CreateEditor(nodeView.node);
+                IMGUIContainer container = new IMGUIContainer(() => {
+                    if (editor && editor.target)
+                    {
+                        editor.OnInspectorGUI();
+                    }
+                });
+                Add(container);
+            }
         }
     }
 }

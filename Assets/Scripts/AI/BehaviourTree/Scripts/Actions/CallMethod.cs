@@ -110,12 +110,20 @@ namespace Harmony.AI
                     selectedMethod = EditorGUILayout.Popup("Method", selectedMethod, methodList.ToArray());
                     if (EditorGUI.EndChangeCheck())
                     {
-                        string selectedMethodStr = methodList[selectedMethod];
-                        string[] methodInfos = selectedMethodStr.Split(" / ");
-                        if (methodInfos.Length == 2)
+                        if (selectedMethod == 0)
                         {
-                            component.stringValue = methodInfos[0];
-                            method.stringValue = methodInfos[1];
+                            component.stringValue = "";
+                            method.stringValue = "";
+                        }
+                        else
+                        {
+                            string selectedMethodStr = methodList[selectedMethod];
+                            string[] methodInfos = selectedMethodStr.Split(" / ");
+                            if (methodInfos.Length == 2)
+                            {
+                                component.stringValue = methodInfos[0];
+                                method.stringValue = methodInfos[1];
+                            }
                         }
                     }
 

@@ -790,27 +790,12 @@ PrefabInstance:
         type: 3}
       propertyPath: tree
       value: 
-      objectReference: {fileID: 11400000, guid: 2f0c79949e45cfc45ac76ecaa4421704,
+      objectReference: {fileID: 11400000, guid: e63afbb465958ab468b6d0b534fd0b5d,
         type: 2}
     - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}
-      propertyPath: customEvents.keys.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
-        type: 3}
       propertyPath: customEvents.values.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
-        type: 3}
-      propertyPath: customEvents.keys.Array.data[0]
-      value: test
-      objectReference: {fileID: 0}
-    - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
-        type: 3}
-      propertyPath: customEvents.keys.Array.data[1]
-      value: event 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1006983962636285121, guid: 7f014150ec9de7840a1b38e85553f658,
         type: 3}

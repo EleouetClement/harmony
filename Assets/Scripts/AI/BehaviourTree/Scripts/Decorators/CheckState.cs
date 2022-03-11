@@ -20,5 +20,12 @@ namespace Harmony.AI{
                 return blackboard.currentState != aiState ? State.Success : State.Failure;
             return blackboard.currentState == aiState ? State.Success : State.Failure;
         }
+
+        public override string GetName()
+        {
+            if (isNot)
+                return $"Is State Not {aiState}?";
+            return $"Is State {aiState}?";
+        }
     }
 }
