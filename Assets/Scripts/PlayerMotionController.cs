@@ -17,6 +17,8 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float strafeMaxSpeed;
     [Range(0, 100)] public float BackWalkMaxSpeed;
     [Range(0, 100)] public float timeToMaxSpeed;
+    private float maxSpeed;
+    private float maxSpeedPercent;
     public float walkSpeed;
     public float strafeSpeed;
     public float backWalkSpeed;
@@ -79,8 +81,7 @@ public class PlayerMotionController : MonoBehaviour
     public bool movingRight;
     public bool movingLeft;
 
-    private float maxSpeed;
-    private float maxSpeedPercent;
+   
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
@@ -94,7 +95,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
-        maxSpeed = walkMaxSpeed;
+
 
         movingForward = false;
         movingBackward = false;
@@ -108,7 +109,7 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
-
+        currentSpeed = velocity.magnitude;
         walkAcceleration = walkMaxSpeed / timeToMaxSpeed;
         strafeAcceleration = strafeMaxSpeed / timeToMaxSpeed;
         backWalkAcceleration = BackWalkMaxSpeed / timeToMaxSpeed;
@@ -121,19 +122,16 @@ public class PlayerMotionController : MonoBehaviour
         }
 
         
-		
 
-        maxSpeedPercent = currentSpeed / maxSpeed;
         controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
         }
-
-        currentSpeed = controller.velocity.magnitude;
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
         if (!isMoving)
             alreadyMoving = false;
+        UpdateSpeedStats();
 
         //smooth turning when moving
         if (isMoving)
@@ -428,7 +426,7 @@ public class PlayerMotionController : MonoBehaviour
         return velocity;
     }
 
-    public float GetMaxSpeedApprox()
+    public float GetMaxSpeed()
     {
         return maxSpeed;
     }
@@ -568,6 +566,27 @@ public class PlayerMotionController : MonoBehaviour
             backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, 0f, backWalkAcceleration * Time.deltaTime);
 
         }
+    }
 
+    /// <summary>
+    /// Update maxSpeed and maxSpeedPercent values
+    /// </summary>
+    private void UpdateSpeedStats()
+    {
+        if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+        {
+            maxSpeed = walkMaxSpeed;
+        }
+        else if(isMoving)
+        {
+            if (movingForward)
+                maxSpeed = walkMaxSpeed;
+            else if (movingBackward)
+                maxSpeed = BackWalkMaxSpeed;
+            else if (movingRight || movingLeft)
+                maxSpeed = strafeMaxSpeed;
+        }
+        
+        maxSpeedPercent = currentSpeed / maxSpeed;
     }
 }
