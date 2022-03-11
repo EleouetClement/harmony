@@ -54,7 +54,7 @@ public class PlayerAnimController : MonoBehaviour
         float animVelocityX = animator.GetFloat("VelocityX");
         float animVelocityZ = animator.GetFloat("VelocityZ");
         float maxSpeed = playerMotionController.GetMaxSpeedApprox();
-        float maxSpeedRatio = playerMotionController.GetMaxSpeedRatio();
+        float maxSpeedRatio = playerMotionController.GetMaxSpeedPercent();
         float maxSpeedRatioX = Mathf.Abs(velocity.x) / maxSpeed;
         float maxSpeedRatioZ = Mathf.Abs(velocity.z) / maxSpeed;
 

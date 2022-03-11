@@ -6,7 +6,11 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotionController : MonoBehaviour
 {
+    public bool AlternativeMovement = false;
+
+    [Header("Character Stats")]
     public float currentSpeed;
+
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkMaxSpeed;
@@ -70,13 +74,13 @@ public class PlayerMotionController : MonoBehaviour
     public bool alreadyMoving = false;
     bool sliding = false;
 
-    private bool movingForward;
-    private bool movingBackward;
+    public bool movingForward;
+    public bool movingBackward;
     public bool movingRight;
     public bool movingLeft;
 
-    private float maxSpeedApprox;
-    private float maxSpeedRatio;
+    private float maxSpeed;
+    private float maxSpeedPercent;
 
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
@@ -90,7 +94,7 @@ public class PlayerMotionController : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
-        maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
+        maxSpeed = walkMaxSpeed;
 
         movingForward = false;
         movingBackward = false;
@@ -104,6 +108,7 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
+
         walkAcceleration = walkMaxSpeed / timeToMaxSpeed;
         strafeAcceleration = strafeMaxSpeed / timeToMaxSpeed;
         backWalkAcceleration = BackWalkMaxSpeed / timeToMaxSpeed;
@@ -118,7 +123,7 @@ public class PlayerMotionController : MonoBehaviour
         
 		
 
-        maxSpeedRatio = currentSpeed / maxSpeedApprox;
+        maxSpeedPercent = currentSpeed / maxSpeed;
         controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
@@ -133,12 +138,17 @@ public class PlayerMotionController : MonoBehaviour
         //smooth turning when moving
         if (isMoving)
         {
-            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+            if(AlternativeMovement)
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x,0f,velocity.z).normalized), Time.deltaTime * turnSpeed);
+            else 
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
 
-        isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0)) > 1f;
-
-
+        //isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0)) > 1f;
+        isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) > 1f;
+        
+        if(debug)
+            Debug.DrawLine(transform.position, transform.position + velocity);
 
 
     }
@@ -149,17 +159,17 @@ public class PlayerMotionController : MonoBehaviour
         {
             if (isMoving)
             {
-                if (isTurning)
-                    friction = turningFriction;
-                else if ((lastInputAxis.x * inputAxis.x <= 0f || lastInputAxis.y * inputAxis.y <= 0f) && !alreadyMoving)
+                if (isTurning && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
                 {
-                    print(Quaternion.Angle(Quaternion.Euler(GetDirection()),playerMesh.localRotation));
-                    friction = sharpTurnFriction;
-                    alreadyMoving = true;
+                    if (AlternativeMovement)
+                        friction = (Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) / 180f) * sharpTurnFriction;
+                    else
+                        friction = turningFriction;
                 }
+                else if (isTurning)
+                    friction = turningFriction;
                 else
                     friction = 0f;
-                //friction = accelerationFriction;
             }
 		    else
 		    {
@@ -171,7 +181,7 @@ public class PlayerMotionController : MonoBehaviour
             friction = airFriction;
         }
 
-        CheckMovement();
+        
         UpdateGroundState();
         sliding = floorAngle > maxFloorAngle;
         
@@ -207,7 +217,7 @@ public class PlayerMotionController : MonoBehaviour
         {
             velocity.y += -gravity * Time.fixedDeltaTime;
             //falling
-            if (controller.velocity.y < 0f)
+            if (controller.velocity.y < 0f || sliding)
             {
                 isFalling = true;
                 isJumping = false;
@@ -246,15 +256,17 @@ public class PlayerMotionController : MonoBehaviour
 
         if (/*!sliding &&*/ !isDodging)
         {
-
+            CheckMovement();
             GetDirection();
             UpdateSpeeds();
 
-            float sqrWalkSpeed = walkSpeed * walkSpeed;
-            float sqrStrafeSpeed = strafeSpeed * strafeSpeed;
-            float sqrBackWalkSpeed = backWalkSpeed * backWalkSpeed;
-
-            if (isMoving)
+            if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+            {
+                velocity += GetDirection() * walkAcceleration * Time.deltaTime;
+                if (!isJumping && !isFalling)
+                    velocity = Vector3.ClampMagnitude(velocity, walkMaxSpeed);
+            }
+            else if (isMoving)
             {
                 if (movingForward)
 			    {
@@ -418,11 +430,15 @@ public class PlayerMotionController : MonoBehaviour
 
     public float GetMaxSpeedApprox()
     {
-        return maxSpeedApprox;
+        return maxSpeed;
     }
-    public float GetMaxSpeedRatio()
+    /// <summary>
+    /// Return current speed / max speed
+    /// </summary>
+    /// <returns></returns>
+    public float GetMaxSpeedPercent()
     {
-        return maxSpeedRatio;
+        return maxSpeedPercent;
     }
 
     public bool GetIsJumping()
@@ -488,25 +504,35 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void CheckMovement()
     {
-        if (Mathf.Abs(inputAxis.y) > 0f)
+        if (AlternativeMovement && isMoving && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
         {
-            movingForward = inputAxis.y > float.Epsilon;
-            movingBackward = inputAxis.y < float.Epsilon;
-        }
-        else
-        {
-            movingForward = false;
+            movingForward = true;
             movingBackward = false;
-        }
-        if (Mathf.Abs(inputAxis.x) > float.Epsilon)
-        {
-            movingRight = inputAxis.x > float.Epsilon;
-            movingLeft = inputAxis.x < float.Epsilon;
-        }
-        else
-        {
-            movingRight = false;
             movingLeft = false;
+            movingRight = false;
+        }
+        else 
+        {
+            if (Mathf.Abs(inputAxis.y) > 0f)
+            {
+                movingForward = inputAxis.y > float.Epsilon;
+                movingBackward = inputAxis.y < float.Epsilon;
+            }
+            else
+            {
+                movingForward = false;
+                movingBackward = false;
+            }
+            if (Mathf.Abs(inputAxis.x) > float.Epsilon)
+            {
+                movingRight = inputAxis.x > float.Epsilon;
+                movingLeft = inputAxis.x < float.Epsilon;
+            }
+            else
+            {
+                movingRight = false;
+                movingLeft = false;
+            }
         }
     }
 
