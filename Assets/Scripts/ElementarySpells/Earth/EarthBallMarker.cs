@@ -73,7 +73,7 @@ public class EarthBallMarker : AbstractMarker
         if (markerInstance != null)
             markerInstance.GetComponent<MeshRenderer>().enabled = false;
         aimDirection = (worldPoint - GameModeSingleton.GetInstance().GetElementaryReference.transform.position).normalized;
-        print(" direction :" + aimDirection);
+        //print(" direction :" + aimDirection);
 
         //trajectoryCalculator.CalculateTrajectory();
         

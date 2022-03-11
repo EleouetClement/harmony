@@ -18,6 +18,7 @@ public class Shield : AbstractSpell
     private GameObject shieldReference;
     private Collider shieldCollider;
     private MeshRenderer shieldVisual;
+    private float ManaCostPerHit;
     private void Awake()
     {
         
@@ -62,7 +63,11 @@ public class Shield : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        //To avoid Mana cost when not hit 
+        ManaCostPerHit = damagesInfos.manaCost;
+        damagesInfos.manaCost = 0;
         base.init(elemRef, target.normalized);
+        damagesInfos.manaCost = ManaCostPerHit;
         elemController = elementary.GetComponent<ElementaryController>();
         if(elemController.IsElementaryAway())
         {

@@ -127,7 +127,7 @@ PrefabInstance:
     - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_shaderPropertyID
-      value: 820
+      value: 1010
       objectReference: {fileID: 0}
     - target: {fileID: 1893065722960749156, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}

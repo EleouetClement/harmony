@@ -82,15 +82,15 @@ public abstract class AbstractSpell : MonoBehaviour
 
 	private void Update()
 	{
-        //smooth turning when charging a spell and not moving
-        if (!chargeend)
-            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0), Time.deltaTime * GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().turnSpeed);
     }
 
     public virtual void FixedUpdate()
-    {
+    {       
         if (!chargeend)
         {
+            // turning when charging a spell and not moving
+            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
+            
             charge += Time.fixedDeltaTime;
             PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
             if (player) {

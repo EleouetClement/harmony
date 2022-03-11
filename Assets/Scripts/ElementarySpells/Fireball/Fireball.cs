@@ -103,6 +103,7 @@ public class Fireball : AbstractSpell
         // Update when the fireball is charging
         if(!isReleased())
         {
+            fireOrbInstance.transform.position = elementary.transform.position;
             target = CalculateTrajectory();
             if (fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
@@ -116,8 +117,13 @@ public class Fireball : AbstractSpell
             projectileTopSpeed += projectileTopSpeedGrowth;
             maxDistance += projectileMaxDistanceGrowth;
         }
-        if(launched)
+        if (fireOrbInstance.GetComponent<FireOrb>().hasExplode)
         {
+            Terminate();
+        }
+        else if (launched)
+        {
+            elem.computePosition = false;
             Move();
         }
         
@@ -178,7 +184,7 @@ public class Fireball : AbstractSpell
             fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
             origin = fireOrbInstance.transform.position;
             elem = elementary.GetComponent<ElementaryController>();
-            elem.computePosition = false;
+            
             gameManager = GameModeSingleton.GetInstance();
             if (projectileStartSpeed > projectileTopSpeed)
             {
@@ -289,7 +295,7 @@ public class Fireball : AbstractSpell
         Destroy(marker.gameObject);
         if(isBlinked)
         {
-            Debug.Log("Molotov à appliquer");
+            Debug.Log("Molotov ï¿½ appliquer");
             isExplosive = true;
         }
         if(debug)
