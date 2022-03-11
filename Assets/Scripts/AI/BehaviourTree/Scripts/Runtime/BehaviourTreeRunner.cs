@@ -15,7 +15,7 @@ namespace Harmony.AI {
         protected Context context;
 
         // Start is called before the first frame update
-        protected virtual void Start() {
+        protected virtual void Awake() {
             context = CreateBehaviourTreeContext();
             tree = tree.Clone();
             tree.Bind(context);

@@ -15,7 +15,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2c5760db56e72bf4ab1abc3325c4e6d4
-  position: {x: 804, y: 1008}
+  position: {x: 320.00003, y: 1041}
   blackboard:
     states:
     - Idle
@@ -27,9 +27,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -74,9 +73,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -93,8 +91,9 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 6928311362922673510}
   - {fileID: 173407461202169280}
+  - {fileID: 6928311362922673510}
+  abortOnFailure: 0
 --- !u!114 &-8639514444526135124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,9 +121,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -170,9 +168,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -221,9 +218,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -269,9 +265,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -290,6 +285,7 @@ MonoBehaviour:
   children:
   - {fileID: 6113074290360183482}
   - {fileID: -5184754673708075005}
+  abortOnFailure: 0
 --- !u!114 &-2089884371742793310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,9 +313,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -336,6 +331,7 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
+  - {fileID: 8563186830812071934}
   - {fileID: 8806083092141736936}
   - {fileID: -692805531971096003}
 --- !u!114 &-911882838764309930
@@ -353,7 +349,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: af7e90a8e5d6a1a46b83aeaf487f5307
-  position: {x: 124, y: 991}
+  position: {x: 540.7058, y: 1024}
   blackboard:
     states:
     - Idle
@@ -365,9 +361,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -401,7 +396,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 7224200bf2ac4e54088cd31459ec8d8a
-  position: {x: -148.68149, y: 1361.9999}
+  position: {x: 60.000015, y: 1363.0002}
   blackboard:
     states:
     - Idle
@@ -413,9 +408,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -432,6 +426,51 @@ MonoBehaviour:
   description: Attacking
   drawGizmos: 0
   aiState: Attack
+--- !u!114 &-19661002133830139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c2195cc6418344a99d17ae573d8f3f, type: 3}
+  m_Name: LookTowardTransform
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ba8bd1616cdcda740b9f487b65c954cd
+  position: {x: 0, y: 0}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: target
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -467,6 +506,8 @@ MonoBehaviour:
   - {fileID: 5640981900027116655}
   - {fileID: 979827498029470459}
   - {fileID: -8772267466991076642}
+  - {fileID: 8563186830812071934}
+  - {fileID: -19661002133830139}
   blackboard:
     states:
     - Idle
@@ -478,9 +519,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -521,9 +561,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -557,7 +596,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: dc0b7d8153f00774598b38d536b07e30
-  position: {x: 584, y: 869}
+  position: {x: 170.00003, y: 902}
   blackboard:
     states:
     - Idle
@@ -569,9 +608,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -618,9 +656,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -654,7 +691,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: dc9c9098f72ca314396cb2bc7dc8a2ec
-  position: {x: 584, y: 1008}
+  position: {x: 170.00003, y: 1041}
   blackboard:
     states:
     - Idle
@@ -666,9 +703,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -717,9 +753,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -763,9 +798,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -783,7 +817,7 @@ MonoBehaviour:
   drawGizmos: 0
   child: {fileID: -4563613514251524612}
   restartOnSuccess: 1
-  restartOnFailure: 0
+  restartOnFailure: 1
 --- !u!114 &5640981900027116655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -799,7 +833,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 53d950c1e06001e48ba1ce4c66ff227e
-  position: {x: 378, y: 1008}
+  position: {x: 13.999968, y: 1041}
   blackboard:
     states:
     - Idle
@@ -811,9 +845,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -859,9 +892,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -894,7 +926,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: c40089b0cc359314fbb1dd39ca6417f0
-  position: {x: 124, y: 869}
+  position: {x: 540.7058, y: 902}
   blackboard:
     states:
     - Idle
@@ -906,9 +938,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -923,14 +954,14 @@ MonoBehaviour:
       values:
       - {fileID: 0}
   description: 
-  drawGizmos: 0
+  drawGizmos: 1
   child: {fileID: -911882838764309930}
   targetParameter: target
   searchLayer: 3
   blockMask:
     serializedVersion: 2
-    m_Bits: 12289
-  eyesHeight: 1.75
+    m_Bits: 14337
+  eyesHeight: 0.875
   lookAngle: 45
   lookRange: 16
 --- !u!114 &8027350087361798588
@@ -960,9 +991,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -981,7 +1011,51 @@ MonoBehaviour:
   child: {fileID: -8639514444526135124}
   parameterName: target
   greaterThan: 0
-  distance: 2.5
+  distance: 2
+--- !u!114 &8563186830812071934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e06f41d11fc285479dc7c18d99f01f7, type: 3}
+  m_Name: StopMove
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 3759d0e4de75406418f66cd55a3f0b61
+  position: {x: -419.9, y: 1363.0002}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
 --- !u!114 &8806083092141736936
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,7 +1071,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: db5539df0c5ccde4c8b143a189e99181
-  position: {x: -320.6815, y: 1361.9999}
+  position: {x: -89.99997, y: 1363.0002}
   blackboard:
     states:
     - Idle
@@ -1009,9 +1083,8 @@ MonoBehaviour:
       keys: []
       values: 
     intParameters:
-      keys:
-      - state
-      values: 00000000
+      keys: []
+      values: 
     floatParameters:
       keys: []
       values: []
@@ -1027,6 +1100,6 @@ MonoBehaviour:
       - {fileID: 0}
   description: Attack
   drawGizmos: 0
-  component: 
-  method: 
+  component: WariorAI
+  method: Attack
   delay: 0

@@ -21,14 +21,9 @@ namespace Harmony.AI
         
         [HideInInspector] public int nextWayPoint;
 
-        private void Awake()
+        protected override void Awake()
         {
-            animator = GetComponent<Animator>();
-        }
-
-        protected override void Start()
-        {
-            base.Start();
+            base.Awake();
             health = maxHealth;
         }
 
@@ -50,7 +45,7 @@ namespace Harmony.AI
                 {
                     aiActive = false;
                     if(animator) animator.SetBool("Dead", true);
-                    Invoke(nameof(Death), 2);
+                    Invoke(nameof(Death), 5);
                 }
             }
         }

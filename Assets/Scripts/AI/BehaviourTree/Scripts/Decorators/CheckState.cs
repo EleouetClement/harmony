@@ -16,9 +16,13 @@ namespace Harmony.AI{
 
         protected override State OnUpdate()
         {
-            if (isNot)
-                return blackboard.currentState != aiState ? State.Success : State.Failure;
-            return blackboard.currentState == aiState ? State.Success : State.Failure;
+            if ((isNot && blackboard.currentState != aiState) || (!isNot && blackboard.currentState == aiState))
+            {
+                child.Update();
+                return State.Success;
+            }
+
+            return State.Failure;
         }
 
         public override string GetName()
