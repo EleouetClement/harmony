@@ -50,5 +50,10 @@ namespace Harmony.AI
 
             return State.Running;
         }
+
+        public override string GetName()
+        {
+            return $"Look Toward {parameterName}";
+        }
     }
 }

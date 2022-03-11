@@ -28,7 +28,7 @@ namespace Harmony.AI {
         private Vector2 nodePropertiesScroll;
         private Vector2 blackboardScroll;
 
-        [MenuItem("TheKiwiCoder/BehaviourTreeEditor ...")]
+        [MenuItem("Window/Behaviour Tree Editor")]
         public static void OpenWindow() {
             BehaviourTreeEditor wnd = GetWindow<BehaviourTreeEditor>();
             wnd.titleContent = new GUIContent("Behaviour Tree Editor");

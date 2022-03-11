@@ -31,6 +31,11 @@ namespace Harmony.AI
             context.components[component].Invoke(method, delay);
             return State.Success;
         }
+
+        public override string GetName()
+        {
+            return $"Call {method}";
+        }
     }
 }
 

@@ -27,5 +27,10 @@ namespace Harmony.AI{
             context.transform.rotation = rotation;
             return State.Success;
         }
+
+        public override string GetName()
+        {
+            return $"Look Toward {parameterName}";
+        }
     }
 }

@@ -18,5 +18,10 @@ namespace Harmony.AI{
             blackboard.currentState = aiState;
             return State.Success;
         }
+
+        public override string GetName()
+        {
+            return $"Set State to {aiState}";
+        }
     }
 }
