@@ -57,7 +57,6 @@ public class PositionningMarker : AbstractMarker
             {
                 Destroy(visuReference);
                 currentSlope = hit.normal.y;
-                //Debug.Log("DisplayTarget : hit.normal.y : " + hit.normal.y);
                 visuReference = Instantiate(markerPrefabs[0], hit.point, Quaternion.identity);
                 currentStatus = newStatus;
             }
@@ -66,7 +65,6 @@ public class PositionningMarker : AbstractMarker
                 if(newStatus != currentStatus && newStatus == Status.platform)
                 {
                     currentSlope = hit.normal.y;
-                    //Debug.Log("DisplayTarget : hit.normal.y : " + hit.normal.y);
                     Destroy(visuReference);
                     visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
                     currentStatus = newStatus;

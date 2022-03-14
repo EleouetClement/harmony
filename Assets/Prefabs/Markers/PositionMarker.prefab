@@ -45,5 +45,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerPrefabs:
-  - {fileID: 971290501320111192, guid: eca5f8f7539525c4e8ca5e52046dbc91, type: 3}
+  - {fileID: 426489448097527418, guid: 9a363b17bf35a2c4b871b5bb1b78cfdf, type: 3}
   - {fileID: 5806283404587497345, guid: 59304e62b2ea2004ba45a041808826c7, type: 3}
