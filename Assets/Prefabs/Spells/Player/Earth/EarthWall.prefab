@@ -59,6 +59,8 @@ MonoBehaviour:
   layersCollision:
     serializedVersion: 2
     m_Bits: 6144
+  thresholdGroundToWall: 0.7
+  thresholdWallToCeiling: 0
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0
