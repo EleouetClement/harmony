@@ -149,7 +149,7 @@ public class PlayerMotionController : MonoBehaviour
         //smooth turning when moving
         if (isMoving)
         {
-            if (AlternativeMovement)
+            if (AlternativeMovement && !elementary.isAiming)
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized), Time.deltaTime * turnSpeed);
             else
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
@@ -164,7 +164,7 @@ public class PlayerMotionController : MonoBehaviour
         {
             if (isMoving)
             {
-                if (isTurning && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+                if (isTurning && !elementary.isAiming)
                 {
                     if (AlternativeMovement)
                         friction = (Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) / 180f) * sharpTurnFriction;
@@ -225,7 +225,7 @@ public class PlayerMotionController : MonoBehaviour
             UpdateSpeeds();
             UpdateMaxSpeed();
 
-            if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+            if (isMoving && AlternativeMovement && !elementary.isAiming)
             {
                 velocity += GetDirection() * walkAcceleration * Time.deltaTime;
                 
@@ -307,8 +307,11 @@ public class PlayerMotionController : MonoBehaviour
         #endregion
 
         //clamping depending on maxSpeed
-        if (!isJumping && !isFalling)
+        if (onGround)
+        {
+            print("clamp");
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
+        }
 
     }
 
@@ -501,7 +504,7 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void CheckMovement()
     {
-        if (AlternativeMovement && isMoving && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+        if (AlternativeMovement && isMoving && !elementary.isAiming)
         {
             movingForward = true;
             movingBackward = false;
@@ -582,7 +585,7 @@ public class PlayerMotionController : MonoBehaviour
         {
             maxSpeed = jumpForce;
         }
-        else if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+        else if (isMoving && AlternativeMovement && !elementary.isAiming)
         {
             maxSpeed = walkMaxSpeed;
         }

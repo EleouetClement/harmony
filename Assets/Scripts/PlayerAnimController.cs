@@ -7,6 +7,7 @@ public class PlayerAnimController : MonoBehaviour
     public Animator animator;
 
     private PlayerMotionController playerMotionController;
+    private ElementaryController elementary;
 
     private bool isJumping;
     private bool isFalling;
@@ -25,6 +26,7 @@ public class PlayerAnimController : MonoBehaviour
 	private void Awake()
 	{
         playerMotionController = GetComponent<PlayerMotionController>();
+        elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         idlingSpeed = 2f;
         animSpeed = 1f;
@@ -58,7 +60,7 @@ public class PlayerAnimController : MonoBehaviour
         float maxSpeedRatioX = Mathf.Abs(velocity.x) / playerMotionController.GetMaxSpeed();
         float maxSpeedRatioZ = Mathf.Abs(velocity.z) / playerMotionController.GetMaxSpeed();
 
-        if (playerMotionController.AlternativeMovement)
+        if (playerMotionController.AlternativeMovement && !elementary.isAiming)
         {
             if (movingForward)
                 animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), 1f, inputAxis.magnitude * maxSpeedRatioZ * animSpeed * Time.deltaTime));
@@ -93,7 +95,7 @@ public class PlayerAnimController : MonoBehaviour
             }
             else if (!movingRight && !movingLeft)
             {
-                print("idle!");
+               
                 animator.SetFloat("VelocityX", Mathf.Lerp(animator.GetFloat("VelocityX"), 0f, Time.deltaTime * idlingSpeed));
             }
 		}
