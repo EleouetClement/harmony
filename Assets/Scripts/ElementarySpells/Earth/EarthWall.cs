@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class EarthWall : AbstractSpell
 {
+    private enum Status
+    {
+        pillar,
+        platform
+    }
     public GameObject PosMarkerPrefab;
-
     public GameObject earthPillar;
     public GameObject earthPlatform;
-    public GameObject earthPillarPresisu;
-    public GameObject earthPlatformPrevisu;
     public ParticleSystem groundMovingEffect;
     [Range(0, 50)]
     public float maxDistance;
@@ -25,6 +27,27 @@ public class EarthWall : AbstractSpell
     // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built (between 0 and 1)
     private float possibleSlopeForWall = 0f; 
 
+    [Header("Dev")]
+    [SerializeField] private GameObject[] markerPrefabs;
+    private GameObject visuReference;
+    private Status newStatus;
+    private Status currentStatus;
+
+
+    private void Awake()
+    {
+        if (markerPrefabs == null || markerPrefabs.Length == 0)
+        {
+            Debug.LogError("PositionningMarker.Awake : No Prefab");
+            Destroy(gameObject);
+        }
+        else
+        {
+            visuReference = Instantiate(markerPrefabs[0], Vector3.zero, Quaternion.identity);
+            newStatus = currentStatus = Status.pillar;
+        }
+    }
+
     public void LateUpdate()
     {
         if (!isReleased())
@@ -33,7 +56,7 @@ public class EarthWall : AbstractSpell
             marker.transform.LookAt(cinemachineCameraController.transform);
 
             hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
-
+            Previsualization(hit);
             // Avoid to have no point/normal where the pillar/platform has to spawn
             if (hit.point == Vector3.zero || hit.normal.y < 0)
             {
@@ -113,6 +136,42 @@ public class EarthWall : AbstractSpell
         }
         groundMovingEffect.Stop();
         Destroy(marker.gameObject);
+        Destroy(visuReference);
         Terminate();
+    }
+
+    
+    private void Previsualization(RaycastHit hit)
+    {
+        if (hit.normal.y > possibleSlopeForFloor)
+        {
+            newStatus = Status.pillar;
+        }
+        else
+        {
+            if (hit.normal.y >= possibleSlopeForWall)
+            {
+                newStatus = Status.platform;
+            }
+        }
+        if (newStatus != currentStatus && newStatus == Status.pillar)
+        {
+            Destroy(visuReference);
+            visuReference = Instantiate(markerPrefabs[0], hit.point, Quaternion.identity);
+            currentStatus = newStatus;
+        }
+        else
+        {
+            if (newStatus != currentStatus && newStatus == Status.platform)
+            {
+                Destroy(visuReference);
+                visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
+                currentStatus = newStatus;
+            }
+        }
+        visuReference.transform.position = hit.point;
+        Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
+        positionForRotation.y = visuReference.transform.position.y;
+        visuReference.transform.LookAt(positionForRotation);
     }
 }

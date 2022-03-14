@@ -56,6 +56,10 @@ MonoBehaviour:
     type: 3}
   groundMovingEffect: {fileID: 2093974785645372677}
   maxDistance: 20
+  markerPrefabs:
+  - {fileID: 426489448097527418, guid: 9a363b17bf35a2c4b871b5bb1b78cfdf, type: 3}
+  - {fileID: 5806283404587497345, guid: 59304e62b2ea2004ba45a041808826c7, type: 3}
+  visuReference: {fileID: 0}
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0
