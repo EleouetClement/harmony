@@ -75,8 +75,9 @@ public class PositionningMarker : AbstractMarker
             targetPosition = hit.point;
             visuReference.transform.position = hit.point;
             Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
-            positionForRotation.y = 0;
+            positionForRotation.y = visuReference.transform.position.y;
             visuReference.transform.LookAt(positionForRotation);
+            
         }
         else
         {
