@@ -75,6 +75,10 @@ public class WaterBeam : AbstractSpell
                 transform.localScale = acceleration;
             }
         }
+        else
+        {
+            Terminate();
+        }
     }
 
     public override void init(GameObject elemRef, Vector3 target)
@@ -87,8 +91,6 @@ public class WaterBeam : AbstractSpell
 
         // Init the visual
         impactEffect.transform.position = elementaryController.transform.position;
-        marker.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>().enabled = false; // Hide the marker
-
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 
