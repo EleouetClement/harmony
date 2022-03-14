@@ -55,6 +55,7 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
+    private ElementaryController elementary;
     public Transform playerMesh;
 
     private CharacterController controller;
@@ -105,6 +106,7 @@ public class PlayerMotionController : MonoBehaviour
         walkSpeed = 0f;
         strafeSpeed = 0f;
         backWalkSpeed = 0f;
+        elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
     }
 
     void Update()
@@ -133,14 +135,7 @@ public class PlayerMotionController : MonoBehaviour
             alreadyMoving = false;
         UpdateSpeedStats();
 
-        //smooth turning when moving
-        if (isMoving)
-        {
-            if(AlternativeMovement)
-                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x,0f,velocity.z).normalized), Time.deltaTime * turnSpeed);
-            else 
-                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
-        }
+       
 
         //isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0)) > 1f;
         isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) > 1f;
@@ -153,6 +148,19 @@ public class PlayerMotionController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //smooth turning when moving
+        if (isMoving)
+        {
+            if (AlternativeMovement)
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized), Time.deltaTime * turnSpeed);
+            else
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
+        }
+
+        //player facing in front of them when aiming
+        if (elementary.isAiming)
+            playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0),Time.deltaTime *  turnSpeed);
+       
         if (onGround)
         {
             if (isMoving)
@@ -509,7 +517,7 @@ public class PlayerMotionController : MonoBehaviour
             movingLeft = false;
             movingRight = false;
         }
-        else 
+        else if(isMoving)
         {
             if (Mathf.Abs(inputAxis.y) > 0f)
             {
@@ -531,6 +539,13 @@ public class PlayerMotionController : MonoBehaviour
                 movingRight = false;
                 movingLeft = false;
             }
+        }
+		else
+		{
+            movingForward = false;
+            movingBackward = false;
+            movingLeft = false;
+            movingRight = false;
         }
     }
 

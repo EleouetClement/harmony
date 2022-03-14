@@ -1628,6 +1628,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
+      propertyPath: timeToMaxSpeed
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
       propertyPath: sharpTurnFriction
       value: 10
       objectReference: {fileID: 0}
