@@ -74,8 +74,7 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
     public bool isTurning = false;
-    public bool alreadyMoving = false;
-    bool sliding = false;
+    public bool sliding = false;
 
     public bool movingForward;
     public bool movingBackward;
@@ -111,7 +110,8 @@ public class PlayerMotionController : MonoBehaviour
 
     void Update()
     {
-        currentSpeed = velocity.magnitude;
+		#region Stuff
+		currentSpeed = velocity.magnitude;
         walkAcceleration = walkMaxSpeed / timeToMaxSpeed;
         strafeAcceleration = strafeMaxSpeed / timeToMaxSpeed;
         backWalkAcceleration = BackWalkMaxSpeed / timeToMaxSpeed;
@@ -123,31 +123,29 @@ public class PlayerMotionController : MonoBehaviour
             lastGroundPos = groundTranform.position;
         }
 
-        
 
+        
         controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
         }
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
-        if (!isMoving)
-            alreadyMoving = false;
-        UpdateSpeedStats();
+        
 
-       
-
-        //isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0)) > 1f;
         isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) > 1f;
         
         if(debug)
             Debug.DrawLine(transform.position, transform.position + velocity);
 
+		#endregion
 
-    }
+	}
 
-    private void FixedUpdate()
+	private void FixedUpdate()
     {
+        
+
         //smooth turning when moving
         if (isMoving)
         {
@@ -160,8 +158,9 @@ public class PlayerMotionController : MonoBehaviour
         //player facing in front of them when aiming
         if (elementary.isAiming)
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0),Time.deltaTime *  turnSpeed);
-       
-        if (onGround)
+		
+        #region Friction Calculations
+		if (onGround)
         {
             if (isMoving)
             {
@@ -186,9 +185,9 @@ public class PlayerMotionController : MonoBehaviour
 		{
             friction = airFriction;
         }
+		#endregion
 
-        
-        UpdateGroundState();
+		UpdateGroundState();
         sliding = floorAngle > maxFloorAngle;
         
 
@@ -214,6 +213,55 @@ public class PlayerMotionController : MonoBehaviour
             }
             
         }
+
+        #endregion
+
+        #region Apply Direction Input
+
+        if (/*!sliding &&*/ !isDodging)
+        {
+            CheckMovement();
+            GetDirection();
+            UpdateSpeeds();
+            UpdateMaxSpeed();
+
+            if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+            {
+                velocity += GetDirection() * walkAcceleration * Time.deltaTime;
+                
+            }
+            else if (isMoving)
+            {
+                if (movingForward)
+			    {
+				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime;
+                }
+                if (movingRight || movingLeft)
+                {
+				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime;
+                }
+                if (movingBackward)
+                {
+                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime;
+                }
+                //prevent character from bouncing when going down a slope
+                if (OnSlope())
+                {
+                    velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+                }
+            }
+           
+
+            //if(movingForward)
+            //    velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+            //else
+            //    velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+
+        }
+
+
 
         #endregion
 
@@ -258,78 +306,21 @@ public class PlayerMotionController : MonoBehaviour
 
         #endregion
 
-        #region Apply Direction Input
+        //clamping depending on maxSpeed
+        if (!isJumping && !isFalling)
+            velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
 
-        if (/*!sliding &&*/ !isDodging)
-        {
-            CheckMovement();
-            GetDirection();
-            UpdateSpeeds();
-
-            if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
-            {
-                velocity += GetDirection() * walkAcceleration * Time.deltaTime;
-                if (!isJumping && !isFalling)
-                    velocity = Vector3.ClampMagnitude(velocity, walkMaxSpeed);
-            }
-            else if (isMoving)
-            {
-                if (movingForward)
-			    {
-				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime;
-				    if (!isJumping && !isFalling)
-					    velocity = Vector3.ClampMagnitude(velocity, walkMaxSpeed);
-
-                }
-                if (movingRight || movingLeft)
-                {
-
-				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime;
-                    if (!isJumping && !isFalling && !movingForward && !movingForward)
-                        velocity = Vector3.ClampMagnitude(velocity, strafeMaxSpeed);
-
-                }
-                if (movingBackward)
-                {
-                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime;
-                    if (!isJumping && !isFalling)
-                        velocity = Vector3.ClampMagnitude(velocity, BackWalkMaxSpeed);
-                }
-                //prevent character from bouncing when going down a slope
-                if (OnSlope())
-                {
-                    velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
-                }
-            }
-           
-
-            //if(movingForward)
-            //    velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
-            //else
-            //    velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
-
-        }
-
-
-
-        #endregion
-
-        if (isMoving)
-            lastInputAxis = inputAxis;
     }
 
     void LateUpdate()
     {
-		
-	}
+    }
 
-	/// <summary>
-	/// Handles moving inputs using InputSystem
-	/// </summary>
-	/// <param name="value"></param>
-	void OnMove(InputValue value)
+    /// <summary>
+    /// Handles moving inputs using InputSystem
+    /// </summary>
+    /// <param name="value"></param>
+    void OnMove(InputValue value)
     {
         inputAxis = value.Get<Vector2>();
         isMoving = true;
@@ -579,16 +570,19 @@ public class PlayerMotionController : MonoBehaviour
 		else
 		{
             backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, 0f, backWalkAcceleration * Time.deltaTime);
-
         }
     }
 
     /// <summary>
     /// Update maxSpeed and maxSpeedPercent values
     /// </summary>
-    private void UpdateSpeedStats()
+    private void UpdateMaxSpeed()
     {
-        if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
+        if (isJumping)
+        {
+            maxSpeed = jumpForce;
+        }
+        else if (isMoving && AlternativeMovement && !GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().isAiming)
         {
             maxSpeed = walkMaxSpeed;
         }
