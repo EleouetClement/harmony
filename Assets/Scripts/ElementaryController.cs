@@ -128,10 +128,9 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("readyToCast avt: " + readyToCast);
+        //Debug.Log("readyToCast avt: " + readyToCast + " currentSpell : " + ((currentSpell==null)? "null" : currentSpell.name));
         if (!readyToCast && currentSpell == null)
-        {
-            
+        {      
             readyToCast = !IsElementaryAway();
             //Debug.Log("readyToCast aprs: " + readyToCast);
         }
@@ -281,6 +280,15 @@ public class ElementaryController : MonoBehaviour
         //Debug.Log("readyToCast : " + readyToCast);
     }
 
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    Debug.Log(collision.gameObject.name);
+    //}
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log(other.gameObject.name);
+    }
     private void OnDrawGizmos()
     {
         //Gizmos.DrawSphere((shoulder.position + shoulderOffset), sphereCastRadius);
