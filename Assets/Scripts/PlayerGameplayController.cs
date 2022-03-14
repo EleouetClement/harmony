@@ -41,6 +41,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         Cursor.lockState = CursorLockMode.Locked;
         InitializeElementary();
     }
+
     // Start is called before the first frame update
     void Start()
     {

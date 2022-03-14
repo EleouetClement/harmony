@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Eau
+  m_Name: eau
   m_Shader: {fileID: -6465566751694194690, guid: 7d7fcddad92701a488d945d86a766c7d,
     type: 3}
   m_ShaderKeywords: 
