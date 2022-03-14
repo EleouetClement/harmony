@@ -20,9 +20,9 @@ public class EarthWall : AbstractSpell
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
 
     // Defines the value of the normal for which a pillar can be built above (between 0 and 1)
-    private float possibleSlopeForFloor = 0.7f;
+    [SerializeField] private float thresholdGroundToWall = 0.7f;
     // Defines the value of the normal for which above (but below the value for the pillar) a platform can be built (between 0 and 1)
-    private float possibleSlopeForWall = 0f; 
+    [SerializeField] private float thresholdWallToCeiling = 0f;
 
     public void LateUpdate()
     {
@@ -34,7 +34,7 @@ public class EarthWall : AbstractSpell
             hit = marker.GetComponent<PositionningMarker>().GetRayCastInfo;
 
             // Avoid to have no point/normal where the pillar/platform has to spawn
-            if (hit.point == Vector3.zero || hit.normal.y < 0)
+            if (hit.point == Vector3.zero || hit.normal.y < thresholdWallToCeiling)
             {
                 hit.point = lastMarkerPosition;
                 hit.normal = lastMarkerNormal;
@@ -46,12 +46,13 @@ public class EarthWall : AbstractSpell
             }
 
             groundMovingEffect.transform.position = marker.transform.position;
+
             // The rotation of the particles system is depending on the spawn point of the object object (ground or wall)
-            if(lastMarkerNormal.y > possibleSlopeForFloor)
+            if(lastMarkerNormal.y > thresholdGroundToWall)
             {
                 groundMovingEffect.transform.rotation = Quaternion.Euler(-90f, 0f, 0f);
             }
-            else if(lastMarkerNormal.y > possibleSlopeForWall)
+            else if(lastMarkerNormal.y > thresholdWallToCeiling)
             {
                 groundMovingEffect.transform.LookAt(cinemachineCameraController.transform);
             }
@@ -66,7 +67,10 @@ public class EarthWall : AbstractSpell
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementaryController = elemRef.GetComponent<ElementaryController>();
 
+        // Allows to get collision with the raycast depending on the thresholds of the earth wall spell values
         marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
+        marker.GetComponent<PositionningMarker>().thresholdGroundToWall = thresholdGroundToWall;
+        marker.GetComponent<PositionningMarker>().thresholdWallToCeiling = thresholdWallToCeiling;
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
@@ -84,8 +88,9 @@ public class EarthWall : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
-        if (lastMarkerNormal.y > possibleSlopeForFloor) // If the slope is not too hard
+        Debug.Log("LAST MARKER NORMAL : " + lastMarkerNormal);
+        // If the normal.y is < wall to ceiling threshold, the player can not spawn any object
+        if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
         {
             Debug.Log("SPAWN PILLAR");
 
@@ -97,7 +102,7 @@ public class EarthWall : AbstractSpell
 
             Instantiate(earthPillar, marker.transform.position, rot);
         }
-        else if (lastMarkerNormal.y >= possibleSlopeForWall)
+        else if (lastMarkerNormal.y >= thresholdWallToCeiling)
         {
             Debug.Log("SPAWN PLATFORM");
 
