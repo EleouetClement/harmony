@@ -74,8 +74,9 @@ public class PositionningMarker : AbstractMarker
             }
             targetPosition = hit.point;
             visuReference.transform.position = hit.point;
-            visuReference.transform.LookAt(GameModeSingleton.GetInstance().GetCinemachineCameraController.transform);
-            visuReference.transform.rotation *= Quaternion.Euler(0, 1, 0);
+            Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
+            positionForRotation.y = 0;
+            visuReference.transform.LookAt(positionForRotation);
         }
         else
         {
