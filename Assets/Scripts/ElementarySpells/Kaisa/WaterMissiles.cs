@@ -49,8 +49,7 @@ public class WaterMissiles : AbstractSpell
         // Target location update
         balls.ForEach(e => { e.targetLocation = getDestination(); });
         // Spell self destruction
-        float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
-        if (timeLocale > castmax || balls.Count <= 0)
+        if (balls.Count <= 0)
         {
             Terminate();
         }
