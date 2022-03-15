@@ -123,12 +123,16 @@ public class EarthBall : MonoBehaviour
 
 			range = minRange + charge * (maxRange - minRange);
 
-			if(earthMarkerRef.freeAim)
+			if (earthMarkerRef.freeAim)
+			{
 				launchVelocity = earthMarkerRef.Aim() * range;
+				trajectoryCalculator.SetInitialVelocity(launchVelocity);
+				trajectoryCalculator.CalculateTrajectory();
+			}
 			else
 				launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.Aim(), speed);
 			trajectoryCalculator.SetInitialVelocity(launchVelocity);
-			trajectoryCalculator.CalculateTrajectory();
+
 			earthMarkerRef.SetMarkerRadius(radius);
 
 			impactforce = minImpactForce + charge * (maxImpactForce - minImpactForce);

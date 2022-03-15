@@ -70,7 +70,7 @@ MonoBehaviour:
   markerInstance: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 2147483647
+    m_Bits: 4097
   trajectoryCalculator: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   freeAim: 0
