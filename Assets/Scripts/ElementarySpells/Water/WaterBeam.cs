@@ -89,12 +89,13 @@ public class WaterBeam : AbstractSpell
                 acceleration.z = Vector3.Distance(elementaryPosition, possibleDistancePoint);
                 transform.localScale = acceleration;
 
-                /***** Collision *****/
+                /***** COLLISION WITH THE BEAM *****/
                 // If the beam hits a movable object, it pushes the object in the direction of the beam
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
                 {
                     IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
 
+                    // If the collider gameObject does not contain a script with IDamageable
                     if (item == null)
                     {
                         Debug.LogError("MovableObject is Not Damageable");
@@ -105,9 +106,28 @@ public class WaterBeam : AbstractSpell
                         item.OnDamage(damage);
                     }
                 }
+
+                // If the beam hits flames, it will extinguish them
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
                 {
-                    //raycastFromElementary.collider.gameObject.GetComponents<FIreArea>().isFadingAway = true;
+                    FIreArea item = raycastFromElementary.collider.gameObject.GetComponent<FIreArea>();
+
+                    // If the collider gameObject does not contain the script FIreArea
+                    if (item == null)
+                    {
+                        Debug.LogError("The collider gameObject does not contain the script FIreArea");
+                    }
+                    else
+                    {
+                        item.isFadingAway = true;
+                    }
+                }
+
+                // If the water beam hits the torch, it will extinguish it
+                if (raycastFromElementary.collider.CompareTag("Torch"))
+                {
+                    ParticleSystem fire = raycastFromElementary.collider.GetComponent<ParticleSystem>();
+                    fire.Stop();
                 }
             }
 
