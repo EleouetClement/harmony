@@ -7,16 +7,6 @@ public class Launchbox : MonoBehaviour
 
     public GameObject ledge;
 
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-
-    }
-
     void OnTriggerEnter(Collider collision)
     {
         if (ledge.GetComponent<ClimbableLedgeBehavior>()
@@ -24,8 +14,8 @@ public class Launchbox : MonoBehaviour
         {
             ledge.GetComponent<ClimbableLedgeBehavior>().cantrigger = true;
             Debug.Log("Entered climbable zone. Press jump (space) to climb.");
+            GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().lastLedge = ledge.GetComponent<ClimbableLedgeBehavior>();
         }
-        Debug.Log("Collision log");
     }
 
     void OnTriggerExit(Collider collision)
@@ -33,7 +23,7 @@ public class Launchbox : MonoBehaviour
         if (ledge.GetComponent<ClimbableLedgeBehavior>()
             && collision.gameObject == GameModeSingleton.GetInstance().GetPlayerReference)
         {
-            ledge.GetComponent<ClimbableLedgeBehavior>().cantrigger = true;
+            ledge.GetComponent<ClimbableLedgeBehavior>().cantrigger = false;
             Debug.Log("Exited climbable zone.");
         }
     }
