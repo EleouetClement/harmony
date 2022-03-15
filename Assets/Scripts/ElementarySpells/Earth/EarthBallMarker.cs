@@ -9,6 +9,8 @@ public class EarthBallMarker : AbstractMarker
     /// </summary>
     public GameObject markerInstance;
 
+    public LayerMask layerMask;
+
     public TrajectoryCalculator trajectoryCalculator;
 
     public RaycastHit hit;
@@ -37,7 +39,7 @@ public class EarthBallMarker : AbstractMarker
          ray = Camera.main.ScreenPointToRay(screenPoint);
 
         //aiming at environment
-        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, (1 << HarmonyLayers.LAYER_DEFAULT) + (1 << HarmonyLayers.LAYER_GROUND)))
+        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, layerMask))
         {
             return GetTarget();
         }
@@ -51,15 +53,23 @@ public class EarthBallMarker : AbstractMarker
     private Vector3 GetTarget()
     {
         freeAim = false;
-        if (markerInstance == null)
+        //hide marker if not aiming on the ground
+        if (hit.collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
         {
-            markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
-            markerInstance.GetComponent<MeshRenderer>().enabled = true;
-        }
+            if (!markerInstance)
+            {
+                markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
+                markerInstance.GetComponent<MeshRenderer>().enabled = true;
+            }
 
-        markerInstance.GetComponent<MeshRenderer>().enabled = true;
-        markerInstance.transform.position = hit.point + hit.normal * 0.1f;
-        markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
+            markerInstance.GetComponent<MeshRenderer>().enabled = true;
+            markerInstance.transform.position = hit.point + hit.normal * 0.1f;
+            markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
+        }
+        else if (markerInstance)
+        {
+            Destroy(markerInstance);
+        }
 
         //trajectoryCalculator.CalculateTrajectory();
 
