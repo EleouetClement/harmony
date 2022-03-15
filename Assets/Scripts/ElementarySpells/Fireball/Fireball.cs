@@ -92,6 +92,9 @@ public class Fireball : AbstractSpell
     {
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
+        if (elementaryfollow) {
+            fireOrbInstance.transform.position = elementary.transform.position;
+        }
         if(fireOrbInstance.GetComponent<FireOrb>().hasExplode)
         {
             Terminate();
@@ -100,6 +103,7 @@ public class Fireball : AbstractSpell
         // Update when the fireball is charging
         if(!isReleased())
         {
+            fireOrbInstance.transform.position = elementary.transform.position;
             target = CalculateTrajectory();
             if (fireOrbInstance.transform.localScale.x < projectileMaxSize)
             {
@@ -113,8 +117,13 @@ public class Fireball : AbstractSpell
             projectileTopSpeed += projectileTopSpeedGrowth;
             maxDistance += projectileMaxDistanceGrowth;
         }
-        if(launched)
+        if (fireOrbInstance.GetComponent<FireOrb>().hasExplode)
         {
+            Terminate();
+        }
+        else if (launched)
+        {
+            elem.computePosition = false;
             Move();
         }
         
@@ -164,6 +173,7 @@ public class Fireball : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        elementaryfollow = true;
         base.init(elemRef, target.normalized);
         if (FireballPrefab == null)
         {
@@ -174,7 +184,7 @@ public class Fireball : AbstractSpell
             fireOrbInstance = Instantiate(FireballPrefab, transform.position, Quaternion.identity);
             origin = fireOrbInstance.transform.position;
             elem = elementary.GetComponent<ElementaryController>();
-            elem.computePosition = false;
+            
             gameManager = GameModeSingleton.GetInstance();
             if (projectileStartSpeed > projectileTopSpeed)
             {
@@ -280,11 +290,12 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
+        elementaryfollow = false;
         //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
-            Debug.Log("Molotov à appliquer");
+            Debug.Log("Molotov ï¿½ appliquer");
             isExplosive = true;
         }
         if(debug)

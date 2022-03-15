@@ -41,6 +41,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         Cursor.lockState = CursorLockMode.Locked;
         InitializeElementary();
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -79,16 +80,20 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
-                elementaryController.currentSpell.Terminate();
+                elementaryController.currentSpell.OnRelease();
             }
         }
         if (manaburnout)
         {
             mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
-            if (mana >= maxMana * 0.99f) manaburnout = false;
+            if (mana >= maxMana) manaburnout = false;
         }
-        Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
+        //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
+
+        //player facing in front of them when aiming
+        if (elementaryController.isAiming)
+            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
     }
 
     // Update is called once per frame
@@ -103,7 +108,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// </summary>
     private void cameraCheck()
     {
-        if (elementaryController.inCombat && elementaryController.isAiming)
+        if (elementaryController.isAiming)
         {
             playerCinemachineCameraController.ZoomIn();
         }
@@ -139,7 +144,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             elementaryController.SetElement(AbstractSpell.Element.Earth);
             elementaryController.transform.GetChild(0).gameObject.GetComponent<Light>().color = Color.yellow;
         }
-        print("Element sélectionné : " + elementaryController.currentElement);
+        //print("Element sélectionné : " + elementaryController.currentElement);
     }
     #region Spell casting
 
@@ -149,6 +154,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             if (value.isPressed)
             {
+                elementaryController.readyToCast = false;
                 AbstractSpell spell = Instantiate(
                         elementaryController.GetSpell1(),
                         elementaryController.transform.position,

@@ -26,6 +26,7 @@ public class WaterMissiles : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        elementaryfollow = true;
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
         gameManager = GameModeSingleton.GetInstance();
@@ -33,9 +34,17 @@ public class WaterMissiles : AbstractSpell
 
     }
 
-    public override void FixedUpdate()
+	private void Update()
+	{
+        transform.position = elementary.transform.position;
+    }
+	public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (elementaryfollow)
+        {
+            transform.position = elementary.transform.position;
+        }
         // Time locale
         timeLocale += Time.fixedDeltaTime;
         // Ball spawning
@@ -66,6 +75,7 @@ public class WaterMissiles : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
+        elementaryfollow = false;
         base.onChargeEnd(chargetime);
         gameManager.GetCinemachineCameraController.ZoomOut();
         balls.ForEach(e => { e.launched = true; });

@@ -5,31 +5,31 @@ using UnityEngine;
 public class PositionningMarker : AbstractMarker
 {
     public Vector3 targetPosition { get; private set; }
+    public LayerMask layersCollisionWithRaycast;
+
+    [HideInInspector] public float thresholdGroundToWall = 0.7f;
+    [HideInInspector] public float thresholdWallToCeiling = 0f;
     private RaycastHit hit;
 
     public override void DisplayTarget(Vector3 direction, Vector3 origin)
     {
-        int layers = 1 << HarmonyLayers.LAYER_GROUND;
-        layers += 1 << HarmonyLayers.LAYER_WALL_ENABLE;
-        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layers))
+        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layersCollisionWithRaycast))
         {
-            if(hit.normal.y > 0.70)
+            if(hit.normal.y > thresholdGroundToWall)
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
                 //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
-                
             }
-            else if(hit.normal.y >= 0)
+            else if(hit.normal.y >= thresholdWallToCeiling)
             {
                 targetPosition = hit.point;
                 transform.position = hit.point;
                 //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
-                
             }
             else
             {
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
+                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);
             }
         }
         else

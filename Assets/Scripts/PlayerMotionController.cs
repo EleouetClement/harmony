@@ -10,16 +10,21 @@ public class PlayerMotionController : MonoBehaviour
 
     [Header("Character settings")]
     [Range(0, 100)] public float walkSpeed = 1f;
+    [Range(0, 100)] public float strafeSpeed = 1f;
+    [Range(0, 100)] public float BackWalkSpeed = 1f;
     [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
     public float turnSpeed;
     [Header("Character Physics settings")]
-    [Range(0, 10)] public float friction = 1f;
+    private float friction;
+    [Range(0, 100)] public float accelerationFriction;
+    [Range(0, 100)] public float decelerationFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
+    [SerializeField] private float slopeForce = 9.81f;
     public LayerMask layerMask;
 
     [Header("Dodge settings")]
@@ -28,7 +33,7 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] [Min(0)] private float dodgeCoolDown;
     [SerializeField] private bool isInvincible;
 
-    [Header("SlopeAnglesDetection settings")] 
+    [Header("SlopeAnglesDetection settings")]
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
     [SerializeField] private bool debug = false;
@@ -44,10 +49,17 @@ public class PlayerMotionController : MonoBehaviour
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
+    private Transform groundTranform;
+    private Vector3 lastGroundPos;
     public bool isMoving = false;
     private bool isDodging = false;
     private bool isFalling = false;
     private bool isJumping = false;
+
+    private bool movingForward;
+    private bool movingBackward;
+    private bool movingRight;
+    private bool movingLeft;
 
     private float maxSpeedApprox;
     private float maxSpeedRatio;
@@ -55,20 +67,41 @@ public class PlayerMotionController : MonoBehaviour
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
 
-    public float accelerationFriction;
-    public float decelerationFriction;
+
+    
+
+ 
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
         maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
+
+        movingForward = false;
+        movingBackward = false;
+        movingRight = false;
+        movingLeft = false;
+
     }
 
     void Update()
     {
+        Vector3 playerOffset = Vector3.zero;
+        if (onGround && groundTranform)
+        {
+            playerOffset = groundTranform.position - lastGroundPos;
+            lastGroundPos = groundTranform.position;
+        }
+
+        //prevent character from bouncing when going down a slope
+        if (isMoving && OnSlope())
+        {
+            velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+        }
+
         maxSpeedRatio = currentSpeed / maxSpeedApprox;
-        controller.Move(velocity * Time.deltaTime);
+        controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -83,6 +116,8 @@ public class PlayerMotionController : MonoBehaviour
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
 
+       
+
     }
 
     private void FixedUpdate()
@@ -95,6 +130,7 @@ public class PlayerMotionController : MonoBehaviour
 		{
             friction = decelerationFriction;
 		}
+        CheckMovement();
         UpdateGroundState();
         bool sliding = floorAngle > maxFloorAngle;
         
@@ -102,9 +138,17 @@ public class PlayerMotionController : MonoBehaviour
         #region Apply Direction Input
 
         if (!sliding && !isDodging)
-        {           
-            velocity += GetDirection() * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+        {
+            GetDirection();
+            if(movingForward)
+                velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+            else
+                velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
+                    + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
+
         }
+        
 
 
         #endregion
@@ -221,15 +265,22 @@ public class PlayerMotionController : MonoBehaviour
     private void UpdateGroundState()
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
-            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask);
+            out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
 
-        if (onGround)
+		if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+
+            if (groundTranform != surfaceInfo.transform)
+            {
+                groundTranform = surfaceInfo.transform;
+                lastGroundPos = groundTranform.position;
+            }
         }
         else
         {
             floorAngle = 0;
+            groundTranform = null;
         }
     }
 
@@ -302,5 +353,77 @@ public class PlayerMotionController : MonoBehaviour
     public bool GetIsFalling()
     {
         return isFalling;
+    }
+
+    public bool MovingForward 
+    {
+        get 
+        {
+            return movingForward;
+        }
+    }
+    public bool MovingBackward 
+    {
+        get 
+        {
+            return movingBackward;
+        }
+    }
+    public bool MovingRight 
+    {
+        get 
+        {
+            return movingRight;
+        }
+    }
+    public bool MovingLeft 
+    {
+        get 
+        {
+            return movingLeft;
+        }
+    }
+
+    /// <summary>
+    /// Returns true if the player is on a slope
+    /// </summary>
+    /// <returns></returns>
+    private bool OnSlope()
+    {
+        if (isJumping)
+            return false;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position + Vector3.down * controller.height / 2, Vector3.down, out hit, 0.1f, layerMask))
+        {
+            return hit.normal != Vector3.up;
+        }
+
+        return false;
+    }
+
+    private void CheckMovement()
+    {
+        if (Mathf.Abs(inputAxis.y) > 0f)
+        {
+            movingForward = inputAxis.y > float.Epsilon;
+            movingBackward = inputAxis.y < float.Epsilon;
+        }
+        else
+        {
+            movingForward = false;
+            movingBackward = false;
+        }
+        if (Mathf.Abs(inputAxis.x) > float.Epsilon)
+        {
+            movingRight = inputAxis.x > float.Epsilon;
+            movingLeft = inputAxis.x < float.Epsilon;
+        }
+        else
+        {
+            movingRight = false;
+            movingLeft = false;
+        }
     }
 }

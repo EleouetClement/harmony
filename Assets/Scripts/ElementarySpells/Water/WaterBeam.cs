@@ -7,14 +7,19 @@ public class WaterBeam : AbstractSpell
 
     public GameObject PosMarkerPrefab;
     public ParticleSystem impactEffect;
+    public LayerMask layersCollision;
 
     private ElementaryController elementaryController;
+    private Vector3 elementaryPosition;
     private CinemachineCameraController cameraController;
-    private RaycastHit hit;
+
+    private RaycastHit hit; // Raycast to get the hit.point of the marker for the character's aim
+    private RaycastHit raycastFromElementary; // Raycast to get the direction of the beam 
+    private Vector3 beamDirection;
     private bool isAccelerationBeamFinished = false; // Has the beam finished expanding (false if the beam continues to expand)
-    private Vector3 acceleration = Vector3.zero; // Extension of the beam
-    private Vector3 currentDistance = Vector3.zero; // Current distance to the end of the beam
-    private Vector3 possibleDistance = Vector3.zero; // Maximum distance depending on the obstacles on the path
+    private Vector3 acceleration = Vector3.zero; // Extension vector of the beam
+    private Vector3 currentDistancePoint = Vector3.zero; // Current distance to the end of the beam
+    private Vector3 possibleDistancePoint = Vector3.zero; // Maximum distance depending on the obstacles on the path
 
     public override void FixedUpdate()
     {
@@ -29,18 +34,29 @@ public class WaterBeam : AbstractSpell
             // If the player does not hit anything or not the good layer, he can still be aimed at (with a virtual hit point)
             if (hit.point == Vector3.zero)
             {
-                Vector3 virtualPointDistanceMax = elementaryController.transform.position + cameraController.GetViewDirection * maxDistance;
-                hit.point = virtualPointDistanceMax;
+                Vector3 virtualPointDistanceMax = elementaryPosition + cameraController.GetViewDirection * maxDistance;
+                hit.point =  virtualPointDistanceMax;
             }
 
-            possibleDistance = hit.point;
-            currentDistance = elementaryController.transform.position + cameraController.GetViewDirection * transform.localScale.z;
+            beamDirection = hit.point - elementaryPosition;
 
-            // If there is an obstacle, the end point of the beam is the hit point (and its extension length is readjusted), else the beam continues to expand
-            if(Vector3.Distance(transform.position, currentDistance) >= Vector3.Distance(transform.position, possibleDistance))
+            // Raycast from the elementary to the hit.point (direction of the beam)
+            if (Physics.Raycast(elementaryPosition, beamDirection, out raycastFromElementary, maxDistance, layersCollision))
             {
-                currentDistance = possibleDistance;
-                acceleration.z = Vector3.Distance(transform.position, possibleDistance);
+                // If there is an obstacle, the max distance of the beam is the intersection with this obstacle
+                possibleDistancePoint = raycastFromElementary.point;
+            }
+            else
+            {
+                // If there is no obstacle in the way of the beam, the beam can reach up to the hit point
+                possibleDistancePoint = hit.point;
+            }
+
+            currentDistancePoint = elementaryPosition + beamDirection.normalized * transform.localScale.z;
+
+            // If there is an obstacle, the beam stops expanding, else it continues
+            if (Vector3.Distance(elementaryPosition, currentDistancePoint) >= Vector3.Distance(elementaryPosition, possibleDistancePoint))
+            {
                 isAccelerationBeamFinished = true;
             }
             else
@@ -48,14 +64,10 @@ public class WaterBeam : AbstractSpell
                 isAccelerationBeamFinished = false;
             }
 
-            // Put the impact effect on the impact area with a slight offset to see this area well
-            impactEffect.transform.position = currentDistance - cameraController.GetViewDirection.normalized * 0.2f;
-            impactEffect.transform.LookAt(elementaryController.transform.position);
-            transform.LookAt(hit.point);
-
             //Affecting manaCost
             GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerGameplayController>()?.OnManaSpend(GetManaCost() * Time.fixedDeltaTime);
-
+            
+            /***** BEAM EXTENSION *****/
             // If the beam does not hit an obstacle, its extension continues
             if (!isAccelerationBeamFinished)
             {
@@ -63,17 +75,67 @@ public class WaterBeam : AbstractSpell
                 transform.localScale = acceleration;
 
                 // If the beam has reached an obstacle, it stops expanding
-                if (acceleration.z >= Vector3.Distance(possibleDistance, transform.position))
+                if (acceleration.z >= Vector3.Distance(possibleDistancePoint, elementaryPosition))
                 {
                     isAccelerationBeamFinished = true;
-                    acceleration.z = Vector3.Distance(possibleDistance, transform.position);
+                    acceleration.z = Vector3.Distance(possibleDistancePoint, elementaryPosition);
                 }
             }
             else
             {
-                // The length of the beam depends on the hit point
+                // The length of the beam depends on the hit point :
+                // The end point of the beam is the hit point (and its extension length is readjusted)
+                currentDistancePoint = possibleDistancePoint;
+                acceleration.z = Vector3.Distance(elementaryPosition, possibleDistancePoint);
                 transform.localScale = acceleration;
+
+                /***** COLLISION WITH THE BEAM *****/
+                // If the beam hits a movable object, it pushes the object in the direction of the beam
+                if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
+                {
+                    IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
+
+                    // If the collider gameObject does not contain a script with IDamageable
+                    if (item == null)
+                    {
+                        Debug.LogError("MovableObject is Not Damageable");
+                    }
+                    else
+                    {
+                        DamageHit damage = new DamageHit(0f, beamDirection.normalized);
+                        item.OnDamage(damage);
+                    }
+                }
+
+                // If the beam hits flames, it will extinguish them
+                if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_FIRE)
+                {
+                    FIreArea item = raycastFromElementary.collider.gameObject.GetComponent<FIreArea>();
+
+                    // If the collider gameObject does not contain the script FIreArea
+                    if (item == null)
+                    {
+                        Debug.LogError("The collider gameObject does not contain the script FIreArea");
+                    }
+                    else
+                    {
+                        item.isFadingAway = true;
+                    }
+                }
+
+                // If the water beam hits the torch, it will extinguish it
+                if (raycastFromElementary.collider.CompareTag("Torch"))
+                {
+                    ParticleSystem fire = raycastFromElementary.collider.GetComponent<ParticleSystem>();
+                    fire.Stop();
+                }
             }
+
+            /***** BEAM IMPACT *****/
+            // Put the impact effect on the impact area with a slight offset to see this area well
+            impactEffect.transform.position = currentDistancePoint - beamDirection.normalized * 0.2f;
+            impactEffect.transform.LookAt(elementaryPosition);
+            transform.LookAt(hit.point);
         }
     }
 
@@ -83,7 +145,10 @@ public class WaterBeam : AbstractSpell
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         elementaryController = elemRef.GetComponent<ElementaryController>();
+        elementaryPosition = elementaryController.transform.position;
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
+
+        marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
 
         // Init the visual
         impactEffect.transform.position = elementaryController.transform.position;
