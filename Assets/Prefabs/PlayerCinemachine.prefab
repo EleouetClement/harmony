@@ -781,11 +781,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1f12b39922ffb4999a1a4bedf2e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AlternativeMovement: 0
   currentSpeed: 0
   walkMaxSpeed: 3.5
   strafeMaxSpeed: 3
   BackWalkMaxSpeed: 1.75
-  timeToMaxSpeed: 0.5
+  timeToMaxSpeed: 0.3
   walkSpeed: 0
   strafeSpeed: 0
   backWalkSpeed: 0
@@ -799,13 +800,13 @@ MonoBehaviour:
   accelerationFriction: 0
   decelerationFriction: 12
   turningFriction: 2
-  sharpTurnFriction: 100
+  sharpTurnFriction: 10
   airFriction: 2
-  airControl: 0.03
+  airControl: 0.25
   gravity: 9.81
-  fallGravityMultiplier: 2
+  fallGravityMultiplier: 3
   jumpGravityMultiplier: 2.5
-  slopeForce: 3.5
+  slopeForce: 10
   slideForce: 4
   layerMask:
     serializedVersion: 2
@@ -824,7 +825,9 @@ MonoBehaviour:
   onGround: 0
   isMoving: 0
   isTurning: 0
-  alreadyMoving: 0
+  sliding: 0
+  movingForward: 0
+  movingBackward: 0
   movingRight: 0
   movingLeft: 0
 --- !u!114 &1344650967

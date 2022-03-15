@@ -227,22 +227,22 @@ public class PlayerMotionController : MonoBehaviour
 
             if (isMoving && AlternativeMovement && !elementary.isAiming)
             {
-                velocity += GetDirection() * walkAcceleration * Time.deltaTime;
+                velocity += GetDirection() * walkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 
             }
             else if (isMoving)
             {
                 if (movingForward)
 			    {
-				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime;
+				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 }
                 if (movingRight || movingLeft)
                 {
-				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime;
+				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 }
                 if (movingBackward)
                 {
-                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime;
+                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 }
                 //prevent character from bouncing when going down a slope
                 if (OnSlope())
@@ -309,7 +309,6 @@ public class PlayerMotionController : MonoBehaviour
         //clamping depending on maxSpeed
         if (onGround)
         {
-            print("clamp");
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         }
 
