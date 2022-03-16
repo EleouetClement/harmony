@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.5499958, y: 0.5949993, z: -0.7499997}
+  m_LocalPosition: {x: 0.55, y: 0.595, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.3005525, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -811,6 +811,7 @@ MonoBehaviour:
   velocity: {x: 0, y: 0, z: 0}
   onGround: 0
   isMoving: 0
+  lastLedge: {fileID: 0}
 --- !u!114 &1344650967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1365,6 +1366,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MC_Placeholder
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: ae764c6e44d140f42952e97d722bb0e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae764c6e44d140f42952e97d722bb0e7, type: 3}
 --- !u!1 &8528330449296606753 stripped
@@ -1389,7 +1395,18 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
-  m_WarningMessage: 
+  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
+    are already bound by a Humanoid avatar. These transforms can only be changed
+    by Humanoid clips.\n\tTransform 'mixamorig:Hips'\n\tTransform 'mixamorig:LeftFoot'\n\tTransform
+    'mixamorig:LeftHandThumb2'\n\tTransform 'mixamorig:LeftHandIndex1'\n\tTransform
+    'mixamorig:LeftHandPinky2'\n\tTransform 'mixamorig:RightHandRing2'\n\tTransform
+    'mixamorig:Spine1'\n\tTransform 'mixamorig:LeftToeBase'\n\tTransform 'mixamorig:LeftHandThumb3'\n\tTransform
+    'mixamorig:RightArm'\n\tand more ...\n\tFrom animation clip 'Idle'\n\tFrom animation
+    clip 'Walking'\n\tFrom animation clip 'Running'\n\tFrom animation clip 'Right
+    Strafe Walk'\n\tFrom animation clip 'Right Strafe'\n\tFrom animation clip 'Left
+    Strafe Walk'\n\tFrom animation clip 'Left Strafe'\n\tFrom animation clip 'Walking
+    Backwards'\n\tFrom animation clip 'Running Backward'\n\tFrom animation clip 'Jumping
+    Up'\n\tand more ..."
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
