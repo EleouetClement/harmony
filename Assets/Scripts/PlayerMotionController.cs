@@ -135,8 +135,6 @@ public class PlayerMotionController : MonoBehaviour
         }
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
         
-
-        isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) > 1f;
         
         if(debug)
             Debug.DrawLine(transform.position, transform.position + velocity);
@@ -147,16 +145,21 @@ public class PlayerMotionController : MonoBehaviour
 
 	private void FixedUpdate()
     {
+
+        Vector3 dir = new Vector3(velocity.x, 0f, velocity.z).normalized;
         
+        if(dir != Vector3.zero)
+            isTurning = Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(dir)) > 1f;
 
         //smooth turning when moving
         if (isMoving)
         {
-            if (!elementary.isAiming)
-                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized), Time.deltaTime * turnSpeed);
+            if (!elementary.isAiming && dir != Vector3.zero)
+                playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(dir), Time.deltaTime * turnSpeed);
             else
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
         }
+
 
         //player facing in front of them when aiming
         if (elementary.isAiming)
