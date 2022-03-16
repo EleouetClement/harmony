@@ -88,8 +88,6 @@ public class EarthWall : AbstractSpell
         base.init(elemRef, target);
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
-        marker.GetComponent<PositionningMarker>()?.SetSlopeLowerTreshold(possibleSlopeForFloor);
-        marker.GetComponent<PositionningMarker>()?.SetSlopeUpperTreshold(possibleSlopeForWall);
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementaryController = elemRef.GetComponent<ElementaryController>();
 
@@ -150,7 +148,7 @@ public class EarthWall : AbstractSpell
     
     private void Previsualization(RaycastHit hit)
     {
-        if (hit.normal.y > possibleSlopeForFloor)
+        if (hit.normal.y > thresholdGroundToWall)
         {
             newStatus = Status.pillar;
         }
