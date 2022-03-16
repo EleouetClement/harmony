@@ -79,10 +79,10 @@ public class PlayerMotionController : MonoBehaviour
     public bool sliding = false;
     public bool isShielding = false;
 
-    private bool movingForward = false;
-    private bool movingBackward = false;
-    private bool movingRight = false;
-    private bool movingLeft = false;
+    private bool movingForward;
+    private bool movingBackward;
+    private bool movingRight;
+    private bool movingLeft;
 
    
 

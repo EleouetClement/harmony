@@ -1864,6 +1864,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1344650967, guid: 6bb18bdb3babd9b43b1b7f446398f301, type: 3}
+      propertyPath: animSpeed
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1873,6 +1877,36 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5949998
+      objectReference: {fileID: 0}
+    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 2965026262780704971, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_Avatar
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: aimingFriction
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: maxTurnFriction
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: backWalkMaxSpeed
+      value: 1.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: shieldingMaxSpeed
+      value: 1.75
       objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
