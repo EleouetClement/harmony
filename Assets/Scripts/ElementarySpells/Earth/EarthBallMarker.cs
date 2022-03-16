@@ -9,6 +9,8 @@ public class EarthBallMarker : AbstractMarker
     /// </summary>
     public GameObject markerInstance;
 
+    public LayerMask layerMask;
+
     public TrajectoryCalculator trajectoryCalculator;
 
     public RaycastHit hit;
@@ -37,7 +39,7 @@ public class EarthBallMarker : AbstractMarker
          ray = Camera.main.ScreenPointToRay(screenPoint);
 
         //aiming at environment
-        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, (1 << HarmonyLayers.LAYER_DEFAULT) + (1 << HarmonyLayers.LAYER_GROUND)))
+        if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, layerMask))
         {
             return GetTarget();
         }
@@ -51,15 +53,23 @@ public class EarthBallMarker : AbstractMarker
     private Vector3 GetTarget()
     {
         freeAim = false;
-        if (markerInstance == null)
+        //hide marker if not aiming on the ground
+        if (hit.collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
         {
-            markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
-            markerInstance.GetComponent<MeshRenderer>().enabled = true;
-        }
+            if (!markerInstance)
+            {
+                markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
+                markerInstance.GetComponent<MeshRenderer>().enabled = true;
+            }
 
-        markerInstance.GetComponent<MeshRenderer>().enabled = true;
-        markerInstance.transform.position = hit.point + hit.normal * 0.1f;
-        markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
+            markerInstance.GetComponent<MeshRenderer>().enabled = true;
+            markerInstance.transform.position = hit.point + hit.normal * 0.1f;
+            markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
+        }
+        else if (markerInstance)
+        {
+            Destroy(markerInstance);
+        }
 
         //trajectoryCalculator.CalculateTrajectory();
 
@@ -73,12 +83,59 @@ public class EarthBallMarker : AbstractMarker
         if (markerInstance != null)
             markerInstance.GetComponent<MeshRenderer>().enabled = false;
         aimDirection = (worldPoint - GameModeSingleton.GetInstance().GetElementaryReference.transform.position).normalized;
-        print(" direction :" + aimDirection);
+        //print(" direction :" + aimDirection);
 
         //trajectoryCalculator.CalculateTrajectory();
         
         return aimDirection;
     }
+
+    /// <summary>
+    /// Returns the position where to launch the earth ball and draws markers
+    /// </summary>
+    /// <returns></returns>
+  //  public Vector3 GetTarget()
+  //  {
+  //      Vector3 screenPoint = new Vector3(Screen.width / 2, Screen.height / 2, maxRayCastDistance);
+  //      Vector3 worldPoint = Camera.main.ScreenToWorldPoint(screenPoint);
+  //      Ray ray = Camera.main.ScreenPointToRay(screenPoint);
+  //      Vector3 origin = ray.origin + 0.1f * ray.direction;
+  //      if (Physics.Raycast(ray.origin + ray.direction * 0.1f, ray.direction, out hit, maxRayCastDistance, (1 << HarmonyLayers.LAYER_DEFAULT) + (1 << HarmonyLayers.LAYER_GROUND)))
+  //          {
+  //          freeAim = false;
+  //          if (markerInstance == null)
+  //          {
+  //              markerInstance = Instantiate(markerPrefab, hit.point + hit.normal * 0.1f, Quaternion.FromToRotation(markerPrefab.transform.up, hit.normal) * markerPrefab.transform.rotation);
+  //              markerInstance.GetComponent<MeshRenderer>().enabled = true;
+  //          }
+            
+  //          markerInstance.GetComponent<MeshRenderer>().enabled = true;
+  //          markerInstance.transform.position = hit.point + hit.normal * 0.1f;
+  //          markerInstance.transform.rotation = Quaternion.FromToRotation(markerInstance.transform.up, hit.normal) * markerInstance.transform.rotation;
+
+  //          trajectoryCalculator.CalculateTrajectory();
+  //          trajectoryCalculator.DisplayTrajectory(true);
+
+  //          target = hit.point;
+  //          return hit.point;
+  //      }
+  //      //out of range
+		//else
+		//{
+  //          freeAim = true;
+  //          //trajectoryCalculator.DisplayTrajectory(false);
+  //          if (markerInstance != null)
+  //              markerInstance.GetComponent<MeshRenderer>().enabled = false;
+  //          aimDirection = (worldPoint - GameModeSingleton.GetInstance().GetElementaryReference.transform.position).normalized;
+  //          print(" direction :" +aimDirection);
+
+  //          trajectoryCalculator.CalculateTrajectory();
+  //          Vector3 target = origin + ray.direction * maxRayCastDistance;
+  //          target.y = transform.position.y;
+  //          return target;
+  //      }
+        
+  //  }
 
     public void SetMarkerRadius(float radius)
     {

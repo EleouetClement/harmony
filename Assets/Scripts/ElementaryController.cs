@@ -47,6 +47,7 @@ public class ElementaryController : MonoBehaviour
 
     public bool inCombat = false;
     public bool isAiming = false;
+    private bool isReseting = false;
 
     /// <summary>
     /// true if the element handles itself
@@ -145,7 +146,7 @@ public class ElementaryController : MonoBehaviour
 	private void LateUpdate()
 	{
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
-        if (computePosition)
+        if (computePosition || (currentSpell != null && currentSpell.elementaryfollow))
         {
             
             Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius, layersToIgnore);
@@ -176,7 +177,13 @@ public class ElementaryController : MonoBehaviour
 
 	private void FixedUpdate()
     {
-        
+        isAway = IsElementaryAway();
+        if (!isAway && isReseting)
+        {
+            currentSpell = null;
+            readyToCast = true;
+            isReseting = false;
+        }
     }
 
     public void SetElement(AbstractSpell.Element element)
@@ -278,6 +285,7 @@ public class ElementaryController : MonoBehaviour
         currentSpell = null;
         readyToCast = !IsElementaryAway();
         //Debug.Log("readyToCast : " + readyToCast);
+        isReseting = true;
     }
 
     //private void OnCollisionEnter(Collision collision)

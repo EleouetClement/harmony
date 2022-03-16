@@ -33,7 +33,7 @@ public class GameModeSingleton : MonoBehaviour
 
     private void Awake()
     {
-        Debug.Log("Initialisation du singleton");
+        //Debug.Log("Initialisation du singleton");
         if (playerReference == null)
             playerReference = GameObject.Find("Player");
         if (elementaryReference == null)

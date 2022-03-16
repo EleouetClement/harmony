@@ -47,3 +47,6 @@ MonoBehaviour:
   markerPrefabs:
   - {fileID: 426489448097527418, guid: 9a363b17bf35a2c4b871b5bb1b78cfdf, type: 3}
   - {fileID: 5806283404587497345, guid: 59304e62b2ea2004ba45a041808826c7, type: 3}
+  layersCollisionWithRaycast:
+    serializedVersion: 2
+    m_Bits: 2147483647
