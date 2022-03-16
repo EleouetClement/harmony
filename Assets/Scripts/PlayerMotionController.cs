@@ -39,11 +39,11 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float decelerationFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
-    [Min(0)] public float gravity = 9.81f;
     [Range(1f, 10f)] public float fallGravityMultiplier = 1f;
     [Range(1f, 10f)] public float jumpGravityMultiplier = 1f;
     [SerializeField] private float slopeForce = 9.81f;
     [SerializeField] private float slideForce = 1;
+    [Min(0)] public float gravity = 9.81f;
     public LayerMask layerMask;
 
     [Header("Dodge settings")]
