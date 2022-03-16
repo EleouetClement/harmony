@@ -60,7 +60,7 @@ public class PlayerAnimController : MonoBehaviour
         float maxSpeedRatioX = Mathf.Abs(velocity.x) / playerMotionController.GetMaxSpeed();
         float maxSpeedRatioZ = Mathf.Abs(velocity.z) / playerMotionController.GetMaxSpeed();
 
-        if (playerMotionController.AlternativeMovement && !elementary.isAiming)
+        if (!elementary.isAiming)
         {
             if (movingForward)
                 animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), 1f, inputAxis.magnitude * maxSpeedRatioZ * animSpeed * Time.deltaTime));

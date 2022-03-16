@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMotionController : MonoBehaviour
 {
-    public bool AlternativeMovement = false;
+    [SerializeField] private bool debug = false;
 
     [Header("Character Stats")]
     public float currentSpeed;
@@ -15,25 +15,28 @@ public class PlayerMotionController : MonoBehaviour
     [Header("Character settings")]
     [Range(0, 100)] public float walkMaxSpeed;
     [Range(0, 100)] public float strafeMaxSpeed;
-    [Range(0, 100)] public float BackWalkMaxSpeed;
+    [Range(0, 100)] public float backWalkMaxSpeed;
+    [Range(0, 100)] public float shieldingMaxSpeed;
+    /// <summary>
+    /// speed at which the player turns towards velocity or towards aiming direction
+    /// </summary>
+    [Range(0, 100)] public float turnSpeed;
     [Range(0, 100)] public float timeToMaxSpeed;
     private float maxSpeed;
     private float maxSpeedPercent;
-    public float walkSpeed;
-    public float strafeSpeed;
-    public float backWalkSpeed;
-    public float walkAcceleration;
-    public float strafeAcceleration;
-    public float backWalkAcceleration;
+    private float walkSpeed;
+    private float strafeSpeed;
+    private float backWalkSpeed;
+    private float walkAcceleration;
+    private float strafeAcceleration;
+    private float backWalkAcceleration;
     [Range(0, 20)] public float jumpForce = 1f;
     [Range(0, 90)] public float maxFloorAngle = 45;
-    public float turnSpeed;
     [Header("Character Physics settings")]
-    public float friction;
-    [Range(0, 100)] public float accelerationFriction;
+    private float friction;
+    [Range(0, 100)] public float aimingFriction;
+    [Range(0, 100)] public float maxTurnFriction;
     [Range(0, 100)] public float decelerationFriction;
-    [Range(0, 100)] public float turningFriction;
-    [Range(0, 100)] public float sharpTurnFriction;
     [Range(0, 10)] public float airFriction = 1f;
     [Range(0, 1)] public float airControl = 1f;
     [Min(0)] public float gravity = 9.81f;
@@ -52,7 +55,6 @@ public class PlayerMotionController : MonoBehaviour
     [Header("SlopeAnglesDetection settings")]
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
-    [SerializeField] private bool debug = false;
 
     public CinemachineCameraController cinemachineCamera;
     private ElementaryController elementary;
@@ -75,6 +77,7 @@ public class PlayerMotionController : MonoBehaviour
     private bool isJumping = false;
     public bool isTurning = false;
     public bool sliding = false;
+    public bool isShielding = false;
 
     public bool movingForward;
     public bool movingBackward;
@@ -114,7 +117,7 @@ public class PlayerMotionController : MonoBehaviour
 		currentSpeed = velocity.magnitude;
         walkAcceleration = walkMaxSpeed / timeToMaxSpeed;
         strafeAcceleration = strafeMaxSpeed / timeToMaxSpeed;
-        backWalkAcceleration = BackWalkMaxSpeed / timeToMaxSpeed;
+        backWalkAcceleration = backWalkMaxSpeed / timeToMaxSpeed;
 
         Vector3 playerOffset = Vector3.zero;
         if (onGround && groundTranform)
@@ -149,7 +152,7 @@ public class PlayerMotionController : MonoBehaviour
         //smooth turning when moving
         if (isMoving)
         {
-            if (AlternativeMovement && !elementary.isAiming)
+            if (!elementary.isAiming)
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized), Time.deltaTime * turnSpeed);
             else
                 playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, cinemachineCamera.rotation.y, 0), Time.deltaTime * turnSpeed);
@@ -159,6 +162,13 @@ public class PlayerMotionController : MonoBehaviour
         if (elementary.isAiming)
             playerMesh.localRotation = Quaternion.Slerp(playerMesh.localRotation, Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0),Time.deltaTime *  turnSpeed);
 		
+
+		UpdateGroundState();
+        sliding = floorAngle > maxFloorAngle;
+        
+
+       
+
         #region Friction Calculations
 		if (onGround)
         {
@@ -166,13 +176,10 @@ public class PlayerMotionController : MonoBehaviour
             {
                 if (isTurning && !elementary.isAiming)
                 {
-                    if (AlternativeMovement)
-                        friction = (Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) / 180f) * sharpTurnFriction;
-                    else
-                        friction = turningFriction;
+                     friction = (Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) / 180f) * maxTurnFriction; 
                 }
                 else if (isTurning)
-                    friction = turningFriction;
+                    friction = aimingFriction;
                 else
                     friction = 0f;
             }
@@ -186,13 +193,6 @@ public class PlayerMotionController : MonoBehaviour
             friction = airFriction;
         }
 		#endregion
-
-		UpdateGroundState();
-        sliding = floorAngle > maxFloorAngle;
-        
-
-       
-
 
         #region Dodge force
         if (isDodging && dodgeTimer <= Mathf.Epsilon)
@@ -225,7 +225,7 @@ public class PlayerMotionController : MonoBehaviour
             UpdateSpeeds();
             UpdateMaxSpeed();
 
-            if (isMoving && AlternativeMovement && !elementary.isAiming)
+            if (isMoving && !elementary.isAiming)
             {
                 velocity += GetDirection() * walkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 
@@ -250,14 +250,6 @@ public class PlayerMotionController : MonoBehaviour
                     velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
                 }
             }
-           
-
-            //if(movingForward)
-            //    velocity += forwardDirection.normalized * (walkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
-            //else
-            //    velocity += forwardDirection.normalized * (BackWalkSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl))
-            //        + rightDirection.normalized * (strafeSpeed * Time.fixedDeltaTime * (onGround ? 1 : airControl));
 
         }
 
@@ -479,6 +471,18 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
+    public float MaxSpeed
+    {
+        get
+        {
+            return maxSpeed;
+        }
+        set
+        {
+            maxSpeed = value;
+        }
+    }
+
     /// <summary>
     /// Returns true if the player is on a slope
     /// </summary>
@@ -503,7 +507,7 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void CheckMovement()
     {
-        if (AlternativeMovement && isMoving && !elementary.isAiming)
+        if (isMoving && !elementary.isAiming)
         {
             movingForward = true;
             movingBackward = false;
@@ -567,7 +571,7 @@ public class PlayerMotionController : MonoBehaviour
 
         if (movingBackward)
         {
-            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, BackWalkMaxSpeed, backWalkAcceleration * Time.deltaTime);
+            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, backWalkMaxSpeed, backWalkAcceleration * Time.deltaTime);
         }
 		else
 		{
@@ -584,16 +588,21 @@ public class PlayerMotionController : MonoBehaviour
         {
             maxSpeed = jumpForce;
         }
-        else if (isMoving && AlternativeMovement && !elementary.isAiming)
+        else if (isMoving && !elementary.isAiming)
         {
-            maxSpeed = walkMaxSpeed;
+            if (isShielding)
+                maxSpeed = shieldingMaxSpeed;
+            else
+                maxSpeed = walkMaxSpeed;
         }
         else if(isMoving)
         {
-            if (movingForward)
+            if(isShielding)
+                maxSpeed = shieldingMaxSpeed;
+            else if (movingForward)
                 maxSpeed = walkMaxSpeed;
             else if (movingBackward)
-                maxSpeed = BackWalkMaxSpeed;
+                maxSpeed = backWalkMaxSpeed;
             else if (movingRight || movingLeft)
                 maxSpeed = strafeMaxSpeed;
         }

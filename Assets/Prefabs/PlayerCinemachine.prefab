@@ -781,26 +781,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1f12b39922ffb4999a1a4bedf2e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlternativeMovement: 0
+  debug: 0
   currentSpeed: 0
   walkMaxSpeed: 3.5
   strafeMaxSpeed: 3
   BackWalkMaxSpeed: 1.75
+  turnSpeed: 4
   timeToMaxSpeed: 0.3
-  walkSpeed: 0
-  strafeSpeed: 0
-  backWalkSpeed: 0
-  walkAcceleration: 0
-  strafeAcceleration: 0
-  backWalkAcceleration: 0
   jumpForce: 8.5
   maxFloorAngle: 20
-  turnSpeed: 4
-  friction: 0
-  accelerationFriction: 0
+  aimingFriction: 0
+  maxTurnFriction: 0
   decelerationFriction: 12
-  turningFriction: 2
-  sharpTurnFriction: 10
   airFriction: 2
   airControl: 0.25
   gravity: 9.81
@@ -817,7 +809,6 @@ MonoBehaviour:
   isInvincible: 1
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
-  debug: 1
   cinemachineCamera: {fileID: 1212469516}
   playerMesh: {fileID: 6677204177534006693}
   lastInputAxis: {x: 0, y: 0}
