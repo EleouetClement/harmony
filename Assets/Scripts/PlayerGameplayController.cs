@@ -91,9 +91,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
 
-        //player facing in front of them when aiming
-        if (elementaryController.isAiming)
-            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
+       
     }
 
     // Update is called once per frame
