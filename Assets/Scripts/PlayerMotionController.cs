@@ -56,10 +56,10 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
 
-    private bool movingForward;
-    private bool movingBackward;
-    private bool movingRight;
-    private bool movingLeft;
+    private bool movingForward = false;
+    private bool movingBackward = false;
+    private bool movingRight = false;
+    private bool movingLeft = false;
 
     private float maxSpeedApprox;
     private float maxSpeedRatio;
@@ -67,22 +67,17 @@ public class PlayerMotionController : MonoBehaviour
     private float currentDodgeDuration = Mathf.Epsilon;
     private float dodgeTimer;
 
-
-    
-
- 
+    /// <summary>
+    /// Pointer to the last seen climbable ledge. May be nul until the player has encountered one.
+    /// </summary>
+    [HideInInspector]
+    public ClimbableLedgeBehavior lastLedge;
 
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         controller.slopeLimit = 90;
         maxSpeedApprox = (walkSpeed / accelerationFriction) - 0.3f;
-
-        movingForward = false;
-        movingBackward = false;
-        movingRight = false;
-        movingLeft = false;
-
     }
 
     void Update()
@@ -246,6 +241,10 @@ public class PlayerMotionController : MonoBehaviour
             isJumping = true;
             onGround = false;
             velocity.y = jumpForce;
+        }
+        if (lastLedge && lastLedge.cantrigger) {
+            lastLedge.Trigger();
+            // TODO: maybe se something here to know the player is climbing? Use states please, not a random bool flag.
         }
     }
 
