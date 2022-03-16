@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 2
   damagesInfos: {fileID: 11400000, guid: bccb78db225ca2f419481ac33bf619fa, type: 2}
+  elementaryfollow: 0
   canceled: 0
   earthBall: {fileID: 7776788703797642333, guid: 1b085446e808e00478b51c738000033b,
     type: 3}
@@ -67,6 +68,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   markerInstance: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 4097
   trajectoryCalculator: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   freeAim: 0
