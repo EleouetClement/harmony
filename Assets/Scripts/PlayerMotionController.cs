@@ -614,7 +614,9 @@ public class PlayerMotionController : MonoBehaviour
             else if (movingRight || movingLeft)
                 maxSpeed = strafeMaxSpeed;
         }
-        
-        maxSpeedPercent = currentSpeed / maxSpeed;
+        if (isShielding)
+            maxSpeedPercent = currentSpeed / walkMaxSpeed;
+        else
+            maxSpeedPercent = currentSpeed / maxSpeed;
     }
 }

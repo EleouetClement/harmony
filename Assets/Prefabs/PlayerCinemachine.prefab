@@ -785,14 +785,14 @@ MonoBehaviour:
   currentSpeed: 0
   walkMaxSpeed: 3.5
   strafeMaxSpeed: 3
-  backWalkMaxSpeed: 0
-  shieldingMaxSpeed: 0
+  backWalkMaxSpeed: 1.75
+  shieldingMaxSpeed: 1.25
   turnSpeed: 4
   timeToMaxSpeed: 0.3
   jumpForce: 8.5
   maxFloorAngle: 20
   aimingFriction: 0
-  maxTurnFriction: 0
+  maxTurnFriction: 10
   decelerationFriction: 12
   airFriction: 2
   airControl: 0.25
