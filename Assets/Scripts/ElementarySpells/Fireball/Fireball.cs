@@ -80,6 +80,7 @@ public class Fireball : AbstractSpell
     private GameModeSingleton gameManager;
     private ElementaryController elem;
     private int lastshrapnelspawn = 3;
+    private bool trajcalculated = false;
 
     public Fireball()
     {
@@ -206,6 +207,7 @@ public class Fireball : AbstractSpell
 
     private Vector3 CalculateTrajectory()
     {
+        trajcalculated = true;
         RaycastHit hit;
         int ignoreLayers = 1 << HarmonyLayers.LAYER_PLAYERSPELL;
         ignoreLayers = ~ignoreLayers;
@@ -235,8 +237,7 @@ public class Fireball : AbstractSpell
                 newDirection * 20,
                 Color.blue,
                 5);
-            }
-                
+            }              
             return newDirection;
         }
         else
@@ -269,8 +270,7 @@ public class Fireball : AbstractSpell
                 virtualTarget * aimDistance,
                 Color.blue,
                 5);
-            }
-            
+            }         
             return virtualTarget;
         }
     }
@@ -290,6 +290,8 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
+        if (!trajcalculated)
+            target = CalculateTrajectory();
         elementaryfollow = false;
         //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);

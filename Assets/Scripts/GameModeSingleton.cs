@@ -19,7 +19,8 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
-    
+
+    public bool debug = false;
 
     /// <summary>
     /// True if the player enters in an arena or any fight area.
