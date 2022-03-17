@@ -7,7 +7,8 @@ public class EarthWall : AbstractSpell
     private enum Status
     {
         pillar,
-        platform
+        platform,
+        unvalid
     }
     public GameObject PosMarkerPrefab;
     public GameObject earthPillar;
@@ -92,9 +93,6 @@ public class EarthWall : AbstractSpell
         elementaryController = elemRef.GetComponent<ElementaryController>();
 
         // Allows to get collision with the raycast depending on the thresholds of the earth wall spell values
-        //marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
-        //marker.GetComponent<PositionningMarker>().thresholdGroundToWall = thresholdGroundToWall;
-        //marker.GetComponent<PositionningMarker>().thresholdWallToCeiling = thresholdWallToCeiling;
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
@@ -158,10 +156,15 @@ public class EarthWall : AbstractSpell
             {
                 newStatus = Status.platform;
             }
+            else
+            {
+                newStatus = Status.unvalid;
+            }
         }
         if (newStatus != currentStatus && newStatus == Status.pillar)
         {
-            Destroy(visuReference);
+            if (visuReference != null)
+                Destroy(visuReference);
             visuReference = Instantiate(markerPrefabs[0], hit.point, Quaternion.identity);
             currentStatus = newStatus;
         }
@@ -169,9 +172,18 @@ public class EarthWall : AbstractSpell
         {
             if (newStatus != currentStatus && newStatus == Status.platform)
             {
-                Destroy(visuReference);
+                if (visuReference != null)
+                    Destroy(visuReference);
                 visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
                 currentStatus = newStatus;
+            }
+            else
+            {
+                if(newStatus == Status.unvalid)
+                {
+                    if(visuReference != null)
+                        Destroy(visuReference);
+                }
             }
         }
         visuReference.transform.position = hit.point;
