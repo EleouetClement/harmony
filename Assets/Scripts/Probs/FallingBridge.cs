@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class FallingBridge : MonoBehaviour
 {
-    public float speedFall;
+    public float speedFalling = 7f;
     public float maxAngle = 150f;
+
+    [HideInInspector]
+    public bool isFalling = false;
+    
     //public LayerMask layersToStopFallingBridge;
     private Vector3 initialRotation;
     private Vector3 finalRotation;
-    public bool isFalling = false;
     private float timer = 0f;
 
     private void Start()
@@ -22,9 +25,9 @@ public class FallingBridge : MonoBehaviour
     {
         if(isFalling)
         {
-            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(finalRotation), speedFall * Time.deltaTime);
             timer += Time.deltaTime;
-            transform.rotation = Quaternion.Lerp(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), speedFall * timer);
+            // Mathf.Pow for the exponential speed falling
+            transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedFalling));
 
             if (transform.rotation.eulerAngles.x >= maxAngle)
             {
@@ -37,17 +40,20 @@ public class FallingBridge : MonoBehaviour
     {
         isFalling = false;
 
+        // Foreach gameObject in the FallingBridge, the layer is transformed into "Ground" layer
         foreach (Transform item in transform.parent.gameObject.GetComponentsInChildren<Transform>())
         {
             item.gameObject.layer = HarmonyLayers.LAYER_GROUND;
         }
-
+        
+        // Avoid another interactions
         Destroy(gameObject.GetComponent<BoxCollider>());
         Destroy(gameObject.GetComponent<FallingBridge>());
     }
 
     private void OnTriggerEnter(Collider collider)
     {
+        // If the bridge hits something (the ground in this case), it stops falling
         if (collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
         {
             BridgeHasFallen();
