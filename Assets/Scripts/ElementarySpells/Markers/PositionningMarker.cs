@@ -14,6 +14,8 @@ public class PositionningMarker : AbstractMarker
     [SerializeField] private GameObject [] markerPrefabs;
     private RaycastHit hit;
 
+    [HideInInspector]
+    public LayerMask layersCollisionWithRaycast;
     private GameObject visuReference;
     private Status newStatus;
     private Status currentStatus;
@@ -31,7 +33,7 @@ public class PositionningMarker : AbstractMarker
     {
         int layers = 1 << HarmonyLayers.LAYER_GROUND;
         layers += 1 << HarmonyLayers.LAYER_WALL_ENABLE;
-        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layers))
+        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layersCollisionWithRaycast))
         {
             targetPosition = hit.point;
         }
