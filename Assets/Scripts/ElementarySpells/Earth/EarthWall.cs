@@ -8,7 +8,8 @@ public class EarthWall : AbstractSpell
     {
         pillar,
         platform,
-        unvalid
+        unvalid,
+        noTarget,
     }
     public GameObject PosMarkerPrefab;
     public GameObject earthPillar;
@@ -33,7 +34,7 @@ public class EarthWall : AbstractSpell
     [SerializeField] private GameObject[] markerPrefabs;
     private GameObject visuReference;
     private Status newStatus;
-    private Status currentStatus;
+    private Status currentStatus = Status.noTarget;
 
 
     private void Awake()
@@ -45,8 +46,8 @@ public class EarthWall : AbstractSpell
         }
         else
         {
-            visuReference = Instantiate(markerPrefabs[0], Vector3.zero, Quaternion.identity);
-            newStatus = currentStatus = Status.pillar;
+            //visuReference = Instantiate(markerPrefabs[0], Vector3.zero, Quaternion.identity);
+            //newStatus = currentStatus = Status.pillar;
         }
     }
 
@@ -112,31 +113,34 @@ public class EarthWall : AbstractSpell
     {
         PositionningMarker pouet = (PositionningMarker)marker;
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
-        if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
+        if(currentStatus != Status.noTarget)
         {
-            Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
+            if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
+            {
+                Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
 
-            // Avoid to rotate the pillar on X axis when it spawns
-            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-            v.y = 0f;
-            v.Normalize();
-            Quaternion rot = Quaternion.LookRotation(v);
+                // Avoid to rotate the pillar on X axis when it spawns
+                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+                v.y = 0f;
+                v.Normalize();
+                Quaternion rot = Quaternion.LookRotation(v);
 
-            //Instantiate(earthPillar, marker.transform.position, rot);          
-            Instantiate(earthPillar, pouet.targetPosition, rot);
-        }
-        else if (lastMarkerNormal.y >= thresholdWallToCeiling)
-        {
-            Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
+                //Instantiate(earthPillar, marker.transform.position, rot);          
+                Instantiate(earthPillar, lastMarkerPosition, rot);
+            }
+            else if (lastMarkerNormal.y >= thresholdWallToCeiling)
+            {
+                Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
 
-            // Avoid to rotate the platform on X axis when it spawns
-            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-            v.y = 0f;
-            v.Normalize();
-            Quaternion rot = Quaternion.LookRotation(v);
-            
-            Instantiate(earthPlatform, pouet.targetPosition, rot);
-        }
+                // Avoid to rotate the platform on X axis when it spawns
+                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+                v.y = 0f;
+                v.Normalize();
+                Quaternion rot = Quaternion.LookRotation(v);
+
+                Instantiate(earthPlatform, lastMarkerPosition, rot);
+            }
+        }  
         groundMovingEffect.Stop();
         Destroy(marker.gameObject);
         Destroy(visuReference);
@@ -146,21 +150,30 @@ public class EarthWall : AbstractSpell
     
     private void Previsualization(RaycastHit hit)
     {
-        if (hit.normal.y > thresholdGroundToWall)
+        if(hit.transform == null)
         {
-            newStatus = Status.pillar;
+            newStatus = Status.noTarget;
         }
         else
         {
-            if (hit.normal.y >= thresholdWallToCeiling)
+            if (hit.normal.y > thresholdGroundToWall)
+            {
+                newStatus = Status.pillar;
+                lastMarkerPosition = hit.point;
+                lastMarkerNormal = hit.normal;
+            }
+            else if (hit.normal.y >= thresholdWallToCeiling)
             {
                 newStatus = Status.platform;
+                lastMarkerPosition = hit.point;
+                lastMarkerNormal = hit.normal;
             }
-            else
+            else if(hit.normal.y < thresholdWallToCeiling)
             {
                 newStatus = Status.unvalid;
             }
         }
+        
         if (newStatus != currentStatus && newStatus == Status.pillar)
         {
             if (visuReference != null)
@@ -177,18 +190,18 @@ public class EarthWall : AbstractSpell
                 visuReference = Instantiate(markerPrefabs[1], hit.point, Quaternion.identity);
                 currentStatus = newStatus;
             }
-            else
-            {
-                if(newStatus == Status.unvalid)
-                {
-                    if(visuReference != null)
-                        Destroy(visuReference);
-                }
-            }
         }
-        visuReference.transform.position = hit.point;
-        Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
-        positionForRotation.y = visuReference.transform.position.y;
-        visuReference.transform.LookAt(positionForRotation);
+        if(newStatus == Status.unvalid || (newStatus == Status.noTarget))
+        {
+            currentStatus = newStatus;
+            visuReference.transform.position = lastMarkerPosition;
+        }
+        else
+        {
+            visuReference.transform.position = hit.point;
+            Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
+            positionForRotation.y = visuReference.transform.position.y;
+            visuReference.transform.LookAt(positionForRotation);
+        }
     }
 }
