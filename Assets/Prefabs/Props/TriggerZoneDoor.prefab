@@ -111,4 +111,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   doorForInteraction: {fileID: 0}
-  isPermanentlyOpen: 1
+  isPermanentlyOpen: 0

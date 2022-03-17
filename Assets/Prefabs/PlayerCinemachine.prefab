@@ -803,7 +803,7 @@ MonoBehaviour:
   gravity: 9.81
   layerMask:
     serializedVersion: 2
-    m_Bits: 15385
+    m_Bits: 48665
   dodgeSpeed: 10
   dodgeDuration: 0.15
   dodgeCoolDown: 1.5
