@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.5499958, y: 0.5949993, z: -0.7499997}
+  m_LocalPosition: {x: 0.5500002, y: 0.5949998, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.7838284, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -781,21 +781,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1f12b39922ffb4999a1a4bedf2e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   currentSpeed: 0
-  walkSpeed: 40
-  strafeSpeed: 40
-  BackWalkSpeed: 20
+  walkMaxSpeed: 3.5
+  strafeMaxSpeed: 3
+  backWalkMaxSpeed: 1.75
+  shieldingMaxSpeed: 1.25
+  turnSpeed: 4
+  timeToMaxSpeed: 0.3
   jumpForce: 8.5
   maxFloorAngle: 20
-  turnSpeed: 4
-  accelerationFriction: 10
+  aimingFriction: 0
+  maxTurnFriction: 10
   decelerationFriction: 12
-  airFriction: 0.5
-  airControl: 0.03
-  gravity: 9.81
-  fallGravityMultiplier: 2
+  airFriction: 2
+  airControl: 0.25
+  fallGravityMultiplier: 3
   jumpGravityMultiplier: 2.5
-  slopeForce: 9.81
+  slopeForce: 10
+  slideForce: 4
+  gravity: 9.81
   layerMask:
     serializedVersion: 2
     m_Bits: 15385
@@ -805,12 +810,16 @@ MonoBehaviour:
   isInvincible: 1
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
-  debug: 1
   cinemachineCamera: {fileID: 1212469516}
   playerMesh: {fileID: 6677204177534006693}
+  lastInputAxis: {x: 0, y: 0}
   velocity: {x: 0, y: 0, z: 0}
   onGround: 0
   isMoving: 0
+  isTurning: 0
+  sliding: 0
+  isShielding: 0
+  lastLedge: {fileID: 0}
 --- !u!114 &1344650967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1382,7 +1391,7 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8528330449296606753}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: ae764c6e44d140f42952e97d722bb0e7, type: 3}
+  m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 4ce0a1e9a9e151f4084d809b9e90e523, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
