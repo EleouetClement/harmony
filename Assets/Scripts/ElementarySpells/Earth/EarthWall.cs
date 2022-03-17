@@ -92,9 +92,9 @@ public class EarthWall : AbstractSpell
         elementaryController = elemRef.GetComponent<ElementaryController>();
 
         // Allows to get collision with the raycast depending on the thresholds of the earth wall spell values
-        marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
-        marker.GetComponent<PositionningMarker>().thresholdGroundToWall = thresholdGroundToWall;
-        marker.GetComponent<PositionningMarker>().thresholdWallToCeiling = thresholdWallToCeiling;
+        //marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
+        //marker.GetComponent<PositionningMarker>().thresholdGroundToWall = thresholdGroundToWall;
+        //marker.GetComponent<PositionningMarker>().thresholdWallToCeiling = thresholdWallToCeiling;
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
@@ -114,7 +114,7 @@ public class EarthWall : AbstractSpell
     {
         PositionningMarker pouet = (PositionningMarker)marker;
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
-        if (lastMarkerNormal.y > possibleSlopeForFloor) // If the slope is not too hard
+        if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
         {
             Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
 
@@ -154,7 +154,7 @@ public class EarthWall : AbstractSpell
         }
         else
         {
-            if (hit.normal.y >= possibleSlopeForWall)
+            if (hit.normal.y >= thresholdWallToCeiling)
             {
                 newStatus = Status.platform;
             }
