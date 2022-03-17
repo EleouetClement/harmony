@@ -44,11 +44,7 @@ public class EarthWall : AbstractSpell
             Debug.LogError("PositionningMarker.Awake : No Prefab");
             Destroy(gameObject);
         }
-        else
-        {
-            //visuReference = Instantiate(markerPrefabs[0], Vector3.zero, Quaternion.identity);
-            //newStatus = currentStatus = Status.pillar;
-        }
+        
     }
 
     public void LateUpdate()
@@ -97,7 +93,7 @@ public class EarthWall : AbstractSpell
 
         groundMovingEffect.transform.position = marker.transform.position;
         groundMovingEffect.Play();
-
+        marker.GetComponent<PositionningMarker>().layersCollisionWithRaycast = layersCollision;
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 
