@@ -24,18 +24,19 @@ public class ClimbableLedgeBehavior : MonoBehaviour
     private Vector3 playerinitPos;
 
 
-    void Update()
+    void LateUpdate()
     {
         if (animationTimeLocale >= 0f)
         {
             Transform playertransform = GameModeSingleton.GetInstance().GetPlayerReference.transform;
             animationTimeLocale += Time.deltaTime;
-            // TODO : move the player here and trigger animations
+            // TODO : trigger animations
             if (animationTimeLocale <= animationCutoff)
             { // Grab animation
                 float timeratio = Mathf.Clamp(animationTimeLocale / animationCutoff, 0, 1);
                 Vector3 newpos = playerinitPos * (1 - timeratio) + computeCutoffPosition() * timeratio;
                 playertransform.position = newpos;
+                Debug.Log(newpos);
             }
             else
             { // Pull over animation
@@ -56,6 +57,7 @@ public class ClimbableLedgeBehavior : MonoBehaviour
     /// </summary>
     public void Trigger()
     {
+        Debug.Log("Started climbing ledge");
         animationTimeLocale = 0f;
         playerinitPos = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
         // TODO : set the player state in motion controller
@@ -63,6 +65,7 @@ public class ClimbableLedgeBehavior : MonoBehaviour
 
     private void TriggerEnd()
     {
+        Debug.Log("Stopped climbing ledge");
         animationTimeLocale = -1f;
         // TODO: reset the motion controller
     }
