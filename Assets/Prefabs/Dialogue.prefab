@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 6371691347979643157}
   - component: {fileID: 7086140862536809801}
   - component: {fileID: 3885532614439641594}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Dialogue
-  m_TagString: Untagged
+  m_TagString: EditorOnly
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 324672749295032288}
   - component: {fileID: 4274527500174391602}
   - component: {fileID: 2398004719288445577}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: DialogueCanvaRecto
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   - component: {fileID: 7127860835814059596}
   - component: {fileID: 1179186368343724813}
   - component: {fileID: 1923370103529053247}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 1974914992854552318}
   - component: {fileID: 8533614655694626212}
   - component: {fileID: 2556445646442540266}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: Dialogue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -484,7 +484,7 @@ GameObject:
   - component: {fileID: 9207258136053687400}
   - component: {fileID: 8314684878334104326}
   - component: {fileID: 5289027261664654949}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: DialogueCanvaVerso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -585,7 +585,7 @@ GameObject:
   - component: {fileID: 6176631004565292349}
   - component: {fileID: 6960156658492416281}
   - component: {fileID: 5852363705932881022}
-  m_Layer: 0
+  m_Layer: 1
   m_Name: Plane
   m_TagString: Untagged
   m_Icon: {fileID: 0}
