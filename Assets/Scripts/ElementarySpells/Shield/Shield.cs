@@ -57,7 +57,8 @@ public class Shield : AbstractSpell
         // The player is slowed if his shield is activated
         if (!isReleased())
         {
-            player.GetComponent<PlayerMotionController>().walkSpeed = walkSpeedInShield;
+            player.GetComponent<PlayerMotionController>().isShielding = true;
+           // player.GetComponent<PlayerMotionController>().MaxSpeed = walkSpeedInShield;
         }
     }
 
@@ -76,7 +77,7 @@ public class Shield : AbstractSpell
         gms = GameModeSingleton.GetInstance();
         player = gms.GetPlayerReference;
         transform.position = player.transform.position; // place the shield on the position of the player
-        initialWalkSpeed = player.GetComponent<PlayerMotionController>().walkSpeed;
+        //initialWalkSpeed = player.GetComponent<PlayerMotionController>().MaxSpeed;
         shieldCollider = GetComponent<Collider>();
         shieldVisual = GetComponent<MeshRenderer>();
         if (elemController.IsElementaryAway())
@@ -89,14 +90,15 @@ public class Shield : AbstractSpell
     public override void Terminate()
     {
         elementary.GetComponent<ElementaryController>().Reset();
-        player.GetComponent<PlayerMotionController>().walkSpeed = initialWalkSpeed;
+        //player.GetComponent<PlayerMotionController>().MaxSpeed = initialWalkSpeed;
         //Destroy(shieldReference);
         Destroy(gameObject);
     }
 
     protected override void onChargeEnd(float chargetime)
     {
-        player.GetComponent<PlayerMotionController>().walkSpeed = initialWalkSpeed;
+        player.GetComponent<PlayerMotionController>().isShielding = false;
+        //player.GetComponent<PlayerMotionController>().MaxSpeed = initialWalkSpeed;
         Terminate();
     }
 
