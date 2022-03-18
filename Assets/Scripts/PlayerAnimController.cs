@@ -25,15 +25,15 @@ public class PlayerAnimController : MonoBehaviour
 	private void Awake()
 	{
         playerMotionController = GetComponent<PlayerMotionController>();
-        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
-        idlingSpeed = 2f;
-        animSpeed = 2f;
+        
     }
 
 	// Start is called before the first frame update
 	void Start()
     {
-        
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        idlingSpeed = 2f;
+        animSpeed = 2f;
     }
     
     // Update is called once per frame
