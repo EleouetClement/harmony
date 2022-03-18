@@ -4994,6 +4994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 1
   damagesInfos: {fileID: 11400000, guid: ec7a1c338745244409c4c86c2731fa5f, type: 2}
+  elementaryfollow: 0
   canceled: 0
   maxDistance: 30
   beamAcceleration: 15

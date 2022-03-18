@@ -93,17 +93,26 @@ public class WaterBeam : AbstractSpell
                 // If the beam hits a movable object, it pushes the object in the direction of the beam
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_MOVABLE)
                 {
-                    IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
+                        IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
 
-                    // If the collider gameObject does not contain a script with IDamageable
-                    if (item == null)
+                        // If the collider gameObject does not contain a script with IDamageable
+                        if (item == null)
+                        {
+                            Debug.LogError("MovableObject is Not Damageable");
+                        }
+                        else
+                        {
+                            DamageHit damage = new DamageHit(0f, beamDirection.normalized);
+                            item.OnDamage(damage);
+                        }
+                }
+
+                // If the beam hits an interactable object like a falling bridge
+                if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_INTERACTABLE)
+                {
+                    if (raycastFromElementary.collider.CompareTag("FallingBridge"))
                     {
-                        Debug.LogError("MovableObject is Not Damageable");
-                    }
-                    else
-                    {
-                        DamageHit damage = new DamageHit(0f, beamDirection.normalized);
-                        item.OnDamage(damage);
+                        raycastFromElementary.collider.gameObject.GetComponent<FallingBridge>().isFalling = true;
                     }
                 }
 
@@ -137,6 +146,10 @@ public class WaterBeam : AbstractSpell
             impactEffect.transform.LookAt(elementaryPosition);
             transform.LookAt(hit.point);
         }
+        else
+        {
+            Terminate();
+        }
     }
 
     public override void init(GameObject elemRef, Vector3 target)
@@ -152,8 +165,6 @@ public class WaterBeam : AbstractSpell
 
         // Init the visual
         impactEffect.transform.position = elementaryController.transform.position;
-        marker.GetComponent<UnityEngine.Rendering.Universal.DecalProjector>().enabled = false; // Hide the marker
-
         marker.Init(maxDistance, PosMarkerPrefab);
     }
 

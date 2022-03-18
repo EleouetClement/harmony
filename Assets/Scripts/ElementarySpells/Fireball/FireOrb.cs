@@ -72,7 +72,7 @@ public class FireOrb : MonoBehaviour
     {
         float explosionradius = 2f;
         // Idamageable behavior
-        Debug.Log("Fireball expolosion at : " + transform.position + " / radius : " + explosionradius);
+        //Debug.Log("Fireball expolosion at : " + transform.position + " / radius : " + explosionradius);
         Collider[] enemies = Physics.OverlapCapsule(transform.position + Vector3.down * 3, transform.position + Vector3.up * 3, explosionradius, 1 << HarmonyLayers.LAYER_TARGETABLE);
         AbstractSpell currSpell = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
         if (enemies.Length >= 1)
