@@ -52,7 +52,7 @@ public class EarthWall : AbstractSpell
 
     public void LateUpdate()
     {
-        if (!isReleased())
+        if (!isReleased() && charge > quickCastTimer)
         {
             marker.DisplayTarget(cinemachineCameraController.GetViewDirection, cinemachineCameraController.transform.position);                       
             marker.transform.LookAt(cinemachineCameraController.transform);
