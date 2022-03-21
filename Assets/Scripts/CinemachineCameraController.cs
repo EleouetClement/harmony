@@ -35,8 +35,12 @@ public class CinemachineCameraController : MonoBehaviour
 	private void Update()
 	{
 
+        AddYaw(lookInput.x * Time.deltaTime);
+        AddPitch(-lookInput.y * Time.deltaTime);
 
-	}
+        Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
+        transform.localRotation = camRotation;
+    }
 
 	public Vector3 GetViewDirection
     {
@@ -100,11 +104,7 @@ public class CinemachineCameraController : MonoBehaviour
 
     void LateUpdate()
     {
-        AddYaw(lookInput.x * Time.deltaTime);
-        AddPitch(-lookInput.y * Time.deltaTime);
-
-        Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
-        transform.localRotation = camRotation;
+       
         
     }
 
