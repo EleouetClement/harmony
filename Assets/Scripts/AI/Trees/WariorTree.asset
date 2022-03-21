@@ -15,7 +15,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 2c5760db56e72bf4ab1abc3325c4e6d4
-  position: {x: 320.00003, y: 1041}
+  position: {x: 319.9999, y: 990.8111}
   blackboard:
     states:
     - Idle
@@ -61,7 +61,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 11345542c1207f545af34759edeaeda0
-  position: {x: 319.99988, y: 693}
+  position: {x: 319.9999, y: 642.8111}
   blackboard:
     states:
     - Idle
@@ -253,7 +253,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 8d73ed74e3d895b4fa48ff4ee5451aa3
-  position: {x: 0, y: 270}
+  position: {x: -10.6461525, y: 336.91852}
   blackboard:
     states:
     - Idle
@@ -332,6 +332,7 @@ MonoBehaviour:
   drawGizmos: 0
   children:
   - {fileID: 8563186830812071934}
+  - {fileID: -19661002133830139}
   - {fileID: 8806083092141736936}
   - {fileID: -692805531971096003}
 --- !u!114 &-911882838764309930
@@ -349,7 +350,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: af7e90a8e5d6a1a46b83aeaf487f5307
-  position: {x: 540.7058, y: 1024}
+  position: {x: 541, y: 991}
   blackboard:
     states:
     - Idle
@@ -376,9 +377,7 @@ MonoBehaviour:
       - target
       values:
       - {fileID: 0}
-  description: 'Chase
-
-'
+  description: 
   drawGizmos: 0
   aiState: Chase
 --- !u!114 &-692805531971096003
@@ -396,7 +395,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 7224200bf2ac4e54088cd31459ec8d8a
-  position: {x: 60.000015, y: 1363.0002}
+  position: {x: -15.900002, y: 1361.8503}
   blackboard:
     states:
     - Idle
@@ -423,7 +422,7 @@ MonoBehaviour:
       - target
       values:
       - {fileID: 0}
-  description: Attacking
+  description: 
   drawGizmos: 0
   aiState: Attack
 --- !u!114 &-19661002133830139
@@ -441,7 +440,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: ba8bd1616cdcda740b9f487b65c954cd
-  position: {x: 0, y: 0}
+  position: {x: -316, y: 1362}
   blackboard:
     states:
     - Idle
@@ -596,7 +595,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: dc0b7d8153f00774598b38d536b07e30
-  position: {x: 170.00003, y: 902}
+  position: {x: 169.9999, y: 851.8111}
   blackboard:
     states:
     - Idle
@@ -691,7 +690,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: dc9c9098f72ca314396cb2bc7dc8a2ec
-  position: {x: 170.00003, y: 1041}
+  position: {x: 169.9999, y: 990.8111}
   blackboard:
     states:
     - Idle
@@ -741,7 +740,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: ce175b20d2539894d96c2ac9f34e1d17
-  position: {x: 0, y: 0}
+  position: {x: -10.6461525, y: 120.918495}
   blackboard:
     states:
     - Idle
@@ -786,7 +785,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 96ccc872870c89040b7385dad50ad061
-  position: {x: 0, y: 134}
+  position: {x: -10.6461525, y: 224.91852}
   blackboard:
     states:
     - Idle
@@ -833,7 +832,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 53d950c1e06001e48ba1ce4c66ff227e
-  position: {x: 13.999968, y: 1041}
+  position: {x: 13.99993, y: 990.8111}
   blackboard:
     states:
     - Idle
@@ -926,7 +925,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: c40089b0cc359314fbb1dd39ca6417f0
-  position: {x: 540.7058, y: 902}
+  position: {x: 541, y: 851.8111}
   blackboard:
     states:
     - Idle
@@ -1006,12 +1005,12 @@ MonoBehaviour:
       - target
       values:
       - {fileID: 0}
-  description: Is Close Enough
+  description: 
   drawGizmos: 0
   child: {fileID: -8639514444526135124}
   parameterName: target
   greaterThan: 0
-  distance: 2
+  distance: 2.5
 --- !u!114 &8563186830812071934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,7 +1026,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 3759d0e4de75406418f66cd55a3f0b61
-  position: {x: -419.9, y: 1363.0002}
+  position: {x: -466, y: 1362}
   blackboard:
     states:
     - Idle
@@ -1071,7 +1070,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: db5539df0c5ccde4c8b143a189e99181
-  position: {x: -89.99997, y: 1363.0002}
+  position: {x: -165.89998, y: 1361.8503}
   blackboard:
     states:
     - Idle
@@ -1098,7 +1097,7 @@ MonoBehaviour:
       - target
       values:
       - {fileID: 0}
-  description: Attack
+  description: 
   drawGizmos: 0
   component: WariorAI
   method: Attack
