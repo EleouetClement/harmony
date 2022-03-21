@@ -24,6 +24,7 @@ public class EarthWall : AbstractSpell
     private RaycastHit hit;
     private Vector3 lastMarkerPosition = Vector3.zero; // store the last position of the marker before aiming in the void
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
+    [SerializeField] private float quickCastTimer = 0.2f;
 
     // Defines the value of the normal for which a pillar can be built above (between 0 and 1)
     [SerializeField] private float thresholdGroundToWall = 0.7f;
@@ -33,8 +34,10 @@ public class EarthWall : AbstractSpell
     [Header("Dev")]
     [SerializeField] private GameObject[] markerPrefabs;
     private GameObject visuReference;
+    [SerializeField] float quickPillarOffset;
     private Status newStatus;
     private Status currentStatus = Status.noTarget;
+
 
 
     private void Awake()
@@ -108,8 +111,24 @@ public class EarthWall : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         PositionningMarker pouet = (PositionningMarker)marker;
-        // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects) 
-        if(currentStatus != Status.noTarget)
+        // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects)
+        if(chargetime < quickCastTimer)
+        {
+            lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
+            if (GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().velocity.magnitude > 0.1)
+            {
+                //Offset creation to spawn pillar in front of the player and not below it
+                Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
+                offset += new Vector3(0, 0, quickPillarOffset);
+                lastMarkerPosition += offset;
+            }
+            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+            v.y = 0f;
+            v.Normalize();
+            Quaternion rot = Quaternion.LookRotation(v);
+            Instantiate(earthPillar, lastMarkerPosition, rot);
+        }
+        else if(currentStatus != Status.noTarget)
         {
             if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
             {
@@ -120,7 +139,6 @@ public class EarthWall : AbstractSpell
                 v.y = 0f;
                 v.Normalize();
                 Quaternion rot = Quaternion.LookRotation(v);
-
                 //Instantiate(earthPillar, marker.transform.position, rot);          
                 Instantiate(earthPillar, lastMarkerPosition, rot);
             }
@@ -187,7 +205,7 @@ public class EarthWall : AbstractSpell
                 currentStatus = newStatus;
             }
         }
-        if(newStatus == Status.unvalid || (newStatus == Status.noTarget))
+        if(newStatus == Status.unvalid || newStatus == Status.noTarget)
         {
             currentStatus = newStatus;
             visuReference.transform.position = lastMarkerPosition;
