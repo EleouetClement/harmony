@@ -90,8 +90,6 @@ public class Shield : AbstractSpell
     public override void Terminate()
     {
         elementary.GetComponent<ElementaryController>().Reset();
-        //player.GetComponent<PlayerMotionController>().MaxSpeed = initialWalkSpeed;
-        //Destroy(shieldReference);
         Destroy(gameObject);
     }
 
