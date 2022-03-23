@@ -80,6 +80,7 @@ public class Fireball : AbstractSpell
     private GameModeSingleton gameManager;
     private ElementaryController elem;
     private int lastshrapnelspawn = 3;
+    private bool trajcalculated = false;
 
     public Fireball()
     {
@@ -92,7 +93,13 @@ public class Fireball : AbstractSpell
     {
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
-        
+        if (elementaryfollow) {
+            fireOrbInstance.transform.position = elementary.transform.position;
+        }
+        if(fireOrbInstance.GetComponent<FireOrb>().hasExplode)
+        {
+            Terminate();
+        }
 
         // Update when the fireball is charging
         if(!isReleased())
@@ -167,6 +174,7 @@ public class Fireball : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        elementaryfollow = true;
         base.init(elemRef, target.normalized);
         if (FireballPrefab == null)
         {
@@ -199,6 +207,7 @@ public class Fireball : AbstractSpell
 
     private Vector3 CalculateTrajectory()
     {
+        trajcalculated = true;
         RaycastHit hit;
         int ignoreLayers = 1 << HarmonyLayers.LAYER_PLAYERSPELL;
         ignoreLayers = ~ignoreLayers;
@@ -228,8 +237,7 @@ public class Fireball : AbstractSpell
                 newDirection * 20,
                 Color.blue,
                 5);
-            }
-                
+            }              
             return newDirection;
         }
         else
@@ -262,8 +270,7 @@ public class Fireball : AbstractSpell
                 virtualTarget * aimDistance,
                 Color.blue,
                 5);
-            }
-            
+            }         
             return virtualTarget;
         }
     }
@@ -283,11 +290,14 @@ public class Fireball : AbstractSpell
     {
         base.onChargeEnd(chargetime);
         launched = true;
+        if (!trajcalculated)
+            target = CalculateTrajectory();
+        elementaryfollow = false;
         //target = gameManager.GetCinemachineCameraController.GetViewDirection;        
         Destroy(marker.gameObject);
         if(isBlinked)
         {
-            Debug.Log("Molotov à appliquer");
+            Debug.Log("Molotov ï¿½ appliquer");
             isExplosive = true;
         }
         if(debug)

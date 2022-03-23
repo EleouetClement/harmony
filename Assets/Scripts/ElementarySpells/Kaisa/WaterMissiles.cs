@@ -8,9 +8,13 @@ public class WaterMissiles : AbstractSpell
     
     public float TimePerBall = 0.12f;
 
+    public float maxBallNumber = 50;
+
     private float timeLocale = 0f;
     [HideInInspector]
     public Transform targetTransform;
+
+    
 
     public float maxSpellTime;
 
@@ -26,6 +30,7 @@ public class WaterMissiles : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
+        elementaryfollow = true;
         base.init(elemRef, target);
         elementary.GetComponent<MeshRenderer>().enabled = false;
         gameManager = GameModeSingleton.GetInstance();
@@ -40,11 +45,14 @@ public class WaterMissiles : AbstractSpell
 	public override void FixedUpdate()
     {
         base.FixedUpdate();
-        
+        if (elementaryfollow)
+        {
+            transform.position = elementary.transform.position;
+        }
         // Time locale
         timeLocale += Time.fixedDeltaTime;
         // Ball spawning
-        if (!isReleased() && spawnedballs * TimePerBall < timeLocale) {
+        if (!isReleased() && spawnedballs * TimePerBall < timeLocale && spawnedballs < maxBallNumber) {
             spawnedballs++;
             WaterBall ball = Instantiate(BallPrefab, transform.position, Quaternion.identity);
             ball.parent = this;
@@ -54,8 +62,7 @@ public class WaterMissiles : AbstractSpell
         // Target location update
         balls.ForEach(e => { e.targetLocation = getDestination(); });
         // Spell self destruction
-        float castmax = maxSpellTime < 0.1f ? 1 : maxSpellTime;
-        if (timeLocale > castmax || balls.Count <= 0)
+        if (balls.Count <= 0)
         {
             Terminate();
         }
@@ -71,6 +78,7 @@ public class WaterMissiles : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
+        elementaryfollow = false;
         base.onChargeEnd(chargetime);
         gameManager.GetCinemachineCameraController.ZoomOut();
         balls.ForEach(e => { e.launched = true; });

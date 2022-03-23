@@ -27,7 +27,12 @@ public abstract class AbstractSpell : MonoBehaviour
     /// Reference to the player orbitine elementary
     /// </summary>
     public GameObject elementary { get; protected set; }
-
+    
+    /// <summary>
+    /// Flag set to true telling the elementary that he should still compute his own position during this spell. 
+    /// Note that this flag's value may change during spell lifetime.
+    /// </summary>
+    public bool elementaryfollow = false;
 
     protected AbstractMarker marker;
 
