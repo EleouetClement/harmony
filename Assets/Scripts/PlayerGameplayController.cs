@@ -209,10 +209,9 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             else
             {
                 bool tmp = elementaryController.currentSpell is Shield;
-                Debug.Log("pouet");
                 if (!elementaryController.currentSpell.isReleased() && !(elementaryController.currentSpell is Shield))
                 {
-                    //Debug.Log("Annulation par shield");
+                    Debug.Log("Annulation par shield");
                     elementaryController.currentSpell.canceled = true;
                     OnManaRegain(elementaryController.currentSpell.GetManaRegainAmount());
                     elementaryController.currentSpell.Terminate();
