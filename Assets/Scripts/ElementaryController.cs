@@ -178,6 +178,7 @@ public class ElementaryController : MonoBehaviour
 	private void FixedUpdate()
     {
         isAway = IsElementaryAway();
+        //Debug.Log(currentSpell);
         if (!isAway && isReseting && currentSpell == null)
         {
             currentSpell = null;
