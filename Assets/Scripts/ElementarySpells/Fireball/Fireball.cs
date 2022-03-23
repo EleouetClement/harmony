@@ -283,7 +283,7 @@ public class Fireball : AbstractSpell
     {
         if(canceled)
         {
-            Destroy(marker);
+            Destroy(marker.gameObject);
         }
         Destroy(fireOrbInstance);
         elem.Reset();

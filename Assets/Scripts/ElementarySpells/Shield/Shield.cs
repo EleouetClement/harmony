@@ -43,14 +43,13 @@ public class Shield : AbstractSpell
             }
             else
             {
-                //Debug.Log("Timer On");
                 timer += Time.deltaTime;
             }   
         }
         // If the shield has been activated for too long time, it can no longer maker a perfect shield
         if (timer > maxDelayToPerfectShield && canPerfectShield)
         {
-            Debug.Log("You can not do perfect shield anymore");
+            //Debug.Log("You can not do perfect shield anymore");
             canPerfectShield = false;
         }
 
@@ -58,7 +57,6 @@ public class Shield : AbstractSpell
         if (!isReleased())
         {
             player.GetComponent<PlayerMotionController>().isShielding = true;
-           // player.GetComponent<PlayerMotionController>().MaxSpeed = walkSpeedInShield;
         }
     }
 
@@ -77,7 +75,6 @@ public class Shield : AbstractSpell
         gms = GameModeSingleton.GetInstance();
         player = gms.GetPlayerReference;
         transform.position = player.transform.position; // place the shield on the position of the player
-        //initialWalkSpeed = player.GetComponent<PlayerMotionController>().MaxSpeed;
         shieldCollider = GetComponent<Collider>();
         shieldVisual = GetComponent<MeshRenderer>();
         if (elemController.IsElementaryAway())

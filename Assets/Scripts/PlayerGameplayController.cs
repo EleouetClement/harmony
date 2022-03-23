@@ -197,7 +197,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnBlock(InputValue value)
     {
         //Debug.Log("Blocking");
-        if (!manaburnout)
+        if (!manaburnout && value.isPressed)
         {
             if (elementaryController.currentSpell == null)
             {
@@ -222,9 +222,10 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             }         
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+        {
+            Debug.Log("leve shield");
             elementaryController.currentSpell?.OnRelease();
-
-
+        }
     }
 
 

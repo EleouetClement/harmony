@@ -178,7 +178,7 @@ public class ElementaryController : MonoBehaviour
 	private void FixedUpdate()
     {
         isAway = IsElementaryAway();
-        if (!isAway && isReseting)
+        if (!isAway && isReseting && currentSpell == null)
         {
             currentSpell = null;
             readyToCast = true;
@@ -295,7 +295,7 @@ public class ElementaryController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject.name);
+        //Debug.Log(other.gameObject.name);
     }
     private void OnDrawGizmos()
     {
