@@ -204,7 +204,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                 Debug.Log("shield activation");
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
-                elementaryController.currentSpell = spell;
+                elementaryController.CastSpell(spell);
             }
             else
             {
@@ -217,7 +217,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                     elementaryController.currentSpell.Terminate();
                     AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                     spell.init(elementaryController.gameObject, Vector3.zero);
-                    elementaryController.currentSpell = spell;
+                    elementaryController.CastSpell(spell);
                 }
             }         
         }
