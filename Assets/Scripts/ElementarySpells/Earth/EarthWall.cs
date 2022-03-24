@@ -128,7 +128,7 @@ public class EarthWall : AbstractSpell
             Quaternion rot = Quaternion.LookRotation(v);
             Instantiate(earthPillar, lastMarkerPosition, rot);
         }
-        else if(currentStatus != Status.noTarget)
+        else if(currentStatus != Status.noTarget &&  lastMarkerPosition != Vector3.zero)
         {
             if (currentStatus == Status.pillar) // If the slope is not too hard
             {
