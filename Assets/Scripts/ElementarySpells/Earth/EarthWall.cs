@@ -130,9 +130,9 @@ public class EarthWall : AbstractSpell
         }
         else if(currentStatus != Status.noTarget)
         {
-            if (lastMarkerNormal.y > thresholdGroundToWall) // If the slope is not too hard
+            if (currentStatus == Status.pillar) // If the slope is not too hard
             {
-                Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
+                //Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
 
                 // Avoid to rotate the pillar on X axis when it spawns
                 Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
@@ -142,9 +142,9 @@ public class EarthWall : AbstractSpell
                 //Instantiate(earthPillar, marker.transform.position, rot);          
                 Instantiate(earthPillar, lastMarkerPosition, rot);
             }
-            else if (lastMarkerNormal.y >= thresholdWallToCeiling)
+            else if (currentStatus == Status.platform)
             {
-                Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
+                //Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
 
                 // Avoid to rotate the platform on X axis when it spawns
                 Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
@@ -209,11 +209,13 @@ public class EarthWall : AbstractSpell
         {
             if ((newStatus == Status.unvalid || newStatus == Status.noTarget))
             {
+                Debug.Log("Derniere position enregistrée");
                 currentStatus = newStatus;
                 visuReference.transform.position = lastMarkerPosition;
             }
             else
             {
+                Debug.Log("Nouvelle position");
                 visuReference.transform.position = hit.point;
                 Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
                 positionForRotation.y = visuReference.transform.position.y;
