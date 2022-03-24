@@ -205,17 +205,20 @@ public class EarthWall : AbstractSpell
                 currentStatus = newStatus;
             }
         }
-        if(newStatus == Status.unvalid || newStatus == Status.noTarget)
+        if (visuReference)
         {
-            currentStatus = newStatus;
-            visuReference.transform.position = lastMarkerPosition;
-        }
-        else
-        {
-            visuReference.transform.position = hit.point;
-            Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
-            positionForRotation.y = visuReference.transform.position.y;
-            visuReference.transform.LookAt(positionForRotation);
-        }
+            if ((newStatus == Status.unvalid || newStatus == Status.noTarget))
+            {
+                currentStatus = newStatus;
+                visuReference.transform.position = lastMarkerPosition;
+            }
+            else
+            {
+                visuReference.transform.position = hit.point;
+                Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
+                positionForRotation.y = visuReference.transform.position.y;
+                visuReference.transform.LookAt(positionForRotation);
+            }
+        }    
     }
 }
