@@ -55,7 +55,7 @@ MonoBehaviour:
   lastBallCoord: {x: 0, y: 0, z: 0}
   maxSpellLength: 0
   maxRange: 30
-  castTime: 2
+  castTime: 5
 --- !u!114 &3343081906532645494
 MonoBehaviour:
   m_ObjectHideFlags: 0
