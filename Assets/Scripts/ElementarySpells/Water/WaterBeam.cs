@@ -25,6 +25,9 @@ public class WaterBeam : AbstractSpell
     {
         if (!isReleased())
         {
+            // Set the beam origin to the elementary position
+            transform.position = elementaryController.transform.position;
+
             marker.DisplayTarget(cameraController.GetViewDirection, cameraController.GetViewPosition);
             marker.transform.LookAt(cameraController.transform);
 

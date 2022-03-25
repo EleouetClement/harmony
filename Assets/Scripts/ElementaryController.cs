@@ -55,7 +55,7 @@ public class ElementaryController : MonoBehaviour
     public bool computePosition = true;
     private bool hasShoulder = false;
 
-    private Transform shoulder;
+    public Transform shoulder {get; private set;}
     private Transform playerMesh;
     private GameObject debugSphereReference;
     

@@ -109,7 +109,12 @@ public class PlayerMotionController : MonoBehaviour
         walkSpeed = 0f;
         strafeSpeed = 0f;
         backWalkSpeed = 0f;
+    }
+
+    private void Start()
+    {
         elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
+
     }
 
     void Update()
