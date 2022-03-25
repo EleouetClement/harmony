@@ -12,11 +12,12 @@ public class EarthMortar : AbstractSpell
 	[Min(1)] public float maxSpellLength;
 	public float maxRange;
 	private bool launched;
+	public float castTime;
 	
 
 	private void Start()
 	{
-		maxCastTime = 1.5f;
+		maxCastTime = castTime;
 		blinkTiming = 1f;
 		launched = false;
 	}

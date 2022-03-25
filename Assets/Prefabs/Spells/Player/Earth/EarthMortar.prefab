@@ -55,6 +55,7 @@ MonoBehaviour:
   lastBallCoord: {x: 0, y: 0, z: 0}
   maxSpellLength: 0
   maxRange: 30
+  castTime: 2
 --- !u!114 &3343081906532645494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,7 +71,7 @@ MonoBehaviour:
   markerInstance: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 4097
+    m_Bits: 6145
   trajectoryCalculator: {fileID: 0}
   target: {x: 0, y: 0, z: 0}
   freeAim: 0
