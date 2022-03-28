@@ -7,10 +7,10 @@ public class WariorAI : AIAgent
 {
     private static readonly int Speed = Animator.StringToHash("Speed");
 
-    void Update()
+    protected override void Update()
     {
         base.Update();
-        animator.SetFloat(Speed, context.agent.velocity.magnitude);
+        animator.SetFloat(Speed, treeRunner.context.agent.velocity.magnitude);
     }
 
     public void Attack()
@@ -20,6 +20,6 @@ public class WariorAI : AIAgent
 
     public void FinishedAttack()
     {
-        tree.blackboard.currentState = "Chase"; 
+        treeRunner.tree.blackboard.currentState = "Chase"; 
     }
 }

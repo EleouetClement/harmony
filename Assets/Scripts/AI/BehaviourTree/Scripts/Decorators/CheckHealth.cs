@@ -9,18 +9,19 @@ namespace Harmony.AI{
     {
         public ComparisonType comparison;
         public float value;
+        private AIAgent agent;
 
-        protected override void OnStart() {
+        protected override void OnStart()
+        {
+            agent = context.gameObject.GetComponent<AIAgent>();
         }
 
         protected override void OnStop() {
         }
 
         protected override State OnUpdate() {
-            if (context.treeRunner is AIAgent)
+            if (agent)
             {
-                AIAgent agent = context.treeRunner as AIAgent;
-
                 switch (comparison)
                 {
                     case ComparisonType.Equal: return agent.health == value ? State.Success : State.Failure;

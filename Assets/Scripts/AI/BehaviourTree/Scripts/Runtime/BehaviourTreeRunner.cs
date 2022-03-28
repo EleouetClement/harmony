@@ -12,7 +12,7 @@ namespace Harmony.AI {
         public UDictionary<string, UnityEvent> customEvents;
 
         // Storage container object to hold game object subsystems
-        protected Context context;
+        public Context context { get; private set; }
 
         // Start is called before the first frame update
         protected virtual void Awake() {

@@ -1,51 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8772267466991076642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
-  m_Name: Wait
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 2c5760db56e72bf4ab1abc3325c4e6d4
-  position: {x: 319.9999, y: 990.8111}
-  blackboard:
-    states:
-    - Idle
-    - Chase
-    - Attack
-    - Dead
-    currentState: 
-    boolParameters:
-      keys: []
-      values: 
-    intParameters:
-      keys: []
-      values: 
-    floatParameters:
-      keys: []
-      values: []
-    vectorParameters:
-      keys:
-      - search
-      values:
-      - {x: 0, y: 0, z: 0}
-    transformParameters:
-      keys:
-      - target
-      values:
-      - {fileID: 0}
-  description: 
-  drawGizmos: 0
-  durationMin: 1
-  durationMax: 5
 --- !u!114 &-8770944735055934421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141,6 +95,50 @@ MonoBehaviour:
   child: {fileID: -2089884371742793310}
   aiState: Attack
   isNot: 1
+--- !u!114 &-7981817562880161853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce3de13f93dc8249b1173dc943bf4ef, type: 3}
+  m_Name: StartPatrolling
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: d9b21ee9503a47d489a5a0db2271dd95
+  position: {x: 170.00003, y: 991.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
 --- !u!114 &-5297026774898947343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -502,11 +500,9 @@ MonoBehaviour:
   - {fileID: -8639514444526135124}
   - {fileID: -8770944735055934421}
   - {fileID: 173407461202169280}
-  - {fileID: 5640981900027116655}
-  - {fileID: 979827498029470459}
-  - {fileID: -8772267466991076642}
   - {fileID: 8563186830812071934}
   - {fileID: -19661002133830139}
+  - {fileID: -7981817562880161853}
   blackboard:
     states:
     - Idle
@@ -625,9 +621,7 @@ MonoBehaviour:
   description: 
   drawGizmos: 0
   children:
-  - {fileID: 5640981900027116655}
-  - {fileID: 979827498029470459}
-  - {fileID: -8772267466991076642}
+  - {fileID: -7981817562880161853}
 --- !u!114 &446694999428995256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -675,56 +669,6 @@ MonoBehaviour:
   child: {fileID: 75298422744429364}
   aiState: Chase
   isNot: 0
---- !u!114 &979827498029470459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4489e3e257543504c8fc9f891246af6c, type: 3}
-  m_Name: MoveToPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: dc9c9098f72ca314396cb2bc7dc8a2ec
-  position: {x: 169.9999, y: 990.8111}
-  blackboard:
-    states:
-    - Idle
-    - Chase
-    - Attack
-    - Dead
-    currentState: 
-    boolParameters:
-      keys: []
-      values: 
-    intParameters:
-      keys: []
-      values: 
-    floatParameters:
-      keys: []
-      values: []
-    vectorParameters:
-      keys:
-      - search
-      values:
-      - {x: 0, y: 0, z: 0}
-    transformParameters:
-      keys:
-      - target
-      values:
-      - {fileID: 0}
-  description: 
-  drawGizmos: 0
-  parameterName: search
-  speed: 2
-  stoppingDistance: 0.1
-  updateRotation: 1
-  acceleration: 20
-  tolerance: 1
 --- !u!114 &5440851567276491666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -817,53 +761,6 @@ MonoBehaviour:
   child: {fileID: -4563613514251524612}
   restartOnSuccess: 1
   restartOnFailure: 1
---- !u!114 &5640981900027116655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0a055ff4bd9e6642b3f0dff32a86e1d, type: 3}
-  m_Name: RandomPosition
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 53d950c1e06001e48ba1ce4c66ff227e
-  position: {x: 13.99993, y: 990.8111}
-  blackboard:
-    states:
-    - Idle
-    - Chase
-    - Attack
-    - Dead
-    currentState: 
-    boolParameters:
-      keys: []
-      values: 
-    intParameters:
-      keys: []
-      values: 
-    floatParameters:
-      keys: []
-      values: []
-    vectorParameters:
-      keys:
-      - search
-      values:
-      - {x: 0, y: 0, z: 0}
-    transformParameters:
-      keys:
-      - target
-      values:
-      - {fileID: 0}
-  description: 
-  drawGizmos: 0
-  parameterName: search
-  min: {x: -10, y: -10}
-  max: {x: 10, y: 10}
 --- !u!114 &6113074290360183482
 MonoBehaviour:
   m_ObjectHideFlags: 0
