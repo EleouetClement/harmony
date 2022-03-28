@@ -35,7 +35,7 @@ public class EarthWall : AbstractSpell
     [SerializeField] private GameObject[] markerPrefabs;
     private GameObject visuReference;
     [SerializeField] float quickPillarOffset;
-    private Status newStatus;
+    private Status newStatus = Status.noTarget;
     private Status currentStatus = Status.noTarget;
 
 
@@ -158,9 +158,9 @@ public class EarthWall : AbstractSpell
     
     private void Previsualization(RaycastHit hit)
     {
-        if(hit.collider == null && visuReference)
+
+        if (hit.collider == null)
         {
-            Debug.Log("wtf");
             newStatus = Status.unvalid;
         }
         else
@@ -177,12 +177,11 @@ public class EarthWall : AbstractSpell
                 lastMarkerPosition = hit.point;
                 lastMarkerNormal = hit.normal;
             }
-            else if(hit.normal.y < thresholdWallToCeiling)
+            else if (hit.normal.y < thresholdWallToCeiling)
             {
                 newStatus = Status.unvalid;
             }
-        }
-        
+        }   
         if (newStatus != currentStatus && newStatus == Status.pillar)
         {
             if (visuReference != null)
@@ -201,8 +200,7 @@ public class EarthWall : AbstractSpell
             }
         }
         if (visuReference)
-        {
-            
+        {          
             if ((newStatus == Status.unvalid))
             {
                 visuReference.transform.position = lastMarkerPosition;
