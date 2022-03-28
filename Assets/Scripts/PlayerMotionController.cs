@@ -17,14 +17,14 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float strafeMaxSpeed;
     [Range(0, 100)] public float backWalkMaxSpeed;
     [Range(0, 100)] public float shieldingMaxSpeed;
+    [Range(0, 100)] public float timeToMaxSpeed;
     /// <summary>
     /// speed at which the player turns towards velocity or towards aiming direction
     /// </summary>
     [Range(0, 100)] public float turnSpeed;
-    [Range(0, 100)] public float timeToMaxSpeed;
     private float maxSpeed;
     private float maxSpeedPercent;
-    public float walkSpeed;
+    private float walkSpeed;
     private float strafeSpeed;
     private float backWalkSpeed;
     private float walkAcceleration;
@@ -56,28 +56,27 @@ public class PlayerMotionController : MonoBehaviour
     [SerializeField] private float groundTestRadiusFactor = 0.95f;
     [SerializeField] private float groundMaxDistance = 0.1f;
 
-    public CinemachineCameraController cinemachineCamera;
+    private CinemachineCameraController cinemachineCamera;
     private ElementaryController elementary;
-    public Transform playerMesh;
+    private Transform playerMesh;
 
     private CharacterController controller;
     private Vector3 forwardDirection;
     private Vector3 rightDirection;
     private Vector2 inputAxis;
-    public Vector2 lastInputAxis;
-    public Vector3 velocity;
+    private Vector3 velocity;
     [HideInInspector] public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
     private Transform groundTranform;
     private Vector3 lastGroundPos;
-    public bool isMoving = false;
+    private bool isMoving = false;
     private bool isDodging = false;
     private bool isFalling = false;
     private bool isJumping = false;
-    public bool isTurning = false;
-    public bool sliding = false;
-    public bool isShielding = false;
+    private bool isTurning = false;
+    private bool sliding = false;
+    private bool isShielding = false;
 
     private bool movingForward;
     private bool movingBackward;
@@ -113,6 +112,8 @@ public class PlayerMotionController : MonoBehaviour
 
     private void Start()
     {
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
 
     }
@@ -140,10 +141,7 @@ public class PlayerMotionController : MonoBehaviour
            dodgeTimer -= Time.deltaTime;
         }
         isMoving = (Mathf.Abs(inputAxis.x) + Mathf.Abs(inputAxis.y)) != 0;
-        
-        
-        if(debug)
-            Debug.DrawLine(transform.position, transform.position + velocity);
+       
 
 		#endregion
 
@@ -151,7 +149,8 @@ public class PlayerMotionController : MonoBehaviour
 
 	private void FixedUpdate()
     {
-
+        if(debug)
+            Debug.DrawLine(transform.position, transform.position + cinemachineCamera.GetViewForward, Color.red);
         Vector3 dir = new Vector3(velocity.x, 0f, velocity.z).normalized;
         
         if(dir != Vector3.zero)
@@ -226,51 +225,72 @@ public class PlayerMotionController : MonoBehaviour
         #endregion
 
         #region Apply Direction Input
-        Debug.DrawLine(transform.position, transform.position + cinemachineCamera.GetViewForward, Color.red);
         if (/*!sliding &&*/ !isDodging)
         {
             CheckMovement();
             Vector3 nextDir = GetDirection();
             UpdateSpeeds();
             UpdateMaxSpeed();
-
-            if (isMoving && !elementary.isAiming)
+            if (isMoving)
             {
-                
-                if (onGround && !isJumping)
+                if (!elementary.isAiming)
                 {
-                    velocity = nextDir * walkSpeed;
+                
+                    if (onGround && !isJumping)
+                    {
+                        velocity = nextDir * walkSpeed;
+                    }
+				    else
+				    {
+                        velocity += nextDir * walkAcceleration * Time.deltaTime * airControl;
+                    }
+
+                    if (debug)
+                    {
+                        Debug.DrawLine(transform.position, transform.position + nextDir, Color.blue);
+                        Debug.DrawLine(transform.position, transform.position + velocity.normalized,Color.green);
+                    }
+                }
+                else if (!isJumping)
+                {
+                    if (movingRight || movingLeft)
+                    {
+				        velocity = rightDirection.normalized * strafeSpeed;
+                    }
+                    if (movingForward)
+			        {
+                        if (movingRight || movingLeft)
+                            velocity = forwardDirection.normalized * walkSpeed + rightDirection * strafeSpeed;
+                        else
+                            velocity = forwardDirection.normalized * walkSpeed;
+                    }
+                    if (movingBackward)
+                    {
+                        if (movingRight || movingLeft)
+                            velocity = forwardDirection.normalized * backWalkSpeed + rightDirection * strafeSpeed;
+                        else
+                            velocity = forwardDirection.normalized * backWalkSpeed;
+                    }
+                    //prevent character from bouncing when going down a slope
+                    if (OnSlope())
+                    {
+                        velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+                    }
                 }
 				else
 				{
-                    velocity += nextDir * walkAcceleration * Time.deltaTime * airControl;
-                }
-
-                if (debug)
-                {
-                    Debug.DrawLine(transform.position, transform.position + nextDir, Color.blue);
-                    Debug.DrawLine(transform.position, transform.position + velocity.normalized,Color.green);
-                }
-               
-            }
-            else if (isMoving)
-            {
-                if (movingForward)
-			    {
-				    velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
-                }
-                if (movingRight || movingLeft)
-                {
-				    velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
-                }
-                if (movingBackward)
-                {
-                    velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
-                }
-                //prevent character from bouncing when going down a slope
-                if (OnSlope())
-                {
-                    velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+                    if (movingForward)
+                    {
+                        velocity += forwardDirection.normalized * walkAcceleration * Time.deltaTime * airControl;
+                    }
+                    if (movingRight || movingLeft)
+                    {
+                        velocity += rightDirection.normalized * strafeAcceleration * Time.deltaTime * airControl;
+                    }
+                    if (movingBackward)
+                    {
+                        velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime * airControl;
+                    }
                 }
             }
 
@@ -326,7 +346,6 @@ public class PlayerMotionController : MonoBehaviour
         {
             velocity = Vector3.ClampMagnitude(velocity, maxSpeed);
         }
-
     }
 
     void LateUpdate()
@@ -376,8 +395,10 @@ public class PlayerMotionController : MonoBehaviour
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
             out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
+        if (debug)
+            Debug.DrawLine(transform.position, transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance), Color.yellow);
 
-		if (onGround)
+        if (onGround)
         {
             floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
 
@@ -406,26 +427,26 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-    
 
-    //void OnDrawGizmosSelected()
-    //{
-    //    if (debug && Application.isPlaying)
-    //    {
-    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
 
-    //        Gizmos.color = Color.white;
-    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
+	//void OnDrawGizmosSelected()
+	//{
+	//	if (debug && Application.isPlaying)
+	//	{
+	//		Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
 
-    //        Gizmos.color = Color.gray;
-    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
+	//		Gizmos.color = Color.white;
+	//		Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
 
-    //        Gizmos.DrawLine(transform.position, end);
+	//		Gizmos.color = Color.gray;
+	//		Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
 
-    //    }
-    //}
+	//		Gizmos.DrawLine(transform.position, end);
 
-    private Vector3 GetDirection()
+	//	}
+	//}
+
+	private Vector3 GetDirection()
     {
         forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;
         rightDirection = inputAxis.x * cinemachineCamera.GetViewRight;
@@ -441,6 +462,17 @@ public class PlayerMotionController : MonoBehaviour
         return inputAxis;
     }
 
+    public Vector3 Velocity
+    {
+        get 
+        {
+            return velocity;
+        }
+        set
+        {
+            velocity = value;
+        }
+    }
     public Vector3 GetVelocity()
     {
         return velocity;
@@ -515,6 +547,18 @@ public class PlayerMotionController : MonoBehaviour
         set
         {
             maxSpeed = value;
+        }
+    }
+
+    public bool Shielding
+    {
+        get 
+        {
+            return isShielding;
+        }
+        set
+        {
+            isShielding = value;
         }
     }
 

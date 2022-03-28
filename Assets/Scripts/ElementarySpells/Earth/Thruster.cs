@@ -30,7 +30,8 @@ public class Thruster : MonoBehaviour
             if(EarthPillar.instance != null && EarthPillar.instance.isTotallyOut && playerMotionController.onGround && canPropel)
             {
                 playerMotionController.onGround = false;
-                playerMotionController.velocity.y = playerMotionController.jumpForce + jumpForceAdded;
+                Vector3 velocity = playerMotionController.Velocity;
+                playerMotionController.Velocity = new Vector3(velocity.x,playerMotionController.jumpForce + jumpForceAdded,velocity.z);
             }
         }
     }
