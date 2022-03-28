@@ -177,7 +177,6 @@ public class ElementaryController : MonoBehaviour
 	private void FixedUpdate()
     {
         isAway = IsElementaryAway();
-        Debug.Log("is Away : " + isAway + " isReseting : " + isReseting + " ComputePosition : " + computePosition);
         if (!isAway && isReseting && currentSpell == null)
         {
             readyToCast = true;
@@ -284,19 +283,5 @@ public class ElementaryController : MonoBehaviour
         currentSpell = null;
         readyToCast = !IsElementaryAway();
         isReseting = true;
-    }
-
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    Debug.Log(collision.gameObject.name);
-    //}
-
-    private void OnTriggerEnter(Collider other)
-    {
-        //Debug.Log(other.gameObject.name);
-    }
-    private void OnDrawGizmos()
-    {
-        //Gizmos.DrawSphere((shoulder.position + shoulderOffset), sphereCastRadius);
     }
 }
