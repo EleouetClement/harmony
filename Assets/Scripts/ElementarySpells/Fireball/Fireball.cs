@@ -281,6 +281,7 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void Terminate()
     {
+        launched = false;
         if(canceled)
         {
             Destroy(marker.gameObject);

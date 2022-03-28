@@ -129,7 +129,6 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("readyToCast avt: " + readyToCast + " currentSpell : " + ((currentSpell==null)? "null" : currentSpell.name));
         if (!readyToCast && currentSpell == null)
         {      
             readyToCast = !IsElementaryAway();
@@ -178,10 +177,9 @@ public class ElementaryController : MonoBehaviour
 	private void FixedUpdate()
     {
         isAway = IsElementaryAway();
-        //Debug.Log(currentSpell);
+        Debug.Log("is Away : " + isAway + " isReseting : " + isReseting + " ComputePosition : " + computePosition);
         if (!isAway && isReseting && currentSpell == null)
         {
-            currentSpell = null;
             readyToCast = true;
             isReseting = false;
         }
@@ -285,7 +283,6 @@ public class ElementaryController : MonoBehaviour
         Recall();
         currentSpell = null;
         readyToCast = !IsElementaryAway();
-        //Debug.Log("readyToCast : " + readyToCast);
         isReseting = true;
     }
 
