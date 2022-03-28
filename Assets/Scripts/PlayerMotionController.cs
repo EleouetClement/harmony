@@ -24,7 +24,7 @@ public class PlayerMotionController : MonoBehaviour
     [Range(0, 100)] public float timeToMaxSpeed;
     private float maxSpeed;
     private float maxSpeedPercent;
-    private float walkSpeed;
+    public float walkSpeed;
     private float strafeSpeed;
     private float backWalkSpeed;
     private float walkAcceleration;
@@ -226,18 +226,32 @@ public class PlayerMotionController : MonoBehaviour
         #endregion
 
         #region Apply Direction Input
-
+        Debug.DrawLine(transform.position, transform.position + cinemachineCamera.GetViewForward, Color.red);
         if (/*!sliding &&*/ !isDodging)
         {
             CheckMovement();
-            GetDirection();
+            Vector3 nextDir = GetDirection();
             UpdateSpeeds();
             UpdateMaxSpeed();
 
             if (isMoving && !elementary.isAiming)
             {
-                velocity += GetDirection() * walkAcceleration * Time.deltaTime * (onGround ? 1 : airControl);
                 
+                if (onGround && !isJumping)
+                {
+                    velocity = nextDir * walkSpeed;
+                }
+				else
+				{
+                    velocity += nextDir * walkAcceleration * Time.deltaTime * airControl;
+                }
+
+                if (debug)
+                {
+                    Debug.DrawLine(transform.position, transform.position + nextDir, Color.blue);
+                    Debug.DrawLine(transform.position, transform.position + velocity.normalized,Color.green);
+                }
+               
             }
             else if (isMoving)
             {
@@ -572,32 +586,42 @@ public class PlayerMotionController : MonoBehaviour
     /// </summary>
     private void UpdateSpeeds()
     {
-        if (MovingForward)
+        if (!elementary.isAiming)
         {
-            walkSpeed = Mathf.MoveTowards(walkSpeed, walkMaxSpeed, walkAcceleration * Time.deltaTime);
+            if(isMoving)
+                walkSpeed = Mathf.MoveTowards(walkSpeed, walkMaxSpeed, walkAcceleration * Time.deltaTime);
+			else
+                walkSpeed = Mathf.MoveTowards(walkSpeed, 0f, walkAcceleration * Time.deltaTime);
         }
 		else
 		{
-            walkSpeed = Mathf.MoveTowards(walkSpeed, 0f, walkAcceleration * Time.deltaTime);
-        }
+            if (MovingForward)
+            {
+                walkSpeed = Mathf.MoveTowards(walkSpeed, walkMaxSpeed, walkAcceleration * Time.deltaTime);
+            }
+		    else
+		    {
+                walkSpeed = Mathf.MoveTowards(walkSpeed, 0f, walkAcceleration * Time.deltaTime);
+            }
 
-        if (movingRight || movingLeft)
-        {
-            strafeSpeed = Mathf.MoveTowards(strafeSpeed, strafeMaxSpeed, strafeAcceleration * Time.deltaTime);
-        }
-		else
-		{
-            strafeSpeed = Mathf.MoveTowards(strafeSpeed, 0f, strafeAcceleration * Time.deltaTime);
-        }
+            if (movingRight || movingLeft)
+            {
+                strafeSpeed = Mathf.MoveTowards(strafeSpeed, strafeMaxSpeed, strafeAcceleration * Time.deltaTime);
+            }
+		    else
+		    {
+                strafeSpeed = Mathf.MoveTowards(strafeSpeed, 0f, strafeAcceleration * Time.deltaTime);
+            }
 
-        if (movingBackward)
-        {
-            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, backWalkMaxSpeed, backWalkAcceleration * Time.deltaTime);
-        }
-		else
-		{
-            backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, 0f, backWalkAcceleration * Time.deltaTime);
-        }
+            if (movingBackward)
+            {
+                backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, backWalkMaxSpeed, backWalkAcceleration * Time.deltaTime);
+            }
+		    else
+		    {
+                backWalkSpeed = Mathf.MoveTowards(backWalkSpeed, 0f, backWalkAcceleration * Time.deltaTime);
+            }
+		}
     }
 
     /// <summary>
