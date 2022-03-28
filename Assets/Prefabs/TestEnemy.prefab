@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1006983962636285120}
   - component: {fileID: 704326010901488104}
   - component: {fileID: 1498510093121200613}
+  - component: {fileID: 6073644814743142033}
   m_Layer: 8
   m_Name: TestEnemy
   m_TagString: Untagged
@@ -70,16 +71,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e571ad9326bd3f14489b86fe69b60396, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tree: {fileID: 11400000, guid: e63afbb465958ab468b6d0b534fd0b5d, type: 2}
-  running: 1
-  customEvents:
-    keys: []
-    values: []
+  treeRunner: {fileID: 6073644814743142033}
   animator: {fileID: 4155440454439436746}
   aiActive: 1
   health: 0
   maxHealth: 30
-  wayPointList: []
+  patrolling: 0
+  patrolSpeed: 1.25
+  minWaitProbability: 5
+  maxWaitProbability: 15
+  minWaitDuration: 0
+  maxWaitDuration: 5
+  maxPointDistance: 2
+  wayPointList:
+  - {x: -0.69188476, y: 0.3504696, z: 0}
+  - {x: 6.6793003, y: 0.24565586, z: 0}
+  - {x: 7.993948, y: 0.24565586, z: -7.86147}
+  - {x: 3.487114, y: 0.20635605, z: -4.5866036}
+  - {x: -0.4935155, y: 0.2820981, z: -6.92331}
   nextWayPoint: 0
 --- !u!136 &1498510093121200613
 CapsuleCollider:
@@ -95,6 +104,23 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6073644814743142033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1006983962636285134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58c6f9b140a52a14881ec09eaebb66eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tree: {fileID: 11400000, guid: e63afbb465958ab468b6d0b534fd0b5d, type: 2}
+  running: 1
+  customEvents:
+    keys: []
+    values: []
 --- !u!1001 &6800877013123974053
 PrefabInstance:
   m_ObjectHideFlags: 0

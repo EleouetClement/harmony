@@ -219,7 +219,7 @@ namespace Harmony.AI
 
             if (pointList != null && pointList.arraySize > 0)
             {
-                for (int i = 0; i < agent.wayPointList.Length; i++)
+                for (int i = 0; i < pointList.arraySize; i++)
                 {
                     Handles.color = Color.white;
                     if (pointList.arraySize > 1 && i != pointList.arraySize - 1)
@@ -228,13 +228,17 @@ namespace Harmony.AI
                     }else if (i == pointList.arraySize - 1)
                     {
                         Handles.DrawLine(pointList.GetArrayElementAtIndex(i).vector3Value, pointList.GetArrayElementAtIndex(0).vector3Value, 2);
+                        if (pointList.arraySize > 1 && pointList.GetArrayElementAtIndex(i).vector3Value == pointList.GetArrayElementAtIndex(i-1).vector3Value)
+                        {
+                            pointList.GetArrayElementAtIndex(i).vector3Value = agent.transform.position-Vector3.up;
+                        }
                     }
 
                     bool isCurrent = currentHandle == i;
 
                     if (isCurrent)
                     {
-                        if (Event.current.type == EventType.MouseUp)
+                        if (!Application.isPlaying && Event.current.type == EventType.MouseUp)
                             EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
 
                         pointList.GetArrayElementAtIndex(i).vector3Value = Handles.PositionHandle(pointList.GetArrayElementAtIndex(i).vector3Value, Quaternion.identity);
