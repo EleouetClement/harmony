@@ -183,7 +183,7 @@ public class PlayerMotionController : MonoBehaviour
         {
             if (isMoving)
             {
-                if (isTurning && !elementary.isAiming)
+                if (isTurning && !elementary.isAiming && dir != Vector3.zero)
                 {
                      friction = (Quaternion.Angle(playerMesh.localRotation, Quaternion.LookRotation(new Vector3(velocity.x, 0f, velocity.z).normalized)) / 180f) * maxTurnFriction; 
                 }
@@ -452,6 +452,14 @@ public class PlayerMotionController : MonoBehaviour
     public bool GetIsFalling()
     {
         return isFalling;
+    }
+
+    public bool Moving
+    {
+        get
+        {
+            return isMoving;
+        }
     }
 
     public bool MovingForward 
