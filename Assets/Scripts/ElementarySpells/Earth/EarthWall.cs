@@ -128,31 +128,25 @@ public class EarthWall : AbstractSpell
             Quaternion rot = Quaternion.LookRotation(v);
             Instantiate(earthPillar, lastMarkerPosition, rot);
         }
-        else if(currentStatus != Status.noTarget &&  lastMarkerPosition != Vector3.zero)
+        else if(currentStatus != Status.noTarget)
         {
-            if (currentStatus == Status.pillar) // If the slope is not too hard
+            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+            v.y = 0f;
+            v.Normalize();
+            Quaternion rot = Quaternion.LookRotation(v);
+            switch (currentStatus)
             {
-                //Debug.Log("SPAWN PILLAR at location : " + lastMarkerPosition);
+                case Status.pillar:
+                    Instantiate(earthPillar, lastMarkerPosition, rot);
+                    break;
 
-                // Avoid to rotate the pillar on X axis when it spawns
-                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-                v.y = 0f;
-                v.Normalize();
-                Quaternion rot = Quaternion.LookRotation(v);
-                //Instantiate(earthPillar, marker.transform.position, rot);          
-                Instantiate(earthPillar, lastMarkerPosition, rot);
-            }
-            else if (currentStatus == Status.platform)
-            {
-                //Debug.Log("SPAWN PLATFORM at location : " + lastMarkerPosition);
+                case Status.platform:
+                    Instantiate(earthPlatform, lastMarkerPosition, rot);
+                    break;
 
-                // Avoid to rotate the platform on X axis when it spawns
-                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-                v.y = 0f;
-                v.Normalize();
-                Quaternion rot = Quaternion.LookRotation(v);
-
-                Instantiate(earthPlatform, lastMarkerPosition, rot);
+                default:
+                    Debug.Log("Earth wall : no valid target for wall/plaforms " + currentStatus);
+                    break;
             }
         }  
         groundMovingEffect.Stop();
@@ -164,9 +158,10 @@ public class EarthWall : AbstractSpell
     
     private void Previsualization(RaycastHit hit)
     {
-        if(hit.transform == null)
+        if(hit.collider == null && visuReference)
         {
-            newStatus = Status.noTarget;
+            Debug.Log("wtf");
+            newStatus = Status.unvalid;
         }
         else
         {
@@ -207,15 +202,13 @@ public class EarthWall : AbstractSpell
         }
         if (visuReference)
         {
-            if ((newStatus == Status.unvalid || newStatus == Status.noTarget))
+            
+            if ((newStatus == Status.unvalid))
             {
-                Debug.Log("Derniere position enregistrée");
-                currentStatus = newStatus;
                 visuReference.transform.position = lastMarkerPosition;
             }
             else
             {
-                Debug.Log("Nouvelle position");
                 visuReference.transform.position = hit.point;
                 Vector3 positionForRotation = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
                 positionForRotation.y = visuReference.transform.position.y;
