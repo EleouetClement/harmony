@@ -117,6 +117,28 @@ public class WaterBeam : AbstractSpell
                     {
                         raycastFromElementary.collider.gameObject.GetComponent<FallingBridge>().isFalling = true;
                     }
+
+                    if(raycastFromElementary.collider.CompareTag("Wheel"))
+                    {
+                        //if(raycastFromElementary.collider.gameObject.GetComponentInParent<WheelHeavyDoor>() != null)
+                        //{
+                        //    raycastFromElementary.collider.gameObject.GetComponentInParent<WheelHeavyDoor>().OpenDoor(gameObject, raycastFromElementary);
+                        //}
+
+                        IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
+
+                        // If the collider gameObject does not contain a script with IDamageable
+                        if (item == null)
+                        {
+                            Debug.LogError("InteractableObject is Not Damageable");
+                        }
+                        else
+                        {
+                            raycastFromElementary.collider.gameObject.GetComponent<AbstractWheelSystem>().SetHitPoint(impactEffect.transform.position);
+                            DamageHit damage = new DamageHit(0f, beamDirection.normalized);
+                            item.OnDamage(damage);
+                        }
+                    }
                 }
 
                 // If the beam hits flames, it will extinguish them
@@ -179,5 +201,10 @@ public class WaterBeam : AbstractSpell
     {
         Destroy(marker.gameObject);
         Terminate();
+    }
+
+    public Vector3 GetCurrentDistancePoint()
+    {
+        return currentDistancePoint;
     }
 }
