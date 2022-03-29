@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class BurnableItem : MonoBehaviour
+public abstract class BurnableItem : MonoBehaviour, IDamageable
 {
 
     protected ParticleSystem fireSystem;
@@ -22,12 +22,18 @@ public abstract class BurnableItem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentElement == AbstractSpell.Element.Fire)
-        {  
+        if (collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentElement == AbstractSpell.Element.Fire)
+        {
             Consume();
         }
     }
 
+    public void OnDamage(DamageHit hit)
+    {
+        Consume();
+    }
+
     protected abstract void Update();
 
+    
 }
