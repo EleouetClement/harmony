@@ -133,8 +133,13 @@ public class PlayerMotionController : MonoBehaviour
             lastGroundPos = groundTranform.position;
         }
 
+        //prevent character from bouncing when going down a slope
+        if (OnSlope())
+        {
+            print("slope!");
+            velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+        }
 
-        
         controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
@@ -270,11 +275,6 @@ public class PlayerMotionController : MonoBehaviour
                             velocity = forwardDirection.normalized * backWalkSpeed + rightDirection * strafeSpeed;
                         else
                             velocity = forwardDirection.normalized * backWalkSpeed;
-                    }
-                    //prevent character from bouncing when going down a slope
-                    if (OnSlope())
-                    {
-                        velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
                     }
                 }
 				else
