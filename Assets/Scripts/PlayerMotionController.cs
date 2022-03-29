@@ -65,9 +65,10 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 rightDirection;
     private Vector2 inputAxis;
     private Vector3 velocity;
-    [HideInInspector] public bool onGround;
-    private float floorAngle;
+     public bool onGround;
+    public float floorAngle;
     private RaycastHit surfaceInfo;
+    private RaycastHit slopeInfo;
     private Transform groundTranform;
     private Vector3 lastGroundPos;
     private bool isMoving = false;
@@ -75,8 +76,9 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
     private bool isTurning = false;
-    private bool sliding = false;
+    public bool sliding = false;
     private bool isShielding = false;
+    public bool onSlope = false;
 
     private bool movingForward;
     private bool movingBackward;
@@ -133,14 +135,13 @@ public class PlayerMotionController : MonoBehaviour
             lastGroundPos = groundTranform.position;
         }
 
-        //prevent character from bouncing when going down a slope
-        if (OnSlope())
-        {
-            print("slope!");
-            velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
-        }
 
-        controller.Move(velocity * Time.deltaTime + playerOffset);
+		//prevent character from bouncing when going down a slope
+		if (onSlope && onGround && isMoving && !sliding)
+		{
+			velocity += Vector3.down * slopeForce * Time.fixedDeltaTime;
+		}
+		controller.Move(velocity * Time.deltaTime + playerOffset);
         if(dodgeTimer > Mathf.Epsilon)
         {
            dodgeTimer -= Time.deltaTime;
@@ -230,7 +231,7 @@ public class PlayerMotionController : MonoBehaviour
         #endregion
 
         #region Apply Direction Input
-        if (/*!sliding &&*/ !isDodging)
+        if (!sliding && !isDodging)
         {
             CheckMovement();
             Vector3 nextDir = GetDirection();
@@ -292,6 +293,7 @@ public class PlayerMotionController : MonoBehaviour
                         velocity += forwardDirection.normalized * backWalkAcceleration * Time.deltaTime * airControl;
                     }
                 }
+                
             }
 
         }
@@ -324,10 +326,10 @@ public class PlayerMotionController : MonoBehaviour
             isJumping = false;
             if (sliding)
             {
-                Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+				Vector3 force = Vector3.ProjectOnPlane(Vector3.up * (-gravity * Time.fixedDeltaTime), surfaceInfo.normal);
+				velocity += force * slideForce;
 
-                velocity += force * slideForce;
-            }
+			}
         }
 
 		#endregion
@@ -395,12 +397,18 @@ public class PlayerMotionController : MonoBehaviour
     {
         onGround = Physics.SphereCast(transform.position, controller.radius * groundTestRadiusFactor, Vector3.down,
             out surfaceInfo, controller.height / 2 - controller.radius + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
+
+        bool slopeCheck = Physics.Raycast(transform.position, Vector3.down,
+            out slopeInfo, controller.height / 2 + groundMaxDistance, layerMask, QueryTriggerInteraction.Ignore);
+
         if (debug)
             Debug.DrawLine(transform.position, transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance), Color.yellow);
 
-        if (onGround)
+        if (slopeCheck)
         {
-            floorAngle = Vector3.Angle(surfaceInfo.normal, Vector3.up);
+            floorAngle = Vector3.Angle(slopeInfo.normal, Vector3.up);
+            onSlope = slopeInfo.normal != Vector3.up;
+      
 
             if (groundTranform != surfaceInfo.transform)
             {
@@ -573,7 +581,7 @@ public class PlayerMotionController : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(transform.position + Vector3.down * controller.height / 2, Vector3.down, out hit, 0.1f, layerMask))
+        if (Physics.Raycast(transform.position + Vector3.down * controller.height / 2 , Vector3.down, out hit, 0.1f, layerMask))
         {
             return hit.normal != Vector3.up;
         }
