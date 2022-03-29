@@ -4,9 +4,8 @@ using UnityEngine;
 
 public abstract class AbstractWheelSystem : MonoBehaviour
 {
-    public GameObject objectToOpen;
     public float spinForce;
-    protected Transform wheelPosition;
+    public GameObject doorToOpen;
     protected Vector3 hitPoint;
 
     public abstract void OpenDoor();
