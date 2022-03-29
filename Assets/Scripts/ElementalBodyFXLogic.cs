@@ -7,6 +7,7 @@ public class ElementalBodyFXLogic : MonoBehaviour
 
     private Vector3 StartPosRefLocale;
     private float timeLocale = 0f;
+    private Transform playerref;
 
     public float BreatheAmp = 0.1f;
     public float BreathTime = 4f;
@@ -17,6 +18,7 @@ public class ElementalBodyFXLogic : MonoBehaviour
     void Start()
     {
         StartPosRefLocale = transform.localPosition;
+        playerref = GameModeSingleton.GetInstance().GetPlayerMesh;
     }
 
     void Update()
@@ -30,5 +32,6 @@ public class ElementalBodyFXLogic : MonoBehaviour
         float newz = StartPosRefLocale.z + Mathf.Sin(ratiofront * Mathf.PI * 2) * FrontAmp;
 
         transform.localPosition = new Vector3(StartPosRefLocale.x, newy, newz);
+        transform.rotation = playerref.rotation;
     }
 }
