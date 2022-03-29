@@ -22,7 +22,10 @@ public abstract class BurnableItem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Consume();
+        if(collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentElement == AbstractSpell.Element.Fire)
+        {  
+            Consume();
+        }
     }
 
     protected abstract void Update();

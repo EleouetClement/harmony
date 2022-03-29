@@ -47,7 +47,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         cinemachineCamera = GameModeSingleton.GetInstance().GetCinemachineCameraController;
-        
     }
 
     private void Update()
@@ -80,7 +79,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
-                elementaryController.currentSpell.OnRelease();
+                elementaryController.currentSpell?.OnRelease();
             }
         }
         if (manaburnout)
@@ -91,9 +90,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion
 
-        //player facing in front of them when aiming
-        if (elementaryController.isAiming)
-            playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
+       
     }
 
     // Update is called once per frame
@@ -200,14 +197,14 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnBlock(InputValue value)
     {
         //Debug.Log("Blocking");
-        if (!manaburnout)
+        if (!manaburnout && value.isPressed)
         {
             if (elementaryController.currentSpell == null)
             {
                 Debug.Log("shield activation");
                 AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                 spell.init(elementaryController.gameObject, Vector3.zero);
-                elementaryController.currentSpell = spell;
+                elementaryController.CastSpell(spell);
             }
             else
             {
@@ -220,14 +217,15 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
                     elementaryController.currentSpell.Terminate();
                     AbstractSpell spell = Instantiate(elementaryController.shieldPrefab, elementaryController.transform.position, Quaternion.identity);
                     spell.init(elementaryController.gameObject, Vector3.zero);
-                    elementaryController.currentSpell = spell;
+                    elementaryController.CastSpell(spell);
                 }
             }         
         }
         if (!value.isPressed && elementaryController.currentSpell != null && !elementaryController.currentSpell.isReleased())
+        {
+            Debug.Log("leve shield");
             elementaryController.currentSpell?.OnRelease();
-
-
+        }
     }
 
 

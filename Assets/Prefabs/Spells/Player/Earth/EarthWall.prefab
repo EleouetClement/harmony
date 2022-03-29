@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 2
   damagesInfos: {fileID: 11400000, guid: d1363431101d32c4aa88be45db727a2a, type: 2}
+  elementaryfollow: 0
   canceled: 0
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
@@ -59,8 +60,13 @@ MonoBehaviour:
   layersCollision:
     serializedVersion: 2
     m_Bits: 6144
+  quickCastTimer: 0.2
   thresholdGroundToWall: 0.7
   thresholdWallToCeiling: 0
+  markerPrefabs:
+  - {fileID: 426489448097527418, guid: 9a363b17bf35a2c4b871b5bb1b78cfdf, type: 3}
+  - {fileID: 5806283404587497345, guid: 59304e62b2ea2004ba45a041808826c7, type: 3}
+  quickPillarOffset: 0.3
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0

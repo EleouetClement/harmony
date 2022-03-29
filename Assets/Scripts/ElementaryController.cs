@@ -26,6 +26,13 @@ public class ElementaryController : MonoBehaviour
     [SerializeField] private AbstractSpell[] spellsLeft;
     [SerializeField] private AbstractSpell[] spellsRight;
 
+    [Header("Dev")]
+    [SerializeField] GameObject debugSpherePrefab;
+    [SerializeField][Range(0, 4)] float sphereCastRadius;
+    [SerializeField][Range(0, 1)] float sphereCastMaxDistance;
+    [SerializeField] [Range(2, 5)] float yAxisNewValue;
+    [SerializeField] LayerMask layersToIgnore;
+
 
     //Contains 1 spell per element
     public Dictionary<AbstractSpell.Element, AbstractSpell> spells1;
@@ -48,19 +55,30 @@ public class ElementaryController : MonoBehaviour
     public bool computePosition = true;
     private bool hasShoulder = false;
 
-    private Transform shoulder;
+    public Transform shoulder {get; private set;}
     private Transform playerMesh;
-
-    public bool isAway /*{ get; private set; }*/ = false;
+    private GameObject debugSphereReference;
+    
+    /// <summary>
+    /// true if the elementary is away from the player after a spell or inside something
+    /// </summary>
+    public bool isAway { get; private set; } = false;
 
     [HideInInspector]
     public AbstractSpell currentSpell = null;
+
+    /// <summary>
+    /// True if the elementary has return next to the player
+    /// </summary>
     public bool readyToCast = true;
     public AbstractSpell.Element currentElement;
 
 	private void Awake()
 	{
 		shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
+        if(GameModeSingleton.GetInstance().debug)
+            debugSphereReference = Instantiate(debugSpherePrefab, Vector3.zero, Quaternion.identity);
+        
         InitDict();
     }
 
@@ -98,6 +116,11 @@ public class ElementaryController : MonoBehaviour
         SetElement(AbstractSpell.Element.Fire);
         virtualShoulder.transform.localPosition = shoulderOffset;
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        if(GameModeSingleton.GetInstance().debug)
+        {
+            debugSphereReference.transform.parent = playerMesh;
+            debugSphereReference.transform.localPosition = shoulderOffset;
+        }      
         Vector3 shoulderXZ = new Vector3(virtualShoulder.transform.position.x, 0f, virtualShoulder.transform.position.z);
         Vector3 transformXZ = new Vector3(shoulderOffset.x, 0f, shoulderOffset.z);
         safetyDistance = Vector3.Distance(shoulderXZ, transformXZ);
@@ -106,7 +129,11 @@ public class ElementaryController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (!readyToCast && currentSpell == null)
+        {      
+            readyToCast = !IsElementaryAway();
+            //Debug.Log("readyToCast aprs: " + readyToCast);
+        }
         //Testing purposes
         virtualShoulder.transform.localPosition = shoulderOffset;
         if (Input.GetKeyDown(KeyCode.C))
@@ -120,16 +147,38 @@ public class ElementaryController : MonoBehaviour
         shoulderOffset = new Vector3(horizontalOffset, verticalOffset, forwardOffset);
         if (computePosition || (currentSpell != null && currentSpell.elementaryfollow))
         {
+            
+            Collider[] obstacles = Physics.OverlapSphere((shoulder.position + shoulderOffset), sphereCastRadius, layersToIgnore);
+            if(GameModeSingleton.GetInstance().debug)
+            {
+                string debugs = "";
+                foreach (Collider c in obstacles)
+                {
+                    debugs += c.gameObject.name;
+                    debugs += " ";
+                }
+                Debug.Log(debugs);
+            }         
+            if (obstacles != null && obstacles.Length > 0)
+            {
+                //Debug.Log("Changement de position d'epaule nb d'obstacles : " + obstacles.Length);
+
+                virtualShoulder.transform.localPosition = new Vector3(0, yAxisNewValue, 0);
+            }
+            else
+            {
+                virtualShoulder.transform.localPosition = shoulderOffset;
+            }
             Orbit();
+            
         }
     }
 
 	private void FixedUpdate()
     {
         isAway = IsElementaryAway();
-        if (!isAway && isReseting)
+        if (!isAway && isReseting && currentSpell == null)
         {
-            currentSpell = null;
             readyToCast = true;
             isReseting = false;
         }
@@ -137,7 +186,8 @@ public class ElementaryController : MonoBehaviour
 
     public void SetElement(AbstractSpell.Element element)
     {
-        currentElement = element;
+        if(readyToCast)
+            currentElement = element;
     }
 
     /// <summary>
@@ -173,7 +223,8 @@ public class ElementaryController : MonoBehaviour
     {
         currentSpell = spell;
         readyToCast = false;
-        //computePosition = false;
+        computePosition = false;
+        isAway = true;
     }
 
     /// <summary>
@@ -185,10 +236,6 @@ public class ElementaryController : MonoBehaviour
     {
         if(hasShoulder)
         {
-            //Vector3 newPosition = new Vector3(shoulder.position.x + horizontalOffset, shoulder.position.y + verticalOffset, shoulder.position.z + forwardOffset);
-            //transform.position = Vector3.Lerp(transform.position, newPosition, Time.deltaTime*lerpInterpolationValue);
-
-            //Vector3 shoulderPosition = virtualShoulder.transform.position + Random.insideUnitSphere * 5f;
             transform.position = Vector3.Lerp(transform.position, virtualShoulder.transform.position, Time.deltaTime * lerpInterpolationValue);
         }     
     }
@@ -233,8 +280,8 @@ public class ElementaryController : MonoBehaviour
     public void Reset()
     {
         Recall();
+        currentSpell = null;
+        readyToCast = !IsElementaryAway();
         isReseting = true;
     }
-
-
 }

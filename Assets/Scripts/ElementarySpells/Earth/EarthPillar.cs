@@ -31,7 +31,7 @@ public class EarthPillar : MonoBehaviour
 
         // Initial and final point values for moving the pillar from bottom to top
         finalSpawnPoint = transform.position;
-        initialSpawnPoint = new Vector3(transform.position.x, transform.position.y-transform.localScale.y, transform.position.z);
+        initialSpawnPoint = new Vector3(transform.position.x, transform.position.y - transform.localScale.y, transform.position.z);
         transform.position += initialSpawnPoint;
 
         // Definition of the shake system (to have shocks as long as the pillar extends)

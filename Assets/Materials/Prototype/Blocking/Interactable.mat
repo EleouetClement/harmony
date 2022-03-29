@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: landscapeRoche
+  m_Name: Interactable
   m_Shader: {fileID: -6465566751694194690, guid: 7d7fcddad92701a488d945d86a766c7d,
     type: 3}
   m_ShaderKeywords: 
@@ -57,5 +57,5 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color: {r: 0.5377358, g: 0, b: 0.46291056, a: 0}
+    - _Color: {r: 1, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
