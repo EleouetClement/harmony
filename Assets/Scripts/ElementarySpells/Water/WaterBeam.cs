@@ -113,18 +113,13 @@ public class WaterBeam : AbstractSpell
                 // If the beam hits an interactable object like a falling bridge
                 if (raycastFromElementary.collider.gameObject.layer == HarmonyLayers.LAYER_INTERACTABLE)
                 {
-                    if (raycastFromElementary.collider.CompareTag("FallingBridge"))
+                    if (raycastFromElementary.collider.CompareTag("FallingTree"))
                     {
-                        raycastFromElementary.collider.gameObject.GetComponent<FallingBridge>().isFalling = true;
+                        raycastFromElementary.collider.gameObject.GetComponent<FallingTree>().isFalling = true;
                     }
 
                     if(raycastFromElementary.collider.CompareTag("Wheel"))
                     {
-                        //if(raycastFromElementary.collider.gameObject.GetComponentInParent<WheelHeavyDoor>() != null)
-                        //{
-                        //    raycastFromElementary.collider.gameObject.GetComponentInParent<WheelHeavyDoor>().OpenDoor(gameObject, raycastFromElementary);
-                        //}
-
                         IDamageable item = raycastFromElementary.collider.gameObject.GetComponent<IDamageable>();
 
                         // If the collider gameObject does not contain a script with IDamageable

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingBridge : MonoBehaviour
+public class FallingTree : MonoBehaviour
 {
     public float speedFalling = 7f;
     public float maxAngle = 150f;
@@ -31,12 +31,12 @@ public class FallingBridge : MonoBehaviour
 
             if (transform.rotation.eulerAngles.x >= maxAngle)
             {
-                BridgeHasFallen();
+                TreeHasFallen();
             }
         }
     }
 
-    public void BridgeHasFallen()
+    public void TreeHasFallen()
     {
         isFalling = false;
 
@@ -48,7 +48,7 @@ public class FallingBridge : MonoBehaviour
         
         // Avoid another interactions
         Destroy(gameObject.GetComponent<BoxCollider>());
-        Destroy(gameObject.GetComponent<FallingBridge>());
+        Destroy(this);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -56,7 +56,7 @@ public class FallingBridge : MonoBehaviour
         // If the bridge hits something (the ground in this case), it stops falling
         if (collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
         {
-            BridgeHasFallen();
+            TreeHasFallen();
         }
     }
 }
