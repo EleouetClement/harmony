@@ -11,13 +11,17 @@ public abstract class EnnemySpell : MonoBehaviour
 
     public DamageHit damagesDeal{ get; protected set; }
 
+    [SerializeField] private float livingTime;
+
     protected Transform summonerPosition;
 
     //public GameObject Target;
 
+    [HideInInspector]
     public Vector3 target;
 
     private float chargeTimer;
+    private float lifeTimer;
 
     private float castObjective;
     /// <summary>
@@ -49,7 +53,7 @@ public abstract class EnnemySpell : MonoBehaviour
     /// </summary>
     protected virtual void FixedUpdate()
     {
-        if(!charged)
+        if (!charged)
         {
             if (chargeTimer < castObjective)
             {
@@ -60,11 +64,24 @@ public abstract class EnnemySpell : MonoBehaviour
                 charged = true;
                 OnChargeEnd();
             }
-        }    
+        }
+        else if(lifeTimer < livingTime)
+        {
+            lifeTimer += Time.fixedDeltaTime;
+        }
+        else
+        {
+            Terminate();
+        }
     }
-
     /// <summary>
     /// Setup the spell before launching it.  
     /// </summary>
     protected abstract void OnChargeEnd();
+
+    /// <summary>
+    /// Clean the spell by destroying that needs to be.
+    /// Additionnal operations should be added according to each spell.
+    /// </summary>
+    public abstract void Terminate();
 }

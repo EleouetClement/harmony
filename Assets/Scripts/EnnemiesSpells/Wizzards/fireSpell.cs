@@ -5,32 +5,31 @@ using UnityEngine;
 public class fireSpell : EnnemySpell
 {
 
-    [SerializeField] EnnemiFireBall fireOrbReference;
-    [SerializeField][Min(0)] float projectileGrowthPerSec;
-    [SerializeField][Min(0)] float damagesGrowthPerSec;
+    
+
+    [Header("Casting stats")]
+    [SerializeField][Range(0, 0.5f)] float projectileGrowthPerSec;
+    [SerializeField][Min(0)] int damagesGrowthPerSec;
 
     //should be counted in number of hits according to the player health system
     [SerializeField][Range(1, 4)] int baseDamages;
+    [SerializeField] float speed;
+    [Header("Do not change")]
+    [SerializeField] EnnemiFireBall fireOrbReference;
+    
     private EnnemiFireBall fireOrbInstance;
 
     private Vector3 trajectory = Vector3.zero;
 
     private void Awake()
     {
-        
+        if(!fireOrbReference)
+        {
+            Debug.LogError("Ennemy fire Spell : no fire orb reference, spell cannot launch");
+            Destroy(gameObject);
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public override void Charge(float chargeTime, Transform spellOrigin)
     {
@@ -56,8 +55,9 @@ public class fireSpell : EnnemySpell
         }
         else
         {
-
+            Fly();
         }
+        
     }
 
     protected override void OnChargeEnd()
@@ -66,4 +66,18 @@ public class fireSpell : EnnemySpell
         trajectory.Normalize();
         damagesDeal.direction = trajectory;
     }
+
+    private void Fly()
+    {
+        Vector3 velocity = target * speed * Time.deltaTime;
+        fireOrbInstance.transform.Translate(velocity);
+    }
+
+    public override void Terminate()
+    {
+        Destroy(fireOrbInstance);
+        Destroy(gameObject);
+    }
+
+
 }
