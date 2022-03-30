@@ -39,6 +39,7 @@ public abstract class EnnemySpell : MonoBehaviour
     {
         castObjective = chargeTime;
         summonerPosition = spellOrigin;
+        target = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
     }
 
     public virtual void Charge(float chargeTime, Transform spellOrigin, Vector3 targetPosition)
