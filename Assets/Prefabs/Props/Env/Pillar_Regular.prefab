@@ -101,6 +101,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LP_BASE_Bottom
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 305b225c0ee92004e859cefbb15ffe57,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 305b225c0ee92004e859cefbb15ffe57, type: 3}
 --- !u!4 &3348971311522107347 stripped
@@ -176,6 +181,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LP_P_colonne
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 3335358654694ce48a167d49dc204936,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3335358654694ce48a167d49dc204936, type: 3}
 --- !u!4 &5595376128216731052 stripped
@@ -250,6 +260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LP_BASE_Top
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 305b225c0ee92004e859cefbb15ffe57,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 305b225c0ee92004e859cefbb15ffe57, type: 3}

@@ -101,6 +101,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LP_G_base_Bottom
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 362a73a91912f5a4d9e4f284f5d0b079,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362a73a91912f5a4d9e4f284f5d0b079, type: 3}
 --- !u!4 &5526650344689186794 stripped
@@ -176,6 +181,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LP_G_colonne
       objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 321f1e21e01d7e949a8b0e3e27a017d2,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 321f1e21e01d7e949a8b0e3e27a017d2, type: 3}
 --- !u!4 &7244686164878179691 stripped
@@ -250,6 +260,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LP_G_base_Top
+      objectReference: {fileID: 0}
+    - target: {fileID: 3451118302482216456, guid: 362a73a91912f5a4d9e4f284f5d0b079,
+        type: 3}
+      propertyPath: m_Convex
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 362a73a91912f5a4d9e4f284f5d0b079, type: 3}

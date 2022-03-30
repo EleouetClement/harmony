@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Rocher
-    second: {fileID: 2100000, guid: 27e235416565db04791ba28fc30ae20a, type: 2}
+    second: {fileID: 2100000, guid: 0f4a9edfd3d559b45bb548ce9d212a15, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -42,7 +42,7 @@ ModelImporter:
     lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
-    addColliders: 0
+    addColliders: 1
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
     importVisibility: 1
