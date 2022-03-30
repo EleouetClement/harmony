@@ -50,7 +50,7 @@ MonoBehaviour:
   projectileGrowthPerSec: 0.054
   damagesGrowthPerSec: 1
   baseDamages: 1
-  speed: 3
+  speed: 25.08
   fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
     type: 3}
   debug: 1

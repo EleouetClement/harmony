@@ -73,7 +73,7 @@ public class fireSpell : EnnemySpell
 
     private void Fly()
     {
-        Vector3 velocity = target * speed * Time.deltaTime;
+        Vector3 velocity = trajectory * speed * Time.deltaTime;
         fireOrbInstance.transform.Translate(velocity);
     }
 
