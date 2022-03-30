@@ -53,4 +53,4 @@ MonoBehaviour:
   speed: 25.08
   fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
     type: 3}
-  debug: 1
+  debug: 0

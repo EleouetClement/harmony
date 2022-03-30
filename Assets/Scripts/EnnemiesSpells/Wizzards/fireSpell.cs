@@ -70,10 +70,12 @@ public class fireSpell : EnnemySpell
         trajectory = target - summonerPosition.position;
         trajectory.Normalize();
         if (debug)
-            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
-        damagesDeal.direction = trajectory;
+            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);     
         if(chargeTimer > 0)
+        {
+            damagesDeal.direction = trajectory;
             fireOrbInstance.explosionOn = true;
+        }         
     }
 
     private void Fly()
@@ -92,8 +94,7 @@ public class fireSpell : EnnemySpell
     protected override void DealDamages(GameObject objectHitted)
     {
         base.DealDamages(objectHitted);
-        
-        Destroy(fireOrbInstance.gameObject);
+        Terminate();
     }
 
 }
