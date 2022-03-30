@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439142077459054627}
   - component: {fileID: 4106613200688171979}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireSpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,4 +51,5 @@ MonoBehaviour:
   damagesGrowthPerSec: 1
   baseDamages: 1
   speed: 3
-  fireOrbReference: {fileID: 0}
+  fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
+    type: 3}

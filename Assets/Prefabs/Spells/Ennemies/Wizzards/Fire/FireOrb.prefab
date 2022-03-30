@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5601021594072667299}
   - component: {fileID: 3555296788594870089}
   - component: {fileID: 6926710170593425771}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FireOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,9 +136,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8121383544601911911}
     m_Modifications:
+    - target: {fileID: 1866692896978666, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
       propertyPath: m_Name
       value: FireBall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1947871717301538, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4209731392266258, guid: a990e3ac1318b834488c784d851f42a9, type: 3}
       propertyPath: m_RootOrder
@@ -199,6 +207,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8121383544601911911}
     m_Modifications:
+    - target: {fileID: 1350410435254458454, guid: d903df075089ef945ba38f35017eaac8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743503367066904597, guid: d903df075089ef945ba38f35017eaac8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3841384982787575142, guid: d903df075089ef945ba38f35017eaac8,
         type: 3}
       propertyPath: m_RootOrder
@@ -254,10 +272,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7642859409816467763, guid: d903df075089ef945ba38f35017eaac8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8782145736878327818, guid: d903df075089ef945ba38f35017eaac8,
         type: 3}
       propertyPath: m_Name
       value: Trail_Flame
+      objectReference: {fileID: 0}
+    - target: {fileID: 8782145736878327818, guid: d903df075089ef945ba38f35017eaac8,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d903df075089ef945ba38f35017eaac8, type: 3}
