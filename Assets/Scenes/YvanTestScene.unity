@@ -2457,11 +2457,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WheelHeavyDoor
       objectReference: {fileID: 0}
-    - target: {fileID: 5995300319931703895, guid: 69b7cd640b22d6a4dbeca9a0aff69cbe,
-        type: 3}
-      propertyPath: m_Mass
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 6717771205879608452, guid: 69b7cd640b22d6a4dbeca9a0aff69cbe,
         type: 3}
       propertyPath: m_RootOrder

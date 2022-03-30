@@ -1,19 +1,9 @@
 using UnityEngine;
 
-public class WheelHeavyDoor : AbstractWheelSystem, IDamageable
+public class WheelHeavyDoor : AbstractWheelSystem
 {
-    [Range(0, 1)] public float speedToOpen;
-    public bool canBeClosedAgain;
-    //public bool isAffectedByGravity;
-    
-    private float timer = 0f;
-    private Rigidbody rigidBody;
-    private bool isTotallyOpened = false;
-    private bool isTotallyClosed = true;
     private Vector3 initialSpawnScale;
     private Vector3 finalSpawnScale;
-    private Quaternion previousRotation;
-    private Quaternion currentRotation;
 
     private void Awake()
     {
@@ -25,32 +15,6 @@ public class WheelHeavyDoor : AbstractWheelSystem, IDamageable
         finalSpawnScale = new Vector3(scale.x, 0f, scale.z);
         initialSpawnScale = new Vector3(scale.x, scale.y, scale.z);
         doorToOpen.transform.localScale = initialSpawnScale;
-    }
-
-    public void OnDamage(DamageHit hit)
-    {
-        rigidBody.velocity = hit.direction * spinForce * Time.deltaTime;
-        rigidBody.AddForceAtPosition(hit.direction * spinForce * Time.deltaTime, hitPoint);
-
-        //Debug.Log("Rotation : " + rigidBody.angularVelocity); 
-
-        // Check the wheel rotation to know the rotation direction
-        previousRotation = currentRotation;
-        currentRotation = transform.parent.gameObject.transform.rotation;
-
-        // If the beam direction goes in a direction, the wheel opens the door, if it goes in the other direction, it closes the door
-        // If clockwise direction --> open --- else if anti-clockwise direction --> close
-        if (currentRotation.eulerAngles.z < previousRotation.eulerAngles.z)
-        {
-            OpenDoor();
-        }
-        else if (currentRotation.eulerAngles.z > previousRotation.eulerAngles.z)
-        {
-            if (canBeClosedAgain)
-            {
-                CloseDoor();
-            }
-        }
     }
 
     public override void OpenDoor()
@@ -70,7 +34,7 @@ public class WheelHeavyDoor : AbstractWheelSystem, IDamageable
         }
     }
 
-    public void CloseDoor()
+    public override void CloseDoor()
     {
         if (!isTotallyClosed)
         {
