@@ -11,22 +11,25 @@ public class WheelDrawbridge : AbstractWheelSystem
     {
         rigidBody = transform.parent.gameObject.GetComponent<Rigidbody>();
 
-        initialRotation = new Vector3(transform.localRotation.x, transform.localRotation.y, transform.localRotation.z);
-        finalRotation = new Vector3(maxAngle, transform.localRotation.y, transform.localRotation.z);
+        initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        finalRotation = new Vector3(maxAngle, transform.rotation.y, transform.rotation.z);
     }
 
     public override void OpenDoor()
     {
-        Debug.Log("Open door");
+        //Debug.Log("Open door");
 
-        timer += Time.deltaTime;
-        // Mathf.Pow for the exponential speed falling
-        doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
-        //doorToOpen.transform.localScale = Vector3.Lerp(initialSpawnScale, finalSpawnScale, timer * speedToOpen);
-
-        if (transform.localRotation.eulerAngles.x >= maxAngle)
+        if(!isTotallyOpened)
         {
-            DrawbridgeHasFallen();
+            timer += Time.deltaTime;
+            // Mathf.Pow for the exponential speed falling
+            doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
+            //doorToOpen.transform.localScale = Vector3.Lerp(initialSpawnScale, finalSpawnScale, timer * speedToOpen);
+
+            if (doorToOpen.transform.rotation.eulerAngles.x >= maxAngle)
+            {
+                DrawbridgeHasFallen();
+            }
         }
     }
 
@@ -43,17 +46,7 @@ public class WheelDrawbridge : AbstractWheelSystem
         doorToOpen.gameObject.layer = HarmonyLayers.LAYER_GROUND;
 
         // Avoid another interactions
-        Destroy(doorToOpen.GetComponent<BoxCollider>());
-        Destroy(this);
+        //Destroy(doorToOpen.GetComponent<BoxCollider>());
+        //Destroy(this);
     }
-
-    private void OnTriggerEnter(Collider collider)
-    {
-        // If the bridge hits something (the ground in this case), it stops falling
-        if (collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
-        {
-            DrawbridgeHasFallen();
-        }
-    }
-
 }

@@ -120,7 +120,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3380090258070405502}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: -7.78, y: 1.08, z: -5.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -129,7 +129,7 @@ Transform:
   - {fileID: 2982165063847477107}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3380090258390481978
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +139,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3380090258390481979}
+  - component: {fileID: 734000444}
+  - component: {fileID: 855663182}
+  - component: {fileID: 855663183}
   m_Layer: 0
   m_Name: DrawBridge
   m_TagString: Untagged
@@ -162,6 +165,47 @@ Transform:
   m_Father: {fileID: 3380090258070405503}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &734000444
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380090258390481978}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 1.5, z: 0.4}
+  m_Center: {x: 0, y: 3.3, z: 0.2}
+--- !u!114 &855663182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380090258390481978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18e7cb65d6a290141926fcdc4db2b19c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &855663183
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3380090258390481978}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &3380090257222932632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -333,6 +377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinForce: 1500
   doorToOpen: {fileID: 3380090258390481978}
-  speedToOpen: 2
+  speedToOpen: 5
   canBeClosedAgain: 0
   maxAngle: 90
