@@ -13,7 +13,9 @@ public abstract class EnnemySpell : MonoBehaviour
 
     protected Transform summonerPosition;
 
-    public GameObject Target;
+    //public GameObject Target;
+
+    public Vector3 target;
 
     private float chargeTimer;
 
@@ -22,6 +24,8 @@ public abstract class EnnemySpell : MonoBehaviour
     /// true if the spell is done charging
     /// </summary>
     public bool charged { get;  protected set; } = false;
+
+    protected bool customTarget = false;
 
     /// <summary>
     /// Starts the spell charge timer after instanciating the spell visual
@@ -33,20 +37,34 @@ public abstract class EnnemySpell : MonoBehaviour
         summonerPosition = spellOrigin;
     }
 
+    public virtual void Charge(float chargeTime, Transform spellOrigin, Vector3 targetPosition)
+    {
+        Charge(chargeTime, spellOrigin);
+        target = targetPosition;
+        customTarget = true;
+    }
+
     /// <summary>
     /// Spell base Behaviour
     /// </summary>
     protected virtual void FixedUpdate()
     {
-        if (chargeTimer < castObjective && !charged)
+        if(!charged)
         {
-            chargeTimer += Time.fixedDeltaTime;
-        }
-        else
-        {
-            charged = true;
-        }
+            if (chargeTimer < castObjective)
+            {
+                chargeTimer += Time.fixedDeltaTime;
+            }
+            else
+            {
+                charged = true;
+                OnChargeEnd();
+            }
+        }    
     }
 
-
+    /// <summary>
+    /// Setup the spell before launching it.  
+    /// </summary>
+    protected abstract void OnChargeEnd();
 }

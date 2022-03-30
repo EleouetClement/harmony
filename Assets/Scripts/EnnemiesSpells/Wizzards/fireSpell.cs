@@ -13,6 +13,8 @@ public class fireSpell : EnnemySpell
     [SerializeField][Range(1, 4)] int baseDamages;
     private EnnemiFireBall fireOrbInstance;
 
+    private Vector3 trajectory = Vector3.zero;
+
     private void Awake()
     {
         
@@ -36,6 +38,13 @@ public class fireSpell : EnnemySpell
         fireOrbInstance = Instantiate(fireOrbReference, summonerPosition.position, Quaternion.identity);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Fire);
     }
+    public override void Charge(float chargeTime, Transform spellOrigin, Vector3 targetPosition)
+    {
+        base.Charge(chargeTime, spellOrigin, targetPosition);
+        fireOrbInstance = Instantiate(fireOrbReference, summonerPosition.position, Quaternion.identity);
+        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Fire);
+    }
+
 
     protected override void FixedUpdate()
     {
@@ -49,5 +58,12 @@ public class fireSpell : EnnemySpell
         {
 
         }
+    }
+
+    protected override void OnChargeEnd()
+    {
+        trajectory = target - summonerPosition.position;
+        trajectory.Normalize();
+        damagesDeal.direction = trajectory;
     }
 }
