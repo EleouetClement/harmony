@@ -8,7 +8,8 @@ using UnityEngine;
 public abstract class EnnemySpell : MonoBehaviour
 {
     public AbstractSpell.Element element;
-    public Damages damagesInfos { get; private set; }
+
+    public DamageHit damagesDeal{ get; protected set; }
 
     protected Transform summonerPosition;
 
@@ -23,11 +24,6 @@ public abstract class EnnemySpell : MonoBehaviour
     public bool charged { get;  protected set; } = false;
 
     /// <summary>
-    /// Comes after the Charge(float chargeTime) method. Defines the spell behaviour
-    /// </summary>
-    public abstract void Launch();
-
-    /// <summary>
     /// Starts the spell charge timer after instanciating the spell visual
     /// </summary>
     /// <param name="chargeTime"> maximum duration for the spell charge</param>
@@ -40,7 +36,7 @@ public abstract class EnnemySpell : MonoBehaviour
     /// <summary>
     /// Spell base Behaviour
     /// </summary>
-    public virtual void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (chargeTimer < castObjective && !charged)
         {
