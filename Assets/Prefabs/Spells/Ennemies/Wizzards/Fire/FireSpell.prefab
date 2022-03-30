@@ -46,11 +46,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   livingTime: 4
+  quickCastDuration: 1
+  chargeCastDuration: 4
   target: {x: 0, y: 0, z: 0}
-  projectileGrowthPerSec: 0.054
+  maxProjectileSize: 1.244
   damagesGrowthPerSec: 1
   baseDamages: 1
   speed: 25.08
+  explosionradius: 0
   fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
     type: 3}
   debug: 0

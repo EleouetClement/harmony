@@ -7,11 +7,23 @@ using UnityEngine;
 /// </summary>
 public abstract class EnnemySpell : MonoBehaviour
 {
+
+    public enum CastType
+    {
+        quick,
+        charge
+    }
+
     public AbstractSpell.Element element;
 
     public DamageHit damagesDeal{ get; protected set; }
 
+    [Header("base timers")]
     [SerializeField] private float livingTime;
+    [SerializeField] private float quickCastDuration;
+    [SerializeField] private float chargeCastDuration;
+
+    protected CastType currentCast;
 
     protected Transform summonerPosition;
 
@@ -23,7 +35,7 @@ public abstract class EnnemySpell : MonoBehaviour
     protected float chargeTimer { get; private set; }
     private float lifeTimer;
 
-    private float castObjective;
+    protected float CastObjective { get; private set; }
     /// <summary>
     /// true if the spell is done charging
     /// </summary>
@@ -31,18 +43,27 @@ public abstract class EnnemySpell : MonoBehaviour
 
     protected bool customTarget = false;
 
+
+
     /// <summary>
     /// Starts the spell charge timer after instanciating the spell visual
     /// </summary>
     /// <param name="chargeTime"> maximum duration for the spell charge</param>
-    public virtual void Charge(float chargeTime, Transform spellOrigin)
+    public virtual void Charge(CastType chargeTime, Transform spellOrigin)
     {
-        castObjective = chargeTime;
+        if(chargeTime.Equals(CastType.charge))
+        {
+            CastObjective = chargeCastDuration;
+        }
+        else
+        {
+            CastObjective = quickCastDuration;
+        }     
         summonerPosition = spellOrigin;
         target = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
     }
 
-    public virtual void Charge(float chargeTime, Transform spellOrigin, Vector3 targetPosition)
+    public virtual void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
     {
         Charge(chargeTime, spellOrigin);
         target = targetPosition;
@@ -56,7 +77,7 @@ public abstract class EnnemySpell : MonoBehaviour
     {
         if (!charged)
         {
-            if (chargeTimer < castObjective)
+            if (chargeTimer < CastObjective)
             {
                 chargeTimer += Time.fixedDeltaTime;
             }

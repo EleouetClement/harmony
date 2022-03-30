@@ -43,7 +43,7 @@ public class SpellTurret : MonoBehaviour
                 if(ennemySpells.TryGetValue(AbstractSpell.Element.Fire, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(1, spawner);
+                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
                 }
                 else
                 {
@@ -55,7 +55,7 @@ public class SpellTurret : MonoBehaviour
                 if (ennemySpells.TryGetValue(AbstractSpell.Element.Water, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(1, spawner);
+                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
                 }
                 else
                 {
@@ -67,7 +67,7 @@ public class SpellTurret : MonoBehaviour
                 if (ennemySpells.TryGetValue(AbstractSpell.Element.Earth, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(1, spawner);
+                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
                 }
                 else
                 {
