@@ -20,7 +20,7 @@ public abstract class EnnemySpell : MonoBehaviour
     [HideInInspector]
     public Vector3 target;
 
-    private float chargeTimer;
+    protected float chargeTimer { get; private set; }
     private float lifeTimer;
 
     private float castObjective;
@@ -85,4 +85,13 @@ public abstract class EnnemySpell : MonoBehaviour
     /// Additionnal operations should be added according to each spell.
     /// </summary>
     public abstract void Terminate();
+
+    /// <summary>
+    /// Check if the object is Idamageable then applies damages to it.
+    /// </summary>
+    /// <param name="objectHitted"></param>
+    protected virtual void DealDamages(GameObject objectHitted)
+    {
+
+    }
 }

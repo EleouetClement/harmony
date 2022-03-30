@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class EnnemiFireBall : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] GameObject explosion;
+    public bool hitted = false;
+    public bool explosionOn = false;
+    GameObject explosionInstance;
 
-    // Update is called once per frame
-    void Update()
+    public GameObject objectHitted {get; private set;}
+
+    private void OnCollisionEnter(Collision collision)
     {
-        
+        if (explosionOn)
+            explosionInstance = Instantiate(explosion, transform.position, Quaternion.identity);
+        objectHitted = collision.gameObject;
+        hitted = true;
     }
 }

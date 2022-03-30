@@ -32,7 +32,6 @@ public class fireSpell : EnnemySpell
         }
     }
 
-
     public override void Charge(float chargeTime, Transform spellOrigin)
     {
         base.Charge(chargeTime, spellOrigin);
@@ -59,6 +58,10 @@ public class fireSpell : EnnemySpell
         {
             Fly();
         }
+        if(fireOrbInstance.hitted)
+        {
+            DealDamages(fireOrbInstance.objectHitted);
+        }
         
     }
 
@@ -69,6 +72,8 @@ public class fireSpell : EnnemySpell
         if (debug)
             Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
         damagesDeal.direction = trajectory;
+        if(chargeTimer > 0)
+            fireOrbInstance.explosionOn = true;
     }
 
     private void Fly()
@@ -79,9 +84,16 @@ public class fireSpell : EnnemySpell
 
     public override void Terminate()
     {
-        Destroy(fireOrbInstance.gameObject);
+        if(fireOrbInstance.gameObject)
+            Destroy(fireOrbInstance.gameObject);
         Destroy(gameObject);
     }
 
+    protected override void DealDamages(GameObject objectHitted)
+    {
+        base.DealDamages(objectHitted);
+        
+        Destroy(fireOrbInstance.gameObject);
+    }
 
 }
