@@ -7,9 +7,9 @@ TagManager:
   - Torch
   - Elementary
   - Platform
-  - FallingBridge
   - WaterBeam
   - Wheel
+  - FallingTree
   layers:
   - Default
   - TransparentFX

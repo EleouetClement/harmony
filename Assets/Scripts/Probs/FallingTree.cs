@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FallingBridge : MonoBehaviour
+public class FallingTree : MonoBehaviour
 {
     public float speedFalling = 7f;
     public float maxAngle = 150f;
@@ -10,7 +10,7 @@ public class FallingBridge : MonoBehaviour
     [HideInInspector]
     public bool isFalling = false;
     
-    //public LayerMask layersToStopFallingBridge;
+    //public LayerMask layersToStopFallingTree;
     private Vector3 initialRotation;
     private Vector3 finalRotation;
     private float timer = 0f;
@@ -31,16 +31,16 @@ public class FallingBridge : MonoBehaviour
 
             if (transform.rotation.eulerAngles.x >= maxAngle)
             {
-                BridgeHasFallen();
+                TreeHasFallen();
             }
         }
     }
 
-    public void BridgeHasFallen()
+    public void TreeHasFallen()
     {
         isFalling = false;
 
-        // Foreach gameObject in the FallingBridge, the layer is transformed into "Ground" layer
+        // Foreach gameObject in the FallingTree, the layer is transformed into "Ground" layer
         foreach (Transform item in transform.parent.gameObject.GetComponentsInChildren<Transform>())
         {
             item.gameObject.layer = HarmonyLayers.LAYER_GROUND;
@@ -48,7 +48,7 @@ public class FallingBridge : MonoBehaviour
         
         // Avoid another interactions
         Destroy(gameObject.GetComponent<BoxCollider>());
-        Destroy(gameObject.GetComponent<FallingBridge>());
+        Destroy(this);
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -56,7 +56,7 @@ public class FallingBridge : MonoBehaviour
         // If the bridge hits something (the ground in this case), it stops falling
         if (collider.gameObject.layer == HarmonyLayers.LAYER_GROUND)
         {
-            BridgeHasFallen();
+            TreeHasFallen();
         }
     }
 }

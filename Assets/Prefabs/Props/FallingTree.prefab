@@ -112,7 +112,7 @@ GameObject:
   - component: {fileID: 2059664825}
   m_Layer: 9
   m_Name: Pivot
-  m_TagString: FallingBridge
+  m_TagString: FallingTree
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142cbb2216e7dec4aa0ea8418123e35a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speedFall: 0.5
+  speedFalling: 7
   maxAngle: 150
   isFalling: 0
 --- !u!54 &2059664825
@@ -381,7 +381,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2775277138770222656}
   m_Layer: 9
-  m_Name: FallingBridge
+  m_Name: FallingTree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
