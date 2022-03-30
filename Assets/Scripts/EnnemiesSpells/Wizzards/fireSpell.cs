@@ -14,8 +14,10 @@ public class fireSpell : EnnemySpell
     //should be counted in number of hits according to the player health system
     [SerializeField][Range(1, 4)] int baseDamages;
     [SerializeField] float speed;
+    
     [Header("Do not change")]
     [SerializeField] EnnemiFireBall fireOrbReference;
+    [SerializeField] bool debug = false;
     
     private EnnemiFireBall fireOrbInstance;
 
@@ -64,6 +66,8 @@ public class fireSpell : EnnemySpell
     {
         trajectory = target - summonerPosition.position;
         trajectory.Normalize();
+        if (debug)
+            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
         damagesDeal.direction = trajectory;
     }
 
@@ -75,7 +79,7 @@ public class fireSpell : EnnemySpell
 
     public override void Terminate()
     {
-        Destroy(fireOrbInstance);
+        Destroy(fireOrbInstance.gameObject);
         Destroy(gameObject);
     }
 
