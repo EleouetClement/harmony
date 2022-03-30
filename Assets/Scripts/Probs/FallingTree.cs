@@ -10,7 +10,7 @@ public class FallingTree : MonoBehaviour
     [HideInInspector]
     public bool isFalling = false;
     
-    //public LayerMask layersToStopFallingBridge;
+    //public LayerMask layersToStopFallingTree;
     private Vector3 initialRotation;
     private Vector3 finalRotation;
     private float timer = 0f;
@@ -40,7 +40,7 @@ public class FallingTree : MonoBehaviour
     {
         isFalling = false;
 
-        // Foreach gameObject in the FallingBridge, the layer is transformed into "Ground" layer
+        // Foreach gameObject in the FallingTree, the layer is transformed into "Ground" layer
         foreach (Transform item in transform.parent.gameObject.GetComponentsInChildren<Transform>())
         {
             item.gameObject.layer = HarmonyLayers.LAYER_GROUND;

@@ -17,14 +17,11 @@ public class WheelDrawbridge : AbstractWheelSystem
 
     public override void OpenDoor()
     {
-        //Debug.Log("Open door");
-
         if(!isTotallyOpened)
         {
             timer += Time.deltaTime;
-            // Mathf.Pow for the exponential speed falling
-            doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
-            //doorToOpen.transform.localScale = Vector3.Lerp(initialSpawnScale, finalSpawnScale, timer * speedToOpen);
+            //doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
+            doorToOpen.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedToOpen));
 
             if (doorToOpen.transform.rotation.eulerAngles.x >= maxAngle)
             {
@@ -42,8 +39,12 @@ public class WheelDrawbridge : AbstractWheelSystem
     {
         isTotallyOpened = true;
 
-        // The layer of the door is transformed into "Ground" layer
-        doorToOpen.gameObject.layer = HarmonyLayers.LAYER_GROUND;
+        // The layer of the Bridge is transformed into "Ground" layer
+        // Foreach gameObject in the Drawbridge, the layer is transformed into "Ground" layer
+        foreach (Transform item in doorToOpen.transform.gameObject.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.layer = HarmonyLayers.LAYER_GROUND;
+        }
 
         // Avoid another interactions
         //Destroy(doorToOpen.GetComponent<BoxCollider>());

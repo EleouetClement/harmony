@@ -125,8 +125,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3380090258390481979}
   - {fileID: 2982165063847477107}
+  - {fileID: 3380090258390481979}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -163,7 +163,7 @@ Transform:
   m_Children:
   - {fileID: 3380090257233214374}
   m_Father: {fileID: 3380090258070405503}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &734000444
 BoxCollider:
@@ -176,7 +176,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3, y: 1.5, z: 0.4}
+  m_Size: {x: 3, y: 1.5, z: 0.2}
   m_Center: {x: 0, y: 3.3, z: 0.2}
 --- !u!114 &855663182
 MonoBehaviour:
@@ -216,7 +216,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: a423fd40cfb6c14409b09a0eee597242,
         type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a423fd40cfb6c14409b09a0eee597242,
         type: 3}
@@ -377,6 +377,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spinForce: 1500
   doorToOpen: {fileID: 3380090258390481978}
-  speedToOpen: 5
+  speedToOpen: 0.5
   canBeClosedAgain: 0
   maxAngle: 90
