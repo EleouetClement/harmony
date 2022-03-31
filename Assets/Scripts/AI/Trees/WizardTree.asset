@@ -479,7 +479,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
-  m_Name: WariorTree
+  m_Name: WizardTree
   m_EditorClassIdentifier: 
   rootNode: {fileID: 5440851567276491666}
   treeState: 0
@@ -908,7 +908,7 @@ MonoBehaviour:
   child: {fileID: -8639514444526135124}
   parameterName: target
   greaterThan: 0
-  distance: 2.5
+  distance: 10
 --- !u!114 &8563186830812071934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -997,6 +997,6 @@ MonoBehaviour:
       - {fileID: 0}
   description: 
   drawGizmos: 0
-  component: WariorAI
+  component: WizardAI
   method: Attack
   delay: 0
