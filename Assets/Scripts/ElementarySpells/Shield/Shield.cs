@@ -117,7 +117,7 @@ public class Shield : AbstractSpell
                 player.GetComponent<PlayerGameplayController>()?.OnManaSpend(GetManaCost());
             }
 
-            Destroy(collision.gameObject);
+            //Destroy(collision.gameObject);
         }
     }
 
