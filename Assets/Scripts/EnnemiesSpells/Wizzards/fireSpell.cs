@@ -16,12 +16,14 @@ public class fireSpell : EnnemySpell
     [Header("behaviour stats")]
     [SerializeField][Range(1, 4)] int baseDamages;
     [SerializeField] float speed;
-    [SerializeField] float explosionradius;
+    
 
     [Header("Do not change")]
     [SerializeField] EnnemiFireBall fireOrbReference;
     [SerializeField] bool debug = false;
-    
+    [SerializeField] float explosionradius;
+    [SerializeField] LayerMask blastEffect;
+
     private EnnemiFireBall fireOrbInstance;
 
     private Vector3 trajectory = Vector3.zero;
@@ -111,19 +113,26 @@ public class fireSpell : EnnemySpell
     }
 
     protected override void DealDamages(GameObject objectHitted)
-    {
-        base.DealDamages(objectHitted);
-        Terminate();
+    {              
         if(currentCast.Equals(CastType.charge))
         {
-            Collider[] mightBePlayer = Physics.OverlapCapsule(fireOrbInstance.transform.position + Vector3.down * 3, transform.position + Vector3.up * 3, explosionradius, 1 << HarmonyLayers.LAYER_TARGETABLE);
-            AbstractSpell currSpell = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
+            //fireOrbInstance.transform.position + Vector3.down * 3, transform.position + Vector3.up * 3, explosionradius, 1 << HarmonyLayers.LAYER_TARGETABLE
+            Collider[] mightBePlayer = Physics.OverlapSphere(fireOrbInstance.transform.position, explosionradius, blastEffect);
             if (mightBePlayer.Length >= 1)
+            {
+                Debug.Log("fireSpell : stuff in Blast zone");
                 foreach (Collider c in mightBePlayer)
                 {
+                    Debug.Log("fireSpell : " + c.name);
                     c.gameObject.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
                 }
+            }              
         }
+        else
+        {
+            base.DealDamages(objectHitted);
+        }
+        Terminate();
     }
 
 }
