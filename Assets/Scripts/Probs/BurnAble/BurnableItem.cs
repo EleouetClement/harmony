@@ -24,13 +24,15 @@ public abstract class BurnableItem : MonoBehaviour, IDamageable
     {
         if (collision.gameObject.layer.Equals(HarmonyLayers.LAYER_PLAYERSPELL) && GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>().currentElement == AbstractSpell.Element.Fire)
         {
+
             Consume();
         }
     }
 
     public void OnDamage(DamageHit hit)
     {
-        Consume();
+        if(hit.type.Equals(AbstractSpell.Element.Fire))
+            Consume();
     }
 
     protected abstract void Update();
