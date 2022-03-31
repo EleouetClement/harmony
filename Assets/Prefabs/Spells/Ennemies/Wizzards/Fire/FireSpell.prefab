@@ -49,11 +49,14 @@ MonoBehaviour:
   quickCastDuration: 1
   chargeCastDuration: 4
   target: {x: 0, y: 0, z: 0}
-  projectileAdditionnalScale: 0.0224
+  projectileAdditionnalScale: 0.0049
   damagesGrowthPerSec: 1
   baseDamages: 1
   speed: 8.59
-  explosionradius: 0
   fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
     type: 3}
   debug: 0
+  explosionradius: 2.69
+  blastEffect:
+    serializedVersion: 2
+    m_Bits: 16648
