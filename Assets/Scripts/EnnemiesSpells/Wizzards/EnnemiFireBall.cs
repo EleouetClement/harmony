@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnnemiFireBall : MonoBehaviour
 {
     [SerializeField] GameObject explosion;
+    [SerializeField] GameObject hugeExplosion;
     public bool hitted = false;
     public bool explosionOn = false;
 
@@ -16,8 +17,12 @@ public class EnnemiFireBall : MonoBehaviour
         {           
             if (explosionOn)
             {
+                Instantiate(hugeExplosion, transform.position, Quaternion.identity);
+            }
+            else
+            {
                 Instantiate(explosion, transform.position, Quaternion.identity);
-            }             
+            }
             objectHitted = collision.gameObject;
             hitted = true;
         }      
