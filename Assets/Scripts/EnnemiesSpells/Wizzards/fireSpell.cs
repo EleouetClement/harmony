@@ -62,6 +62,7 @@ public class fireSpell : EnnemySpell
         base.FixedUpdate();
         if(!charged)
         {
+            fireOrbInstance.transform.position = summonerPosition.position;
             fireOrbInstance.gameObject.transform.localScale += new Vector3(projectileGrowthPerSec, projectileGrowthPerSec, projectileGrowthPerSec);
             damagesDeal.damage += damagesGrowthPerSec;        
         }
@@ -78,13 +79,19 @@ public class fireSpell : EnnemySpell
 
     protected override void OnChargeEnd()
     {
-        trajectory = target - summonerPosition.position;
+        if(customTarget)
+        {        
+            trajectory = target - summonerPosition.position;
+        }
+        else
+        {
+            trajectory = DefaultTarget.position - summonerPosition.position;
+        }
         trajectory.Normalize();
         if (debug)
             Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);     
         if(currentCast.Equals(CastType.charge))
         {
-            Debug.Log("fireSpell : Activation explosion");
             damagesDeal.direction = trajectory;
             fireOrbInstance.explosionOn = true;
         }         

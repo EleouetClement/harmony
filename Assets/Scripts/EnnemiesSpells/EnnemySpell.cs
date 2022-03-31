@@ -27,7 +27,7 @@ public abstract class EnnemySpell : MonoBehaviour
 
     protected Transform summonerPosition;
 
-    //public GameObject Target;
+    protected Transform DefaultTarget { get; private set; }
 
     [HideInInspector]
     public Vector3 target;
@@ -61,12 +61,13 @@ public abstract class EnnemySpell : MonoBehaviour
         }
         currentCast = chargeTime;
         summonerPosition = spellOrigin;
-        target = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
+        DefaultTarget = GameModeSingleton.GetInstance().GetPlayerReference.transform;
     }
 
     public virtual void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
     {
         Charge(chargeTime, spellOrigin);
+        DefaultTarget = null;
         target = targetPosition;
         customTarget = true;
     }
@@ -79,11 +80,12 @@ public abstract class EnnemySpell : MonoBehaviour
         if (!charged)
         {
             if (chargeTimer < CastObjective)
-            {
+            {            
                 chargeTimer += Time.fixedDeltaTime;
             }
             else
             {
+                Debug.Log("EnnemySpell : charge terminee");
                 charged = true;
                 OnChargeEnd();
             }

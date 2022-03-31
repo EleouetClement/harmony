@@ -7,6 +7,7 @@ public class SpellTurret : MonoBehaviour
 
     [SerializeField] Transform spawner;
     [SerializeField] EnnemySpell [] spells;
+    [SerializeField] EnnemySpell.CastType testCastType;
     private Dictionary<AbstractSpell.Element, EnnemySpell> ennemySpells;
 
     EnnemySpell currentSpell;
@@ -43,7 +44,7 @@ public class SpellTurret : MonoBehaviour
                 if(ennemySpells.TryGetValue(AbstractSpell.Element.Fire, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
+                    currentSpell.Charge(testCastType, spawner);
                 }
                 else
                 {
@@ -55,7 +56,7 @@ public class SpellTurret : MonoBehaviour
                 if (ennemySpells.TryGetValue(AbstractSpell.Element.Water, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
+                    currentSpell.Charge(testCastType, spawner);
                 }
                 else
                 {
@@ -67,7 +68,7 @@ public class SpellTurret : MonoBehaviour
                 if (ennemySpells.TryGetValue(AbstractSpell.Element.Earth, out currentSpell))
                 {
                     currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
-                    currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
+                    currentSpell.Charge(testCastType, spawner);
                 }
                 else
                 {
