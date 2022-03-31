@@ -58,7 +58,8 @@ public abstract class EnnemySpell : MonoBehaviour
         else
         {
             CastObjective = quickCastDuration;
-        }     
+        }
+        currentCast = chargeTime;
         summonerPosition = spellOrigin;
         target = GameModeSingleton.GetInstance().GetPlayerReference.transform.position;
     }

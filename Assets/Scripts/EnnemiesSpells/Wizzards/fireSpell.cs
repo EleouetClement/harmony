@@ -8,7 +8,7 @@ public class fireSpell : EnnemySpell
     
 
     [Header("Casting stats")]
-    [SerializeField][Range(0, 2f)] float maxProjectileSize;
+    [SerializeField][Range(0, 0.1f)] float projectileAdditionnalScale;
     [SerializeField][Min(0)] int damagesGrowthPerSec;
     private float projectileGrowthPerSec;
 
@@ -38,11 +38,14 @@ public class fireSpell : EnnemySpell
 
     public override void Charge(CastType chargeTime, Transform spellOrigin)
     {
-        base.Charge(chargeTime, spellOrigin);
+        base.Charge(chargeTime, spellOrigin);     
         fireOrbInstance = Instantiate(fireOrbReference, summonerPosition.position, Quaternion.identity);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Fire);
         if(currentCast.Equals(CastType.charge))
-            projectileGrowthPerSec = maxProjectileSize / CastObjective;
+        {
+            projectileGrowthPerSec = projectileAdditionnalScale / CastObjective;
+        }
+            
     }
     public override void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
     {
@@ -50,7 +53,7 @@ public class fireSpell : EnnemySpell
         fireOrbInstance = Instantiate(fireOrbReference, summonerPosition.position, Quaternion.identity);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Fire);
         if (currentCast.Equals(CastType.charge))
-            projectileGrowthPerSec = maxProjectileSize / CastObjective;
+            projectileGrowthPerSec = projectileAdditionnalScale / CastObjective;
     }
 
 
@@ -81,6 +84,7 @@ public class fireSpell : EnnemySpell
             Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);     
         if(currentCast.Equals(CastType.charge))
         {
+            Debug.Log("fireSpell : Activation explosion");
             damagesDeal.direction = trajectory;
             fireOrbInstance.explosionOn = true;
         }         
@@ -113,7 +117,6 @@ public class fireSpell : EnnemySpell
                     c.gameObject.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
                 }
         }
-
     }
 
 }

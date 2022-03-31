@@ -1791,50 +1791,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1212469516, guid: 6bb18bdb3babd9b43b1b7f446398f301, type: 3}
-      propertyPath: sensibility
-      value: 0.71
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.5500002
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.595
-      objectReference: {fileID: 0}
-    - target: {fileID: 1751085389126414958, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.75
-      objectReference: {fileID: 0}
-    - target: {fileID: 5421705379638874386, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_Lens.m_SensorSize.x
-      value: 0.79122806
-      objectReference: {fileID: 0}
-    - target: {fileID: 6677204176381467571, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6677204177119343018, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: dodgeCoolDown
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6677204177286177698, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-        type: 3}
-      propertyPath: dodgeDuration
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177699, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_RootOrder

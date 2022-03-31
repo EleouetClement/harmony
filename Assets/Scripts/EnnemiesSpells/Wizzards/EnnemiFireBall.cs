@@ -13,10 +13,11 @@ public class EnnemiFireBall : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(!hitted)
-        {
-            Debug.Log("Explosion");
+        {           
             if (explosionOn)
+            {
                 Instantiate(explosion, transform.position, Quaternion.identity);
+            }             
             objectHitted = collision.gameObject;
             hitted = true;
         }      
