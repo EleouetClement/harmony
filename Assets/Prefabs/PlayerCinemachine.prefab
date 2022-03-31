@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.5500002, y: 0.5949998, z: -0.75}
+  m_LocalPosition: {x: 0.5500002, y: 0.595, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7838284, y: 1}
+    m_SensorSize: {x: 0.97068965, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   aimingCam: {fileID: 2093330017194327939}
   combatCam: {fileID: 2495494544240427447}
   verticalMaxAngle: 85
-  sensibility: 1
+  sensibility: 0.71
   rotation: {x: 0, y: 0}
 --- !u!1 &6677204177286177703
 GameObject:
@@ -805,8 +805,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 48665
   dodgeSpeed: 10
-  dodgeDuration: 0.15
-  dodgeCoolDown: 1.5
+  dodgeDuration: 0.1
+  dodgeCoolDown: 1
   isInvincible: 1
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
@@ -1042,7 +1042,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6677204177534006693}
-  - component: {fileID: 2061522067}
   m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
@@ -1068,20 +1067,6 @@ Transform:
   m_Father: {fileID: 6677204177286177699}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2061522067
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6677204177534006692}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &7667032606368823738
 GameObject:
   m_ObjectHideFlags: 0

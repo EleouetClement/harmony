@@ -14,7 +14,6 @@ public class DissolveBurnable : MonoBehaviour, IDamageable
 
     void Start()
     {
-        Debug.Log("Instance Burnable = " + dissolutionprogress);
         gameObject.GetComponent<Renderer>().sharedMaterial.SetFloat("_Dissolution", 0f);
     }
 
