@@ -155,7 +155,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2093330017194327939}
   m_LocalRotation: {x: 0.34671316, y: -0.123309895, z: 0.0460323, w: 0.9286904}
-  m_LocalPosition: {x: 0.5500002, y: 0.5949998, z: -0.75}
+  m_LocalPosition: {x: 0.5500002, y: 0.595, z: -0.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.9583334, y: 1}
+    m_SensorSize: {x: 0.97068965, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -723,7 +723,7 @@ MonoBehaviour:
   aimingCam: {fileID: 2093330017194327939}
   combatCam: {fileID: 2495494544240427447}
   verticalMaxAngle: 85
-  sensibility: 1
+  sensibility: 0.71
   rotation: {x: 0, y: 0}
 --- !u!1 &6677204177286177703
 GameObject:
@@ -781,34 +781,45 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1f12b39922ffb4999a1a4bedf2e47a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debug: 0
   currentSpeed: 0
-  walkSpeed: 40
+  walkMaxSpeed: 3.5
+  strafeMaxSpeed: 3
+  backWalkMaxSpeed: 1.75
+  shieldingMaxSpeed: 1.25
+  turnSpeed: 4
+  timeToMaxSpeed: 0.3
   jumpForce: 8.5
   maxFloorAngle: 20
-  turnSpeed: 4
-  accelerationFriction: 10
+  aimingFriction: 0
+  maxTurnFriction: 10
   decelerationFriction: 12
-  airFriction: 0.5
-  airControl: 0.03
-  gravity: 9.81
-  fallGravityMultiplier: 2
+  airFriction: 2
+  airControl: 0.25
+  fallGravityMultiplier: 3
   jumpGravityMultiplier: 2.5
-  slopeForce: 9.81
+  slopeForce: 10
+  slideForce: 4
+  gravity: 9.81
   layerMask:
     serializedVersion: 2
-    m_Bits: 15385
+    m_Bits: 48665
   dodgeSpeed: 10
-  dodgeDuration: 0.15
-  dodgeCoolDown: 1.5
+  dodgeDuration: 0.1
+  dodgeCoolDown: 1
   isInvincible: 1
   groundTestRadiusFactor: 0.95
   groundMaxDistance: 0.1
-  debug: 1
   cinemachineCamera: {fileID: 1212469516}
   playerMesh: {fileID: 6677204177534006693}
+  lastInputAxis: {x: 0, y: 0}
   velocity: {x: 0, y: 0, z: 0}
   onGround: 0
   isMoving: 0
+  isTurning: 0
+  sliding: 0
+  isShielding: 0
+  lastLedge: {fileID: 0}
 --- !u!114 &1344650967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -822,7 +833,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 2965026262780704971}
-  idlingInterpolationValue: 0
+  idlingSpeed: 2
+  animSpeed: 0
 --- !u!114 &6957681519607846577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1030,7 +1042,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6677204177534006693}
-  - component: {fileID: 2061522067}
   m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
@@ -1045,7 +1056,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6677204177534006692}
-  m_LocalRotation: {x: 0, y: -0.7814459, z: 0, w: 0.6239731}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.875, z: 0}
   m_LocalScale: {x: 0.7, y: 0.85, z: 0.7}
   m_ConstrainProportionsScale: 0
@@ -1056,20 +1067,6 @@ Transform:
   m_Father: {fileID: 6677204177286177699}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2061522067
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6677204177534006692}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.9
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &7667032606368823738
 GameObject:
   m_ObjectHideFlags: 0

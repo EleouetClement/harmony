@@ -29,19 +29,19 @@ public class FlameThrower : AbstractSpell
             Debug.LogError("No Flame Effect linked");
             Destroy(gameObject);
         }
-        gm = GameModeSingleton.GetInstance();
+        gm = GameModeSingleton.GetInstance();   
     }
 
     private void Update()
     {
-        if(setTimer)
-        {
-            timer += Time.deltaTime;
-        }
-        if (timer >= colliderActivationTime && flameEffectReference)
-        {
-            coll.enabled = true;
-        }
+        //if (setTimer)
+        //{
+        //    timer += Time.deltaTime;
+        //}
+        //if (timer >= colliderActivationTime && flameEffectReference)
+        //{
+        //    coll.enabled = true;
+        //}
         //if (timer > (duration + destroyTimingOffset) && !flamesFlow.isStopped)
         //{
         //    Terminate();
@@ -65,7 +65,7 @@ public class FlameThrower : AbstractSpell
         base.init(elemRef, target);
         flameEffectReference = Instantiate(flameEffectPrefab, elemRef.transform.position, Quaternion.identity);
         coll = flameEffectReference.GetComponent<BoxCollider>();
-        coll.enabled = false;
+        coll.enabled = true;
         flamesFlow = flameEffectReference.GetComponent<ParticleSystem>();
         flamesFlow.Stop();
         var pouet = flamesFlow.main;
@@ -77,6 +77,7 @@ public class FlameThrower : AbstractSpell
         flameEffectReference.transform.rotation = CalculateTrajectory();
         flamesFlow.Play();
         setTimer = true;
+       
     }
 
 

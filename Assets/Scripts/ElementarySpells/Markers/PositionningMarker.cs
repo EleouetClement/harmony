@@ -4,39 +4,44 @@ using UnityEngine;
 
 public class PositionningMarker : AbstractMarker
 {
+
+    private enum Status
+    {
+        pillar,
+        platform
+    }
     public Vector3 targetPosition { get; private set; }
+    [SerializeField] private GameObject [] markerPrefabs;
     private RaycastHit hit;
+
+    [HideInInspector]
+    public LayerMask layersCollisionWithRaycast;
+    private GameObject visuReference;
+    private Status newStatus;
+    private Status currentStatus;
+
+    private float slopeLowerTreshold;
+    private float slopeUpperTreshold;
+    private float currentSlope;
+
+    private void Awake()
+    {
+        
+    }
 
     public override void DisplayTarget(Vector3 direction, Vector3 origin)
     {
         int layers = 1 << HarmonyLayers.LAYER_GROUND;
         layers += 1 << HarmonyLayers.LAYER_WALL_ENABLE;
-        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layers))
+        if (Physics.Raycast(origin, direction, out hit, maxRayCastDistance, layersCollisionWithRaycast))
         {
-            if(hit.normal.y > 0.70)
-            {
-                targetPosition = hit.point;
-                transform.position = hit.point;
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.green, 10);
-                
-            }
-            else if(hit.normal.y >= 0)
-            {
-                targetPosition = hit.point;
-                transform.position = hit.point;
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.blue, 10);
-                
-            }
-            else
-            {
-                //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.yellow, 10);               
-            }
+            targetPosition = hit.point;
         }
         else
         {
             //Debug.DrawRay(origin, direction * maxRayCastDistance, Color.red, 10);
             targetPosition = Vector3.zero;
-            Debug.Log("No valid target");
+            //Debug.Log("No valid target");
         }
     }
 
@@ -52,8 +57,21 @@ public class PositionningMarker : AbstractMarker
             return hit;
         }
     }
+    /// <summary>
+    /// Allows to Set the treshold for angled surfaces if there is a need of distinction between to types of slope
+    /// </summary>
+    /// <param name="treshold"></param>
+    public void SetSlopeLowerTreshold(float treshold)
+    {
+        slopeLowerTreshold = treshold;
+    }
+    public void SetSlopeUpperTreshold(float treshold)
+    {
+        slopeUpperTreshold = treshold;
+    }
 
     public override void OnDestroy()
     {
+        Destroy(visuReference);
     }
 }

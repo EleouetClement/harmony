@@ -7,100 +7,95 @@ public class PlayerAnimController : MonoBehaviour
     public Animator animator;
 
     private PlayerMotionController playerMotionController;
+    private ElementaryController elementary;
 
-    private bool movingForward;
-    private bool movingBackward;
-    private bool movingRight;
-    private bool movingLeft;
     private bool isJumping;
     private bool isFalling;
+
+    Transform playerMesh;
+    private Vector3 velocity;
 
     /// <summary>
     /// adjusts speed to which character goes back to idling animation when
     /// the player no longer press anything
     /// </summary>
-    public float idlingInterpolationValue;
+    public float idlingSpeed;
 
-	private void Awake()
-	{
-        playerMotionController = GetComponent<PlayerMotionController>();
+    public float animSpeed;
 
-        movingForward = false;
-        movingBackward = false;
-        movingRight = false;
-        movingLeft = false;
-
-
-    }
-
-	// Start is called before the first frame update
-	void Start()
+    private void Awake()
     {
+        playerMotionController = GetComponent<PlayerMotionController>();
         
+        idlingSpeed = 2f;
+        animSpeed = 1f;
     }
-    
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+    }
+
     // Update is called once per frame
     void Update()
     {
         Vector2 inputAxis = playerMotionController.GetInputAxis();
-        Vector3 velocity = playerMotionController.GetVelocity();
+
+        velocity = playerMesh.localRotation * playerMotionController.GetVelocity();
 
         //print(inputAxis+" "+velocity);
+        bool movingForward = playerMotionController.MovingForward;
+        bool movingBackward = playerMotionController.MovingBackward;
+        bool movingRight = playerMotionController.MovingRight;
+        bool movingLeft = playerMotionController.MovingLeft;
 
-        
-        if (Mathf.Abs(inputAxis.y) > 0f)
-        {
-            movingForward = inputAxis.y > float.Epsilon;
-            movingBackward = inputAxis.y < float.Epsilon;
-        }
-        else
-        {
-            movingForward = false;
-            movingBackward = false;
-        }
-        if (Mathf.Abs(inputAxis.x) > float.Epsilon)
-        {
-            movingRight = inputAxis.x > float.Epsilon;
-            movingLeft = inputAxis.x < float.Epsilon;
-        }
-        else
-        {
-            movingRight = false;
-            movingLeft = false;
-        }
-        
+
+
         float animVelocityX = animator.GetFloat("VelocityX");
         float animVelocityZ = animator.GetFloat("VelocityZ");
-        float playerVelocityX = Mathf.Abs(velocity.x);
-        float playerVelocityZ = Mathf.Abs(velocity.z);
-        float maxSpeed = playerMotionController.GetMaxSpeedApprox();
-        float maxSpeedRatio = playerMotionController.GetMaxSpeedRatio();
-        //print(playerVelocityZ + " " + playerVelocityX);
+        float maxSpeed = playerMotionController.GetMaxSpeed();
+        float maxSpeedRatio = playerMotionController.GetMaxSpeedPercent();
+        float maxSpeedRatioX = Mathf.Abs(velocity.x) / playerMotionController.GetMaxSpeed();
+        float maxSpeedRatioZ = Mathf.Abs(velocity.z) / playerMotionController.GetMaxSpeed();
 
-        if (movingForward && animVelocityZ < maxSpeedRatio)
+        if (!elementary.isAiming)
         {
-            animator.SetFloat("VelocityZ", animVelocityZ + inputAxis.y * playerVelocityZ * Time.deltaTime);
+            if (movingForward)
+                animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), maxSpeedRatio, inputAxis.magnitude * animSpeed * Time.deltaTime));
+            else
+                animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), 0f, Time.deltaTime * idlingSpeed));
         }
-        else if (movingBackward && animVelocityZ > -maxSpeedRatio)
+        else
         {
-            animator.SetFloat("VelocityZ", animVelocityZ + inputAxis.y * playerVelocityZ * Time.deltaTime);
-        }
-        else if (!movingForward && !movingBackward)
-        {
-            animator.SetFloat("VelocityZ", Mathf.Lerp(animator.GetFloat("VelocityZ"),0f, Time.deltaTime * idlingInterpolationValue));
-        }
+            if (movingForward)
+            {
+                animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), maxSpeedRatioZ, inputAxis.y * animSpeed * Time.deltaTime));
+            }
+            else if (movingBackward)
+            {
+                animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), maxSpeedRatioZ, inputAxis.y * animSpeed * Time.deltaTime));
+            }
+            else if (!movingForward && !movingBackward)
+            {
+                animator.SetFloat("VelocityZ", Mathf.MoveTowards(animator.GetFloat("VelocityZ"), 0f, Time.deltaTime * idlingSpeed));
+            }
 
-        if (movingRight && animVelocityX < maxSpeedRatio)
-        {
-            animator.SetFloat("VelocityX", animVelocityX + inputAxis.x * playerVelocityX * Time.deltaTime);
-        }
-        else if (movingLeft && animVelocityX > -maxSpeedRatio)
-        {
-            animator.SetFloat("VelocityX", animVelocityX + inputAxis.x * playerVelocityX * Time.deltaTime);
-        }
-        else if (!movingRight && !movingLeft)
-        {
-            animator.SetFloat("VelocityX", Mathf.Lerp(animator.GetFloat("VelocityX"), 0f, Time.deltaTime * idlingInterpolationValue));
+            if (movingRight)
+            {
+                animator.SetFloat("VelocityX", Mathf.MoveTowards(animator.GetFloat("VelocityX"), maxSpeedRatioX, inputAxis.x * animSpeed * Time.deltaTime));
+            }
+            else if (movingLeft)
+            {
+                print(maxSpeedRatioX);
+                animator.SetFloat("VelocityX", Mathf.MoveTowards(animator.GetFloat("VelocityX"), -maxSpeedRatioX, -inputAxis.x * animSpeed * Time.deltaTime));
+            }
+            else if (!movingRight && !movingLeft)
+            {
+
+                animator.SetFloat("VelocityX", Mathf.MoveTowards(animator.GetFloat("VelocityX"), 0f, Time.deltaTime * idlingSpeed));
+            }
         }
 
         animator.SetBool("Moving", playerMotionController.isMoving);

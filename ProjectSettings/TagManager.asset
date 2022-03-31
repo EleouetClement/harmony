@@ -7,6 +7,9 @@ TagManager:
   - Torch
   - Elementary
   - Platform
+  - WaterBeam
+  - Wheel
+  - FallingTree
   layers:
   - Default
   - TransparentFX
@@ -23,10 +26,10 @@ TagManager:
   - Ground
   - InvisibleWall
   - Shield
-  - 
-  - 
-  - 
-  - 
+  - Movable
+  - Fire
+  - Trigger
+  - OtherDefault
   - 
   - 
   - 

@@ -35,4 +35,6 @@ public class FlamesFlowController : MonoBehaviour
         AbstractSpell spell = gm.GetElementaryReference.GetComponent<ElementaryController>().currentSpell;
         collidedItem.OnDamage(spell.SetDamages(transform.forward));
     }
+
+
 }

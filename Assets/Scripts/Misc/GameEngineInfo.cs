@@ -36,6 +36,8 @@ public static class HarmonyLayers
     public static readonly int LAYER_INTERACTABLE = LayerMask.NameToLayer("Interactable");
     public static readonly int LAYER_PAYERTRIGGER = LayerMask.NameToLayer("PlayerTrigger");
     public static readonly int LAYER_SHIELD = LayerMask.NameToLayer("Shield");
+    public static readonly int LAYER_MOVABLE = LayerMask.NameToLayer("Movable");
+    public static readonly int LAYER_FIRE = LayerMask.NameToLayer("Fire");
 }
 
 

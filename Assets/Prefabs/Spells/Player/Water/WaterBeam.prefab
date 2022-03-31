@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1386091946}
   - component: {fileID: 1386091948}
   - component: {fileID: 1386091947}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4822,7 +4822,7 @@ GameObject:
   m_Component:
   - component: {fileID: 209660303498517547}
   - component: {fileID: 209660303498517546}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4954,9 +4954,9 @@ GameObject:
   - component: {fileID: 209660303719141884}
   - component: {fileID: 209660303719141882}
   - component: {fileID: 627015841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: WaterBeam
-  m_TagString: Untagged
+  m_TagString: WaterBeam
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4994,12 +4994,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 1
   damagesInfos: {fileID: 11400000, guid: ec7a1c338745244409c4c86c2731fa5f, type: 2}
+  elementaryfollow: 0
   canceled: 0
   maxDistance: 30
-  beamAcceleration: 10
+  beamAcceleration: 15
   PosMarkerPrefab: {fileID: 8966274939627693210, guid: 76bd97b4f760b28489d35f8e7354d9c3,
     type: 3}
   impactEffect: {fileID: 5863743421125159431}
+  layersCollision:
+    serializedVersion: 2
+    m_Bits: 129809
 --- !u!136 &627015841
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5083,6 +5087,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
         type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
@@ -5161,6 +5170,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WaterBeamImpactEffect2
       objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799635, guid: 32582ddb7c4dbd341bc19f8fdd9263a0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32582ddb7c4dbd341bc19f8fdd9263a0, type: 3}
 --- !u!4 &5863743420797964276 stripped
@@ -5231,10 +5245,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799634, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: df43e5d21cb10364ca81104b29c31806, type: 2}
     - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
         type: 3}
       propertyPath: m_Name
       value: WaterBeamImpactEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5863743419929799635, guid: 73a7d1a61843a88458534a714242882e,
         type: 3}
@@ -5376,6 +5400,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WaterBeamImpactEffect2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5863743419929799635, guid: 32582ddb7c4dbd341bc19f8fdd9263a0,
+        type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5863743419929799635, guid: 32582ddb7c4dbd341bc19f8fdd9263a0,
         type: 3}
