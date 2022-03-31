@@ -108,7 +108,7 @@ public class fireSpell : EnnemySpell
 
     public override void Terminate()
     {
-        if(fireOrbInstance.gameObject)
+        if(fireOrbInstance.gameObject == null)
             Destroy(fireOrbInstance.gameObject);
         Destroy(gameObject);
     }
