@@ -128,9 +128,13 @@ public class EarthBall : MonoBehaviour
 				launchVelocity = earthMarkerRef.Aim() * range;
 				trajectoryCalculator.SetInitialVelocity(launchVelocity);
 				trajectoryCalculator.CalculateTrajectory();
+				trajectoryCalculator.DisplayTrajectory(true);
 			}
 			else
+			{
+				trajectoryCalculator.DisplayTrajectory(false);
 				launchVelocity = trajectoryCalculator.CalculateVelocity(transform.position, earthMarkerRef.Aim(), speed);
+			}
 			trajectoryCalculator.SetInitialVelocity(launchVelocity);
 
 			earthMarkerRef.SetMarkerRadius(radius);
@@ -159,7 +163,7 @@ public class EarthBall : MonoBehaviour
 
 	public void Launch()
 	{
-		GetComponent<LineRenderer>().enabled = false;
+		trajectoryCalculator.DisplayTrajectory(false);
 		earthMortarRef.elementary.GetComponent<ElementaryController>().computePosition = false;
 		rig.isKinematic = false;
 		//GetComponent<SphereCollider>().isTrigger = false;
