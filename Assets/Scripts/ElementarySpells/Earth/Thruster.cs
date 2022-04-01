@@ -27,9 +27,9 @@ public class Thruster : MonoBehaviour
         if (collider.gameObject.layer == HarmonyLayers.LAYER_PLAYER)
         {
             // If the player hits the ground when the pillar finished to expand, he will be propelled by the pillar
-            if(EarthPillar.instance != null && EarthPillar.instance.isTotallyOut && playerMotionController.onGround && canPropel)
+            if(EarthPillar.instance != null && EarthPillar.instance.isTotallyOut && playerMotionController.Grounded && canPropel)
             {
-                playerMotionController.onGround = false;
+                playerMotionController.Grounded = false;
                 Vector3 velocity = playerMotionController.Velocity;
                 playerMotionController.Velocity = new Vector3(velocity.x,playerMotionController.jumpForce + jumpForceAdded,velocity.z);
             }

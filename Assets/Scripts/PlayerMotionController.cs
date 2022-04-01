@@ -65,8 +65,8 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 rightDirection;
     private Vector2 inputAxis;
     private Vector3 velocity;
-     public bool onGround;
-    public float floorAngle;
+    private bool onGround;
+    private float floorAngle;
     private RaycastHit surfaceInfo;
     private RaycastHit slopeInfo;
     private Transform groundTranform;
@@ -76,9 +76,9 @@ public class PlayerMotionController : MonoBehaviour
     private bool isFalling = false;
     private bool isJumping = false;
     private bool isTurning = false;
-    public bool sliding = false;
+    private bool sliding = false;
     private bool isShielding = false;
-    public bool onSlope = false;
+    private bool onSlope = false;
 
     private bool movingForward;
     private bool movingBackward;
@@ -567,6 +567,19 @@ public class PlayerMotionController : MonoBehaviour
         set
         {
             isShielding = value;
+        }
+    }
+
+    public bool Grounded
+    {
+        get
+        {
+            return onGround;
+        }
+
+        set
+        {
+            onGround = value;
         }
     }
 
