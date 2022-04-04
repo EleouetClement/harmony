@@ -45,13 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad5302799d06eb4b921397c2620202c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBetweenDialogue: 0.3
   dialogueBox: {fileID: 0}
   nameLabel: {fileID: 0}
   textLabel: {fileID: 0}
-  testDialogue: {fileID: 11400000, guid: 77874336023def04aaf7259d527122a4, type: 2}
-  dialogueObjectList:
-  - {fileID: 11400000, guid: 2bb1d477984bbc846832d223ad191f87, type: 2}
-  - {fileID: 11400000, guid: cfeaae6818fcbd54bb56fb272edbf5f3, type: 2}
 --- !u!114 &5229084328406621123
 MonoBehaviour:
   m_ObjectHideFlags: 0

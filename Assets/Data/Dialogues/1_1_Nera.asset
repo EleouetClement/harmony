@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e5bebc589e67baa408643bbeda0c6616, type: 3}
-  m_Name: DialogueKamuo1
+  m_Name: 1_1_Nera
   m_EditorClassIdentifier: 
-  characterName: KAMUO
+  characterName: NERA
   dialogue:
-  - "Salut Nera !\nEnchant\xE9 \xE9galement !"
-  - "Moi c'est Kamuo.\nJe vais t'aider \xE0 avancer !"
+  - "Bonjour, je m'appelle Nera.\nEnchant\xE9 !"
+  - Et toi, qui es-tu ?

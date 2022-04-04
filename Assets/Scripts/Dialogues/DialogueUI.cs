@@ -9,7 +9,7 @@ public class DialogueUI : MonoBehaviour
     [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TMP_Text nameLabel;
     [SerializeField] private TMP_Text textLabel;
-    [SerializeField] private DialogueObject[] dialogueObjectList;
+    private DialogueObject[] dialogueObjectList;
 
     private int currentIndexDialogue = 0;
     private TypeWriterEffect typeWriterEffect;
