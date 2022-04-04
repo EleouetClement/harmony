@@ -9,19 +9,22 @@ public class TypeWriterEffect : MonoBehaviour
 
     public bool isRunning { get; private set; }
 
+    // Allow to have more fluidity in reading, by accentuating the punctuation
     private readonly Dictionary<HashSet<char>, float> punctuations = new Dictionary<HashSet<char>, float>()
     {
-        { new HashSet<char>(){'.', '!', '?'}, 0.6f },
-        { new HashSet<char>(){',', ';', ':'}, 0.3f },
+        { new HashSet<char>(){'.', '!', '?'}, 0.6f }, // Characters and delay of the end of sentence punctuation
+        { new HashSet<char>(){',', ';', ':'}, 0.3f }, // Characters and delay of the pause punctuation
     };
 
     private Coroutine typingCoroutine;
     
+    // Start the typing effect
     public void Run(string textToType, TMP_Text textLabel)
     {
         typingCoroutine = StartCoroutine(TypeText(textToType, textLabel));
     }
 
+    // Stop the typing effect (end of the sentence or skip)
     public void Stop()
     {
         StopCoroutine(typingCoroutine);
@@ -33,6 +36,7 @@ public class TypeWriterEffect : MonoBehaviour
         isRunning = true;
         textLabel.text = string.Empty;
 
+        // Waiting at the beginning of the first character typing
         yield return new WaitForSeconds(0.5f);
 
         float time = 0;
