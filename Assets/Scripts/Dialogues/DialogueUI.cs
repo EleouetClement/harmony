@@ -22,7 +22,8 @@ public class DialogueUI : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        // DEBUG MODE
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             //ShowDialogue(testDialogue);
             if (currentIndexDialogue < dialogueObjectList.Length)
@@ -30,13 +31,13 @@ public class DialogueUI : MonoBehaviour
                 ShowDialogue(dialogueObjectList[currentIndexDialogue]);
             }
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Debug.Log("TESTTTTTTTTT");
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.Alpha5))
         {
             CloseDialogueBox();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            Debug.Log("TESTTTTTTTTT");
         }
     }
 
