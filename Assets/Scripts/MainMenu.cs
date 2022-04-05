@@ -12,7 +12,9 @@ public class MainMenu : MonoBehaviour
     public Button extras;
     public Button settings;
     public Button quit_game;
+    public GameObject main_buttons;
     public CanvasGroup backgroundScreen;
+    public CanvasGroup loadingScreen;
 
     private AsyncOperation _asyncOp;
 
@@ -25,6 +27,8 @@ public class MainMenu : MonoBehaviour
     private GameObject _settings_button;
     private GameObject _quit_button;
     private GameObject _loading_text;
+    private GameObject _loading_screen;
+    private GameObject _background_screen;
 
     /// <summary>
     /// is a scene being loaded?
@@ -42,7 +46,11 @@ public class MainMenu : MonoBehaviour
         _extras_button = extras.gameObject;
         _settings_button = settings.gameObject;
         _quit_button = quit_game.gameObject;
-        _loading_text = backgroundScreen.GetComponentInChildren<Text>().gameObject;
+
+        _loading_screen = loadingScreen.gameObject;
+        _background_screen = backgroundScreen.gameObject;
+        
+        _loading_text = loadingScreen.GetComponentInChildren<Text>().gameObject;
         _loading_text.SetActive(false);
         _fadeTime = 1f;
     }
@@ -50,6 +58,7 @@ public class MainMenu : MonoBehaviour
 	void Start()
     {
         new_game.onClick.AddListener(NewGame);
+        quit_game.onClick.AddListener(QuitGame);
     }
 
 	private void Update()
@@ -60,11 +69,11 @@ public class MainMenu : MonoBehaviour
             {
                 _elapsedTime += Time.deltaTime;
                 _elapsedTime = Mathf.Clamp(_elapsedTime, 0f, _fadeTime);
-                backgroundScreen.alpha = 1f - (_elapsedTime / _fadeTime);
+                loadingScreen.alpha = 1f - (_elapsedTime / _fadeTime);
             }
             if (_elapsedTime == _fadeTime)
             {
-                GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>().enabled = true;
+                GameModeSingleton.GetInstance().FadeStart = true;
                 SceneManager.UnloadSceneAsync("MainMenu");
             }
         }
@@ -74,19 +83,23 @@ public class MainMenu : MonoBehaviour
     {
         LoadingScreen();
         _asyncOp = SceneManager.LoadSceneAsync("CommonScene", LoadSceneMode.Additive);
-        //_asyncOp.allowSceneActivation = false;
         _elapsedTime = 0f;
         _loading = true;
     }
 
     private void LoadingScreen()
     {
-        _new_game_button.SetActive(false);
-        _load_game_button.SetActive(false);
-        _load_game_button.SetActive(false);
-        _extras_button.SetActive(false);
-        _settings_button.SetActive(false);
-        _quit_button.SetActive(false);
+        main_buttons.SetActive(false);
+        _background_screen.SetActive(false);
+        _loading_screen.SetActive(true);
         _loading_text.SetActive(true);
     }
+
+    private void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#endif
+        Application.Quit();
+	}
 }

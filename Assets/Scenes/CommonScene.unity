@@ -2252,6 +2252,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6677204177286177700, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6677204177286177703, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
       propertyPath: m_Name
@@ -2433,6 +2438,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c5fc045dcc8b224296d1c3b23829e72, type: 3}
+--- !u!225 &1654015953 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 5939234067492808677, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1736763454
 GameObject:
   m_ObjectHideFlags: 0
@@ -2644,6 +2655,11 @@ PrefabInstance:
       propertyPath: playerMesh
       value: 
       objectReference: {fileID: 1538904876}
+    - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
+        type: 3}
+      propertyPath: blackScreen
+      value: 
+      objectReference: {fileID: 1654015953}
     - target: {fileID: 2036988911515475152, guid: a5db3117df428cd48b89f01b16ca7a5e,
         type: 3}
       propertyPath: playerCrossAir
