@@ -24,22 +24,36 @@ public class CinemachineCameraController : MonoBehaviour
     static private Vector3 groundVector = new Vector3(0, 1, 0);
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private PlayerInput player;
+    private Vector3 pointToLookAtPosition;
 
-	private void Start()
+    private Quaternion rot;
+    private bool endDialogue = false;
+
+    private void Start()
 	{
         currentCam = exploCam;
         cinemachineVirtualCamera = currentCam.GetComponent<CinemachineVirtualCamera>();
+        player = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
 
+        rot = transform.rotation;
     }
 
 	private void Update()
-	{
-
-        AddYaw(lookInput.x * Time.deltaTime);
-        AddPitch(-lookInput.y * Time.deltaTime);
-
-        Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
-        transform.localRotation = camRotation;
+    {
+        if (player.inputIsActive)
+        {
+            AddYaw(lookInput.x * Time.deltaTime);
+            AddPitch(-lookInput.y * Time.deltaTime);
+            Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
+            transform.localRotation = camRotation;
+        }
+        else
+        {
+            transform.LookAt(pointToLookAtPosition);
+            rotation.x = transform.rotation.eulerAngles.x;
+            rotation.y = transform.rotation.eulerAngles.y;
+        }
     }
 
 	public Vector3 GetViewDirection
@@ -102,12 +116,6 @@ public class CinemachineCameraController : MonoBehaviour
         currentCam = exploCam;
     }
 
-    void LateUpdate()
-    {
-       
-        
-    }
-
     public void AddYaw(float yaw)
     {
         rotation.y += yaw * sensibility;
@@ -129,5 +137,9 @@ public class CinemachineCameraController : MonoBehaviour
         lookInput = value.Get<Vector2>() * 100;
     }
 
+    public void SetPointToLookAt(Vector3 point)
+    {
+        pointToLookAtPosition = point;
+    }
 
 }
