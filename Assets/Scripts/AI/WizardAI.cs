@@ -16,7 +16,7 @@ public class WizardAI : AIAgent
     {
         base.Update();
         animator.SetFloat(Speed, treeRunner.context.agent.velocity.magnitude);
-        castPosition.LookAt(GameModeSingleton.GetInstance().GetPlayerReference.transform);
+        
 
         if (attacking && currentSpell && currentSpell.charged)
         {
@@ -28,6 +28,7 @@ public class WizardAI : AIAgent
     {
         if (!attacking)
         {
+            castPosition.LookAt(GameModeSingleton.GetInstance().GetPlayerReference.transform);
             currentSpell = Instantiate(spell, castPosition.position, Quaternion.identity);
             currentSpell.Charge(EnnemySpell.CastType.quick, castPosition);
             animator.SetTrigger("Attack");
@@ -40,6 +41,7 @@ public class WizardAI : AIAgent
     {
         if (!attacking)
         {
+            castPosition.LookAt(GameModeSingleton.GetInstance().GetPlayerReference.transform);
             currentSpell = Instantiate(spell, castPosition.position, Quaternion.identity);
             currentSpell.Charge(EnnemySpell.CastType.charge, castPosition);
             animator.SetTrigger("Attack");

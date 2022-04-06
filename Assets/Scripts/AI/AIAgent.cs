@@ -93,6 +93,7 @@ namespace Harmony.AI
                 if (health <= 0)
                 {
                     aiActive = false;
+                    treeRunner.context.agent.isStopped = true;
                     if(animator) animator.SetBool("Dead", true);
                     Invoke(nameof(Death), 5);
                 }

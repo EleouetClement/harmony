@@ -1,0 +1,1010 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8770944735055934421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 11345542c1207f545af34759edeaeda0
+  position: {x: 319.9999, y: 642.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 173407461202169280}
+  - {fileID: 6928311362922673510}
+  abortOnFailure: 0
+--- !u!114 &-7981817562880161853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce3de13f93dc8249b1173dc943bf4ef, type: 3}
+  m_Name: StartPatrolling
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: d9b21ee9503a47d489a5a0db2271dd95
+  position: {x: 170.00003, y: 991.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+--- !u!114 &-7940324796788549989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe6a168f2cd5114bb2966260fd15e37, type: 3}
+  m_Name: CallMethod
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 83b3d5ae6eed3644da587b321b81026b
+  position: {x: -626, y: 1324.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  component: StaticWizardAI
+  method: FireQuick
+  delay: 0
+--- !u!114 &-7251453161134946520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee64948bda9e2fe4fb5ad88265395141, type: 3}
+  m_Name: RandomSelector
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 1c4be83b6c3a21a4fb56ce6dce145ca4
+  position: {x: -357.99994, y: 967.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -73148418256358804}
+  - {fileID: -3507800824226044058}
+--- !u!114 &-5297026774898947343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60c429c2b8c0b74abf8e3c1c6657ce1, type: 3}
+  m_Name: MoveToTarget
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 7b45a89741192c94b9a5c9e4068883da
+  position: {x: -588.21796, y: 854}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: target
+  speed: 5
+  stoppingDistance: 0.1
+  updateRotation: 1
+  acceleration: 40
+  tolerance: 2
+--- !u!114 &-5184754673708075005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706bd37e7faa47445a45445ba9864cf1, type: 3}
+  m_Name: CheckState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ef643565dfa6ba64098b41ce240c1a62
+  position: {x: 320.0001, y: 541}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: -8770944735055934421}
+  aiState: Idle
+  isNot: 0
+--- !u!114 &-4563613514251524612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8d73ed74e3d895b4fa48ff4ee5451aa3
+  position: {x: -10.6461525, y: 336.91852}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 446694999428995256}
+  - {fileID: -5184754673708075005}
+  abortOnFailure: 0
+--- !u!114 &-3507800824226044058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: befcfeea4cc539f419c0f173d0fadfeb
+  position: {x: -188.99997, y: 1138.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -2714321970390130471}
+  - {fileID: -254083041293537068}
+--- !u!114 &-2714321970390130471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe6a168f2cd5114bb2966260fd15e37, type: 3}
+  m_Name: CallMethod
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: fd1eddb44f6fa274cb9bc50e05aded83
+  position: {x: -263.99997, y: 1324.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  component: StaticWizardAI
+  method: FireCharged
+  delay: 0
+--- !u!114 &-2333310146070605893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c7089bfa96a18ec4e80eeefa25fb539b
+  position: {x: -471.99997, y: 1324.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  durationMin: 3
+  durationMax: 5
+--- !u!114 &-1380767461361556023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffb2b789a60490498476e4912ecffaf, type: 3}
+  m_Name: ConeCheck
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: b661e5a9035d6f142a289ab953847674
+  position: {x: -357.99994, y: 852}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 1
+  child: {fileID: -7251453161134946520}
+  targetParameter: target
+  searchLayer: 3
+  blockMask:
+    serializedVersion: 2
+    m_Bits: 14337
+  eyesHeight: 0.875
+  lookAngle: 55
+  lookRange: 24
+--- !u!114 &-911882838764309930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0228ea19ba10ffe44b1e3e2dfc37257b, type: 3}
+  m_Name: SetState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: af7e90a8e5d6a1a46b83aeaf487f5307
+  position: {x: 541, y: 991}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  aiState: Chase
+--- !u!114 &-254083041293537068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c27cf1e4f373af446babbab674424d87
+  position: {x: -113.99997, y: 1324.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  durationMin: 5
+  durationMax: 8
+--- !u!114 &-73148418256358804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: a1f53312bf4caae458200794b3423197
+  position: {x: -546.99994, y: 1138.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -7940324796788549989}
+  - {fileID: -2333310146070605893}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: StaticWizardTree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 5440851567276491666}
+  treeState: 0
+  nodes:
+  - {fileID: 5440851567276491666}
+  - {fileID: 5535483819682733560}
+  - {fileID: -4563613514251524612}
+  - {fileID: -5184754673708075005}
+  - {fileID: 6928311362922673510}
+  - {fileID: -911882838764309930}
+  - {fileID: 446694999428995256}
+  - {fileID: -5297026774898947343}
+  - {fileID: 75298422744429364}
+  - {fileID: -8770944735055934421}
+  - {fileID: 173407461202169280}
+  - {fileID: -7981817562880161853}
+  - {fileID: -7251453161134946520}
+  - {fileID: -73148418256358804}
+  - {fileID: -7940324796788549989}
+  - {fileID: -2333310146070605893}
+  - {fileID: -3507800824226044058}
+  - {fileID: -2714321970390130471}
+  - {fileID: -254083041293537068}
+  - {fileID: -1380767461361556023}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+--- !u!114 &75298422744429364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: b70a42f6795c82f459e3b44ab14482d9
+  position: {x: -358.21796, y: 657}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -5297026774898947343}
+  - {fileID: -1380767461361556023}
+--- !u!114 &173407461202169280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: dc0b7d8153f00774598b38d536b07e30
+  position: {x: 169.9999, y: 851.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -7981817562880161853}
+--- !u!114 &446694999428995256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706bd37e7faa47445a45445ba9864cf1, type: 3}
+  m_Name: CheckState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8edb2fb4f27e1b94dbed60c74fd84aee
+  position: {x: -358.21796, y: 541}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: 75298422744429364}
+  aiState: Chase
+  isNot: 0
+--- !u!114 &5440851567276491666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163c147d123e4a945b688eddc64e3ea5, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ce175b20d2539894d96c2ac9f34e1d17
+  position: {x: -10.6461525, y: 120.918495}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: 5535483819682733560}
+--- !u!114 &5535483819682733560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 96ccc872870c89040b7385dad50ad061
+  position: {x: -10.6461525, y: 224.91852}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: -4563613514251524612}
+  restartOnSuccess: 1
+  restartOnFailure: 1
+--- !u!114 &6928311362922673510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffb2b789a60490498476e4912ecffaf, type: 3}
+  m_Name: ConeCheck
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c40089b0cc359314fbb1dd39ca6417f0
+  position: {x: 541, y: 851.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 1
+  child: {fileID: -911882838764309930}
+  targetParameter: target
+  searchLayer: 3
+  blockMask:
+    serializedVersion: 2
+    m_Bits: 14337
+  eyesHeight: 0.875
+  lookAngle: 45
+  lookRange: 16
