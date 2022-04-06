@@ -103,4 +103,9 @@ public class MainMenu : MonoBehaviour
 #endif
         Application.Quit();
 	}
+
+    private void Settings()
+    {
+        _background_screen.transform.GetChild(0).gameObject.SetActive(false);
+    }
 }

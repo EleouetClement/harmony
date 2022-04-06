@@ -3,28 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenModeDropwdown : MonoBehaviour
+public class ScreenModeDropdown : MonoBehaviour
 {
 
     Dropdown dropDown;
+    List<string> options = new();
     Resolution[] resolutions;
     // Start is called before the first frame update
     void Awake()
     {
         dropDown = GetComponent<Dropdown>();
+        dropDown.onValueChanged.AddListener(InputHandler);
         resolutions = Screen.resolutions;
-        dropDown.options.Clear();
+        dropDown.ClearOptions();
 		foreach (Resolution resolution in resolutions)
 		{
-            dropDown.options.Add(new Dropdown.OptionData(resolution.width + "x" + resolution.height));
+            options.Add(resolution.width + "x" + resolution.height);
 		}
+        dropDown.AddOptions(options);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void InputHandler(int val)
     {
