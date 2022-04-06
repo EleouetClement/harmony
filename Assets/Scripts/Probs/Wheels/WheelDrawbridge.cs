@@ -44,8 +44,6 @@ public class WheelDrawbridge : AbstractWheelSystem
 
     public override void CloseDoor()
     {
-        Debug.Log("Close door");
-
         if (!isTotallyClosed)
         {
             isTotallyOpened = false;

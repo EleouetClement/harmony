@@ -30,6 +30,7 @@ public class CinemachineCameraController : MonoBehaviour
     private bool inTransition = false;
     private Vector3 finalRotation;
     private Vector3 initialRotation;
+    private float speedCameraRotationDialogue { get; set; }
 
     private void Start()
 	{
@@ -49,27 +50,33 @@ public class CinemachineCameraController : MonoBehaviour
             Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
             transform.localRotation = camRotation;
             inTransition = false;
-            initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+            //initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+            initialRotation = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            timer = 0f;
         }
         else
         {
+            // If there is the movement of the camera to look at a specific point, do the camera rotation
             if (!inTransition)
             {
                 Quaternion rot = Quaternion.LookRotation(pointToLookAtPosition - transform.position);
+                finalRotation = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
+
                 timer += Time.deltaTime;
+                transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedCameraRotationDialogue));
 
-                transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * 2));
-
-                inTransition = true;
+                if (timer >= 1)
+                {
+                    inTransition = true;
+                }
             }
-
-            //transform.LookAt(pointToLookAtPosition);
-            //Quaternion rot = Quaternion.LookRotation(pointToLookAtPosition - transform.position);
-            //Debug.Log("Rotation = (" + rot.eulerAngles.x + ", " + rot.eulerAngles.y + ", " + rot.eulerAngles.z + ")");
-            //Debug.Log("Rotation.x = " + transform.rotation.eulerAngles.x + " / Rotation.y = " + transform.rotation.eulerAngles.y);
-            //// Allow to keep the angle of the camera after the dialogue
-            //rotation.x = transform.rotation.eulerAngles.x;
-            //rotation.y = transform.rotation.eulerAngles.y;
+            else
+            {
+                transform.LookAt(pointToLookAtPosition);
+                // Allow to keep the angle of the camera after the dialogue
+                rotation.x = transform.rotation.eulerAngles.x;
+                rotation.y = transform.rotation.eulerAngles.y;
+            }
         }
     }
 
@@ -159,4 +166,8 @@ public class CinemachineCameraController : MonoBehaviour
         pointToLookAtPosition = point;
     }
 
+    public void SetSpeedCameraRotationDialogue(float speed)
+    {
+        speedCameraRotationDialogue = speed;
+    }
 }
