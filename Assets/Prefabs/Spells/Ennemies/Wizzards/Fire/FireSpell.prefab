@@ -60,3 +60,6 @@ MonoBehaviour:
   blastEffect:
     serializedVersion: 2
     m_Bits: 16648
+  blastCheck:
+    serializedVersion: 2
+    m_Bits: 22793

@@ -328,7 +328,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     }
 
     public float getDisplayMana() {
-        return mana / maxMana;
+        return 1 - (mana / maxMana);
     }
 
 }

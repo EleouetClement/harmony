@@ -23,6 +23,7 @@ public class fireSpell : EnnemySpell
     [SerializeField] bool debug = false;
     [SerializeField] float explosionradius;
     [SerializeField] LayerMask blastEffect;
+    [SerializeField] LayerMask blastCheck;
 
     private EnnemiFireBall fireOrbInstance;
 
@@ -124,7 +125,8 @@ public class fireSpell : EnnemySpell
                 foreach (Collider c in mightBePlayer)
                 {
                     Debug.Log("fireSpell : " + c.name);
-                    c.gameObject.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
+                    if(IsVisible(c))
+                        c.gameObject.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
                 }
             }              
         }
@@ -133,6 +135,18 @@ public class fireSpell : EnnemySpell
             base.DealDamages(objectHitted);
         }
         Terminate();
+    }
+
+    private bool IsVisible(Collider collidedItem)
+    {
+        Vector3 direction = collidedItem.transform.position - fireOrbInstance.transform.position;
+        direction.Normalize();
+        RaycastHit hit;
+        if (Physics.Raycast(fireOrbInstance.transform.position, direction * explosionradius, out hit, blastCheck))
+        {
+            return (hit.collider.GetComponent<IDamageable>() != null ? true : false);
+        }
+        return false;
     }
 
 }
