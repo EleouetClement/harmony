@@ -15,9 +15,10 @@ public class MainMenu : MonoBehaviour
     public GameObject main_buttons;
     public CanvasGroup backgroundScreen;
     public CanvasGroup loadingScreen;
+    public GameObject options;
 
+   
     private AsyncOperation _asyncOp;
-
     /// <summary>
     /// references to UI elements' game object
     /// </summary>
