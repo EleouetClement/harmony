@@ -13,14 +13,14 @@ public class StaticWizardAI : AIAgent
     public void FireQuick()
     {
         spawner.LookAt(GameModeSingleton.GetInstance().GetPlayerReference.transform);
-        currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
+        currentSpell = Instantiate(spell, spawner.position, Quaternion.identity);
         currentSpell.Charge(EnnemySpell.CastType.quick, spawner);
     }
 
     public void FireCharged()
     {
         spawner.LookAt(GameModeSingleton.GetInstance().GetPlayerReference.transform);
-        currentSpell = Instantiate(currentSpell, spawner.position, Quaternion.identity);
+        currentSpell = Instantiate(spell, spawner.position, Quaternion.identity);
         currentSpell.Charge(EnnemySpell.CastType.charge, spawner);
     }
 }

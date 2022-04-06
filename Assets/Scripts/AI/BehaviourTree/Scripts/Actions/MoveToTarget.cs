@@ -53,7 +53,7 @@ namespace Harmony.AI
 
         public override string GetName()
         {
-            return $"Look Toward {parameterName}";
+            return $"Move Toward {parameterName}";
         }
     }
 }

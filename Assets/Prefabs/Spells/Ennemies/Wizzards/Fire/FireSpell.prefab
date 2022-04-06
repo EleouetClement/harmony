@@ -59,7 +59,7 @@ MonoBehaviour:
   explosionradius: 2.69
   blastEffect:
     serializedVersion: 2
-    m_Bits: 16648
+    m_Bits: 16392
   blastCheck:
     serializedVersion: 2
-    m_Bits: 22793
+    m_Bits: 22537

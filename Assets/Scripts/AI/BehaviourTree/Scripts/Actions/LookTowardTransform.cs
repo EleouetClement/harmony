@@ -15,8 +15,7 @@ namespace Harmony.AI{
 
         protected override void OnStart() {
             target = null;
-            if (blackboard.GetParameter(parameterName, out target))
-                context.agent.destination = target.position;
+            blackboard.GetParameter(parameterName, out target);
         }
 
         protected override void OnStop() {
