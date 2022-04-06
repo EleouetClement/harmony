@@ -26,33 +26,50 @@ public class CinemachineCameraController : MonoBehaviour
     private CinemachineVirtualCamera cinemachineVirtualCamera;
     private PlayerInput player;
     private Vector3 pointToLookAtPosition;
-
-    private Quaternion rot;
-    private bool endDialogue = false;
+    private float timer = 0f;
+    private bool inTransition = false;
+    private Vector3 finalRotation;
+    private Vector3 initialRotation;
 
     private void Start()
 	{
         currentCam = exploCam;
         cinemachineVirtualCamera = currentCam.GetComponent<CinemachineVirtualCamera>();
         player = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
-
-        rot = transform.rotation;
     }
 
 	private void Update()
     {
+        // If the player movements are not blocked (by cinematics for example), the camera follow the mouse
+        // else the camera look at a specific point
         if (player.inputIsActive)
         {
             AddYaw(lookInput.x * Time.deltaTime);
             AddPitch(-lookInput.y * Time.deltaTime);
             Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
             transform.localRotation = camRotation;
+            inTransition = false;
+            initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
         }
         else
         {
-            transform.LookAt(pointToLookAtPosition);
-            rotation.x = transform.rotation.eulerAngles.x;
-            rotation.y = transform.rotation.eulerAngles.y;
+            if (!inTransition)
+            {
+                Quaternion rot = Quaternion.LookRotation(pointToLookAtPosition - transform.position);
+                timer += Time.deltaTime;
+
+                transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * 2));
+
+                inTransition = true;
+            }
+
+            //transform.LookAt(pointToLookAtPosition);
+            //Quaternion rot = Quaternion.LookRotation(pointToLookAtPosition - transform.position);
+            //Debug.Log("Rotation = (" + rot.eulerAngles.x + ", " + rot.eulerAngles.y + ", " + rot.eulerAngles.z + ")");
+            //Debug.Log("Rotation.x = " + transform.rotation.eulerAngles.x + " / Rotation.y = " + transform.rotation.eulerAngles.y);
+            //// Allow to keep the angle of the camera after the dialogue
+            //rotation.x = transform.rotation.eulerAngles.x;
+            //rotation.y = transform.rotation.eulerAngles.y;
         }
     }
 

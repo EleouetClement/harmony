@@ -19,6 +19,8 @@ public class WheelDrawbridge : AbstractWheelSystem
     {
         if(!isTotallyOpened)
         {
+            isTotallyClosed = false;
+
             timer += Time.deltaTime;
             //doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
             doorToOpen.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedToOpen));
@@ -27,12 +29,36 @@ public class WheelDrawbridge : AbstractWheelSystem
             {
                 DrawbridgeHasFallen();
             }
+
+            if (doorToOpen.transform.rotation.eulerAngles.x >= maxAngle)
+            {
+                isTotallyOpened = true;
+
+                if (!canBeClosedAgain)
+                {
+                    DrawbridgeHasFallen();
+                }
+            }
         }
     }
 
     public override void CloseDoor()
     {
         Debug.Log("Close door");
+
+        if (!isTotallyClosed)
+        {
+            isTotallyOpened = false;
+
+            timer -= Time.deltaTime;
+            //doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
+            doorToOpen.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedToOpen));
+
+            if (doorToOpen.transform.rotation.eulerAngles.x <= 0)
+            {
+                isTotallyClosed = true;
+            }
+        }
     }
 
     public void DrawbridgeHasFallen()
