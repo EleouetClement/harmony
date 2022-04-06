@@ -6,17 +6,23 @@ public class WaterDisk : EnnemySpell
 {
     [Header("Casting stats")]
     [SerializeField] [Min(0)] int damagesGrowthPerSec;
+    [SerializeField] [Min(1)] int diskNumber;
     [Header("behaviour stats")]
     [SerializeField] [Range(1, 4)] int baseDamages;
     [SerializeField] float speed;
+    
 
     [Header("Do not change")]
     [SerializeField] DiskManager waterDiskReference;
+    [SerializeField] [Min(0)] float diskDelayInSeconds;
     [SerializeField] bool debug = false;
+    
 
     private DiskManager waterDiskInstance;
 
     private Vector3 trajectory = Vector3.zero;
+
+    List<DiskManager> allDisks;
 
     private void Awake()
     {
@@ -25,6 +31,7 @@ public class WaterDisk : EnnemySpell
             Debug.LogError("Ennemy water spell : no water disk reference, spell cannot launch");
             Destroy(gameObject);
         }
+        allDisks = new List<DiskManager>();
 
     }
 
@@ -42,6 +49,7 @@ public class WaterDisk : EnnemySpell
     {
         base.Charge(chargeTime, spellOrigin);
         waterDiskInstance = Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity);
+        allDisks.Add(waterDiskInstance);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Water);
     }
 
@@ -49,6 +57,7 @@ public class WaterDisk : EnnemySpell
     {
         base.Charge(chargeTime, spellOrigin, targetPosition);
         waterDiskInstance = Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity);
+        allDisks.Add(waterDiskInstance);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Water);
     }
 
@@ -59,6 +68,10 @@ public class WaterDisk : EnnemySpell
         {
             //Nothing to ad yet for the casting
             waterDiskInstance.transform.position = summonerPosition.position;
+            if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber)
+            {
+                allDisks.Add(Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity));
+            }         
         }
         else
         {
@@ -85,6 +98,7 @@ public class WaterDisk : EnnemySpell
             trajectory = DefaultTarget.position - summonerPosition.position;
         }
         trajectory.Normalize();
+        StartCoroutine(LaunchDisks());
         if (debug)
             Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
     }
@@ -92,12 +106,26 @@ public class WaterDisk : EnnemySpell
     private void Fly()
     {
         Vector3 velocity = trajectory * speed * Time.deltaTime;
-        waterDiskInstance.transform.Translate(velocity);
+        //waterDiskInstance.transform.Translate(velocity);
+        foreach(DiskManager disk in allDisks)
+        {
+            if(disk.lauched)
+                disk.transform.Translate(velocity);
+        }
     }
 
     protected override void DealDamages(GameObject objectHitted)
     {
         base.DealDamages(objectHitted);
 
+    }
+
+    public IEnumerator LaunchDisks()
+    {
+        foreach(DiskManager disk in allDisks)
+        {
+            disk.lauched = true;
+            yield return new WaitForSeconds(diskDelayInSeconds);
+        }
     }
 }

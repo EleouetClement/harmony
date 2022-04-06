@@ -6,6 +6,8 @@ public class DiskManager : MonoBehaviour
 {
     public bool hitted = false;
     public GameObject objectHitted { get; private set; }
+
+    public bool lauched = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,7 +24,6 @@ public class DiskManager : MonoBehaviour
     {
         if (!hitted)
         {
-            Debug.Log("DiskManager : hit something");
             objectHitted = other.gameObject;
             hitted = true;
         }
