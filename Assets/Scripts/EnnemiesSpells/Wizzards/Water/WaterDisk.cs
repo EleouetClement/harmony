@@ -32,7 +32,10 @@ public class WaterDisk : EnnemySpell
     void Update()
     {
         if (waterDiskInstance.hitted)
+        {
+            waterDiskInstance.hitted = false;
             DealDamages(waterDiskInstance.objectHitted);
+        }
     }
 
     public override void Charge(CastType chargeTime, Transform spellOrigin)
@@ -95,5 +98,6 @@ public class WaterDisk : EnnemySpell
     protected override void DealDamages(GameObject objectHitted)
     {
         base.DealDamages(objectHitted);
+
     }
 }

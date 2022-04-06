@@ -115,7 +115,8 @@ public abstract class EnnemySpell : MonoBehaviour
     /// <param name="objectHitted"></param>
     protected virtual void DealDamages(GameObject objectHitted)
     {
-        Debug.Log("EnnemySpell : damages");
+        Debug.Log("EnnemySpell : damages to " + objectHitted.name);
+        
         objectHitted.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
     }
 }
