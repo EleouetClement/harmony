@@ -32,6 +32,7 @@ public class DialogueUI : MonoBehaviour
     {
         typeWriterEffect = GetComponent<TypeWriterEffect>();
         player = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
+
         //CloseDialogueBox();
         dialogueBox.SetActive(false);
         nameLabel.text = string.Empty;
@@ -61,6 +62,7 @@ public class DialogueUI : MonoBehaviour
     public void ShowDialogue(DialogueObject dialogueObject)
     {
         player.DeactivateInput(); // Disable all the input player movement during the dialogue
+
         nameLabel.text = dialogueObject.CharacterName;
         dialogueBox.SetActive(true);
         StartCoroutine(StepThroughDialogue(dialogueObject));

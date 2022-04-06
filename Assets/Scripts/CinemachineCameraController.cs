@@ -24,22 +24,60 @@ public class CinemachineCameraController : MonoBehaviour
     static private Vector3 groundVector = new Vector3(0, 1, 0);
 
     private CinemachineVirtualCamera cinemachineVirtualCamera;
+    private PlayerInput player;
+    private Vector3 pointToLookAtPosition;
+    private float timer = 0f;
+    private bool inTransition = false;
+    private Vector3 finalRotation;
+    private Vector3 initialRotation;
+    private float speedCameraRotationDialogue { get; set; }
 
-	private void Start()
+    private void Start()
 	{
         currentCam = exploCam;
         cinemachineVirtualCamera = currentCam.GetComponent<CinemachineVirtualCamera>();
-
+        player = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
     }
 
 	private void Update()
-	{
+    {
+        // If the player movements are not blocked (by cinematics for example), the camera follow the mouse
+        // else the camera look at a specific point
+        if (player.inputIsActive)
+        {
+            AddYaw(lookInput.x * Time.deltaTime);
+            AddPitch(-lookInput.y * Time.deltaTime);
+            Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
+            transform.localRotation = camRotation;
+            inTransition = false;
+            //initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+            initialRotation = new Vector3(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            timer = 0f;
+        }
+        else
+        {
+            // If there is the movement of the camera to look at a specific point, do the camera rotation
+            if (!inTransition)
+            {
+                Quaternion rot = Quaternion.LookRotation(pointToLookAtPosition - transform.position);
+                finalRotation = new Vector3(rot.eulerAngles.x, rot.eulerAngles.y, rot.eulerAngles.z);
 
-        AddYaw(lookInput.x * Time.deltaTime);
-        AddPitch(-lookInput.y * Time.deltaTime);
+                timer += Time.deltaTime;
+                transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedCameraRotationDialogue));
 
-        Quaternion camRotation = Quaternion.Euler(rotation.x, rotation.y, 0);
-        transform.localRotation = camRotation;
+                if (timer >= 1)
+                {
+                    inTransition = true;
+                }
+            }
+            else
+            {
+                transform.LookAt(pointToLookAtPosition);
+                // Allow to keep the angle of the camera after the dialogue
+                rotation.x = transform.rotation.eulerAngles.x;
+                rotation.y = transform.rotation.eulerAngles.y;
+            }
+        }
     }
 
 	public Vector3 GetViewDirection
@@ -102,12 +140,6 @@ public class CinemachineCameraController : MonoBehaviour
         currentCam = exploCam;
     }
 
-    void LateUpdate()
-    {
-       
-        
-    }
-
     public void AddYaw(float yaw)
     {
         rotation.y += yaw * sensibility;
@@ -129,5 +161,13 @@ public class CinemachineCameraController : MonoBehaviour
         lookInput = value.Get<Vector2>() * 100;
     }
 
+    public void SetPointToLookAt(Vector3 point)
+    {
+        pointToLookAtPosition = point;
+    }
 
+    public void SetSpeedCameraRotationDialogue(float speed)
+    {
+        speedCameraRotationDialogue = speed;
+    }
 }
