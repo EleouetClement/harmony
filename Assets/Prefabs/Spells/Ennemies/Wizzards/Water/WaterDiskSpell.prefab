@@ -51,7 +51,7 @@ MonoBehaviour:
   target: {x: 0, y: 0, z: 0}
   damagesGrowthPerSec: 1
   baseDamages: 1
-  speed: 16.11
+  speed: 3.39
   waterDiskReference: {fileID: 7949065683106968820, guid: 4408418f655d3a74c8da3b953d8a3de0,
     type: 3}
   debug: 0

@@ -31,7 +31,8 @@ public class WaterDisk : EnnemySpell
     // Update is called once per frame
     void Update()
     {
-        
+        if (waterDiskInstance.hitted)
+            DealDamages(waterDiskInstance.objectHitted);
     }
 
     public override void Charge(CastType chargeTime, Transform spellOrigin)

@@ -88,7 +88,7 @@ public class PlayerAnimController : MonoBehaviour
             }
             else if (movingLeft)
             {
-                print(maxSpeedRatioX);
+                //print(maxSpeedRatioX);
                 animator.SetFloat("VelocityX", Mathf.MoveTowards(animator.GetFloat("VelocityX"), -maxSpeedRatioX, -inputAxis.x * animSpeed * Time.deltaTime));
             }
             else if (!movingRight && !movingLeft)

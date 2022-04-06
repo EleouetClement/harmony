@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DiskManager : MonoBehaviour
 {
+    public bool hitted = false;
+    public GameObject objectHitted { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
@@ -14,5 +16,16 @@ public class DiskManager : MonoBehaviour
     void Update()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!hitted)
+        {
+            Debug.Log("DiskManager : hit something");
+            objectHitted = other.gameObject;
+            hitted = true;
+        }
+            
     }
 }

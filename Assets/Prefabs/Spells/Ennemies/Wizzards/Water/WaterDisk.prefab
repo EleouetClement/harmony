@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1990041607735579252}
   - component: {fileID: 1990041607735579251}
   - component: {fileID: 1990041607735579250}
+  - component: {fileID: 7836135850703968122}
   - component: {fileID: 648706664407870626}
   - component: {fileID: 7949065683106968820}
-  - component: {fileID: 7836135850703968122}
   m_Layer: 7
   m_Name: WaterDisk
   m_TagString: Untagged
@@ -87,6 +87,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!54 &7836135850703968122
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990041607735579248}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &648706664407870626
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -112,22 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fa02a161d2b79e4daade013f60c3aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!54 &7836135850703968122
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990041607735579248}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  hitted: 0
 --- !u!1001 &8933789977385912038
 PrefabInstance:
   m_ObjectHideFlags: 0

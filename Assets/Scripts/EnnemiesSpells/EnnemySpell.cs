@@ -85,7 +85,6 @@ public abstract class EnnemySpell : MonoBehaviour
             }
             else
             {
-                Debug.Log("EnnemySpell : charge terminee");
                 charged = true;
                 OnChargeEnd();
             }
@@ -116,6 +115,7 @@ public abstract class EnnemySpell : MonoBehaviour
     /// <param name="objectHitted"></param>
     protected virtual void DealDamages(GameObject objectHitted)
     {
+        Debug.Log("EnnemySpell : damages");
         objectHitted.GetComponent<IDamageable>()?.OnDamage(damagesDeal);
     }
 }
