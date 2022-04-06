@@ -38,26 +38,28 @@ public class WaterDisk : EnnemySpell
     // Update is called once per frame
     void Update()
     {
-        if (waterDiskInstance.hitted)
+        foreach (DiskManager d in allDisks)
         {
-            waterDiskInstance.hitted = false;
-            DealDamages(waterDiskInstance.objectHitted);
+            if (d.hitted)
+            {
+                d.hitted = false;
+                DealDamages(d.objectHitted);
+            }
         }
+            
     }
 
     public override void Charge(CastType chargeTime, Transform spellOrigin)
     {
         base.Charge(chargeTime, spellOrigin);
-        waterDiskInstance = Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity);
-        allDisks.Add(waterDiskInstance);
+        allDisks.Add(Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity));
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Water);
     }
 
     public override void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
     {
         base.Charge(chargeTime, spellOrigin, targetPosition);
-        waterDiskInstance = Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity);
-        allDisks.Add(waterDiskInstance);
+        allDisks.Add(Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity));
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Water);
     }
 
@@ -67,8 +69,11 @@ public class WaterDisk : EnnemySpell
         if(!charged)
         {
             //Nothing to ad yet for the casting
-            waterDiskInstance.transform.position = summonerPosition.position;
-            if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber)
+            foreach (DiskManager d in allDisks)
+            {
+                d.transform.position = summonerPosition.position;
+            }
+            if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber - 1)
             {
                 allDisks.Add(Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity));
             }         
@@ -81,8 +86,14 @@ public class WaterDisk : EnnemySpell
 
     public override void Terminate()
     {
-        if (waterDiskInstance)
-            Destroy(waterDiskInstance.gameObject);
+        if (allDisks.Count > 0)
+        {
+            foreach(DiskManager d in allDisks)
+            {
+                Destroy(d.gameObject);
+            }
+        }
+            
         Destroy(gameObject);
 
     }
