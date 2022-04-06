@@ -1970,18 +1970,24 @@ PrefabInstance:
     - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
         type: 3}
       propertyPath: testCastType
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
         type: 3}
       propertyPath: spells.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
         type: 3}
       propertyPath: spells.Array.data[0]
       value: 
       objectReference: {fileID: 4106613200688171979, guid: 2ccd7c6a6ad614244873619279f5dca9,
+        type: 3}
+    - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
+        type: 3}
+      propertyPath: spells.Array.data[1]
+      value: 
+      objectReference: {fileID: 1704620592701577225, guid: 4cfcde45bffa1354289ecea67a7db7f6,
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1175bd8cca15ddf4db02900987081466, type: 3}
@@ -2177,6 +2183,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WaterDisk
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990041607735579248, guid: 4408418f655d3a74c8da3b953d8a3de0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1990041607735579252, guid: 4408418f655d3a74c8da3b953d8a3de0,
         type: 3}

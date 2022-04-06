@@ -6,7 +6,6 @@ public class WaterDisk : EnnemySpell
 {
     [Header("Casting stats")]
     [SerializeField] [Min(0)] int damagesGrowthPerSec;
-    [SerializeField] [Min(0)] int bounsNumber;
     [Header("behaviour stats")]
     [SerializeField] [Range(1, 4)] int baseDamages;
     [SerializeField] float speed;
@@ -55,23 +54,41 @@ public class WaterDisk : EnnemySpell
         if(!charged)
         {
             //Nothing to ad yet for the casting
+            waterDiskInstance.transform.position = summonerPosition.position;
+        }
+        else
+        {
+            Fly();
         }
     }
 
     public override void Terminate()
     {
-        throw new System.NotImplementedException();
+        if (waterDiskInstance)
+            Destroy(waterDiskInstance.gameObject);
+        Destroy(gameObject);
+
     }
 
     protected override void OnChargeEnd()
     {
-        throw new System.NotImplementedException();
-        //Trajectory calculation to do
+        if (customTarget)
+        {
+            trajectory = target - summonerPosition.position;
+        }
+        else
+        {
+            trajectory = DefaultTarget.position - summonerPosition.position;
+        }
+        trajectory.Normalize();
+        if (debug)
+            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
     }
 
     private void Fly()
     {
-
+        Vector3 velocity = trajectory * speed * Time.deltaTime;
+        waterDiskInstance.transform.Translate(velocity);
     }
 
     protected override void DealDamages(GameObject objectHitted)

@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1990041607735579252}
   - component: {fileID: 1990041607735579251}
   - component: {fileID: 1990041607735579250}
-  - component: {fileID: 1990041607735579249}
+  - component: {fileID: 648706664407870626}
+  - component: {fileID: 7949065683106968820}
   m_Layer: 0
   m_Name: WaterDisk
   m_TagString: Untagged
@@ -85,8 +86,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1990041607735579249
-SphereCollider:
+--- !u!65 &648706664407870626
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -96,8 +97,20 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 0.76855814, z: 1}
+  m_Center: {x: 0, y: -0.09807553, z: 0}
+--- !u!114 &7949065683106968820
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990041607735579248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fa02a161d2b79e4daade013f60c3aa7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8933789977385912038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -108,12 +121,12 @@ PrefabInstance:
     - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_shaderPropertyID
-      value: 1088
+      value: 1086
       objectReference: {fileID: 0}
     - target: {fileID: 160484399314501631, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
       propertyPath: m_materialData.Array.data[0].m_move
-      value: 0
+      value: 0.20229793
       objectReference: {fileID: 0}
     - target: {fileID: 3841384982787575142, guid: 8ca2cdb55dfa370408d80107d6193f08,
         type: 3}
