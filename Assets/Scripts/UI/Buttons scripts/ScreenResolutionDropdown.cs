@@ -3,19 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenModeDropdown : MonoBehaviour
+public class ScreenResolutionDropdown : DropdownHandler
 {
 
-    Dropdown dropDown;
-    List<string> options = new();
     Resolution[] resolutions;
     // Start is called before the first frame update
     void Awake()
     {
-        dropDown = GetComponent<Dropdown>();
-        dropDown.onValueChanged.AddListener(InputHandler);
         resolutions = Screen.resolutions;
-        dropDown.ClearOptions();
 		foreach (Resolution resolution in resolutions)
 		{
             options.Add(resolution.width + "x" + resolution.height);
@@ -24,8 +19,8 @@ public class ScreenModeDropdown : MonoBehaviour
     }
 
 
-    public void InputHandler(int val)
+    public override void InputHandler(int val)
     {
-        Screen.SetResolution(resolutions[val].width,resolutions[val].height,FullScreenMode.FullScreenWindow);
+        Screen.SetResolution(resolutions[val].width,resolutions[val].height,Screen.fullScreenMode);
 	}
 }

@@ -20,7 +20,8 @@ public class CanvasManager : MonoBehaviour
     private static CanvasManager _instance;
 
     public List<CanvasController> canvasControllerList;
-    CanvasController lastActiveCanvas;
+    CanvasController activeCanvas;
+    CanvasController previousCanvas;
 
     // Start is called before the first frame update
     void Awake()
@@ -34,26 +35,27 @@ public class CanvasManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void SwitchCanvas(CanvasType type)
     {
-        if (lastActiveCanvas != null)
+        if (activeCanvas != null)
         {
-            lastActiveCanvas.gameObject.SetActive(false);
+            activeCanvas.gameObject.SetActive(false);
+            previousCanvas = activeCanvas;
         }
 
         CanvasController nextCanvas = canvasControllerList.Find(x => x.canvasType == type);
         if (nextCanvas != null)
         {
             nextCanvas.gameObject.SetActive(true);
-            lastActiveCanvas = nextCanvas;
+            activeCanvas = nextCanvas;
         }
-		else
-		{
+        else
+        {
             Debug.LogWarning("Canvas not found!");
-		}
+        }
     }
 
     public static CanvasManager GetInstance()
@@ -64,4 +66,13 @@ public class CanvasManager : MonoBehaviour
         }
         return _instance;
     }
+
+    public CanvasController PreviousCanvas
+    {
+        get
+        {
+            return previousCanvas;
+        }
+    }
+        
 }
