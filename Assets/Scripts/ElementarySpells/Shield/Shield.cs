@@ -56,7 +56,8 @@ public class Shield : AbstractSpell
         // The player is slowed if his shield is activated
         if (!isReleased())
         {
-            player.GetComponent<PlayerMotionController>().isShielding = true;
+            player.GetComponent<PlayerMotionController>().Shielding = true;
+           // player.GetComponent<PlayerMotionController>().MaxSpeed = walkSpeedInShield;
         }
     }
 
@@ -92,7 +93,7 @@ public class Shield : AbstractSpell
 
     protected override void onChargeEnd(float chargetime)
     {
-        player.GetComponent<PlayerMotionController>().isShielding = false;
+        player.GetComponent<PlayerMotionController>().Shielding = false;
         //player.GetComponent<PlayerMotionController>().MaxSpeed = initialWalkSpeed;
         Terminate();
     }

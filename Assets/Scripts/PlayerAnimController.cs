@@ -88,7 +88,6 @@ public class PlayerAnimController : MonoBehaviour
             }
             else if (movingLeft)
             {
-                print(maxSpeedRatioX);
                 animator.SetFloat("VelocityX", Mathf.MoveTowards(animator.GetFloat("VelocityX"), -maxSpeedRatioX, -inputAxis.x * animSpeed * Time.deltaTime));
             }
             else if (!movingRight && !movingLeft)
@@ -98,8 +97,8 @@ public class PlayerAnimController : MonoBehaviour
             }
         }
 
-        animator.SetBool("Moving", playerMotionController.isMoving);
-        animator.SetBool("Grounded", playerMotionController.onGround);
+        animator.SetBool("Moving", playerMotionController.Moving);
+        animator.SetBool("Grounded", playerMotionController.Grounded);
         animator.SetBool("Jumping", playerMotionController.GetIsJumping());
         animator.SetBool("Falling", playerMotionController.GetIsFalling());
 

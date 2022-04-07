@@ -19,9 +19,11 @@ public class TrajectoryCalculator : MonoBehaviour
 	private float timeFlight;
 
 	Vector3 initialVelocity;
+	[HideInInspector] public LineRenderer lr;
 
 	public void Start()
 	{
+		lr = GetComponent<LineRenderer>();
 	}
 
 	/// <summary>
@@ -32,14 +34,14 @@ public class TrajectoryCalculator : MonoBehaviour
 		timeFlight = (-1f * (initialVelocity.y + transform.position.y)) / Physics.gravity.y;
 		timeFlight = length * timeFlight;
 		//Debug.Log(timeFlight);
-		GetComponent<LineRenderer>().positionCount = accuracy;
+		lr.positionCount = accuracy;
 		Vector3 trajectoryPoint;
 
-		for (int i = 0; i < GetComponent<LineRenderer>().positionCount; i++)
+		for (int i = 0; i < lr.positionCount; i++)
 		{
-			float time = timeFlight * i / (float)(GetComponent<LineRenderer>().positionCount);
+			float time = timeFlight * i / (float)(lr.positionCount);
 			trajectoryPoint = transform.position + initialVelocity * time + 0.5f * Physics.gravity * time * time;
-			GetComponent<LineRenderer>().SetPosition(i, trajectoryPoint);
+			lr.SetPosition(i, trajectoryPoint);
 			
 		}
 	}
@@ -72,7 +74,7 @@ public class TrajectoryCalculator : MonoBehaviour
 
 	public void DisplayTrajectory(bool active)
 	{
-		GetComponent<LineRenderer>().enabled = active;
+		lr.enabled = active;
 	}
 
 	public void SetInitialVelocity(Vector3 velocity)
