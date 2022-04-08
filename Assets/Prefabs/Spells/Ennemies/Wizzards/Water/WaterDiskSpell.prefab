@@ -52,7 +52,7 @@ MonoBehaviour:
   damagesGrowthPerSec: 1
   diskNumber: 3
   baseDamages: 1
-  speed: 11.17
+  speed: 4.9
   waterDiskReference: {fileID: 7949065683106968820, guid: 4408418f655d3a74c8da3b953d8a3de0,
     type: 3}
   diskDelayInSeconds: 2.2

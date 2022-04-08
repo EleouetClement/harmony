@@ -23,6 +23,9 @@ public class WaterDisk : EnnemySpell
     private Vector3 trajectory = Vector3.zero;
 
     private int diskCount;
+    private float startCoolDown = 0.0f;
+    private bool allLaunched = false;
+
     List<DiskManager> allDisks;
 
     private void Awake()
@@ -39,6 +42,20 @@ public class WaterDisk : EnnemySpell
     // Update is called once per frame
     void Update()
     {
+        if(currentCast.Equals(CastType.charge) && charged)
+        {
+            if(startCoolDown < diskDelayInSeconds)
+            {
+                startCoolDown += Time.deltaTime;
+            }
+            else
+            {
+                if(!allLaunched)
+                {
+                    StartDisks();
+                }
+            }
+        }
         foreach (DiskManager d in allDisks)
         {
             if (d.hitted)
@@ -67,12 +84,13 @@ public class WaterDisk : EnnemySpell
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if(!charged)
+        if(!charged || !allLaunched)
         {
             //Nothing to ad yet for the casting
             foreach (DiskManager d in allDisks)
             {
-                d.transform.position = summonerPosition.position;
+                if(!d.lauched)
+                    d.transform.position = summonerPosition.position;
             }
             if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber - 1)
             {
@@ -119,11 +137,13 @@ public class WaterDisk : EnnemySpell
     {
         Vector3 velocity = trajectory * speed * Time.deltaTime;
         //waterDiskInstance.transform.Translate(velocity);
+        int pouet = 0;
         foreach(DiskManager disk in allDisks)
         {
             if(disk.lauched)
             {
                 disk.transform.Translate(velocity);
+                Debug.Log(pouet++);
             }
             else
             {
@@ -141,9 +161,16 @@ public class WaterDisk : EnnemySpell
 
     private void StartDisks()
     {
-        if(diskCount < diskNumber)
+        
+        if(diskCount < allDisks.Count)
         {
-            allDisks[diskCount++].lauched = true;
+            Debug.Log("Launching a disk : " + diskCount);
+            allDisks[diskCount++].SetLaunch();
+            startCoolDown = 0.0f;
+        }
+        else
+        {
+            allLaunched = true;
         }
     }
 

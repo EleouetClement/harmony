@@ -1970,7 +1970,7 @@ PrefabInstance:
     - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
         type: 3}
       propertyPath: testCastType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9132346779084201942, guid: 1175bd8cca15ddf4db02900987081466,
         type: 3}
