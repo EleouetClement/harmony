@@ -22,6 +22,7 @@ public class WaterDisk : EnnemySpell
 
     private Vector3 trajectory = Vector3.zero;
 
+    private int diskCount;
     List<DiskManager> allDisks;
 
     private void Awake()
@@ -109,7 +110,7 @@ public class WaterDisk : EnnemySpell
             trajectory = DefaultTarget.position - summonerPosition.position;
         }
         trajectory.Normalize();
-        StartCoroutine(LaunchDisks());
+        StartDisks();
         if (debug)
             Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
     }
@@ -138,13 +139,12 @@ public class WaterDisk : EnnemySpell
 
     }
 
-    public IEnumerator LaunchDisks()
+    private void StartDisks()
     {
-        foreach(DiskManager disk in allDisks)
+        if(diskCount < diskNumber)
         {
-            disk.lauched = true;
-            Debug.Log("pouet");
-            yield return new WaitForSeconds(diskDelayInSeconds);
+            allDisks[diskCount++].lauched = true;
         }
     }
+
 }
