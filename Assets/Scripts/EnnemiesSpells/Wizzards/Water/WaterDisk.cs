@@ -121,7 +121,14 @@ public class WaterDisk : EnnemySpell
         foreach(DiskManager disk in allDisks)
         {
             if(disk.lauched)
+            {
                 disk.transform.Translate(velocity);
+            }
+            else
+            {
+                Debug.Log("Launched false");
+            }
+                
         }
     }
 
@@ -136,6 +143,7 @@ public class WaterDisk : EnnemySpell
         foreach(DiskManager disk in allDisks)
         {
             disk.lauched = true;
+            Debug.Log("pouet");
             yield return new WaitForSeconds(diskDelayInSeconds);
         }
     }
