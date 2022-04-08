@@ -50,10 +50,10 @@ MonoBehaviour:
   chargeCastDuration: 4
   target: {x: 0, y: 0, z: 0}
   damagesGrowthPerSec: 1
-  diskNumber: 3
+  diskNumber: 5
   baseDamages: 1
-  speed: 4.9
+  speed: 10.24
   waterDiskReference: {fileID: 7949065683106968820, guid: 4408418f655d3a74c8da3b953d8a3de0,
     type: 3}
-  diskDelayInSeconds: 2.2
+  diskDelayInSeconds: 0.5
   debug: 0

@@ -7,7 +7,9 @@ public class DiskManager : MonoBehaviour
     public bool hitted = false;
     public GameObject objectHitted { get; private set; }
 
-    public bool lauched { get;  private set; } = false;
+    public bool launched { get;  private set; } = false;
+
+    public Vector3 trajectory;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,7 +19,6 @@ public class DiskManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -31,6 +32,6 @@ public class DiskManager : MonoBehaviour
 
     public void SetLaunch()
     {
-        lauched = true;
+        launched = true;
     }
 }

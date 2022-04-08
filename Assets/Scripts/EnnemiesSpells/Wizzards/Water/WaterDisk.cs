@@ -84,22 +84,23 @@ public class WaterDisk : EnnemySpell
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-        if(!charged || !allLaunched)
-        {
-            //Nothing to ad yet for the casting
-            foreach (DiskManager d in allDisks)
-            {
-                if(!d.lauched)
-                    d.transform.position = summonerPosition.position;
-            }
-            if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber - 1)
+        if(!charged)
+        {          
+            if(currentCast.Equals(CastType.charge) && allDisks.Count < diskNumber)
             {
                 allDisks.Add(Instantiate(waterDiskReference, summonerPosition.position, Quaternion.identity));
             }         
         }
-        else
+        foreach (DiskManager d in allDisks)
         {
-            Fly();
+            if (d.launched)
+            {
+                Fly(d);
+            }
+            else
+            {
+                d.transform.position = summonerPosition.position;
+            }             
         }
     }
 
@@ -111,13 +112,19 @@ public class WaterDisk : EnnemySpell
             {
                 Destroy(d.gameObject);
             }
-        }
-            
+        }           
         Destroy(gameObject);
 
     }
 
     protected override void OnChargeEnd()
+    {
+        StartDisks();
+        if (debug)
+            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
+    }
+
+    private Vector3 CalculateTrajectory()
     {
         if (customTarget)
         {
@@ -128,35 +135,18 @@ public class WaterDisk : EnnemySpell
             trajectory = DefaultTarget.position - summonerPosition.position;
         }
         trajectory.Normalize();
-        StartDisks();
-        if (debug)
-            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
+        return trajectory;
     }
 
-    private void Fly()
+    private void Fly(DiskManager disk)
     {
-        Vector3 velocity = trajectory * speed * Time.deltaTime;
-        //waterDiskInstance.transform.Translate(velocity);
-        int pouet = 0;
-        foreach(DiskManager disk in allDisks)
-        {
-            if(disk.lauched)
-            {
-                disk.transform.Translate(velocity);
-                Debug.Log(pouet++);
-            }
-            else
-            {
-                Debug.Log("Launched false");
-            }
-                
-        }
+        Vector3 velocity = disk.trajectory * speed * Time.deltaTime;
+        disk.transform.Translate(velocity);
     }
 
     protected override void DealDamages(GameObject objectHitted)
     {
         base.DealDamages(objectHitted);
-
     }
 
     private void StartDisks()
@@ -164,8 +154,8 @@ public class WaterDisk : EnnemySpell
         
         if(diskCount < allDisks.Count)
         {
-            Debug.Log("Launching a disk : " + diskCount);
-            allDisks[diskCount++].SetLaunch();
+            allDisks[diskCount].SetLaunch();
+            allDisks[diskCount++].trajectory = CalculateTrajectory();
             startCoolDown = 0.0f;
         }
         else
