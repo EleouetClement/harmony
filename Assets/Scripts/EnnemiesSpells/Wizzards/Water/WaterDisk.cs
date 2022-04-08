@@ -120,8 +120,6 @@ public class WaterDisk : EnnemySpell
     protected override void OnChargeEnd()
     {
         StartDisks();
-        if (debug)
-            Debug.DrawRay(summonerPosition.position, trajectory * 200, Color.red, 10);
     }
 
     private Vector3 CalculateTrajectory()
