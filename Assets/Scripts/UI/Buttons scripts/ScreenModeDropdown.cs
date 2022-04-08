@@ -10,10 +10,10 @@ public class ScreenModeDropdown : DropdownHandler
 	new void Start()
     {
 		base.Start();
-		options.Add("Pleine écran exclusif");
-		options.Add("Pleine écran fenêtré");
-		options.Add("Fenêtré maximisé");
-		options.Add("Fenêtré");
+		options.Add("Pleine ï¿½cran exclusif");
+		options.Add("Pleine ï¿½cran fenï¿½trï¿½");
+		options.Add("Fenï¿½trï¿½ maximisï¿½");
+		options.Add("Fenï¿½trï¿½");
 		dropDown.AddOptions(options);
 		dropDown.value = (int)Screen.fullScreenMode;
 	}
