@@ -85,7 +85,6 @@ public abstract class EnnemySpell : MonoBehaviour
             }
             else
             {
-                Debug.Log("EnnemySpell : charge terminee");
                 charged = true;
                 OnChargeEnd();
             }

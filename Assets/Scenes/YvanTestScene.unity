@@ -739,6 +739,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9178465301757207433, guid: 66e927793e95d4b4a9f7c335345a9968,
         type: 3}
+      propertyPath: pointToLookAt
+      value: 
+      objectReference: {fileID: 434342749}
+    - target: {fileID: 9178465301757207433, guid: 66e927793e95d4b4a9f7c335345a9968,
+        type: 3}
       propertyPath: dialogues.Array.size
       value: 2
       objectReference: {fileID: 0}
@@ -811,6 +816,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 66e927793e95d4b4a9f7c335345a9968, type: 3}
+--- !u!4 &434342749 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 279816721, guid: 66e927793e95d4b4a9f7c335345a9968,
+    type: 3}
+  m_PrefabInstance: {fileID: 434342748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &437897396
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,23 +2663,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DialogueTrigger
       objectReference: {fileID: 0}
-    - target: {fileID: 9178465301757207433, guid: 66e927793e95d4b4a9f7c335345a9968,
-        type: 3}
-      propertyPath: dialogues.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 9178465301757207433, guid: 66e927793e95d4b4a9f7c335345a9968,
-        type: 3}
-      propertyPath: dialogues.Array.data[0]
-      value: 
-      objectReference: {fileID: 11400000, guid: 2bb1d477984bbc846832d223ad191f87,
-        type: 2}
-    - target: {fileID: 9178465301757207433, guid: 66e927793e95d4b4a9f7c335345a9968,
-        type: 3}
-      propertyPath: dialogues.Array.data[1]
-      value: 
-      objectReference: {fileID: 11400000, guid: cfeaae6818fcbd54bb56fb272edbf5f3,
-        type: 2}
     - target: {fileID: 9184719666217380253, guid: 66e927793e95d4b4a9f7c335345a9968,
         type: 3}
       propertyPath: m_RootOrder
@@ -2952,6 +2946,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3380090257329033580, guid: dc333b2dcea356d45ac400b657e28dae,
+        type: 3}
+      propertyPath: canBeClosedAgain
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3380090258070405502, guid: dc333b2dcea356d45ac400b657e28dae,
         type: 3}
       propertyPath: m_Name
