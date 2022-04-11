@@ -13,6 +13,9 @@ public class AsteroidSpell : EnnemySpell
     [Header("behaviour stats")]
     [SerializeField] [Range(1, 4)] int baseDamages;
     [SerializeField] float speed;
+    [SerializeField] float gravity = -18;
+    [SerializeField] float height = 25;
+
 
 
     [Header("Do not change")]
@@ -25,6 +28,8 @@ public class AsteroidSpell : EnnemySpell
     private AsteroidController rockInstance;
 
     private Vector3 trajectory = Vector3.zero;
+
+    private Rigidbody rockBody;
 
     private void Awake()
     {
@@ -44,5 +49,15 @@ public class AsteroidSpell : EnnemySpell
     protected override void OnChargeEnd()
     {
         throw new System.NotImplementedException();
+    }
+
+    Vector3 CalculateLaunchVelocity()
+    {
+        float displacementY = target.y - rockBody.position.y;
+        Vector3 displacementXZ = new Vector3(target.x - rockBody.position.x, 0, target.z - rockBody.position.z);
+
+        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
+        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity));
+        return velocityXZ + velocityY;
     }
 }
