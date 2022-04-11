@@ -19,7 +19,7 @@ public class AsteroidSpell : EnnemySpell
 
 
     [Header("Do not change")]
-    [SerializeField] EnnemiFireBall rockReference;
+    [SerializeField] AsteroidController rockReference;
     [SerializeField] bool debug = false;
     [SerializeField] float explosionradius;
     [SerializeField] LayerMask blastEffect;
@@ -41,6 +41,26 @@ public class AsteroidSpell : EnnemySpell
 
     }
 
+    public override void Charge(CastType chargeTime, Transform spellOrigin)
+    {
+        base.Charge(chargeTime, spellOrigin);
+        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
+        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
+    }
+
+    public override void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
+    {
+        base.Charge(chargeTime, spellOrigin, targetPosition);
+        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
+        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);       
+    }
+
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+    }
+
     public override void Terminate()
     {
         throw new System.NotImplementedException();
@@ -50,6 +70,8 @@ public class AsteroidSpell : EnnemySpell
     {
         throw new System.NotImplementedException();
     }
+
+
 
     Vector3 CalculateLaunchVelocity()
     {
