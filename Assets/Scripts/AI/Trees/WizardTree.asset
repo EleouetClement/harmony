@@ -48,53 +48,6 @@ MonoBehaviour:
   - {fileID: 173407461202169280}
   - {fileID: 6928311362922673510}
   abortOnFailure: 0
---- !u!114 &-8639514444526135124
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 706bd37e7faa47445a45445ba9864cf1, type: 3}
-  m_Name: CheckState
-  m_EditorClassIdentifier: 
-  state: 0
-  started: 0
-  guid: 6ed6d8861b8220943a8b7a2b331c4adc
-  position: {x: -239.68149, y: 1072}
-  blackboard:
-    states:
-    - Idle
-    - Chase
-    - Attack
-    - Dead
-    currentState: 
-    boolParameters:
-      keys: []
-      values: 
-    intParameters:
-      keys: []
-      values: 
-    floatParameters:
-      keys: []
-      values: []
-    vectorParameters:
-      keys:
-      - search
-      values:
-      - {x: 0, y: 0, z: 0}
-    transformParameters:
-      keys:
-      - target
-      values:
-      - {fileID: 0}
-  description: 
-  drawGizmos: 0
-  child: {fileID: -2089884371742793310}
-  aiState: Attack
-  isNot: 1
 --- !u!114 &-7981817562880161853
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,6 +286,7 @@ MonoBehaviour:
   - {fileID: -19661002133830139}
   - {fileID: 8806083092141736936}
   - {fileID: -692805531971096003}
+  - {fileID: 9116264616811719046}
 --- !u!114 &-911882838764309930
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -498,12 +452,12 @@ MonoBehaviour:
   - {fileID: 8806083092141736936}
   - {fileID: -2089884371742793310}
   - {fileID: -692805531971096003}
-  - {fileID: -8639514444526135124}
   - {fileID: -8770944735055934421}
   - {fileID: 173407461202169280}
   - {fileID: 8563186830812071934}
   - {fileID: -19661002133830139}
   - {fileID: -7981817562880161853}
+  - {fileID: 9116264616811719046}
   blackboard:
     states:
     - Idle
@@ -905,7 +859,7 @@ MonoBehaviour:
       - {fileID: 0}
   description: 
   drawGizmos: 0
-  child: {fileID: -8639514444526135124}
+  child: {fileID: -2089884371742793310}
   parameterName: target
   greaterThan: 0
   distance: 10
@@ -1000,3 +954,49 @@ MonoBehaviour:
   component: WizardAI
   method: Attack
   delay: 0
+--- !u!114 &9116264616811719046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 838faf4a403f66a459cc40b4f706f114
+  position: {x: 139.00005, y: 1362}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  durationMin: 2
+  durationMax: 2

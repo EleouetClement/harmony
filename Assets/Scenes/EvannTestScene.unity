@@ -1883,8 +1883,14 @@ PrefabInstance:
     - target: {fileID: 1006983962636285134, guid: cb5bcce19fb79454ab952fbf0316eba3,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2850964839927702125, guid: cb5bcce19fb79454ab952fbf0316eba3,
+        type: 3}
+      propertyPath: spell
+      value: 
+      objectReference: {fileID: 1704620592701577225, guid: 4cfcde45bffa1354289ecea67a7db7f6,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb5bcce19fb79454ab952fbf0316eba3, type: 3}
 --- !u!1001 &1026854366557113621
@@ -1953,6 +1959,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: StaticWizard
+      objectReference: {fileID: 0}
+    - target: {fileID: 8304886017924119566, guid: 2c4b0b4b421774c43bef597a22432cd4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c4b0b4b421774c43bef597a22432cd4, type: 3}
