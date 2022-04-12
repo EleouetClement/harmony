@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95ca6b47eb8498242a9e3f0271473674, type: 3}
+  m_Name: Group_Lore_1
+  m_EditorClassIdentifier: 
+  nameGroup: "Les Art\xE9facts\nQu'est-ce que c'est ?"
+  pages:
+  - {fileID: 11400000, guid: 8b4746f65c168a440a7ce638f2420d05, type: 2}
+  - {fileID: 11400000, guid: 5913c3de002200047aeb21540dfa4cc6, type: 2}
+  isUnlocked: 1

@@ -98,8 +98,8 @@ public class PlayerAnimController : MonoBehaviour
             }
         }
 
-        animator.SetBool("Moving", playerMotionController.isMoving);
-        animator.SetBool("Grounded", playerMotionController.onGround);
+        animator.SetBool("Moving", playerMotionController.Moving);
+        animator.SetBool("Grounded", playerMotionController.Grounded);
         animator.SetBool("Jumping", playerMotionController.GetIsJumping());
         animator.SetBool("Falling", playerMotionController.GetIsFalling());
 

@@ -11,6 +11,7 @@ public class EarthWall : AbstractSpell
         unvalid,
         noTarget,
     }
+    
     public GameObject PosMarkerPrefab;
     public GameObject earthPillar;
     public GameObject earthPlatform;
@@ -21,6 +22,7 @@ public class EarthWall : AbstractSpell
 
     private ElementaryController elementaryController;
     private CinemachineCameraController cinemachineCameraController;
+    private PlayerMotionController controller;
     private RaycastHit hit;
     private Vector3 lastMarkerPosition = Vector3.zero; // store the last position of the marker before aiming in the void
     private Vector3 lastMarkerNormal = Vector3.zero; // store the last normal of the hit point from the marker before aiming in the void
@@ -50,7 +52,8 @@ public class EarthWall : AbstractSpell
         
     }
 
-    public void LateUpdate()
+
+	public void LateUpdate()
     {
         if (!isReleased() && charge > quickCastTimer)
         {
@@ -95,7 +98,7 @@ public class EarthWall : AbstractSpell
         marker = tmp.GetComponent<PositionningMarker>();
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         elementaryController = elemRef.GetComponent<ElementaryController>();
-
+        controller = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>();
         // Allows to get collision with the raycast depending on the thresholds of the earth wall spell values
 
         groundMovingEffect.transform.position = marker.transform.position;
