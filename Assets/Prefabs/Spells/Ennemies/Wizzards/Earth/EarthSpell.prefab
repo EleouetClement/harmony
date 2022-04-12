@@ -52,12 +52,12 @@ MonoBehaviour:
   projectileAdditionnalScale: 0.0253
   damagesGrowthPerSec: 1
   baseDamages: 0
-  time: 1.79
-  rockReference: {fileID: 828241559685846073, guid: f2b77c95010448c41be29de5baa09979,
+  time: 0.62
+  rockReference: {fileID: 876292738921586109, guid: f2b77c95010448c41be29de5baa09979,
     type: 3}
   debug: 0
   explosionradius: 0
-  aimOffset: 2.99
+  aimOffset: 0
   blastEffect:
     serializedVersion: 2
     m_Bits: 0
