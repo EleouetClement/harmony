@@ -2,9 +2,12 @@ using UnityEngine.UI;
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
+using UnityEngine.InputSystem;
 
 public class InventoryManager : MonoBehaviour
 {
+    public GameObject inventoryMenu;
+
     private int currentIndexMenu = 0;
     private int money { get; set; } = 0;
 
@@ -19,6 +22,8 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private GameObject contentPagesTips;
     [SerializeField] private List<PageGroup> listGroupPagesTips;
     private List<Button> listButtonsPagesTips;
+
+    private bool isInventoryActive;
 
     public static InventoryManager instance;
 
@@ -80,7 +85,8 @@ public class InventoryManager : MonoBehaviour
             Debug.LogError("Size of -List Group Pages Tips- is different from size of -Content Pages Tips- in InventoryManager");
         }
 
-
+        //CloseInventory();
+        OpenJournalTab();
 
 
     }
@@ -93,7 +99,10 @@ public class InventoryManager : MonoBehaviour
 
     public void OpenInventory()
     {
-
+        Time.timeScale = 0f;
+        inventoryMenu.SetActive(true);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
     public void OpenJournalTab()
@@ -108,8 +117,11 @@ public class InventoryManager : MonoBehaviour
         contentPagesTips.SetActive(true);
     }
 
-    public void ExitInventory()
+    public void CloseInventory()
     {
-
+        inventoryMenu.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }

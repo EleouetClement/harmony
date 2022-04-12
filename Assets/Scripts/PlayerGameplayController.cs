@@ -37,8 +37,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     public bool InFight { get; private set; } = false;
     private void Awake()
     {
-        //Cursor.visible = false;
-        //Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         InitializeElementary();
     }
 
@@ -244,6 +244,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private void OnAim(InputValue value)
     {
         elementaryController.isAiming = value.isPressed;
+    }
+
+    private void OnInventory(InputValue value)
+    {
+        InventoryManager.instance.OpenInventory();
     }
 
     private void OnSwitchPlayMode(InputValue value)
