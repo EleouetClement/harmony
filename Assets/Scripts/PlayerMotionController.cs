@@ -391,25 +391,6 @@ public class PlayerMotionController : MonoBehaviour
         }
     }
 
-    
-
-    //void OnDrawGizmosSelected()
-    //{
-    //    if (debug && Application.isPlaying)
-    //    {
-    //        Vector3 end = transform.position + Vector3.down * (controller.height / 2 + groundMaxDistance - controller.radius);
-
-    //        Gizmos.color = Color.white;
-    //        Gizmos.DrawWireSphere(transform.position, controller.radius * groundTestRadiusFactor);
-
-    //        Gizmos.color = Color.gray;
-    //        Gizmos.DrawWireSphere(end, controller.radius * groundTestRadiusFactor);
-
-    //        Gizmos.DrawLine(transform.position, end);
-
-    //    }
-    //}
-
     private Vector3 GetDirection()
     {
         forwardDirection = inputAxis.y * cinemachineCamera.GetViewForward;

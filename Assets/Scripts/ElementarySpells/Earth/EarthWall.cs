@@ -111,22 +111,30 @@ public class EarthWall : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         PositionningMarker pouet = (PositionningMarker)marker;
+        PlayerMotionController motionControl = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>();
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects)
-        if(chargetime < quickCastTimer)
+        if (chargetime < quickCastTimer)
         {
-            lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
-            if (GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>().velocity.magnitude > 0.1)
+            if(motionControl.onGround)
             {
-                //Offset creation to spawn pillar in front of the player and not below it
-                Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
-                offset += new Vector3(0, 0, quickPillarOffset);
-                lastMarkerPosition += offset;
+                lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
+                if (motionControl.velocity.magnitude > 0.1)
+                {
+                    //Offset creation to spawn pillar in front of the player and not below it
+                    Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
+                    offset += new Vector3(0, 0, quickPillarOffset);
+                    lastMarkerPosition += offset;
+                }
+                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+                v.y = 0f;
+                v.Normalize();
+                Quaternion rot = Quaternion.LookRotation(v);
+                Instantiate(earthPillar, lastMarkerPosition, rot);
             }
-            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-            v.y = 0f;
-            v.Normalize();
-            Quaternion rot = Quaternion.LookRotation(v);
-            Instantiate(earthPillar, lastMarkerPosition, rot);
+            else
+            {
+                GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerGameplayController>().OnManaRegain(damagesInfos.manaCost);
+            }
         }
         else if(currentStatus != Status.noTarget)
         {
