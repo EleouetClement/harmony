@@ -122,7 +122,7 @@ public class EarthWall : AbstractSpell
             if(motionControl.onGround)
             {
                 lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
-                if (/*motionControl.velocity.magnitude > 0.1*/ motionControl.isMoving)
+                if (motionControl.isMoving)
                 {
                     //Offset creation to spawn pillar in front of the player and not below it
                     Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
