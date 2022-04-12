@@ -24,7 +24,7 @@ public class AsteroidSpell : EnnemySpell
     [SerializeField] LayerMask blastCheck;
 
     private AsteroidController rockInstance;
-    private GameObject rockChild;
+    private GameObject rock;
 
     private Vector3 launchVelocity = Vector3.zero;
 
