@@ -12,9 +12,7 @@ public class AsteroidSpell : EnnemySpell
     //should be counted in number of hits according to the player health system
     [Header("behaviour stats")]
     [SerializeField] [Range(1, 4)] int baseDamages;
-    [SerializeField] float speed;
-    [SerializeField] float gravity = -18;
-    [SerializeField] float height = 25;
+    [SerializeField] [Min(0)] float time = 1;
 
 
 
@@ -27,9 +25,11 @@ public class AsteroidSpell : EnnemySpell
 
     private AsteroidController rockInstance;
 
-    private Vector3 trajectory = Vector3.zero;
+    private Vector3 launchVelocity = Vector3.zero;
 
     private Rigidbody rockBody;
+
+    TrajectoryCalculator pouet;
 
     private void Awake()
     {
@@ -38,6 +38,7 @@ public class AsteroidSpell : EnnemySpell
             Debug.LogError("Ennemy earth Spell : no rock reference, spell cannot launch");
             Destroy(gameObject);
         }
+        pouet = new TrajectoryCalculator();
 
     }
 
@@ -57,7 +58,7 @@ public class AsteroidSpell : EnnemySpell
     {
         rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
-        rockBody = rockInstance.GetComponent<Rigidbody>();
+        rockBody = rockInstance.GetComponentInChildren<Rigidbody>();
         rockBody.useGravity = false;
         if (currentCast.Equals(CastType.charge))
             projectileGrowthPerSec = projectileAdditionnalScale / CastObjective;
@@ -80,6 +81,12 @@ public class AsteroidSpell : EnnemySpell
             rockInstance.transform.position = summonerPosition.position;
             rockInstance.transform.localScale += new Vector3(projectileGrowthPerSec, projectileGrowthPerSec, projectileGrowthPerSec);
             damagesDeal.damage += damagesGrowthPerSec;
+            launchVelocity = pouet.CalculateVelocity(summonerPosition.position, DefaultTarget.position, time);
+            rockInstance.transform.rotation = Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5);
+        }
+        else
+        {
+            rockInstance.transform.rotation = Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(rockBody.velocity.normalized), Time.deltaTime * 5);
         }
     }
 
@@ -92,7 +99,9 @@ public class AsteroidSpell : EnnemySpell
 
     protected override void OnChargeEnd()
     {
-        rockBody.velocity = CalculateLaunchVelocity();
+        
+        //rockBody.velocity = CalculateLaunchVelocity(DefaultTarget.position) * speed;
+        rockBody.velocity = pouet.CalculateVelocity(summonerPosition.position, DefaultTarget.position, time);
         rockBody.useGravity = true;
     }
 
@@ -100,15 +109,5 @@ public class AsteroidSpell : EnnemySpell
     {
         base.DealDamages(objectHitted);
         Terminate();
-    }
-
-    Vector3 CalculateLaunchVelocity()
-    {
-        float displacementY = target.y - rockBody.position.y;
-        Vector3 displacementXZ = new Vector3(target.x - rockBody.position.x, 0, target.z - rockBody.position.z);
-
-        Vector3 velocityY = Vector3.up * Mathf.Sqrt(-2 * gravity * height);
-        Vector3 velocityXZ = displacementXZ / (Mathf.Sqrt(-2 * height / gravity) + Mathf.Sqrt(2 * (displacementY - height) / gravity));
-        return velocityXZ + velocityY;
     }
 }
