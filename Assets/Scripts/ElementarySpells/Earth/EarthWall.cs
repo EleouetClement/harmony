@@ -37,7 +37,7 @@ public class EarthWall : AbstractSpell
     [SerializeField] float quickPillarOffset;
     private Status newStatus = Status.noTarget;
     private Status currentStatus = Status.noTarget;
-
+    private bool manaBurned = false;
 
 
     private void Awake()
@@ -54,6 +54,7 @@ public class EarthWall : AbstractSpell
     {
         if (!isReleased() && charge > quickCastTimer)
         {
+            BurnMana();
             marker.DisplayTarget(cinemachineCameraController.GetViewDirection, cinemachineCameraController.transform.position);                       
             marker.transform.LookAt(cinemachineCameraController.transform);
 
@@ -86,7 +87,10 @@ public class EarthWall : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        base.init(elemRef, target);
+        //base.init(elemRef, target);
+        this.target = target;
+        elementary = elemRef;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
@@ -130,10 +134,7 @@ public class EarthWall : AbstractSpell
                 v.Normalize();
                 Quaternion rot = Quaternion.LookRotation(v);
                 Instantiate(earthPillar, lastMarkerPosition, rot);
-            }
-            else
-            {
-                GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerGameplayController>().OnManaRegain(damagesInfos.manaCost);
+                BurnMana();
             }
         }
         else if(currentStatus != Status.noTarget)
@@ -163,7 +164,20 @@ public class EarthWall : AbstractSpell
         Terminate();
     }
 
-    
+    private void BurnMana()
+    {
+        if(!manaBurned)
+        {
+            PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+            if (player)
+            {
+                player.OnManaSpend(GetManaCost());
+            }
+            manaBurned = true;
+        }
+        
+    }
+
     private void Previsualization(RaycastHit hit)
     {
 
