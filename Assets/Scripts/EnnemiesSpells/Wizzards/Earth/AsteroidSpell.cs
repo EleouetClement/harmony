@@ -44,34 +44,63 @@ public class AsteroidSpell : EnnemySpell
     public override void Charge(CastType chargeTime, Transform spellOrigin)
     {
         base.Charge(chargeTime, spellOrigin);
-        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
-        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
+        Setup();
     }
 
     public override void Charge(CastType chargeTime, Transform spellOrigin, Vector3 targetPosition)
     {
         base.Charge(chargeTime, spellOrigin, targetPosition);
+        Setup();
+    }
+
+    private void Setup()
+    {
         rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
-        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);       
+        damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
+        rockBody = rockInstance.GetComponent<Rigidbody>();
+        rockBody.useGravity = false;
+        if (currentCast.Equals(CastType.charge))
+            projectileGrowthPerSec = projectileAdditionnalScale / CastObjective;
+
+    }
+
+    private void Update()
+    {
+        if(rockInstance.hitted)
+        {
+            DealDamages(rockInstance.objectHitted);
+        }
     }
 
     protected override void FixedUpdate()
     {
         base.FixedUpdate();
-
+        if(!charged)
+        {
+            rockInstance.transform.position = summonerPosition.position;
+            rockInstance.transform.localScale += new Vector3(projectileGrowthPerSec, projectileGrowthPerSec, projectileGrowthPerSec);
+            damagesDeal.damage += damagesGrowthPerSec;
+        }
     }
 
     public override void Terminate()
     {
-        throw new System.NotImplementedException();
+        if (rockInstance.gameObject)
+            Destroy(rockInstance.gameObject);
+        Destroy(gameObject);
     }
 
     protected override void OnChargeEnd()
     {
-        throw new System.NotImplementedException();
+        rockBody.velocity = CalculateLaunchVelocity();
+        rockBody.useGravity = true;
     }
 
-
+    protected override void DealDamages(GameObject objectHitted)
+    {
+        base.DealDamages(objectHitted);
+        Terminate();
+    }
 
     Vector3 CalculateLaunchVelocity()
     {
