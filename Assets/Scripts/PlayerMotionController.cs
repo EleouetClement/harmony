@@ -65,13 +65,13 @@ public class PlayerMotionController : MonoBehaviour
     private Vector3 rightDirection;
     private Vector2 inputAxis;
     private Vector3 velocity;
-    private bool onGround;
+    public bool onGround;
     private float floorAngle;
     private RaycastHit surfaceInfo;
     private RaycastHit slopeInfo;
     private Transform groundTranform;
     private Vector3 lastGroundPos;
-    private bool isMoving = false;
+    public bool isMoving = false;
     private bool isDodging = false;
     private bool isFalling = false;
     private bool isJumping = false;
