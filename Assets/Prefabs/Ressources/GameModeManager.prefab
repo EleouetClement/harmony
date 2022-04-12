@@ -44,13 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b23f17d204236084bb1fca63db636f58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerReference: {fileID: 6677204177286177703, guid: 6bb18bdb3babd9b43b1b7f446398f301,
-    type: 3}
-  playerMesh: {fileID: 0}
-  elementaryReference: {fileID: 824288169518036289, guid: bf9e1cab28c7fd34880611e7bbc7efc6,
-    type: 3}
-  playerCameraReference: {fileID: 0}
-  playerHUD: {fileID: 3944452313615605064, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
-    type: 3}
+  playerReference: {fileID: 0}
+  elementaryReference: {fileID: 0}
+  playerHUD: {fileID: 0}
   playerCrossAir: {fileID: 0}
   cinemachineCameraControl: {fileID: 0}
+  blackScreen: {fileID: 0}
+  debug: 0

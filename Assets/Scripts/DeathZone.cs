@@ -3,19 +3,24 @@ using UnityEngine;
 public class DeathZone : MonoBehaviour
 {
     private Transform playerSpawn;
+    public GameObject player;
 
     private void Awake()
     {
         playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerEnter(Collider collider)
     {
-        Debug.Log("TRIGGERRRRRRRRRRRRRR");
-        if(collision.CompareTag("Player"))
+        if(collider.gameObject.layer == HarmonyLayers.LAYER_PLAYER)
         {
             Debug.Log("TRIGGERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR");
-            collision.transform.position = playerSpawn.position;
+            //GameObject.FindGameObjectWithTag("Player").transform.position = transform.position;
+            //GameModeSingleton.GetInstance().GetPlayerReference.transform.position = playerSpawn.position;
+            //GameObject.FindGameObjectWithTag("Player").transform.position = playerSpawn.position;
+            //collider.transform.position = playerSpawn.position;
+            //player.transform.position = playerSpawn.position;
+            //collider.transform.Translate(playerSpawn.position);
         }
     }
 }
