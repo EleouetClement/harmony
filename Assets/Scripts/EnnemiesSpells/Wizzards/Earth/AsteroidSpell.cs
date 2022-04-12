@@ -20,6 +20,7 @@ public class AsteroidSpell : EnnemySpell
     [SerializeField] GameObject rockReference;
     [SerializeField] bool debug = false;
     [SerializeField] float explosionradius;
+    [SerializeField] float aimOffset = 1;
     [SerializeField] LayerMask blastEffect;
     [SerializeField] LayerMask blastCheck;
 
@@ -57,7 +58,8 @@ public class AsteroidSpell : EnnemySpell
 
     private void Setup()
     {
-        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity).GetComponentInChildren<AsteroidController>();
+        rock = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
+        rockInstance = rock.GetComponentInChildren<AsteroidController>();
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
         rockBody = rockInstance.GetComponentInChildren<Rigidbody>();
         rockBody.useGravity = false;
@@ -84,12 +86,12 @@ public class AsteroidSpell : EnnemySpell
             damagesDeal.damage += damagesGrowthPerSec;
             
             launchVelocity = pouet.CalculateVelocity(summonerPosition.position, DefaultTarget.position, time);
-            Debug.Log(rockInstance.gameObject.name + " : " + Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5));
-            rockInstance.transform.rotation = Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5);
+            //Debug.Log(rock.name + " : " + Quaternion.Slerp(rock.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5));
+            rock.transform.rotation = Quaternion.Slerp(rock.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5);
         }
         else
         {
-            rockInstance.transform.rotation = Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(rockBody.velocity.normalized), Time.deltaTime * 5);
+            rock.transform.rotation = Quaternion.Slerp(rock.transform.rotation, Quaternion.LookRotation(rockBody.velocity.normalized), Time.deltaTime * 5);
         }
     }
 
@@ -102,9 +104,9 @@ public class AsteroidSpell : EnnemySpell
 
     protected override void OnChargeEnd()
     {
-        
-        //rockBody.velocity = CalculateLaunchVelocity(DefaultTarget.position) * speed;
+        Vector3 tempTarget = DefaultTarget.position + new Vector3(0, aimOffset, 0);
         rockBody.velocity = pouet.CalculateVelocity(summonerPosition.position, DefaultTarget.position, time);
+        //rockBody.velocity = pouet.CalculateVelocity(summonerPosition.position, tempTarget, time);
         rockBody.useGravity = true;
     }
 
