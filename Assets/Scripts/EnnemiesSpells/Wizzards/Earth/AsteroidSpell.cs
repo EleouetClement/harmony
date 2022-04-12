@@ -17,13 +17,14 @@ public class AsteroidSpell : EnnemySpell
 
 
     [Header("Do not change")]
-    [SerializeField] AsteroidController rockReference;
+    [SerializeField] GameObject rockReference;
     [SerializeField] bool debug = false;
     [SerializeField] float explosionradius;
     [SerializeField] LayerMask blastEffect;
     [SerializeField] LayerMask blastCheck;
 
     private AsteroidController rockInstance;
+    private GameObject rockChild;
 
     private Vector3 launchVelocity = Vector3.zero;
 
@@ -56,7 +57,7 @@ public class AsteroidSpell : EnnemySpell
 
     private void Setup()
     {
-        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity);
+        rockInstance = Instantiate(rockReference, summonerPosition.position, Quaternion.identity).GetComponentInChildren<AsteroidController>();
         damagesDeal = new DamageHit(baseDamages, AbstractSpell.Element.Earth);
         rockBody = rockInstance.GetComponentInChildren<Rigidbody>();
         rockBody.useGravity = false;
@@ -81,7 +82,9 @@ public class AsteroidSpell : EnnemySpell
             rockInstance.transform.position = summonerPosition.position;
             rockInstance.transform.localScale += new Vector3(projectileGrowthPerSec, projectileGrowthPerSec, projectileGrowthPerSec);
             damagesDeal.damage += damagesGrowthPerSec;
+            
             launchVelocity = pouet.CalculateVelocity(summonerPosition.position, DefaultTarget.position, time);
+            Debug.Log(rockInstance.gameObject.name + " : " + Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5));
             rockInstance.transform.rotation = Quaternion.Slerp(rockInstance.transform.rotation, Quaternion.LookRotation(launchVelocity), Time.deltaTime * 5);
         }
         else

@@ -53,7 +53,7 @@ MonoBehaviour:
   damagesGrowthPerSec: 1
   baseDamages: 0
   time: 1
-  rockReference: {fileID: 4669968430050569895, guid: f2b77c95010448c41be29de5baa09979,
+  rockReference: {fileID: 828241559685846073, guid: f2b77c95010448c41be29de5baa09979,
     type: 3}
   debug: 0
   explosionradius: 0

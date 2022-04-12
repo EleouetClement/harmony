@@ -10,6 +10,10 @@ public class AsteroidController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        
+        if(!hitted)
+        {
+            hitted = true;
+            objectHitted = collision.gameObject;
+        }
     }
 }
