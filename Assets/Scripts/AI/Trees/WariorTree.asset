@@ -876,7 +876,7 @@ MonoBehaviour:
   state: 0
   started: 0
   guid: 99855d96364f2784b8e2e85acc52103e
-  position: {x: -249.6815, y: 948}
+  position: {x: -250.4999, y: 947}
   blackboard:
     states:
     - Idle
@@ -908,7 +908,7 @@ MonoBehaviour:
   child: {fileID: -8639514444526135124}
   parameterName: target
   greaterThan: 0
-  distance: 2.5
+  distance: 2
 --- !u!114 &8563186830812071934
 MonoBehaviour:
   m_ObjectHideFlags: 0
