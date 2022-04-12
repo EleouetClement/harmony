@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class AsteroidController : MonoBehaviour
 {
+    [SerializeField] private GameObject BigHugeMassiveExplosionOfTheDeath;
+
     public bool hitted { get; private set; } = false;
 
     public GameObject objectHitted { get; private set; }
@@ -14,6 +16,7 @@ public class AsteroidController : MonoBehaviour
         {
             hitted = true;
             objectHitted = collision.gameObject;
+            Instantiate(BigHugeMassiveExplosionOfTheDeath, transform.position, Quaternion.identity);
         }
     }
 }

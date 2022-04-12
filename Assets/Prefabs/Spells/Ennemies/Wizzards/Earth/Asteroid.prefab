@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fabc239eb6e20e34aa4cd3c6101d19f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  BigHugeMassiveExplosionOfTheDeath: {fileID: 1025285306637258, guid: 4e3607e8004c52d4188a02f238cbb5b0,
+    type: 3}
 --- !u!54 &363912724781574005
 Rigidbody:
   m_ObjectHideFlags: 0

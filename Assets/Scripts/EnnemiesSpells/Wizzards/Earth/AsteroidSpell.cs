@@ -20,7 +20,6 @@ public class AsteroidSpell : EnnemySpell
     [SerializeField] AsteroidController rockReference;
     [SerializeField] bool debug = false;
     [SerializeField] float explosionradius;
-    [SerializeField] float aimOffset = 1;
     [SerializeField] LayerMask blastEffect;
     [SerializeField] LayerMask blastCheck;
 
