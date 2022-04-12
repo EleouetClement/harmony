@@ -39,7 +39,7 @@ public class EarthWall : AbstractSpell
     [SerializeField] float quickPillarOffset;
     private Status newStatus = Status.noTarget;
     private Status currentStatus = Status.noTarget;
-
+    private bool manaBurned = false;
 
 
     private void Awake()
@@ -57,6 +57,7 @@ public class EarthWall : AbstractSpell
     {
         if (!isReleased() && charge > quickCastTimer)
         {
+            BurnMana();
             marker.DisplayTarget(cinemachineCameraController.GetViewDirection, cinemachineCameraController.transform.position);                       
             marker.transform.LookAt(cinemachineCameraController.transform);
 
@@ -89,7 +90,10 @@ public class EarthWall : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        base.init(elemRef, target);
+        //base.init(elemRef, target);
+        this.target = target;
+        elementary = elemRef;
+        playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
         GameObject tmp = Instantiate(PosMarkerPrefab, Vector3.zero, Quaternion.identity);
         marker = tmp.GetComponent<PositionningMarker>();
         cinemachineCameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
@@ -114,22 +118,27 @@ public class EarthWall : AbstractSpell
     protected override void onChargeEnd(float chargetime)
     {
         PositionningMarker pouet = (PositionningMarker)marker;
+        PlayerMotionController motionControl = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>();
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects)
-        if(chargetime < quickCastTimer)
+        if (chargetime < quickCastTimer)
         {
-            lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
-            if (controller.Velocity.magnitude > 0.1)
+            if(motionControl.onGround)
             {
-                //Offset creation to spawn pillar in front of the player and not below it
-                Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
-                offset += new Vector3(0, 0, quickPillarOffset);
-                lastMarkerPosition += offset;
+                lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
+                if (motionControl.isMoving)
+                {
+                    //Offset creation to spawn pillar in front of the player and not below it
+                    Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
+                    offset += new Vector3(0, 0, quickPillarOffset);
+                    lastMarkerPosition += offset;
+                }
+                Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
+                v.y = 0f;
+                v.Normalize();
+                Quaternion rot = Quaternion.LookRotation(v);
+                Instantiate(earthPillar, lastMarkerPosition, rot);
+                BurnMana();
             }
-            Vector3 v = cinemachineCameraController.transform.position - lastMarkerPosition;
-            v.y = 0f;
-            v.Normalize();
-            Quaternion rot = Quaternion.LookRotation(v);
-            Instantiate(earthPillar, lastMarkerPosition, rot);
         }
         else if(currentStatus != Status.noTarget)
         {
@@ -158,7 +167,20 @@ public class EarthWall : AbstractSpell
         Terminate();
     }
 
-    
+    private void BurnMana()
+    {
+        if(!manaBurned)
+        {
+            PlayerGameplayController player = GameModeSingleton.GetInstance()?.GetPlayerReference?.GetComponent<PlayerGameplayController>();
+            if (player)
+            {
+                player.OnManaSpend(GetManaCost());
+            }
+            manaBurned = true;
+        }
+        
+    }
+
     private void Previsualization(RaycastHit hit)
     {
 

@@ -74,7 +74,7 @@ public abstract class AbstractSpell : MonoBehaviour
 
     private bool chargeend = false;
 
-    private Transform playerMesh;
+    protected Transform playerMesh;
 
     protected DamageHit damages;
 
