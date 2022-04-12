@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// Gamemode controller that contains usefull references
@@ -9,7 +9,7 @@ using UnityEngine;
 public class GameModeSingleton : MonoBehaviour
 {
     [SerializeField] private GameObject playerReference;
-    
+
     private Transform playerMesh;
     [SerializeField] private GameObject elementaryReference;
     /// <summary>
@@ -20,6 +20,8 @@ public class GameModeSingleton : MonoBehaviour
     [SerializeField] private GameObject playerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
 
+    public CanvasGroup blackScreen;
+
     public bool debug = false;
 
     /// <summary>
@@ -28,11 +30,28 @@ public class GameModeSingleton : MonoBehaviour
     public bool InFight { get; private set; } = false;
 
     private static GameModeSingleton _instance;
+    private float _elapsedTime;
+    private bool _fade_start;
+
+    public bool FadeStart
+    {
+        get  
+        {
+			return _fade_start;
+        }
+        set
+        {
+            _fade_start = value;
+        }
+    }
 
     private GameModeSingleton() { }
 
     private void Awake()
     {
+        _elapsedTime = 0f;
+        _fade_start = false;
+
         //Debug.Log("Initialisation du singleton");
         if (playerReference == null)
             playerReference = GameObject.Find("Player");
@@ -59,7 +78,21 @@ public class GameModeSingleton : MonoBehaviour
         _instance = this;
     }
 
-    public static GameModeSingleton GetInstance()
+	private void Update()
+	{
+        if (_elapsedTime < 1f && _fade_start)
+        {
+            _elapsedTime += Time.deltaTime;
+            _elapsedTime = Mathf.Clamp(_elapsedTime, 0f, 1f);
+            blackScreen.alpha = 1f - (_elapsedTime / 1f);
+        }
+		else
+		{
+            playerReference.GetComponent<PlayerInput>().enabled = true;
+		}
+	}
+
+	public static GameModeSingleton GetInstance()
     {
         if(_instance == null)
         {

@@ -246,6 +246,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         elementaryController.isAiming = value.isPressed;
     }
 
+    private void OnInventory(InputValue value)
+    {
+        InventoryManager.instance.OpenInventory();
+    }
+
     private void OnSwitchPlayMode(InputValue value)
     {
         elementaryController.inCombat = !elementaryController.inCombat;

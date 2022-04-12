@@ -10,6 +10,7 @@ TagManager:
   - WaterBeam
   - Wheel
   - FallingTree
+  - PlayerSpawn
   layers:
   - Default
   - TransparentFX
