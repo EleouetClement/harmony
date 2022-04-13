@@ -27,6 +27,12 @@ public class MoneyTaker : MonoBehaviour
     private void ShutUpAndTakeMyMoney()
     {
         InventoryManager.instance.AddMoney(value);
+        PlayPickupSound();
         Destroy(gameObject);
+    }
+
+    private void PlayPickupSound()
+    {
+        //TO DO...
     }
 }
