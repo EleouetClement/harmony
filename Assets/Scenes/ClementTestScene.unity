@@ -257,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 1757258288035369256, guid: 8c6320fb29891fb439e357423f376072,
         type: 3}
       propertyPath: manaIncreaseAmount
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2278079131765673264, guid: 8c6320fb29891fb439e357423f376072,
         type: 3}
@@ -3317,6 +3317,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 67801059, guid: e802db13bf4c2544d8f2fdd1a7ea10f6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 520529578, guid: e802db13bf4c2544d8f2fdd1a7ea10f6, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 

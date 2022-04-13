@@ -88,9 +88,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             if (mana >= maxMana) manaburnout = false;
         }
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
-        #endregion
-
-       
+        #endregion      
     }
 
     // Update is called once per frame
@@ -288,6 +286,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
     }
 
+    #region Health management
     /// <returns>A representation of the player current recovery in health value, between 0f and 1f</returns>
     public float getDisplayHP()
     {
@@ -310,7 +309,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         //DEAD SCENE TO LOAD...
     }
-
+    #endregion
+    #region mana management
     /// <summary>
     /// Event called when the player spends mana
     /// </summary>
@@ -342,5 +342,5 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         maxMana += amount;
     }
-
+    #endregion
 }
