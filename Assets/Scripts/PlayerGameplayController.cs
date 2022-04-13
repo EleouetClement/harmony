@@ -327,13 +327,20 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="m"></param>
     public void OnManaRegain(float m)
     {
-        mana = (mana + m > maxMana) ? mana : mana + m;
-
-        
+        mana = (mana + m > maxMana) ? mana : mana + m;       
     }
 
     public float getDisplayMana() {
         return 1 - (mana / maxMana);
+    }
+
+    /// <summary>
+    /// Add the amount givent to the maximum mana the player can use
+    /// </summary>
+    /// <param name="amount"></param>
+    public void IncreaseMana(int amount)
+    {
+        maxMana += amount;
     }
 
 }
