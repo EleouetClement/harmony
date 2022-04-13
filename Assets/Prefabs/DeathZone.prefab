@@ -59,3 +59,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeScreen: {fileID: 0}
+  fadeInTime: 0.5
+  fadeOutTime: 2

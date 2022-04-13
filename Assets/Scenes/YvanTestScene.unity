@@ -3046,9 +3046,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2456664140805321671, guid: 4ad7ceebe2eba2f498324535b349ab6d,
         type: 3}
+      propertyPath: fadeInTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2456664140805321671, guid: 4ad7ceebe2eba2f498324535b349ab6d,
+        type: 3}
       propertyPath: fadeScreen
       value: 
       objectReference: {fileID: 937853593}
+    - target: {fileID: 2456664140805321671, guid: 4ad7ceebe2eba2f498324535b349ab6d,
+        type: 3}
+      propertyPath: fadeOutTime
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ad7ceebe2eba2f498324535b349ab6d, type: 3}
 --- !u!1001 &3341974440767138101
