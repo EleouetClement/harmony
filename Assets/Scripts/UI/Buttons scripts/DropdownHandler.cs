@@ -17,4 +17,12 @@ public abstract class DropdownHandler : MonoBehaviour
 	}
 
 	public abstract void InputHandler(int val);
+
+	public Dropdown Dropdown
+	{
+		get
+		{
+			return dropDown;
+		}
+	}
 }
