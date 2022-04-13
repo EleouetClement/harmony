@@ -12,9 +12,22 @@ public class Book : MonoBehaviour
     [SerializeField] [Min(0)] int index = 0;
     [SerializeField] PageType type = PageType.Journal;
     private bool triggered = false;
-    private 
+    private GameObject button;
+    private Transform playersTransform;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        if(transform.childCount > 0)
+        {
+            button = transform.GetChild(0).gameObject;
+            button.SetActive(false);
+            transform.LookAt(playersTransform);
+        }
+        else
+        {
+            Debug.LogError("Book : No children for book, canvas must be missing");
+        }
+    }
     void Start()
     {
         
@@ -36,6 +49,7 @@ public class Book : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         EnableInput();
+        playersTransform = other.transform;
     }
 
     private void OnTriggerExit(Collider other)
@@ -47,13 +61,14 @@ public class Book : MonoBehaviour
     {
         //Ui button activation
         triggered = true;
-
+        button.SetActive(true);
     }
 
     private void UnableInput()
     {
         //Ui button deactivation
         triggered = false;
+        button.SetActive(false);
 
     }
 
