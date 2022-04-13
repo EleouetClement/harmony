@@ -131,4 +131,62 @@ public class InventoryManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+
+    public int GetMoneyAmount
+    {
+        get
+        {
+            return money;
+        }
+    }
+    #region tipsGetters&Setters
+    public List<PageGroup> GetTipsPageGroups
+    {
+        get
+        {
+            return listGroupPagesTips;
+        }
+    }
+
+    public PageGroup GetTipsPageGroup(int idx)
+    {
+        return listGroupPagesTips[idx];
+    }
+
+    public bool UnlockTipInInventory(int idx)
+    {
+        if(idx >= listGroupPagesTips.Count)
+        {
+            return false;
+        }
+        listGroupPagesTips[idx].isUnlocked = true;
+        return true;
+    }
+    #endregion
+
+    #region journalGetters&Setters
+    public List<PageGroup> GetJournalPageGroups
+    {
+        get
+        {
+            return listGroupPagesJournal;
+        }
+    }
+
+    public PageGroup GetJournalPageGroup(int idx)
+    {
+        return listGroupPagesJournal[idx];
+    }
+
+    public bool UnlockJournalInInventory(int idx)
+    {
+        if (idx >= listGroupPagesJournal.Count)
+        {
+            return false;
+        }
+        listGroupPagesJournal[idx].isUnlocked = true;
+        return true;
+    }
+    #endregion
+
 }
