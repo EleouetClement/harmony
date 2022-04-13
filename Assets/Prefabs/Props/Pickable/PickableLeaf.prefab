@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2556170880268949551}
   - component: {fileID: 332598516783262949}
   - component: {fileID: 4375494397477750377}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: PickableLeaf
   m_TagString: Untagged
   m_Icon: {fileID: 0}

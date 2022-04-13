@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 7301993369175035854}
   - component: {fileID: 4805643176490531588}
   - component: {fileID: 8832776507803881864}
-  m_Layer: 0
+  - component: {fileID: 5308709787772249362}
+  - component: {fileID: 8397431857398876507}
+  m_Layer: 19
   m_Name: PickableBook
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,3 +104,29 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4022938566264831444, guid: d688cfa5f76c90142bbec49c54e3a48f, type: 3}
+--- !u!135 &5308709787772249362
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463210212174125777}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.48418528
+  m_Center: {x: 0.020612657, y: 0.06414026, z: 0.03020811}
+--- !u!114 &8397431857398876507
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6463210212174125777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a97bc16206c8a284b8e3ef2457a061a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
