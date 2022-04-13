@@ -36,7 +36,9 @@ public class Book : MonoBehaviour
         {
             inv.UnlockTipInInventory(index);
         }
+
         PlayPickUpSound();
+        Destroy(gameObject);
     }
 
     private void PlayPickUpSound()
