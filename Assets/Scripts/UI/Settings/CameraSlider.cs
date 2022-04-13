@@ -9,10 +9,12 @@ public class CameraSlider : MonoBehaviour
 {
     Slider slider;
     CinemachineCameraController cameraController;
+    ControlsSettingsSaver controlsSettingsSaver;
 
     // Start is called before the first frame update
     void Start()
     {
+        controlsSettingsSaver = ControlsSettingsSaver.Instance;
         slider = GetComponent<Slider>();
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         var range = typeof(CinemachineCameraController).GetField(nameof(CinemachineCameraController.sensibility)).GetCustomAttribute<RangeAttribute>();
@@ -29,5 +31,6 @@ public class CameraSlider : MonoBehaviour
     void ChangeSensitivity(float val)
     {
         cameraController.sensibility = val;
+        ControlsSettingsSaver.Instance.cameraSensitivity = val;
     }
 }

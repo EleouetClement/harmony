@@ -77,9 +77,23 @@ public class SettingsDataHandler : MonoBehaviour
 
 	public void SaveData()
 	{
+		DefaultCheck();
 		string settingsData = JsonUtility.ToJson(this);
 		string filePath = Application.persistentDataPath + "/SettingsData.json";
 		System.IO.File.WriteAllText(filePath, settingsData);
 		Debug.Log("Paramètres sauvegardés dans " + filePath);
+	}
+
+	private void DefaultCheck()
+	{
+		if (_cameraSensitivity == 0)
+		{
+			_cameraSensitivity = .25f;
+		}
+		if (_width == 0 && _height == 0)
+		{
+			_width = Screen.currentResolution.width;
+			_height = Screen.currentResolution.height;
+		}
 	}
 }
