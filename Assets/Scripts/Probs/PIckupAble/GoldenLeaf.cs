@@ -65,6 +65,8 @@ public class GoldenLeaf : MonoBehaviour
     private void IncreaseMana()
     {
         GameModeSingleton.GetInstance()?.GetPlayerReference.GetComponent<PlayerGameplayController>()?.IncreaseMana(manaIncreaseAmount);
+        PlayPickUpSound();
+        Destroy(gameObject);
     }
 
     private void PlayPickUpSound()

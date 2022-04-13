@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e9626757f61ba42a378b8621a082aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ManaIncrese: 10
+  manaIncreaseAmount: 10
 --- !u!135 &1725854271739052202
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -206,7 +206,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2278079131765673264}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.43270344
@@ -287,8 +287,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292429333
-  m_fontColor: {r: 0.084104665, g: 0.2727616, b: 0.8490566, a: 1}
+    rgba: 4278299109
+  m_fontColor: {r: 0.8962264, g: 0.66351086, b: 0.004227493, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
