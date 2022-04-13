@@ -257,7 +257,7 @@ PrefabInstance:
     - target: {fileID: 1757258288035369256, guid: 8c6320fb29891fb439e357423f376072,
         type: 3}
       propertyPath: manaIncreaseAmount
-      value: 20
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 2278079131765673264, guid: 8c6320fb29891fb439e357423f376072,
         type: 3}
