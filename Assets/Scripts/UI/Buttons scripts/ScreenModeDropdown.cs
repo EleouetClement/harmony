@@ -11,11 +11,11 @@ public class ScreenModeDropdown : DropdownHandler
     {
 		base.Start();
 		options.Add("Pleine �cran exclusif");
-		options.Add("Pleine �cran fen�tr�");
+		options.Add("Pleine écran fen�tr�");
 		options.Add("Fen�tr� maximis�");
 		options.Add("Fen�tr�");
 		dropDown.AddOptions(options);
-		dropDown.value = (int)Screen.fullScreenMode;
+		dropDown.value = (int)SettingsDataHandler.Instance.ScreenMode;
 	}
 
 	public override void InputHandler(int val)

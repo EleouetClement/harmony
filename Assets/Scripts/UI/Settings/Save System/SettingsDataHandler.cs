@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SettingsDataHandler : MonoBehaviour
+public class SettingsDataHandler
 {
+
 	#region Fields
 	public float _cameraSensitivity;
 	public int _width, _height;
 	public FullScreenMode _screenMode;
 	public static SettingsDataHandler _instance;
+	private string _filePath;
+	private SettingsDataHandler twin;
 	#endregion
 
 	#region Properties
@@ -70,18 +73,36 @@ public class SettingsDataHandler : MonoBehaviour
 	}
 	#endregion
 
-	private void Awake()
+	public  SettingsDataHandler(string path)
 	{
 		_instance = this;
+		_filePath = path;
+		LoadData();
 	}
 
 	public void SaveData()
 	{
 		DefaultCheck();
 		string settingsData = JsonUtility.ToJson(this);
-		string filePath = Application.persistentDataPath + "/SettingsData.json";
-		System.IO.File.WriteAllText(filePath, settingsData);
-		Debug.Log("Paramètres sauvegardés dans " + filePath);
+		System.IO.File.WriteAllText(_filePath, settingsData);
+		Debug.Log("Paramètres sauvegardés dans " + _filePath);
+	}
+
+	public void LoadData()
+	{
+		if (System.IO.File.Exists(_filePath))
+		{
+			string settingsData = System.IO.File.ReadAllText(_filePath);
+			twin = JsonUtility.FromJson<SettingsDataHandler>(settingsData);
+
+			_cameraSensitivity = twin.CameraSensitivity;
+			_width = twin.ScreenWidth;
+			_height = twin.ScreenHeight;
+			_screenMode = twin.ScreenMode;
+
+			Screen.SetResolution(_width, _height, _screenMode);
+		}
+		DefaultCheck();
 	}
 
 	private void DefaultCheck()
@@ -96,4 +117,6 @@ public class SettingsDataHandler : MonoBehaviour
 			_height = Screen.currentResolution.height;
 		}
 	}
+
+
 }

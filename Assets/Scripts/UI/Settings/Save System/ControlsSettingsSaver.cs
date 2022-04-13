@@ -6,7 +6,7 @@ public class ControlsSettingsSaver : ButtonHandler
 {
     public static ControlsSettingsSaver Instance;
     public float cameraSensitivity;
-    SettingsDataHandler dataHandler;
+    public SettingsDataHandler dataHandler;
     new
     // Start is called before the first frame update
     void Start()
@@ -14,6 +14,7 @@ public class ControlsSettingsSaver : ButtonHandler
         base.Start();
         Instance = this;
         dataHandler = SettingsDataHandler.Instance;
+        cameraSensitivity = dataHandler.CameraSensitivity;
     }
 
     

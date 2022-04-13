@@ -9,12 +9,12 @@ public class CameraSlider : MonoBehaviour
 {
     Slider slider;
     CinemachineCameraController cameraController;
-    ControlsSettingsSaver controlsSettingsSaver;
+
+    bool initialized = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        controlsSettingsSaver = ControlsSettingsSaver.Instance;
         slider = GetComponent<Slider>();
         cameraController = GameModeSingleton.GetInstance().GetCinemachineCameraController;
         var range = typeof(CinemachineCameraController).GetField(nameof(CinemachineCameraController.sensibility)).GetCustomAttribute<RangeAttribute>();
@@ -25,6 +25,14 @@ public class CameraSlider : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!initialized)
+        {
+            if (ControlsSettingsSaver.Instance)
+            {
+                slider.value = ControlsSettingsSaver.Instance.dataHandler.CameraSensitivity;
+                initialized = true;
+            }
+        }
         slider.onValueChanged.AddListener(ChangeSensitivity);
     }
 
