@@ -11,6 +11,7 @@ public class Book : MonoBehaviour
     }
     [SerializeField] [Min(0)] int index = 0;
     [SerializeField] PageType type = PageType.Journal;
+    [SerializeField] [Min(0)] float height;
     private bool triggered = false;
     private GameObject button;
     private Transform playersTransform;
@@ -20,8 +21,7 @@ public class Book : MonoBehaviour
         if(transform.childCount > 0)
         {
             button = transform.GetChild(0).gameObject;
-            button.SetActive(false);
-            transform.LookAt(playersTransform);
+            button.SetActive(false);      
         }
         else
         {
@@ -38,7 +38,8 @@ public class Book : MonoBehaviour
     {
         if (triggered)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            //transform.LookAt(playersTransform);
+            if (Input.GetKeyDown(KeyCode.E))
             {
                 ActivateBook();
             }
