@@ -3078,6 +3078,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6957681519607846577, guid: 6bb18bdb3babd9b43b1b7f446398f301,
         type: 3}
+      propertyPath: maxHitsNumber
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6957681519607846577, guid: 6bb18bdb3babd9b43b1b7f446398f301,
+        type: 3}
       propertyPath: setManaToWarning
       value: 60
       objectReference: {fileID: 0}

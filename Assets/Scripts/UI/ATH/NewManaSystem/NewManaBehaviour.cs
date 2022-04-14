@@ -51,7 +51,6 @@ public class NewManaBehaviour : MonoBehaviour
         actualBarre.localScale = new Vector3(pgc.GetMana(), actualBarre.localScale.y, actualBarre.localScale.z);
         if (actualBarre.localScale.x <= 0)
         {
-            Debug.Log("Allo !");
             actualBarre.localScale = new Vector3(minimumValue, actualBarre.localScale.y, actualBarre.localScale.z);
             FadeBar();
         }
