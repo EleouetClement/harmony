@@ -7,6 +7,10 @@ public class NewManaBehaviour : MonoBehaviour
 {
     [SerializeField][Range(0.01f, 0.05f)] private float minimumValue;
     [SerializeField][Min(0)] private float fadeSpeed;
+    [SerializeField] Color baseColor = Color.white;
+    [SerializeField] Color warningColor = Color.yellow;
+    [SerializeField] Color CriticalColor = Color.red;
+    
     private GameModeSingleton gm;
     private PlayerGameplayController pgc;
     public static NewManaBehaviour instance = null;
@@ -56,18 +60,19 @@ public class NewManaBehaviour : MonoBehaviour
             if(transform.GetChild(0).GetComponent<Image>().color.a != 1)
                 AppearBar();
         }
-    }
+        if(actualBarre.localScale.x >= pgc.GetCriticalTreshhold / 100)
+        {
+            SwitchToCritical();
+        }
+        else if(actualBarre.localScale.x >= pgc.GetWarningTreshhold / 100)
+        {
+            SwitchToWarning();
+        }
+        else if (actualBarre.GetComponent<Image>().color != baseColor && !(actualBarre.localScale.x <= minimumValue))
+        {
+            SwitchToBase();
+        }
 
-    public void UseMana(float amount)
-    {
-        float value = amount / 100;
-        actualBarre.localScale += new Vector3(amount, 0, 0);
-    }
-
-    public void GainMana(float amount)
-    {
-        float value = amount / 100;
-        actualBarre.localScale -= new Vector3(amount, 0, 0);
     }
 
     /// <summary>
@@ -85,17 +90,21 @@ public class NewManaBehaviour : MonoBehaviour
     /// <summary>
     /// Switch the color of the bar to orange
     /// </summary>
-    public void SwitchToWarning()
+    private void SwitchToWarning()
     {
-
+        actualBarre.GetComponent<Image>().color = warningColor;
     }
 
     /// <summary>
     /// Switch the color of the bar to red
     /// </summary>
-    public void SwitchToCritical()
+    private void SwitchToCritical()
     {
-
+        actualBarre.GetComponent<Image>().color = CriticalColor;
+    }
+    private void SwitchToBase()
+    {
+        actualBarre.GetComponent<Image>().color = baseColor;
     }
 
     private void FadeBar()

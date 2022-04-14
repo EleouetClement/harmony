@@ -27,6 +27,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField] [Min(0)] private float ManaRegenCooldown = 2f;
     [SerializeField] [Min(0)] private float ManaRegenPerSecond = 20f;
     [SerializeField] [Min(0)] private float ManaRegenPerSecondWhileBurnout = 15f;
+    [SerializeField] [Min(0)] private float setManaToWarning;
+    [SerializeField] [Min(0)] private float setManaToCritical;
     private float CurrentManaCooldown = 0;
     private Boolean manaburnout = false;
 
@@ -351,6 +353,21 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         {
             Debug.Log("IncreaseMana : increasing manaBarScale");
             manaBar.IncreaseManaMax(amount);
+        }
+    }
+
+    public float GetCriticalTreshhold
+    {
+        get
+        {
+            return setManaToCritical;
+        }
+    }
+    public float GetWarningTreshhold
+    {
+        get
+        {
+            return setManaToWarning;
         }
     }
     #endregion
