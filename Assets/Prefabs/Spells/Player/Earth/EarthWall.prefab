@@ -67,7 +67,10 @@ MonoBehaviour:
   - {fileID: 426489448097527418, guid: 9a363b17bf35a2c4b871b5bb1b78cfdf, type: 3}
   - {fileID: 5806283404587497345, guid: 59304e62b2ea2004ba45a041808826c7, type: 3}
   quickPillarOffset: 0.3
-  sphereCastRadius: 9.27
+  rayCastRadius: 25.96
+  rayCastLayers:
+    serializedVersion: 2
+    m_Bits: 1048576
 --- !u!1001 &1774273817
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -37,12 +37,11 @@ public class EarthWall : AbstractSpell
     [SerializeField] private GameObject[] markerPrefabs;
     private GameObject visuReference;
     [SerializeField] float quickPillarOffset;
-    [SerializeField] float sphereCastRadius;
-    [SerializeField] LayerMask SphereCastLayers;
+    [SerializeField] float rayCastRadius = 1;
+    [SerializeField] LayerMask rayCastLayers;
     private Status newStatus = Status.noTarget;
     private Status currentStatus = Status.noTarget;
     private bool manaBurned = false;
-
 
 
 
@@ -94,7 +93,6 @@ public class EarthWall : AbstractSpell
 
     public override void init(GameObject elemRef, Vector3 target)
     {
-        //base.init(elemRef, target);
         
         this.target = target;
         elementary = elemRef;
@@ -125,18 +123,13 @@ public class EarthWall : AbstractSpell
         PositionningMarker pouet = (PositionningMarker)marker;
         PlayerMotionController motionControl = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerMotionController>();
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects)
+        DestroyOldPillar();
         if (chargetime < quickCastTimer)
         {
-            RaycastHit hit;
-            bool peout = Physics.SphereCast(elementary.GetComponent<ElementaryController>().GetVirtualShoulder.transform.position,
-                               sphereCastRadius,
-                               Vector3.down,
-                               out hit,
-                               SphereCastLayers);
-            if (peout)
+            if (IsOnPillar())
             {
-                if((hit.transform.gameObject.GetComponent<EarthPillar>()))
-                    Debug.Log("OnApillar");
+                Terminate();
+                return;
             }
             if (motionControl.onGround)
             {
@@ -254,5 +247,33 @@ public class EarthWall : AbstractSpell
                 visuReference.transform.LookAt(positionForRotation);
             }
         }    
+    }
+
+    private bool IsOnPillar()
+    {
+        RaycastHit hit;
+        if(Physics.Raycast(playerMesh.transform.position, Vector3.down, out hit, rayCastRadius, rayCastLayers))
+        {
+            return true;
+        }
+        else
+        {
+            Debug.DrawRay(playerMesh.transform.position, Vector3.down * rayCastRadius, Color.red, 10);
+        }
+        return false;
+    }
+
+    private void DestroyOldPillar()
+    {
+        if (EarthPillar.instance != null)
+        {
+            Debug.LogWarning("There is more than one instance of EarthPillar in the scene, the old one is destroyed");
+            Destroy(EarthPillar.instance.gameObject);
+        }
+        else if (EarthPlatform.instance != null)
+        {
+            Debug.LogWarning("There is more than one instance of EarthPlatform in the scene, the old one is destroyed");
+            Destroy(EarthPlatform.instance.gameObject);
+        }
     }
 }
