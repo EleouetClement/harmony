@@ -284,4 +284,12 @@ public class ElementaryController : MonoBehaviour
         readyToCast = !IsElementaryAway();
         isReseting = true;
     }
+
+    public GameObject GetVirtualShoulder
+    {
+        get
+        {
+            return virtualShoulder;
+        }
+    }
 }

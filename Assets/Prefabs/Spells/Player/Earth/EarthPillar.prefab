@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2846935910747186753}
   - component: {fileID: 3718558389846799929}
   - component: {fileID: 7684248909046418704}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: EarthPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4237598137324749561}
   - component: {fileID: 320593531743711462}
   - component: {fileID: 880739441}
-  m_Layer: 0
+  m_Layer: 20
   m_Name: EarthPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -211,6 +211,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Thruster
+      objectReference: {fileID: 0}
+    - target: {fileID: 8333127965691530797, guid: c6adb39238299864e88a82ee1a211ed6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8333127965691530798, guid: c6adb39238299864e88a82ee1a211ed6,
         type: 3}
@@ -371,6 +376,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GroundPillarMovingEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 7198647017337580305, guid: 9b72770d490b18f4fbe9f6abf8f2f6bd,
+        type: 3}
+      propertyPath: m_Layer
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7198647017337580305, guid: 9b72770d490b18f4fbe9f6abf8f2f6bd,
         type: 3}

@@ -37,9 +37,13 @@ public class EarthWall : AbstractSpell
     [SerializeField] private GameObject[] markerPrefabs;
     private GameObject visuReference;
     [SerializeField] float quickPillarOffset;
+    [SerializeField] float sphereCastRadius;
+    [SerializeField] LayerMask SphereCastLayers;
     private Status newStatus = Status.noTarget;
     private Status currentStatus = Status.noTarget;
     private bool manaBurned = false;
+
+
 
 
     private void Awake()
@@ -91,6 +95,7 @@ public class EarthWall : AbstractSpell
     public override void init(GameObject elemRef, Vector3 target)
     {
         //base.init(elemRef, target);
+        
         this.target = target;
         elementary = elemRef;
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
@@ -122,7 +127,18 @@ public class EarthWall : AbstractSpell
         // If the normal.y is < 0, the player can not spawn any object (the wall/ceiling do not allow to spawn objects)
         if (chargetime < quickCastTimer)
         {
-            if(motionControl.onGround)
+            RaycastHit hit;
+            bool peout = Physics.SphereCast(elementary.GetComponent<ElementaryController>().GetVirtualShoulder.transform.position,
+                               sphereCastRadius,
+                               Vector3.down,
+                               out hit,
+                               SphereCastLayers);
+            if (peout)
+            {
+                if((hit.transform.gameObject.GetComponent<EarthPillar>()))
+                    Debug.Log("OnApillar");
+            }
+            if (motionControl.onGround)
             {
                 lastMarkerPosition = elementary.GetComponent<ElementaryController>().shoulder.position;
                 if (motionControl.isMoving)
