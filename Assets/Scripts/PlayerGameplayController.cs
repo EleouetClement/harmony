@@ -341,6 +341,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         return mana / 100;
     }
 
+    public bool ManaTest()
+    {
+        return mana>=maxMana;
+    }
+
     /// <summary>
     /// Add the amount givent to the maximum mana the player can use
     /// </summary>

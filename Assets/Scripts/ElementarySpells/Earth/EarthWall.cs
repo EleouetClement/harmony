@@ -252,13 +252,18 @@ public class EarthWall : AbstractSpell
     private bool IsOnPillar()
     {
         RaycastHit hit;
-        if(Physics.Raycast(playerMesh.transform.position, Vector3.down, out hit, rayCastRadius, rayCastLayers))
+        Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
+        offset += new Vector3(0, 0, quickPillarOffset);
+        Debug.Log("Drawing Ray");
+        Debug.DrawRay(offset, Vector3.down * rayCastRadius, Color.red, 10);
+        if (Physics.Raycast(playerMesh.transform.position, Vector3.down, out hit, rayCastRadius, rayCastLayers))
         {
             return true;
-        }
-        else
+        }    
+        else if(Physics.Raycast(offset, Vector3.down, out hit, rayCastRadius, rayCastLayers))
         {
-            Debug.DrawRay(playerMesh.transform.position, Vector3.down * rayCastRadius, Color.red, 10);
+            Debug.DrawRay(offset, Vector3.down * rayCastRadius, Color.red, 10);
+            return true;         
         }
         return false;
     }
