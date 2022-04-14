@@ -3226,7 +3226,7 @@ RectTransform:
   m_GameObject: {fileID: 1104974010465147850}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6362559285036482275}
@@ -3302,7 +3302,7 @@ RectTransform:
   m_GameObject: {fileID: 1685199616745779253}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6362559285036482275}
@@ -3538,7 +3538,7 @@ RectTransform:
   m_GameObject: {fileID: 3565687708245840261}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6362559285036482275}
@@ -4244,6 +4244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   minimumValue: 0.0147
+  fadeSpeed: 1
 --- !u!1 &9031037223360524628
 GameObject:
   m_ObjectHideFlags: 0

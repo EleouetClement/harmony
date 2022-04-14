@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NewManaBehaviour : MonoBehaviour
 {
     [SerializeField][Range(0.01f, 0.05f)] private float minimumValue;
+    [SerializeField][Min(0)] private float fadeSpeed;
     private GameModeSingleton gm;
     private PlayerGameplayController pgc;
     public static NewManaBehaviour instance = null;
@@ -43,8 +45,17 @@ public class NewManaBehaviour : MonoBehaviour
     void Update()
     {
         actualBarre.localScale = new Vector3(pgc.GetMana(), actualBarre.localScale.y, actualBarre.localScale.z);
-        if (transform.localScale.x <= 0)
+        if (actualBarre.localScale.x <= 0)
+        {
+            Debug.Log("Allo !");
             actualBarre.localScale = new Vector3(minimumValue, actualBarre.localScale.y, actualBarre.localScale.z);
+            FadeBar();
+        }
+        else
+        {
+            if(transform.GetChild(0).GetComponent<Image>().color.a != 1)
+                AppearBar();
+        }
     }
 
     public void UseMana(float amount)
@@ -66,7 +77,6 @@ public class NewManaBehaviour : MonoBehaviour
     public void IncreaseManaMax(float amount)
     {
         float value = amount / 100;
-        Debug.Log("IncreaseManaMax : Amount : " + value);
         transform.GetChild(0).localScale += new Vector3(value, 0, 0);
         transform.GetChild(2).localScale += new Vector3(value, 0, 0);
         maxValue = transform.GetChild(2).localScale.x;
@@ -86,5 +96,28 @@ public class NewManaBehaviour : MonoBehaviour
     public void SwitchToCritical()
     {
 
+    }
+
+    private void FadeBar()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Color pouet = transform.GetChild(i).GetComponent<Image>().color;
+            if (pouet.a > 0)
+            {
+                pouet.a -= fadeSpeed * Time.deltaTime;
+                transform.GetChild(i).GetComponent<Image>().color = pouet;
+            }
+        }
+    }
+
+    private void AppearBar()
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            Color pouet = transform.GetChild(i).GetComponent<Image>().color;
+            pouet.a = 1;
+            transform.GetChild(i).GetComponent<Image>().color = pouet;
+        }
     }
 }
