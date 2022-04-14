@@ -9,6 +9,7 @@ public class NewManaBehaviour : MonoBehaviour
     private PlayerGameplayController pgc;
     public static NewManaBehaviour instance = null;
     private Transform actualBarre;
+    private float maxValue;
 
     private void Awake()
     {
@@ -30,7 +31,8 @@ public class NewManaBehaviour : MonoBehaviour
     {
         gm = GameModeSingleton.GetInstance();
         pgc = gm.GetPlayerReference?.GetComponent<PlayerGameplayController>();
-        if(!pgc)
+        maxValue = transform.GetChild(2).localScale.x;
+        if (!pgc)
         {
             Debug.LogError("NewManaBehaviour : playerGameplayControllerReference is null");
             Destroy(gameObject);
@@ -67,7 +69,7 @@ public class NewManaBehaviour : MonoBehaviour
         Debug.Log("IncreaseManaMax : Amount : " + value);
         transform.GetChild(0).localScale += new Vector3(value, 0, 0);
         transform.GetChild(2).localScale += new Vector3(value, 0, 0);
-        
+        maxValue = transform.GetChild(2).localScale.x;
     }
 
     /// <summary>
