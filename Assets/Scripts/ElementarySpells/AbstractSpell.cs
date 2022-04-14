@@ -88,6 +88,7 @@ public abstract class AbstractSpell : MonoBehaviour
     {       
         if (!chargeend)
         {
+
             // turning when charging a spell and not moving
             playerMesh.localRotation = Quaternion.Euler(playerMesh.localRotation.x, GameModeSingleton.GetInstance().GetCinemachineCameraController.rotation.y, 0);
             
@@ -96,6 +97,7 @@ public abstract class AbstractSpell : MonoBehaviour
             if (player) {
                 player.OnManaSpend(GetChannelCost() * Time.fixedDeltaTime);
             }
+
         }
 
         //Debug.Log(isReleased() + " " + currentLivingTime + " " + currentCastTime);
