@@ -15,7 +15,7 @@ public class CinemachineCameraController : MonoBehaviour
     private GameObject currentCam;
 
     [Range(0, 90)] public float verticalMaxAngle = 85.0f;
-    [Min(0)] public float sensibility = 0.25f;
+    [Range(0,1)] public float sensibility = 0.25f;
 
     private Vector3 targetPosition;
     private Vector2 lookInput;
