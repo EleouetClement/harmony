@@ -71,11 +71,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             if (CurrentManaCooldown >= 0)
                 CurrentManaCooldown -= Time.deltaTime;
             else
-                mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecond * Time.deltaTime));
+                mana = Mathf.Max(0, mana - (ManaRegenPerSecond * Time.deltaTime));
         // Enables mana burnout if oom
-        if (mana < 0)
+        if (mana > maxMana)
         {
-            mana = 0;
+            mana = maxMana;
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
@@ -84,8 +84,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         if (manaburnout)
         {
-            mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
-            if (mana >= maxMana) manaburnout = false;
+            mana = Mathf.Max(0, mana - (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
+            if (mana <= 0) manaburnout = false;
         }
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
         #endregion      
@@ -318,7 +318,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         if (m > 0)
             CurrentManaCooldown = ManaRegenCooldown;
-        mana -= m;
+        mana += m;
     }
 
     /// <summary>
@@ -327,7 +327,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="m"></param>
     public void OnManaRegain(float m)
     {
-        mana = (mana + m > maxMana) ? mana : mana + m;       
+        mana = (mana - m <= 0) ? mana : mana - m;       
     }
 
     public float getDisplayMana() {
