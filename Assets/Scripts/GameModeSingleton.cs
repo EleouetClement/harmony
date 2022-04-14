@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class GameModeSingleton : MonoBehaviour
 {
+    public SettingsDataHandler SDH;
+
     [SerializeField] private GameObject playerReference;
 
     private Transform playerMesh;
@@ -76,6 +78,8 @@ public class GameModeSingleton : MonoBehaviour
             playerMesh = playerReference.transform.GetChild(1);
         }
         _instance = this;
+
+        SDH = new(Application.persistentDataPath + "/SettingsData.json");
     }
 
 	private void Update()
