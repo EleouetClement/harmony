@@ -346,6 +346,12 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     public void IncreaseMana(int amount)
     {
         maxMana += amount;
+        NewManaBehaviour manaBar = NewManaBehaviour.instance;
+        if(manaBar)
+        {
+            Debug.Log("IncreaseMana : increasing manaBarScale");
+            manaBar.IncreaseManaMax(amount);
+        }
     }
     #endregion
 }

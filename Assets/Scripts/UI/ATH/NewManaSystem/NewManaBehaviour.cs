@@ -64,7 +64,10 @@ public class NewManaBehaviour : MonoBehaviour
     public void IncreaseManaMax(float amount)
     {
         float value = amount / 100;
-        transform.localScale += new Vector3(amount, 0, 0);
+        Debug.Log("IncreaseManaMax : Amount : " + value);
+        transform.GetChild(0).localScale += new Vector3(value, 0, 0);
+        transform.GetChild(2).localScale += new Vector3(value, 0, 0);
+        
     }
 
     /// <summary>
