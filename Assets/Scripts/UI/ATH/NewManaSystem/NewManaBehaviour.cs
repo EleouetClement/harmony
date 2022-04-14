@@ -60,7 +60,7 @@ public class NewManaBehaviour : MonoBehaviour
             if(transform.GetChild(0).GetComponent<Image>().color.a != 1)
                 AppearBar();
         }
-        if(actualBarre.localScale.x >= pgc.GetCriticalTreshhold / 100)
+        if(actualBarre.localScale.x >= pgc.GetCriticalTreshhold / 100 || pgc.IsManaBurnout)
         {
             SwitchToCritical();
         }

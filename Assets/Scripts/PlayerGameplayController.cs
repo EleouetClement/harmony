@@ -349,6 +349,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         maxMana += amount;
         NewManaBehaviour manaBar = NewManaBehaviour.instance;
+        setManaToWarning += amount;
+        setManaToCritical += amount;
         if(manaBar)
         {
             Debug.Log("IncreaseMana : increasing manaBarScale");
@@ -368,6 +370,14 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         get
         {
             return setManaToWarning;
+        }
+    }
+
+    public bool IsManaBurnout
+    {
+        get
+        {
+            return manaburnout;
         }
     }
     #endregion
