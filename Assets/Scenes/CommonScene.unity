@@ -136,6 +136,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1651627532, guid: e802db13bf4c2544d8f2fdd1a7ea10f6, type: 3}
+      propertyPath: m_spriteAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a67b1bdd0060c14abe86f3555ee493b,
+        type: 2}
     - target: {fileID: 2753716231833086003, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
         type: 3}
       propertyPath: m_AnchorMax.x

@@ -19,6 +19,7 @@ public class DialogueUI : MonoBehaviour
 
     protected void Awake()
     {
+        
         if (instance != null)
         {
             Debug.LogWarning("There is more than one instance of DialogueUI in the scene");

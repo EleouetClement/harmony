@@ -2410,7 +2410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1651627531}
   - component: {fileID: 1651627533}
-  - component: {fileID: 1651627532}
+  - component: {fileID: 5835344122653344625}
   m_Layer: 5
   m_Name: DialogueText
   m_TagString: Untagged
@@ -2446,7 +2446,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1651627530}
   m_CullTransparentMesh: 1
---- !u!114 &1651627532
+--- !u!114 &5835344122653344625
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2466,14 +2466,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Un tutoriel est un guide d'apprentissage pratique qui montre ou d\xE9crit
-    une mani\xE8re d'atteindre un objectif clairement d\xE9fini, \xE9tape par \xE9tape.
-    Il se distingue du mode d'emploi, qui, typiquement, \xE9num\xE8re et d\xE9crit
-    les \xE9l\xE9ments et les fonctionnalit\xE9s d\u2019un appareil ou d\u2019un
-    logiciel sans les envisager sous l\u2019angle d\u2019une t\xE2che sp\xE9cifique.
-    Par exemple, un tutoriel peut d\xE9crire comment battre des blancs d\u2019\u0153ufs
-    en neige, comment d\xE9couper une partie d\u2019une image dans un logiciel de
-    retouche d\u2019images, ou comment installer un aquarium."
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2482,8 +2475,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2492,7 +2485,7 @@ MonoBehaviour:
     bottomLeft: {r: 1, g: 1, b: 1, a: 1}
     bottomRight: {r: 1, g: 1, b: 1, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
-  m_spriteAsset: {fileID: 0}
+  m_spriteAsset: {fileID: 11400000, guid: 6e4fb6f257c07024f9a7fd0299045fe5, type: 2}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
   m_TextStyleHashCode: -1183493901
@@ -2500,19 +2493,19 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
-  m_HorizontalAlignment: 8
+  m_fontStyle: 0
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
-  m_lineSpacing: 20
+  m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
