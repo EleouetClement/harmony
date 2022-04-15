@@ -27,6 +27,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     [SerializeField] [Min(0)] private float ManaRegenCooldown = 2f;
     [SerializeField] [Min(0)] private float ManaRegenPerSecond = 20f;
     [SerializeField] [Min(0)] private float ManaRegenPerSecondWhileBurnout = 15f;
+    [SerializeField] [Min(0)] private float setManaToWarning;
+    [SerializeField] [Min(0)] private float setManaToCritical;
     private float CurrentManaCooldown = 0;
     private Boolean manaburnout = false;
 
@@ -71,11 +73,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
             if (CurrentManaCooldown >= 0)
                 CurrentManaCooldown -= Time.deltaTime;
             else
-                mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecond * Time.deltaTime));
+                mana = Mathf.Max(0, mana - (ManaRegenPerSecond * Time.deltaTime));
         // Enables mana burnout if oom
-        if (mana < 0)
+        if (mana > maxMana)
         {
-            mana = 0;
+            mana = maxMana;
             manaburnout = true;
             if(elementaryController.currentSpell)
             {
@@ -84,13 +86,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         if (manaburnout)
         {
-            mana = Mathf.Min(maxMana, mana + (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
-            if (mana >= maxMana) manaburnout = false;
+            mana = Mathf.Max(0, mana - (ManaRegenPerSecondWhileBurnout * Time.deltaTime));
+            if (mana <= 0) manaburnout = false;
         }
         //Debug.LogWarning($"{mana} / {maxMana} : {mana / maxMana}, {manaburnout}");
-        #endregion
-
-       
+        #endregion      
     }
 
     // Update is called once per frame
@@ -288,6 +288,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
 
     }
 
+    #region Health management
     /// <returns>A representation of the player current recovery in health value, between 0f and 1f</returns>
     public float getDisplayHP()
     {
@@ -310,7 +311,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         }
         //DEAD SCENE TO LOAD...
     }
-
+    #endregion
+    #region mana management
     /// <summary>
     /// Event called when the player spends mana
     /// </summary>
@@ -318,7 +320,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     {
         if (m > 0)
             CurrentManaCooldown = ManaRegenCooldown;
-        mana -= m;
+        mana += m;
     }
 
     /// <summary>
@@ -327,13 +329,56 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     /// <param name="m"></param>
     public void OnManaRegain(float m)
     {
-        mana = (mana + m > maxMana) ? mana : mana + m;
-
-        
+        mana = (mana - m <= 0) ? mana : mana - m;       
     }
 
     public float getDisplayMana() {
         return 1 - (mana / maxMana);
     }
 
+    public float GetMana()
+    {
+        return mana / 100;
+    }
+
+    /// <summary>
+    /// Add the amount givent to the maximum mana the player can use
+    /// </summary>
+    /// <param name="amount"></param>
+    public void IncreaseMana(int amount)
+    {
+        maxMana += amount;
+        NewManaBehaviour manaBar = NewManaBehaviour.instance;
+        setManaToWarning += amount;
+        setManaToCritical += amount;
+        if(manaBar)
+        {
+            Debug.Log("IncreaseMana : increasing manaBarScale");
+            manaBar.IncreaseManaMax(amount);
+        }
+    }
+
+    public float GetCriticalTreshhold
+    {
+        get
+        {
+            return setManaToCritical;
+        }
+    }
+    public float GetWarningTreshhold
+    {
+        get
+        {
+            return setManaToWarning;
+        }
+    }
+
+    public bool IsManaBurnout
+    {
+        get
+        {
+            return manaburnout;
+        }
+    }
+    #endregion
 }

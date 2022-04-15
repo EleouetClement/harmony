@@ -2,35 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Book : MonoBehaviour
+public class GoldenLeaf : MonoBehaviour
 {
-    public enum PageType
-    {
-        Journal,
-        Tips,
-    }
-    [SerializeField] [Min(0)] int index = 0;
-    [SerializeField] PageType type = PageType.Journal;
-    [SerializeField] [Min(0)] float height;
-    private bool triggered = false;
+
+    [SerializeField][Min(1)] int manaIncreaseAmount;
     private GameObject button;
-    private Transform playersTransform;
+    private bool triggered;
 
     private void Awake()
     {
-        if(transform.childCount > 0)
+        if (transform.childCount > 0)
         {
             button = transform.GetChild(0).gameObject;
-            button.SetActive(false);      
+            button.SetActive(false);
         }
         else
         {
-            Debug.LogError("Book : No children for book, canvas must be missing");
+            Debug.LogError("Leaf : No children for Leaf, canvas must be missing");
         }
-    }
-    void Start()
-    {
-        
     }
 
     // Update is called once per frame
@@ -41,16 +30,14 @@ public class Book : MonoBehaviour
             //transform.LookAt(playersTransform);
             if (Input.GetKeyDown(KeyCode.E))
             {
-                ActivateBook();
+                IncreaseMana();
             }
         }
-           
     }
 
     private void OnTriggerEnter(Collider other)
     {
         EnableInput();
-        playersTransform = other.transform;
     }
 
     private void OnTriggerExit(Collider other)
@@ -72,19 +59,12 @@ public class Book : MonoBehaviour
         button.SetActive(false);
     }
 
-    private void ActivateBook()
+    /// <summary>
+    /// Increase player's mana max
+    /// </summary>
+    private void IncreaseMana()
     {
-        Debug.Log("Livre d'index " + index);
-        InventoryManager inv = InventoryManager.instance;
-        if (type.Equals(PageType.Journal))
-        {
-            inv.UnlockJournalInInventory(index);
-        }
-        else
-        {
-            inv.UnlockTipInInventory(index);
-        }
-
+        GameModeSingleton.GetInstance()?.GetPlayerReference.GetComponent<PlayerGameplayController>()?.IncreaseMana(manaIncreaseAmount);
         PlayPickUpSound();
         Destroy(gameObject);
     }
@@ -94,4 +74,6 @@ public class Book : MonoBehaviour
         //Activate pickup sound before destroying item
         //TO DO...
     }
+
+
 }
