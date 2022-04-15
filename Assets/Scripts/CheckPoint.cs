@@ -6,7 +6,7 @@ public class CheckPoint : MonoBehaviour
 {
     private Transform playerSpawn;
 
-    private void Awake()
+    private void Start()
     {
         playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
     }

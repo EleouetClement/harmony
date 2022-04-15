@@ -16,11 +16,11 @@ public class DeathZone : MonoBehaviour
     private bool isFadingIn = false;
     private bool isFadingOut = false;
 
-    private void Awake()
+    private void Start()
     {
         playerSpawn = GameObject.FindGameObjectWithTag("PlayerSpawn").transform;
         player = GameModeSingleton.GetInstance().GetPlayerReference;
-        playerInput = player.GetComponent<PlayerInput>();
+        playerInput = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
     }
 
     private void OnTriggerEnter(Collider collider)
@@ -66,10 +66,14 @@ public class DeathZone : MonoBehaviour
 
             if (fadeScreen.alpha <= 0)
             {
-                playerInput.ActivateInput(); // Allow player's movements
                 isFadingOut = false;
                 elapsedTime = 0f;
             }
+            else if (fadeScreen.alpha <= 0.4f)
+            {
+                playerInput.ActivateInput(); // Allow player's movements
+            }
+
         }
     }
 }

@@ -45,12 +45,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryMenu: {fileID: 0}
+  textMoneyAmount: {fileID: 0}
   lockedText: '- Locked -'
-  contentPagesJournal: {fileID: 0}
+  listButtonJournal: {fileID: 0}
+  contentJournal: {fileID: 0}
   listGroupPagesJournal:
   - {fileID: 11400000, guid: c0eaf8a0d0726754c848a37e9dc8ec4b, type: 2}
   - {fileID: 11400000, guid: cadad6dc3864795489a98f2da53a5829, type: 2}
-  contentPagesTips: {fileID: 0}
+  listButtonTips: {fileID: 0}
+  contentTips: {fileID: 0}
   listGroupPagesTips:
   - {fileID: 11400000, guid: 378329f8b2dd9514b8b8f6f5f7277de7, type: 2}
   - {fileID: 11400000, guid: 051cf0eacbc45eb4dba9d0c3458c7611, type: 2}
