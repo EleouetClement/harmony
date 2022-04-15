@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f4faf036360bf94a9eb986f7d17dfda, type: 3}
+  m_Name: Tutorial_Test
+  m_EditorClassIdentifier: 
+  title: "D\xE9finition"
+  text:
+  - "Un tutoriel (de l\u2019anglais : tutorial) est un guide d'apprentissage pratique
+    qui montre ou d\xE9crit une mani\xE8re d'atteindre un objectif clairement d\xE9fini,
+    \xE9tape par \xE9tape. Il se distingue du mode d'emploi, qui, typiquement, \xE9num\xE8re
+    et d\xE9crit les \xE9l\xE9ments et les fonctionnalit\xE9s d\u2019un appareil
+    ou d\u2019un logiciel sans les envisager sous l\u2019angle d\u2019une t\xE2che
+    sp\xE9cifique. Par exemple, un tutoriel peut d\xE9crire comment battre des blancs
+    d\u2019\u0153ufs en neige, comment d\xE9couper une partie d\u2019une image dans
+    un logiciel de retouche d\u2019images, ou comment installer un aquarium.\nAppuie
+    sur <sprite=9>"
+  - "Le mot d\xE9signe \xE0 l\u2019origine les didacticiels (logiciels didactiques)
+    permettant \xE0 un utilisateur novice de se former de mani\xE8re autonome \xE0
+    l'utilisation d'un autre logiciel (dans lequel il est parfois int\xE9gr\xE9).
+    Par extension, le mot \xAB tutoriel \xBB en est venu \xE0 d\xE9signer des guides
+    pratiques utilisant des supports divers (logiciel, vid\xE9o, texte, images) et
+    portant sur toutes sortes d'activit\xE9s, comme le bricolage, l'automobile, la
+    photo, la vid\xE9o, le jardinage, les loisirs cr\xE9atifs et m\xEAme des domaines
+    comme le d\xE9veloppement personnel.  Dans cette acception, il est abr\xE9g\xE9,
+    dans le langage familier, par apocope, en \xAB\u202Ftuto\u202F\xBB"

@@ -39,8 +39,8 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     public bool InFight { get; private set; } = false;
     private void Awake()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
         InitializeElementary();
     }
 
