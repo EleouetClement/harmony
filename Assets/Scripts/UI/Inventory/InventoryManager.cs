@@ -34,6 +34,7 @@ public class InventoryManager : MonoBehaviour
     private PlayerInput playerInput;
     private bool isInventoryOpen = false;
     private bool canQuitInventory = false;
+    private int indexButtonJournal;
     private int currentJournalPageNumber = 0; // ------------------------------------- ou 0
     private int currentTipsPageNumber = 0;
 
@@ -80,8 +81,9 @@ public class InventoryManager : MonoBehaviour
             button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
             //button.onClick.AddListener(() => PreviousJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
             //button.onClick.AddListener(() => NextJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-            buttonPreviousArrowJournal.onClick.AddListener(() => PreviousJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-            buttonNextArrowJournal.onClick.AddListener(() => NextJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
+            //buttonPreviousArrowJournal.onClick.AddListener(() => PreviousJournalPage());
+            buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
+            buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
             listButtonsPagesJournal.Add(button);
 
             ind++;
@@ -227,6 +229,7 @@ public class InventoryManager : MonoBehaviour
     // Open the journal page when click on a button
     public void OpenJournalPage(int indexJournal)
     {
+        indexButtonJournal = indexJournal;
         currentJournalPageNumber = 0;
         buttonPreviousArrowJournal.interactable = false;
         buttonNextArrowJournal.interactable = false;
@@ -251,18 +254,18 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void PreviousJournalPage(int indexJournal)
+    public void PreviousJournalPage()
     {
         currentJournalPageNumber--;
         buttonNextArrowJournal.interactable = true;
         
-        if (listGroupPagesJournal[indexJournal].isUnlocked)
+        if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
 
 
-            titleJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber - 1].title;
-            textJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber - 1].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber) + "/" + listGroupPagesJournal[indexJournal].pages.Count;
+            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber - 1].title;
+            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber - 1].textContent;
+            textNbPagesJournal.text = (currentJournalPageNumber) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
 
             if (currentJournalPageNumber == 1)
             {
@@ -271,7 +274,7 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void NextJournalPage(int indexJournal)
+    public void NextJournalPage()
     {
         Debug.Log("currentJournalPageNumber before = " + currentJournalPageNumber);
         currentJournalPageNumber++;
@@ -279,13 +282,13 @@ public class InventoryManager : MonoBehaviour
 
         buttonPreviousArrowJournal.interactable = true;
 
-        if (listGroupPagesJournal[indexJournal].isUnlocked)
+        if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
-            titleJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber].title;
-            textJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexJournal].pages.Count;
+            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].title;
+            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
+            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
 
-            if (currentJournalPageNumber >= listGroupPagesJournal[indexJournal].pages.Count - 1)
+            if (currentJournalPageNumber >= listGroupPagesJournal[indexButtonJournal].pages.Count - 1)
             {
                 buttonNextArrowJournal.interactable = false;
             }
