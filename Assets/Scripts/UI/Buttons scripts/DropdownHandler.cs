@@ -9,7 +9,7 @@ public abstract class DropdownHandler : MonoBehaviour
     protected Dropdown dropDown;
     protected List<string> options = new();
 
-	protected void Awake()
+	protected void Start()
 	{
 		dropDown = GetComponent<Dropdown>();
 		dropDown.onValueChanged.AddListener(InputHandler);
@@ -17,4 +17,12 @@ public abstract class DropdownHandler : MonoBehaviour
 	}
 
 	public abstract void InputHandler(int val);
+
+	public Dropdown Dropdown
+	{
+		get
+		{
+			return dropDown;
+		}
+	}
 }
