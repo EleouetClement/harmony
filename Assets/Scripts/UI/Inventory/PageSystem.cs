@@ -5,6 +5,6 @@ using UnityEngine;
 public class PageSystem : ScriptableObject
 {
     private int index;
-    [SerializeField] private string title;
-    [SerializeField] [TextArea] private string textContent;
+    public string title;
+    [TextArea] public string textContent;
 }
