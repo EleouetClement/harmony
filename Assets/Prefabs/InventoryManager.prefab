@@ -49,9 +49,15 @@ MonoBehaviour:
   lockedText: '- Locked -'
   listButtonJournal: {fileID: 0}
   contentJournal: {fileID: 0}
+  titleJournal: {fileID: 0}
+  textJournal: {fileID: 0}
+  textNbPagesJournal: {fileID: 0}
+  buttonPreviousArrowJournal: {fileID: 0}
+  buttonNextArrowJournal: {fileID: 0}
   listGroupPagesJournal:
   - {fileID: 11400000, guid: c0eaf8a0d0726754c848a37e9dc8ec4b, type: 2}
   - {fileID: 11400000, guid: cadad6dc3864795489a98f2da53a5829, type: 2}
+  - {fileID: 11400000, guid: 3271ca5e9a3bd254e848313f3ad7db07, type: 2}
   listButtonTips: {fileID: 0}
   contentTips: {fileID: 0}
   listGroupPagesTips:

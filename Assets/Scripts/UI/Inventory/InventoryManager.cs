@@ -77,13 +77,6 @@ public class InventoryManager : MonoBehaviour
             }
 
             // Add each button to the list to have a button list with their index
-            button.GetComponent<ButtonPage>().SetIndexButton(ind);
-            button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-            //button.onClick.AddListener(() => PreviousJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-            //button.onClick.AddListener(() => NextJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-            //buttonPreviousArrowJournal.onClick.AddListener(() => PreviousJournalPage());
-            buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
-            buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
             listButtonsPagesJournal.Add(button);
 
             ind++;
@@ -132,6 +125,19 @@ public class InventoryManager : MonoBehaviour
         playerInput = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
         textMoneyAmount.text = money.ToString();
         ClearMenu();
+
+        int ind = 0;
+        foreach (Button button in listButtonsPagesJournal)
+        {
+            button.GetComponent<ButtonPage>().SetIndexButton(ind);
+            button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
+
+            buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
+            buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
+            listButtonsPagesJournal.Add(button);
+
+            ind++;
+        }
     }
 
     public void ClearMenu()
@@ -261,13 +267,11 @@ public class InventoryManager : MonoBehaviour
         
         if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
+            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].title;
+            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
+            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
 
-
-            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber - 1].title;
-            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber - 1].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
-
-            if (currentJournalPageNumber == 1)
+            if (currentJournalPageNumber <= 0)
             {
                 buttonPreviousArrowJournal.interactable = false;
             }
@@ -276,10 +280,7 @@ public class InventoryManager : MonoBehaviour
 
     public void NextJournalPage()
     {
-        Debug.Log("currentJournalPageNumber before = " + currentJournalPageNumber);
         currentJournalPageNumber++;
-        Debug.Log("currentJournalPageNumber after = " + currentJournalPageNumber);
-
         buttonPreviousArrowJournal.interactable = true;
 
         if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
@@ -293,12 +294,6 @@ public class InventoryManager : MonoBehaviour
                 buttonNextArrowJournal.interactable = false;
             }
         }
-        //else
-        //{
-        //    titleJournal.text = lockedText;
-        //    textJournal.text = lockedText;
-        //    textNbPagesJournal.text = "?/?";
-        //}
     }
 
     public void CloseInventory()
