@@ -24,19 +24,25 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] private Button buttonNextArrowJournal;
     [SerializeField] private List<PageGroup> listGroupPagesJournal; // Contains the list of journal "books"
     private List<Button> listButtonsPagesJournal;
+    private int indexButtonJournal;
+    private int currentJournalPageNumber = 0;
 
     [Header("------ Tips attributes ------")]
     [SerializeField] private GameObject listButtonTips; // Contains the list of tips page buttons
     [SerializeField] private GameObject contentTips;
+    [SerializeField] private TMP_Text titleTips;
+    [SerializeField] private TMP_Text textTips;
+    [SerializeField] private TMP_Text textNbPagesTips;
+    [SerializeField] private Button buttonPreviousArrowTips;
+    [SerializeField] private Button buttonNextArrowTips;
     [SerializeField] private List<PageGroup> listGroupPagesTips; // Contains the list of tips "books"
     private List<Button> listButtonsPagesTips;
+    private int indexButtonTips;
+    private int currentTipsPageNumber = 0;
 
     private PlayerInput playerInput;
     private bool isInventoryOpen = false;
     private bool canQuitInventory = false;
-    private int indexButtonJournal;
-    private int currentJournalPageNumber = 0;
-    private int currentTipsPageNumber = 0;
 
     public static InventoryManager instance;
 
@@ -58,6 +64,11 @@ public class InventoryManager : MonoBehaviour
             listGroupPagesJournal[i].isUnlocked = false;
         }
 
+        for (int i = 0; i < listGroupPagesTips.Count; i++)
+        {
+            listGroupPagesTips[i].isUnlocked = false;
+        }
+
         // FOR JOURNAL PAGES :
         // For each button, get the text and modify it depending on whether they are blocked or not
         int ind = 0;
@@ -76,7 +87,7 @@ public class InventoryManager : MonoBehaviour
                 txt.text = lockedText;
             }
 
-            // Add each button to the list to have a button list with their index
+            // Add each button to the list to have a button list with their index and click event
             button.GetComponent<ButtonPage>().SetIndexButton(ind);
             button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
             listButtonsPagesJournal.Add(button);
@@ -102,7 +113,9 @@ public class InventoryManager : MonoBehaviour
                 txt.text = lockedText;
             }
 
-            // Add each button to the list to have a button list with their index
+            // Add each button to the list to have a button list with their index and click event
+            button.GetComponent<ButtonPage>().SetIndexButton(ind);
+            button.onClick.AddListener(() => OpenTipsPage(button.GetComponent<ButtonPage>().GetIndexButton()));
             listButtonsPagesTips.Add(button);
 
             ind++;
@@ -131,6 +144,8 @@ public class InventoryManager : MonoBehaviour
         // Add the event which change the page when clicking on the previous/right arrow
         buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
         buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
+        buttonPreviousArrowTips.onClick.AddListener(PreviousTipsPage);
+        buttonNextArrowTips.onClick.AddListener(NextTipsPage);
     }
 
     public void ClearMenu()
@@ -140,6 +155,12 @@ public class InventoryManager : MonoBehaviour
         titleJournal.text = lockedText;
         textJournal.text = lockedText;
         textNbPagesJournal.text = "?/?";
+
+        buttonNextArrowTips.interactable = false;
+        buttonPreviousArrowTips.interactable = false;
+        titleTips.text = lockedText;
+        textTips.text = lockedText;
+        textNbPagesTips.text = "?/?";
     }
 
     private void Update()
@@ -197,21 +218,32 @@ public class InventoryManager : MonoBehaviour
         //StartCoroutine(Wait());
     }
 
+    public void CloseInventory()
+    {
+        isInventoryOpen = false;
+        canQuitInventory = false;
+        inventoryMenu.SetActive(false);
+        Time.timeScale = 1f;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        playerInput.ActivateInput();
+    }
+
     public void OpenJournalTab()
     {
-        listButtonJournal.SetActive(true);
+        listButtonJournal.transform.parent.gameObject.SetActive(true);
         contentJournal.SetActive(true);
 
-        listButtonTips.SetActive(false);
+        listButtonTips.transform.parent.gameObject.SetActive(false);
         contentTips.SetActive(false);
     }
 
     public void OpenTipsTab()
     {
-        listButtonJournal.SetActive(false);
+        listButtonJournal.transform.parent.gameObject.SetActive(false);
         contentJournal.SetActive(false);
 
-        listButtonTips.SetActive(true);
+        listButtonTips.transform.parent.gameObject.SetActive(true);
         contentTips.SetActive(true);
     }
 
@@ -236,14 +268,12 @@ public class InventoryManager : MonoBehaviour
         buttonNextArrowJournal.interactable = false;
 
         // If the journal is unlocked, its informations will be showed, else they will be locked
-        if (listGroupPagesJournal[indexJournal].isUnlocked)
+        if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
-            titleJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber].title;
-            textJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexJournal].pages.Count;
+            UpdateJournalPageUI();
 
             // If there is more than 1 page, the next button is showed
-            if (listGroupPagesJournal[indexJournal].pages.Count > 1)
+            if (listGroupPagesJournal[indexButtonJournal].pages.Count > 1)
             {
                 buttonNextArrowJournal.interactable = true;
             }
@@ -256,6 +286,33 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
+    // Open the tips page when click on a button
+    public void OpenTipsPage(int indexTips)
+    {
+        indexButtonTips = indexTips;
+        currentTipsPageNumber = 0;
+        buttonPreviousArrowTips.interactable = false;
+        buttonNextArrowTips.interactable = false;
+
+        // If the tips is unlocked, its informations will be showed, else they will be locked
+        if (listGroupPagesTips[indexButtonTips].isUnlocked)
+        {
+            UpdateTipsPageUI();
+
+            // If there is more than 1 page, the next button is showed
+            if (listGroupPagesTips[indexButtonTips].pages.Count > 1)
+            {
+                buttonNextArrowTips.interactable = true;
+            }
+        }
+        else
+        {
+            titleTips.text = lockedText;
+            textTips.text = lockedText;
+            textNbPagesTips.text = "?/?";
+        }
+    }
+
     public void PreviousJournalPage()
     {
         currentJournalPageNumber--;
@@ -263,14 +320,29 @@ public class InventoryManager : MonoBehaviour
         
         if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
-            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].title;
-            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
+            UpdateJournalPageUI();
 
             // If the current page is the first one, the previous button is showed
             if (currentJournalPageNumber <= 0)
             {
                 buttonPreviousArrowJournal.interactable = false;
+            }
+        }
+    }
+
+    public void PreviousTipsPage()
+    {
+        currentTipsPageNumber--;
+        buttonNextArrowTips.interactable = true;
+
+        if (listGroupPagesTips[indexButtonTips].isUnlocked)
+        {
+            UpdateTipsPageUI();
+
+            // If the current page is the first one, the previous button is showed
+            if (currentTipsPageNumber <= 0)
+            {
+                buttonPreviousArrowTips.interactable = false;
             }
         }
     }
@@ -282,9 +354,7 @@ public class InventoryManager : MonoBehaviour
 
         if (listGroupPagesJournal[indexButtonJournal].isUnlocked)
         {
-            titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].title;
-            textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
-            textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
+            UpdateJournalPageUI();
 
             // If the current page is the last one, the next button is showed
             if (currentJournalPageNumber >= listGroupPagesJournal[indexButtonJournal].pages.Count - 1)
@@ -294,15 +364,35 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void CloseInventory()
+    public void NextTipsPage()
     {
-        isInventoryOpen = false;
-        canQuitInventory = false;
-        inventoryMenu.SetActive(false);
-        Time.timeScale = 1f;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
-        playerInput.ActivateInput();
+        currentTipsPageNumber++;
+        buttonPreviousArrowTips.interactable = true;
+
+        if (listGroupPagesTips[indexButtonTips].isUnlocked)
+        {
+            UpdateTipsPageUI();
+
+            // If the current page is the last one, the next button is showed
+            if (currentTipsPageNumber >= listGroupPagesTips[indexButtonTips].pages.Count - 1)
+            {
+                buttonNextArrowTips.interactable = false;
+            }
+        }
+    }
+
+    public void UpdateJournalPageUI()
+    {
+        titleJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].title;
+        textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
+        textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
+    }
+
+    public void UpdateTipsPageUI()
+    {
+        titleTips.text = listGroupPagesTips[indexButtonTips].pages[currentTipsPageNumber].title;
+        textTips.text = listGroupPagesTips[indexButtonTips].pages[currentTipsPageNumber].textContent;
+        textNbPagesTips.text = (currentTipsPageNumber + 1) + "/" + listGroupPagesTips[indexButtonTips].pages.Count;
     }
 
     public int GetMoneyAmount
@@ -312,6 +402,7 @@ public class InventoryManager : MonoBehaviour
             return money;
         }
     }
+
     #region tipsGetters&Setters
     public List<PageGroup> GetTipsPageGroups
     {
@@ -333,6 +424,7 @@ public class InventoryManager : MonoBehaviour
             return false;
         }
         listGroupPagesTips[idx].isUnlocked = true;
+        UpdateTipsPageList(idx);
         return true;
     }
     #endregion

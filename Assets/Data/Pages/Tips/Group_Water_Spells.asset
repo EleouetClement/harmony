@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Group_Water_Spells
   m_EditorClassIdentifier: 
   nameGroup: Magie de l'eau
-  pages: []
+  pages:
+  - {fileID: 11400000, guid: 25993fe1db6859b4fa2d2f20802ca179, type: 2}
   isUnlocked: 0

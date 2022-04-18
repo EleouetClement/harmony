@@ -981,6 +981,66 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &595765079 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1859427359, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &595765080 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 328729744, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &595765081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1551629567, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &595765082 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1614505362, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &595765083 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 848198477, guid: e802db13bf4c2544d8f2fdd1a7ea10f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 204744144}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &672115879
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2251,6 +2311,16 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
         type: 3}
+      propertyPath: textTips
+      value: 
+      objectReference: {fileID: 595765082}
+    - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
+        type: 3}
+      propertyPath: titleTips
+      value: 
+      objectReference: {fileID: 595765083}
+    - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
+        type: 3}
       propertyPath: contentTips
       value: 
       objectReference: {fileID: 13684065}
@@ -2286,6 +2356,11 @@ PrefabInstance:
       objectReference: {fileID: 1414626747}
     - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
         type: 3}
+      propertyPath: textNbPagesTips
+      value: 
+      objectReference: {fileID: 595765081}
+    - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
+        type: 3}
       propertyPath: listButtonJournal
       value: 
       objectReference: {fileID: 950011085}
@@ -2296,9 +2371,19 @@ PrefabInstance:
       objectReference: {fileID: 950011082}
     - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
         type: 3}
+      propertyPath: buttonNextArrowTips
+      value: 
+      objectReference: {fileID: 595765079}
+    - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
+        type: 3}
       propertyPath: buttonNextArrowJournal
       value: 
       objectReference: {fileID: 950011080}
+    - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
+        type: 3}
+      propertyPath: buttonPreviousArrowTips
+      value: 
+      objectReference: {fileID: 595765080}
     - target: {fileID: 4065361097760251800, guid: 24ce811c74696dd448fd81fc8585a3d9,
         type: 3}
       propertyPath: buttonPreviousArrowJournal
