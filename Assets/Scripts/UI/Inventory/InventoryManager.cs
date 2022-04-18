@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour
     private bool isInventoryOpen = false;
     private bool canQuitInventory = false;
     private int indexButtonJournal;
-    private int currentJournalPageNumber = 0; // ------------------------------------- ou 0
+    private int currentJournalPageNumber = 0;
     private int currentTipsPageNumber = 0;
 
     public static InventoryManager instance;
@@ -77,6 +77,8 @@ public class InventoryManager : MonoBehaviour
             }
 
             // Add each button to the list to have a button list with their index
+            button.GetComponent<ButtonPage>().SetIndexButton(ind);
+            button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
             listButtonsPagesJournal.Add(button);
 
             ind++;
@@ -126,18 +128,9 @@ public class InventoryManager : MonoBehaviour
         textMoneyAmount.text = money.ToString();
         ClearMenu();
 
-        int ind = 0;
-        foreach (Button button in listButtonsPagesJournal)
-        {
-            button.GetComponent<ButtonPage>().SetIndexButton(ind);
-            button.onClick.AddListener(() => OpenJournalPage(button.GetComponent<ButtonPage>().GetIndexButton()));
-
-            buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
-            buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
-            listButtonsPagesJournal.Add(button);
-
-            ind++;
-        }
+        // Add the event which change the page when clicking on the previous/right arrow
+        buttonPreviousArrowJournal.onClick.AddListener(PreviousJournalPage);
+        buttonNextArrowJournal.onClick.AddListener(NextJournalPage);
     }
 
     public void ClearMenu()
@@ -222,11 +215,13 @@ public class InventoryManager : MonoBehaviour
         contentTips.SetActive(true);
     }
 
+    // Update the name of the journal button if it is unlocked
     public void UpdateJournalPageList(int index)
     {
         listButtonsPagesJournal[index].GetComponentInChildren<TMP_Text>().text = listGroupPagesJournal[index].nameGroup;
     }
 
+    // Update the name of the tips button if it is unlocked
     public void UpdateTipsPageList(int index)
     {
         listButtonsPagesTips[index].GetComponentInChildren<TMP_Text>().text = listGroupPagesTips[index].nameGroup;
@@ -247,6 +242,7 @@ public class InventoryManager : MonoBehaviour
             textJournal.text = listGroupPagesJournal[indexJournal].pages[currentJournalPageNumber].textContent;
             textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexJournal].pages.Count;
 
+            // If there is more than 1 page, the next button is showed
             if (listGroupPagesJournal[indexJournal].pages.Count > 1)
             {
                 buttonNextArrowJournal.interactable = true;
@@ -271,6 +267,7 @@ public class InventoryManager : MonoBehaviour
             textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
             textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
 
+            // If the current page is the first one, the previous button is showed
             if (currentJournalPageNumber <= 0)
             {
                 buttonPreviousArrowJournal.interactable = false;
@@ -289,6 +286,7 @@ public class InventoryManager : MonoBehaviour
             textJournal.text = listGroupPagesJournal[indexButtonJournal].pages[currentJournalPageNumber].textContent;
             textNbPagesJournal.text = (currentJournalPageNumber + 1) + "/" + listGroupPagesJournal[indexButtonJournal].pages.Count;
 
+            // If the current page is the last one, the next button is showed
             if (currentJournalPageNumber >= listGroupPagesJournal[indexButtonJournal].pages.Count - 1)
             {
                 buttonNextArrowJournal.interactable = false;
