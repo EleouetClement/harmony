@@ -353,7 +353,6 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         setManaToCritical += amount;
         if(manaBar)
         {
-            Debug.Log("IncreaseMana : increasing manaBarScale");
             manaBar.IncreaseManaMax(amount);
         }
     }

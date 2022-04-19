@@ -254,7 +254,6 @@ public class EarthWall : AbstractSpell
         RaycastHit hit;
         Vector3 offset = GameModeSingleton.GetInstance().GetPlayerMesh.transform.forward.normalized;
         offset += new Vector3(0, 0, quickPillarOffset);
-        Debug.Log("Drawing Ray");
         Debug.DrawRay(offset, Vector3.down * rayCastRadius, Color.red, 10);
         if (Physics.Raycast(playerMesh.transform.position, Vector3.down, out hit, rayCastRadius, rayCastLayers))
         {
