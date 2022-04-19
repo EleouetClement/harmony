@@ -6,6 +6,7 @@ public abstract class AbstractWheelSystem : MonoBehaviour, IDamageable
 {
     public float spinForce; // Force of the water beam to make the wheel rotate
     public GameObject doorToOpen;
+    public GameObject doorToOpen2;
     [Range(0, 2)] public float speedToOpen; // Opening speed of the door
     public bool canBeClosedAgain;
     //public bool isAffectedByGravity;

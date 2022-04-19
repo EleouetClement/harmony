@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d36ef6e851ff694395e07461cfb9fc9, type: 3}
   m_Name: Mortar
   m_EditorClassIdentifier: 
-  baseDamages: 10
-  maxMultiplier: 3
-  blinkMultiplier: 5
+  baseDamages: 30
+  maxMultiplier: 1.34
+  blinkMultiplier: 1.67
   manaCost: 20
-  manaChannelCostPerSec: 5
+  manaChannelCostPerSec: 10
   knockback: 0

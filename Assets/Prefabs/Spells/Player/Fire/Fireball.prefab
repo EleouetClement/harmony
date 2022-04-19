@@ -46,8 +46,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 0
   damagesInfos: {fileID: 11400000, guid: 95a3ef57daa9e9d4991f99516213e6b6, type: 2}
+  elementaryfollow: 0
+  canceled: 0
   FireballPrefab: {fileID: 8956951863821703682, guid: c535aa9e520aba44bb939356140df70f,
     type: 3}
+  fadeDelay: 2
   maxDistance: 20
   maxSpeedDistance: 5
   projectileTopSpeed: 20
@@ -67,3 +70,4 @@ MonoBehaviour:
   debug: 0
   virtualTargetPrefab: {fileID: 3086534299113521334, guid: adf4f8cab21cacc4a88dd53300aa7802,
     type: 3}
+  rotationSpeed: 3

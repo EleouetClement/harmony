@@ -49,6 +49,8 @@ namespace Harmony.AI {
 
         public BehaviourTree Clone() {
             BehaviourTree tree = Instantiate(this);
+            if (string.IsNullOrEmpty(tree.blackboard.currentState) && tree.blackboard.states.Count > 0)
+                tree.blackboard.currentState = tree.blackboard.states[0];
             tree.rootNode = tree.rootNode.Clone();
             tree.nodes = new List<Node>();
             Traverse(tree.rootNode, (n) => {

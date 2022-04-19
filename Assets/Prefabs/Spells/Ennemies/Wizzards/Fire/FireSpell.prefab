@@ -52,14 +52,14 @@ MonoBehaviour:
   projectileAdditionnalScale: 0.0049
   damagesGrowthPerSec: 1
   baseDamages: 1
-  speed: 8.59
+  speed: 15
   fireOrbReference: {fileID: 5601021594072667299, guid: 960815b19d64e2146a307dbc89410730,
     type: 3}
   debug: 0
   explosionradius: 2.69
   blastEffect:
     serializedVersion: 2
-    m_Bits: 16648
+    m_Bits: 16392
   blastCheck:
     serializedVersion: 2
-    m_Bits: 22793
+    m_Bits: 22537

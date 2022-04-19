@@ -1,0 +1,1193 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-9190184115606746825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee64948bda9e2fe4fb5ad88265395141, type: 3}
+  m_Name: RandomSelector
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 026f3ed42707e8a4aae0ba6de637ae03
+  position: {x: -175.00008, y: 1127}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -8880303862886857515}
+  - {fileID: -8579650226459279868}
+--- !u!114 &-8880303862886857515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 7e7966b56c832e440ac1ccc98db8bc8f
+  position: {x: -352.00006, y: 1274}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 8806083092141736936}
+  - {fileID: 9116264616811719046}
+--- !u!114 &-8770944735055934421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 11345542c1207f545af34759edeaeda0
+  position: {x: 319.9999, y: 642.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 173407461202169280}
+  - {fileID: 6928311362922673510}
+  abortOnFailure: 0
+--- !u!114 &-8579650226459279868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c0e48e6c034cfe44c96d4a51e9881309
+  position: {x: 9.99992, y: 1274}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -6734794905848873208}
+  - {fileID: 140445224822579122}
+--- !u!114 &-7981817562880161853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce3de13f93dc8249b1173dc943bf4ef, type: 3}
+  m_Name: StartPatrolling
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: d9b21ee9503a47d489a5a0db2271dd95
+  position: {x: 170.00003, y: 991.0001}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+--- !u!114 &-6734794905848873208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe6a168f2cd5114bb2966260fd15e37, type: 3}
+  m_Name: CallMethod
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 3d86b16e195d26d4d9567fdf26e9ef00
+  position: {x: -75.00004, y: 1422}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  component: WizardAI
+  method: AttackCharged
+  delay: 0
+--- !u!114 &-5297026774898947343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60c429c2b8c0b74abf8e3c1c6657ce1, type: 3}
+  m_Name: MoveToTarget
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 7b45a89741192c94b9a5c9e4068883da
+  position: {x: -239.68912, y: 834.99994}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: target
+  speed: 5
+  stoppingDistance: 0.1
+  updateRotation: 1
+  acceleration: 40
+  tolerance: 10
+--- !u!114 &-5184754673708075005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706bd37e7faa47445a45445ba9864cf1, type: 3}
+  m_Name: CheckState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ef643565dfa6ba64098b41ce240c1a62
+  position: {x: 320.0001, y: 541}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: -8770944735055934421}
+  aiState: Idle
+  isNot: 0
+--- !u!114 &-4563613514251524612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2932073b8a6c3b34391576c45d359457, type: 3}
+  m_Name: Parallel
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8d73ed74e3d895b4fa48ff4ee5451aa3
+  position: {x: -10.6461525, y: 336.91852}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 446694999428995256}
+  - {fileID: -5184754673708075005}
+  abortOnFailure: 0
+--- !u!114 &-2089884371742793310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 6b1b78029744dd347987a3311852ace8
+  position: {x: -450.00006, y: 967.00006}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 8563186830812071934}
+  - {fileID: -19661002133830139}
+  - {fileID: -692805531971096003}
+  - {fileID: -9190184115606746825}
+--- !u!114 &-911882838764309930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0228ea19ba10ffe44b1e3e2dfc37257b, type: 3}
+  m_Name: SetState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: af7e90a8e5d6a1a46b83aeaf487f5307
+  position: {x: 541, y: 991}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  aiState: Chase
+--- !u!114 &-692805531971096003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0228ea19ba10ffe44b1e3e2dfc37257b, type: 3}
+  m_Name: SetState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 7224200bf2ac4e54088cd31459ec8d8a
+  position: {x: -376.0001, y: 1127}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  aiState: Attack
+--- !u!114 &-19661002133830139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4c2195cc6418344a99d17ae573d8f3f, type: 3}
+  m_Name: LookTowardTransform
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ba8bd1616cdcda740b9f487b65c954cd
+  position: {x: -526.00006, y: 1127}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  parameterName: target
+  speed: 3
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d285eb63c2cdd74180de7cfceaa96ad, type: 3}
+  m_Name: WizardTree
+  m_EditorClassIdentifier: 
+  rootNode: {fileID: 5440851567276491666}
+  treeState: 0
+  nodes:
+  - {fileID: 5440851567276491666}
+  - {fileID: 5535483819682733560}
+  - {fileID: -4563613514251524612}
+  - {fileID: -5184754673708075005}
+  - {fileID: 6928311362922673510}
+  - {fileID: -911882838764309930}
+  - {fileID: 446694999428995256}
+  - {fileID: -5297026774898947343}
+  - {fileID: 75298422744429364}
+  - {fileID: 8027350087361798588}
+  - {fileID: 8806083092141736936}
+  - {fileID: -2089884371742793310}
+  - {fileID: -692805531971096003}
+  - {fileID: -8770944735055934421}
+  - {fileID: 173407461202169280}
+  - {fileID: 8563186830812071934}
+  - {fileID: -19661002133830139}
+  - {fileID: -7981817562880161853}
+  - {fileID: 9116264616811719046}
+  - {fileID: -9190184115606746825}
+  - {fileID: -8880303862886857515}
+  - {fileID: -8579650226459279868}
+  - {fileID: -6734794905848873208}
+  - {fileID: 140445224822579122}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+--- !u!114 &75298422744429364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: b70a42f6795c82f459e3b44ab14482d9
+  position: {x: -336.68906, y: 657}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: 8027350087361798588}
+  - {fileID: -5297026774898947343}
+--- !u!114 &140445224822579122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: f851f1d7bd0deef4c8ce94e519398ddc
+  position: {x: 84.99983, y: 1422}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  durationMin: 5
+  durationMax: 7
+--- !u!114 &173407461202169280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61431bba79d7d7843b82bf1de71703f5, type: 3}
+  m_Name: Sequencer
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: dc0b7d8153f00774598b38d536b07e30
+  position: {x: 169.9999, y: 851.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  children:
+  - {fileID: -7981817562880161853}
+--- !u!114 &446694999428995256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 706bd37e7faa47445a45445ba9864cf1, type: 3}
+  m_Name: CheckState
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 8edb2fb4f27e1b94dbed60c74fd84aee
+  position: {x: -336.68906, y: 541}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: 75298422744429364}
+  aiState: Chase
+  isNot: 0
+--- !u!114 &5440851567276491666
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 163c147d123e4a945b688eddc64e3ea5, type: 3}
+  m_Name: RootNode
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: ce175b20d2539894d96c2ac9f34e1d17
+  position: {x: -10.6461525, y: 120.918495}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: 5535483819682733560}
+--- !u!114 &5535483819682733560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afb5496e8cd973748a10b3e3ef436ebd, type: 3}
+  m_Name: Repeat
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 96ccc872870c89040b7385dad50ad061
+  position: {x: -10.6461525, y: 224.91852}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: -4563613514251524612}
+  restartOnSuccess: 1
+  restartOnFailure: 1
+--- !u!114 &6928311362922673510
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ffb2b789a60490498476e4912ecffaf, type: 3}
+  m_Name: ConeCheck
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: c40089b0cc359314fbb1dd39ca6417f0
+  position: {x: 541, y: 851.8111}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 1
+  child: {fileID: -911882838764309930}
+  targetParameter: target
+  searchLayer: 3
+  blockMask:
+    serializedVersion: 2
+    m_Bits: 14337
+  eyesHeight: 0.875
+  lookAngle: 45
+  lookRange: 16
+--- !u!114 &8027350087361798588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48b73dfce5852de41b132e2e4ad1a6d2, type: 3}
+  m_Name: DistanceToTransform
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 99855d96364f2784b8e2e85acc52103e
+  position: {x: -459.00006, y: 835}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  child: {fileID: -2089884371742793310}
+  parameterName: target
+  greaterThan: 0
+  distance: 10
+--- !u!114 &8563186830812071934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e06f41d11fc285479dc7c18d99f01f7, type: 3}
+  m_Name: StopMove
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 3759d0e4de75406418f66cd55a3f0b61
+  position: {x: -676.0001, y: 1127}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+--- !u!114 &8806083092141736936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebe6a168f2cd5114bb2966260fd15e37, type: 3}
+  m_Name: CallMethod
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: db5539df0c5ccde4c8b143a189e99181
+  position: {x: -427.00006, y: 1422}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  component: WizardAI
+  method: Attack
+  delay: 0
+--- !u!114 &9116264616811719046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5134d9de14153468b48928d3e7359a, type: 3}
+  m_Name: Wait
+  m_EditorClassIdentifier: 
+  state: 0
+  started: 0
+  guid: 838faf4a403f66a459cc40b4f706f114
+  position: {x: -277.00006, y: 1422}
+  blackboard:
+    states:
+    - Idle
+    - Chase
+    - Attack
+    - Dead
+    currentState: 
+    boolParameters:
+      keys: []
+      values: 
+    intParameters:
+      keys: []
+      values: 
+    floatParameters:
+      keys: []
+      values: []
+    vectorParameters:
+      keys:
+      - search
+      values:
+      - {x: 0, y: 0, z: 0}
+    transformParameters:
+      keys:
+      - target
+      values:
+      - {fileID: 0}
+  description: 
+  drawGizmos: 0
+  durationMin: 2
+  durationMax: 3

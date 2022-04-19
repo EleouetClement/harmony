@@ -8,6 +8,7 @@ TagManager:
   - Elementary
   - Platform
   - WaterBeam
+  - TorchEnigme
   - Wheel
   - FallingTree
   - PlayerSpawn
@@ -32,7 +33,7 @@ TagManager:
   - Trigger
   - OtherDefault
   - Pickable
-  - SpellSurface
+  - 
   - 
   - 
   - 

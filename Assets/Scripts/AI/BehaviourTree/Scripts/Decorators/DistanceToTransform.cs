@@ -33,5 +33,10 @@ namespace Harmony.AI
 
             return State.Failure;
         }
+
+        public override string GetName()
+        {
+            return $"Distance to {parameterName} {(greaterThan?">":"<")} {distance}";
+        }
     }
 }

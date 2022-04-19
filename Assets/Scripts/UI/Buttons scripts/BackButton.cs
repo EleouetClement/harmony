@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
-public class BackButton : ButtonHandler
+[RequireComponent(typeof(Button))]
+public class BackButton : MonoBehaviour
 {
+    CanvasManager canvasManager;
 
-	new protected void Start()
+	private void Awake()
 	{
-		base.Start();
+		canvasManager = CanvasManager.GetInstance();
 		
-	}
-	protected override void OnClick()
-	{
-		canvasManager.SwitchCanvas(canvasManager.PreviousCanvas.canvasType);
 	}
 
 }

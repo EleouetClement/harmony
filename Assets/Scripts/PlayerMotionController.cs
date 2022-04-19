@@ -99,7 +99,7 @@ public class PlayerMotionController : MonoBehaviour
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
-        controller.slopeLimit = 90;
+        //controller.slopeLimit = 90;
 
 
         movingForward = false;

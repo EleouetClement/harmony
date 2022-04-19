@@ -18,7 +18,8 @@ namespace Harmony.AI {
         public NodeView(Node node) : base(AssetDatabase.GetAssetPath(BehaviourTreeSettings.GetOrCreateSettings().nodeXml)) {
             this.node = node;
             this.node.name = node.GetType().Name;
-            this.title = ObjectNames.NicifyVariableName(node.name.Replace("(Clone)", "").Replace("Node", ""));
+
+            UpdateTitle();
             this.viewDataKey = node.guid;
 
             style.left = node.position.x;
@@ -28,6 +29,19 @@ namespace Harmony.AI {
             CreateOutputPorts();
             SetupClasses();
             SetupDataBinding();
+        }
+
+        private void UpdateTitle()
+        {
+            string nodeName = node.GetName();
+            if (nodeName == null) nodeName = ObjectNames.NicifyVariableName(node.GetType().Name); 
+            title = nodeName;
+        }
+
+        public override void HandleEvent(EventBase evt)
+        {
+            base.HandleEvent(evt);
+            UpdateTitle();
         }
 
         private void SetupDataBinding() {
@@ -97,6 +111,16 @@ namespace Harmony.AI {
             if (OnNodeSelected != null) {
                 OnNodeSelected.Invoke(this);
             }
+        }
+
+        public override void OnUnselected()
+        {
+            base.OnUnselected();
+            if (OnNodeSelected != null)
+            {
+                OnNodeSelected.Invoke(null);
+            }
+            UpdateTitle();
         }
 
         public void SortChildren() {

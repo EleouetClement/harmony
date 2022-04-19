@@ -8,9 +8,13 @@ TrueTypeFontImporter:
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
+<<<<<<< Updated upstream
   fontName: Electronic Highway Sign
   fontNames:
   - Electronic Highway Sign
+=======
+  fontNames: []
+>>>>>>> Stashed changes
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

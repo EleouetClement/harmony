@@ -19,6 +19,8 @@ namespace Harmony.AI {
             Transform
         }
 
+        public List<string> states = new List<string>();
+        public string currentState = "";
         public UDictionary<string, bool> boolParameters = new UDictionary<string, bool>();
         public UDictionary<string, int> intParameters = new UDictionary<string, int>();
         public UDictionary<string, float> floatParameters = new UDictionary<string, float>();

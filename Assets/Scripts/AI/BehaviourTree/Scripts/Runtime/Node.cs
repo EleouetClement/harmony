@@ -50,6 +50,8 @@ namespace Harmony.AI {
 
         public virtual void OnDrawGizmos() { }
 
+        public virtual string GetName() { return null; }
+
         protected abstract void OnStart();
         protected abstract void OnStop();
         protected abstract State OnUpdate();

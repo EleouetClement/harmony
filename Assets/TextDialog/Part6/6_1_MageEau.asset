@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bebc589e67baa408643bbeda0c6616, type: 3}
+  m_Name: 6_1_MageEau
+  m_EditorClassIdentifier: 
+  characterName: Mage d'eau
+  dialogue:
+  - "(R\xE2le d'agonie)"
+  - "Le royaume d\u2019Eriel ne va pas te \r\nrendre la vie facile si tu esp\xE8res\r\nmonter
+    les \xE9chelons.\r\n"
+  - "Une simple gamine \r\ncomme toi ne pourra jamais tenir \r\nt\xEAte \xE0 UGNIS\u2026
+    C\u2019est impossible !\r\n"
+  - 'Argh !
+
+'

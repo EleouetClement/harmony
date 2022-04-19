@@ -4,6 +4,16 @@ using UnityEngine;
 
 public sealed class Torch : BurnableItem
 {
+    public bool ignited;
+
+
+    public void Start()
+    {
+        if (ignited == true)
+        {
+            base.Consume();
+        }
+    }
 
     protected override void Update()
     {

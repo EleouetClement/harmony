@@ -46,11 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   element: 1
   damagesInfos: {fileID: 11400000, guid: ccb0fe45ba6568b40ac6d97902084a2e, type: 2}
+  elementaryfollow: 0
   canceled: 0
   BallPrefab: {fileID: -3416303769625551740, guid: 9432210ea7945ee4595feddf6288e7ad,
     type: 3}
   TimePerBall: 0.12
-  maxBallNumber: 20
+  maxBallNumber: 10
   targetTransform: {fileID: 0}
   maxSpellTime: 3
   zoomPower: 40

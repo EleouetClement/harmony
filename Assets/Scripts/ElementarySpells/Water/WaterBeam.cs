@@ -155,7 +155,7 @@ public class WaterBeam : AbstractSpell
                 // If the water beam hits the torch, it will extinguish it
                 if (raycastFromElementary.collider.CompareTag("Torch"))
                 {
-                    ParticleSystem fire = raycastFromElementary.collider.GetComponent<ParticleSystem>();
+                    ParticleSystem fire = raycastFromElementary.collider.transform.GetChild(0).GetComponent<ParticleSystem>();
                     fire.Stop();
                 }
             }

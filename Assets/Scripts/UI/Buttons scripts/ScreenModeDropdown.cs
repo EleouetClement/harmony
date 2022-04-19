@@ -7,15 +7,14 @@ public class ScreenModeDropdown : DropdownHandler
 {
 	
 	// Start is called before the first frame update
-	new void Start()
+	void Awake()
     {
-		base.Start();
-		options.Add("Pleine ï¿½cran exclusif");
-		options.Add("Pleine Ã©cran fenï¿½trï¿½");
-		options.Add("Fenï¿½trï¿½ maximisï¿½");
-		options.Add("Fenï¿½trï¿½");
+		base.Awake();
+		options.Add("Pleine écran exclusif");
+		options.Add("Pleine écran fenêtré");
+		options.Add("Fenêtré maximisé");
+		options.Add("Fenêtré");
 		dropDown.AddOptions(options);
-		dropDown.value = (int)SettingsDataHandler.Instance.ScreenMode;
 	}
 
 	public override void InputHandler(int val)

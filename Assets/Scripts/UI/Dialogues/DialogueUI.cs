@@ -17,9 +17,8 @@ public class DialogueUI : MonoBehaviour
 
     public static DialogueUI instance;
 
-    protected void Awake()
+    private void Awake()
     {
-        
         if (instance != null)
         {
             Debug.LogWarning("There is more than one instance of DialogueUI in the scene");
@@ -29,7 +28,7 @@ public class DialogueUI : MonoBehaviour
 
     }
 
-    protected void Start()
+    private void Start()
     {
         typeWriterEffect = GetComponent<TypeWriterEffect>();
         player = GameModeSingleton.GetInstance().GetPlayerReference.GetComponent<PlayerInput>();
@@ -42,7 +41,7 @@ public class DialogueUI : MonoBehaviour
         //ShowDialogue(testDialogue);
     }
 
-    protected void Update()
+    private void Update()
     {
         // DEBUG
         if (Input.GetKeyDown(KeyCode.Alpha4))
@@ -128,7 +127,6 @@ public class DialogueUI : MonoBehaviour
         {
             // Enable the player input
             player.ActivateInput();
-            Time.timeScale = 1;
         }
     }
 
