@@ -4344,6 +4344,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2505850508318907829}
+  - component: {fileID: 5653235935816538469}
   m_Layer: 0
   m_Name: Health
   m_TagString: Untagged
@@ -4368,6 +4369,20 @@ Transform:
   m_Father: {fileID: 3944452313615605068}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5653235935816538469
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5245615256344453430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692f3881bbf18dd458f810f0dacdb380, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lightFadeSpeed: 1
+  heavyFadeSpeed: 1
 --- !u!1 &5847007760033784226
 GameObject:
   m_ObjectHideFlags: 0
