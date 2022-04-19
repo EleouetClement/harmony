@@ -15,9 +15,19 @@ public class NewHealthManager : MonoBehaviour
     private Image lightDmgImage;
     private Image heavyDmgImage;
 
+    public static NewHealthManager instance;
 
     private void Awake()
     {
+        if(instance)
+        {
+            Debug.LogError("More than One Instance for the healthManager, self destruction");
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         if(transform.childCount < 2)
         {
             Debug.LogError("NewHealthManager : no sprites for damages");
