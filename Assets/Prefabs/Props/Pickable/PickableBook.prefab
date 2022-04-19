@@ -66,11 +66,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: E
+  m_text: "R\xE9cup\xE9rer (E)"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 43d958a7bf1c376468d1d949046a6323, type: 2}
-  m_sharedMaterial: {fileID: -3420793975790860035, guid: 43d958a7bf1c376468d1d949046a6323,
-    type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
+  m_sharedMaterial: {fileID: 2164040, guid: 5302535af1044152a457ed104f1f4b91, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -318,7 +317,7 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6463210212174125777}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
@@ -351,3 +350,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   index: 1
   type: 0
+  height: 0

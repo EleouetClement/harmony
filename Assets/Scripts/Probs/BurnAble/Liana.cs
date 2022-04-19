@@ -46,4 +46,5 @@ public sealed class Liana : BurnableItem
         transform.localScale += newScale;
 
     }
+
 }

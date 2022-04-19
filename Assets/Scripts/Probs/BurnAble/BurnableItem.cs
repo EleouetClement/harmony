@@ -6,11 +6,15 @@ public abstract class BurnableItem : MonoBehaviour, IDamageable
 {
 
     protected ParticleSystem fireSystem;
+    protected Light pointLight;
+    protected Light spotLight;
     protected bool triggered = false;
 
     private void Awake()
     {
-        fireSystem = GetComponent<ParticleSystem>();
+        fireSystem = this.transform.GetChild(0).GetComponent<ParticleSystem>();
+        pointLight = this.transform.GetChild(2).GetComponent<Light>();
+        spotLight = this.transform.GetChild(3).GetComponent<Light>();
         fireSystem.Stop();
     }
     
@@ -18,6 +22,11 @@ public abstract class BurnableItem : MonoBehaviour, IDamageable
     {
         fireSystem.Play();
         triggered = true;
+        if(pointLight && spotLight)
+        {
+            pointLight.enabled = true;
+            spotLight.enabled = true;
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -37,5 +46,4 @@ public abstract class BurnableItem : MonoBehaviour, IDamageable
 
     protected abstract void Update();
 
-    
 }

@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/CommonScene.unity
-    guid: 5d7a7d0a28f932f4799af8787c3a426f
+    path: Assets/Scenes/Level/Constantin/Landscape.unity
+    guid: a86b5476854391a46b3c38cd5dc47d18
   - enabled: 1
-    path: Assets/Scenes/MainMenu.unity
-    guid: 7a61c262048b9524bab4797ddcdc45f8
+    path: Assets/Scenes/Level/Constantin/Environement.unity
+    guid: 6c3edbfff3455fc43b099628974d8008
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: feb6706bd184d484f82b7d0dc5b4da02,
       type: 2}

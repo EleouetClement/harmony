@@ -8,6 +8,9 @@ public class Fireball : AbstractSpell
 
     [Header("FireBall skin")]
     public GameObject FireballPrefab;
+    
+    private float elapsedTime = 0f;
+    public float fadeDelay = 2f;
 
     [Header("Fireball stats")]
     /// <summary>
@@ -81,7 +84,15 @@ public class Fireball : AbstractSpell
     private ElementaryController elem;
     private int lastshrapnelspawn = 3;
     private bool trajcalculated = false;
+    private float scale;
+    private float rotation = 0;
+    public float rotationSpeed = 2;
 
+
+    private void Start()
+    {
+        scale = elem.crossAirExt.GetComponent<RectTransform>().localScale.x;
+    }
     public Fireball()
     {
         velocity = Vector3.zero;//Might be useless
@@ -91,6 +102,8 @@ public class Fireball : AbstractSpell
     /// </summary>
     public override void FixedUpdate()
     {
+        elapsedTime += Time.deltaTime;
+        elapsedTime = Mathf.Clamp(elapsedTime, 0f, fadeDelay);
         //Debug.Log(Vector3.Distance(origin, fireOrbInstance.transform.position));
         base.FixedUpdate();
         if (elementaryfollow) {
@@ -115,8 +128,16 @@ public class Fireball : AbstractSpell
                     lastshrapnelspawn = 3;
                 }                
             }
+            rotation -= rotationSpeed;
+            scale = Mathf.MoveTowards(scale, 0.8f, (elapsedTime / fadeDelay) * Time.deltaTime);
+            elem.crossAirExt.GetComponent<RectTransform>().localScale = new Vector3(scale, scale, scale);
+            elem.crossAirExt.GetComponent<RectTransform>().localRotation = Quaternion.Euler(new Vector3(0,0, rotation));
             projectileTopSpeed += projectileTopSpeedGrowth;
             maxDistance += projectileMaxDistanceGrowth;
+
+        } else
+        {
+            elem.crossAirExt.GetComponent<RectTransform>().localScale = new Vector3(1.5f, 1.5f, 1.5f);
         }
         if (fireOrbInstance.GetComponent<FireOrb>().hasExplode)
         {

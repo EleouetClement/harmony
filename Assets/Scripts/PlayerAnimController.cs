@@ -26,7 +26,6 @@ public class PlayerAnimController : MonoBehaviour
     private void Awake()
     {
         playerMotionController = GetComponent<PlayerMotionController>();
-        
         idlingSpeed = 2f;
         animSpeed = 1f;
     }
@@ -36,13 +35,13 @@ public class PlayerAnimController : MonoBehaviour
     {
         elementary = GameModeSingleton.GetInstance().GetElementaryReference.GetComponent<ElementaryController>();
         playerMesh = GameModeSingleton.GetInstance().GetPlayerMesh;
+        Debug.Log("Player Mesh : " + GameModeSingleton.GetInstance().GetPlayerMesh);
     }
 
     // Update is called once per frame
     void Update()
     {
         Vector2 inputAxis = playerMotionController.GetInputAxis();
-
         velocity = playerMesh.localRotation * playerMotionController.GetVelocity();
 
         //print(inputAxis+" "+velocity);

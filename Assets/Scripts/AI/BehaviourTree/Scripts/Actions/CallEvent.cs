@@ -22,6 +22,11 @@ namespace Harmony.AI{
             context.treeRunner.customEvents[eventName].Invoke();
             return State.Success;
         }
+
+        public override string GetName()
+        {
+            return $"Call {eventName} Event";
+        }
     }
 }
 

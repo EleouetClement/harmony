@@ -10,9 +10,6 @@ public enum CanvasType
     DeathMenu,
     GameUI,
     SettingsMenu,
-    DisplaySettings,
-    BindSettings,
-    AudioSettings,
     ExtrasMenu,
     LoadMenu,
     LoadingScreen

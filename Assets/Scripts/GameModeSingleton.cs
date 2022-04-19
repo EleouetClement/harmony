@@ -8,8 +8,6 @@ using UnityEngine.InputSystem;
 /// </summary>
 public class GameModeSingleton : MonoBehaviour
 {
-    public SettingsDataHandler SDH;
-
     [SerializeField] private GameObject playerReference;
 
     private Transform playerMesh;
@@ -20,6 +18,7 @@ public class GameModeSingleton : MonoBehaviour
     private GameObject playerCameraReference;
     [SerializeField] private GameObject playerHUD;
     [SerializeField] private GameObject playerCrossAir;
+    [SerializeField] private GameObject newPlayerCrossAir;
     [SerializeField] private CinemachineCameraController cinemachineCameraControl;
 
     public CanvasGroup blackScreen;
@@ -65,7 +64,9 @@ public class GameModeSingleton : MonoBehaviour
             playerHUD = GameObject.Find("ATH");
         if (playerCrossAir == null)
             playerCrossAir = GameObject.Find("Reticle");
-        if(cinemachineCameraControl == null && playerCameraReference != null)
+        if (newPlayerCrossAir == null)
+            newPlayerCrossAir = GameObject.Find("NewReticle");
+        if (cinemachineCameraControl == null && playerCameraReference != null)
         {
             cinemachineCameraControl = playerCameraReference.GetComponent<CinemachineCameraController>();
         }
@@ -78,8 +79,6 @@ public class GameModeSingleton : MonoBehaviour
             playerMesh = playerReference.transform.GetChild(1);
         }
         _instance = this;
-
-        SDH = new(Application.persistentDataPath + "/SettingsData.json");
     }
 
 	private void Update()
@@ -150,6 +149,13 @@ public class GameModeSingleton : MonoBehaviour
         get
         {
             return playerCrossAir;
+        }
+    }
+    public GameObject GetNewPlayerReticle
+    {
+        get
+        {
+            return newPlayerCrossAir;
         }
     }
 

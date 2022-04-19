@@ -41,10 +41,6 @@ namespace Harmony.AI {
             this.AddManipulator(new DoubleClickSelection());
             this.AddManipulator(new SelectionDragger());
             this.AddManipulator(new RectangleSelector());
-            this.AddManipulator(new ContextualMenuManipulator((ContextualMenuPopulateEvent evt) =>
-            {
-                UnityEngine.Debug.Log("right click");
-            }));
 
             var styleSheet = settings.behaviourTreeStyle;
             styleSheets.Add(styleSheet);

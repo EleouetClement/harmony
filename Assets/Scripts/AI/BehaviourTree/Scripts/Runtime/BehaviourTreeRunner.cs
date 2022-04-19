@@ -8,13 +8,14 @@ namespace Harmony.AI {
 
         // The main behaviour tree asset
         public BehaviourTree tree;
+        public bool running = true;
         public UDictionary<string, UnityEvent> customEvents;
 
         // Storage container object to hold game object subsystems
-        protected Context context;
+        public Context context { get; private set; }
 
         // Start is called before the first frame update
-        protected virtual void Start() {
+        protected virtual void Awake() {
             context = CreateBehaviourTreeContext();
             tree = tree.Clone();
             tree.Bind(context);
@@ -22,7 +23,7 @@ namespace Harmony.AI {
 
         // Update is called once per frame
         protected virtual void Update() {
-            if (tree) {
+            if (tree && running) {
                 tree.Update();
             }
         }

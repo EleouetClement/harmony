@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3295243280608638299}
   - component: {fileID: 1889759439191799904}
   - component: {fileID: 7407116465332207041}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: Geometry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 7815377421612240696}
   - component: {fileID: 4951254746501986087}
   - component: {fileID: 4292735709874860802}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: EarthPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -265,11 +265,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WallPlatformMovingEffect
-      objectReference: {fileID: 0}
-    - target: {fileID: 7198647017337580305, guid: d66250d5e56ddf0498a5fe9b572047ec,
-        type: 3}
-      propertyPath: m_Layer
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7198647017337580307, guid: d66250d5e56ddf0498a5fe9b572047ec,
         type: 3}

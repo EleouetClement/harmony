@@ -192,7 +192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7777778, y: 1}
+    m_SensorSize: {x: 1.0690846, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -803,7 +803,7 @@ MonoBehaviour:
   gravity: 9.81
   layerMask:
     serializedVersion: 2
-    m_Bits: 1097241
+    m_Bits: 48665
   dodgeSpeed: 10
   dodgeDuration: 0.1
   dodgeCoolDown: 1
@@ -844,15 +844,13 @@ MonoBehaviour:
   playerMeshReference: {fileID: 6677204177534006692}
   playerCinemachineCameraController: {fileID: 1212469516}
   castingTurnSpeed: 4
-  maxHitsNumber: 3
+  maxHitsNumber: 1
   hitResetTimer: 10
   maxMana: 100
-  mana: 0
+  mana: -21.700006
   ManaRegenCooldown: 2
   ManaRegenPerSecond: 20
   ManaRegenPerSecondWhileBurnout: 15
-  setManaToWarning: 60
-  setManaToCritical: 80
 --- !u!143 &6677204177286177701
 CharacterController:
   m_ObjectHideFlags: 0

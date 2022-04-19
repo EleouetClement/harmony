@@ -18,7 +18,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     public float castingTurnSpeed = 5f;
 
     [Header("Health settings")]
-    [SerializeField] [Min(0)] private int maxHitsNumber = 3;
+    [SerializeField] [Min(0)] private int maxHitsNumber = 1;
     [SerializeField] [Min(0)] private float hitResetTimer = 10;
 
     [Header("Mana settings")]
@@ -35,14 +35,12 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
     private float hitTimer = 0.0f;
     private int hitAmount = 0;
 
-    private NewHealthManager uiHealthManager;
     
     public bool InFight { get; private set; } = false;
     private void Awake()
     {
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        uiHealthManager = NewHealthManager.instance;
         InitializeElementary();
     }
 
@@ -307,24 +305,11 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         CinemachineImpulseSource source = GetComponent<CinemachineImpulseSource>();
         source.GenerateImpulse();
         hitAmount++;
-        switch(hitAmount)
+        if (hitAmount > maxHitsNumber)
         {
-            case (1):
-                uiHealthManager.SetLightDamages(true);
-                break;
-            case (2):
-                uiHealthManager.SetHeavyDamages(true);
-                break;
-            default:
-                Death();
-                break;
+            Debug.Log("Player dead");
         }
-    }
-
-    private void Death()
-    {
-        Debug.Log("Player dead");
-        //Add stuff to do when dead
+        //DEAD SCENE TO LOAD...
     }
     #endregion
     #region mana management
@@ -368,6 +353,7 @@ public class PlayerGameplayController : MonoBehaviour, IDamageable
         setManaToCritical += amount;
         if(manaBar)
         {
+            Debug.Log("IncreaseMana : increasing manaBarScale");
             manaBar.IncreaseManaMax(amount);
         }
     }

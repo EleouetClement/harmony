@@ -4,18 +4,23 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class CanvasSwitch : ButtonHandler
+public class CanvasSwitch : MonoBehaviour
 {
     public CanvasType nextCanvas;
 
+    CanvasManager canvasManager;
+    Button thisButton;
+
     // Start is called before the first frame update
-    new void Start()
+    void Start()
     {
-        base.Start();
+        canvasManager = CanvasManager.GetInstance();
+        thisButton = GetComponent<Button>();
+        thisButton.onClick.AddListener(OnClick);
     }
 
 
-    protected override void OnClick()
+    private void OnClick()
     {
         canvasManager.SwitchCanvas(nextCanvas);
     }

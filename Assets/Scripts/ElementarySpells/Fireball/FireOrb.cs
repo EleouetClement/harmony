@@ -81,7 +81,7 @@ public class FireOrb : MonoBehaviour
             }
         // VFX
         Instantiate(explosionEffect, transform.position + Vector3.up, transform.rotation);
-        Instantiate(firePrefab, transform.position, Quaternion.identity);
+        //Instantiate(firePrefab, transform.position, Quaternion.identity);
         hasExplode = true;
     }
 

@@ -66,6 +66,11 @@ namespace Harmony.AI
             return false;
         }
 
+        public override string GetName()
+        {
+            return $"See {LayerMask.LayerToName(searchLayer)}?";
+        }
+
 #if UNITY_EDITOR
         public override void OnDrawGizmos()
         {

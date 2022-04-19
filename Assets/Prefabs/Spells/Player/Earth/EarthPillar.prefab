@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2846935910747186753}
   - component: {fileID: 3718558389846799929}
   - component: {fileID: 7684248909046418704}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: EarthPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,8 +95,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1.0870507, y: 1.0113215, z: 1.0870507}
+  m_Center: {x: -0.04352514, y: 0.0019207954, z: 0}
 --- !u!1 &4237598137324749565
 GameObject:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ GameObject:
   - component: {fileID: 4237598137324749561}
   - component: {fileID: 320593531743711462}
   - component: {fileID: 880739441}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: EarthPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ Transform:
   m_GameObject: {fileID: 4237598137324749565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 2.5, z: 1.5}
+  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1492290871519464031}
@@ -215,7 +215,7 @@ PrefabInstance:
     - target: {fileID: 8333127965691530797, guid: c6adb39238299864e88a82ee1a211ed6,
         type: 3}
       propertyPath: m_Layer
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8333127965691530798, guid: c6adb39238299864e88a82ee1a211ed6,
         type: 3}
@@ -380,7 +380,7 @@ PrefabInstance:
     - target: {fileID: 7198647017337580305, guid: 9b72770d490b18f4fbe9f6abf8f2f6bd,
         type: 3}
       propertyPath: m_Layer
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7198647017337580305, guid: 9b72770d490b18f4fbe9f6abf8f2f6bd,
         type: 3}
