@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Group_Movements
   m_EditorClassIdentifier: 
   nameGroup: "Les d\xE9placements"
-  pages:
-  - {fileID: 11400000, guid: a7214ffeeffb67c439dbc72674dde299, type: 2}
+  pages: []
   isUnlocked: 1

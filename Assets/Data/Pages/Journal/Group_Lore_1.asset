@@ -16,5 +16,4 @@ MonoBehaviour:
   pages:
   - {fileID: 11400000, guid: 8b4746f65c168a440a7ce638f2420d05, type: 2}
   - {fileID: 11400000, guid: 5913c3de002200047aeb21540dfa4cc6, type: 2}
-  - {fileID: 11400000, guid: f7a36b7df98a41e4f923519fb36f6281, type: 2}
   isUnlocked: 1

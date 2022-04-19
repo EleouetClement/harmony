@@ -197,7 +197,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16e9626757f61ba42a378b8621a082aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manaIncreaseAmount: 10
+  manaIncreaseAmount: 50
 --- !u!135 &1725854271739052202
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -39,3 +39,14 @@ public static class HarmonyLayers
     public static readonly int LAYER_MOVABLE = LayerMask.NameToLayer("Movable");
     public static readonly int LAYER_FIRE = LayerMask.NameToLayer("Fire");
 }
+
+
+public enum ComparisonType
+{
+    Equal,
+    Greater,
+    GreaterOrEqual,
+    Less,
+    LessOrEqual,
+    NotEqual,
+}

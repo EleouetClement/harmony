@@ -45,30 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryMenu: {fileID: 0}
-  textMoneyAmount: {fileID: 0}
   lockedText: '- Locked -'
-  listButtonJournal: {fileID: 0}
-  contentJournal: {fileID: 0}
-  titleJournal: {fileID: 0}
-  textJournal: {fileID: 0}
-  textNbPagesJournal: {fileID: 0}
-  buttonPreviousArrowJournal: {fileID: 0}
-  buttonNextArrowJournal: {fileID: 0}
+  contentPagesJournal: {fileID: 0}
   listGroupPagesJournal:
   - {fileID: 11400000, guid: c0eaf8a0d0726754c848a37e9dc8ec4b, type: 2}
   - {fileID: 11400000, guid: cadad6dc3864795489a98f2da53a5829, type: 2}
-  - {fileID: 11400000, guid: 3271ca5e9a3bd254e848313f3ad7db07, type: 2}
-  - {fileID: 11400000, guid: df29d16fbd06ed8419df4350b6decf3d, type: 2}
-  - {fileID: 11400000, guid: 716f1a06921d7cb4996766937ca0252c, type: 2}
-  - {fileID: 11400000, guid: 6e88ea920f594e040b6ec8099c62e07f, type: 2}
-  - {fileID: 11400000, guid: 9f65ddb4f7f7cc847bab2d3e09160fac, type: 2}
-  listButtonTips: {fileID: 0}
-  contentTips: {fileID: 0}
-  titleTips: {fileID: 0}
-  textTips: {fileID: 0}
-  textNbPagesTips: {fileID: 0}
-  buttonPreviousArrowTips: {fileID: 0}
-  buttonNextArrowTips: {fileID: 0}
+  contentPagesTips: {fileID: 0}
   listGroupPagesTips:
   - {fileID: 11400000, guid: 378329f8b2dd9514b8b8f6f5f7277de7, type: 2}
   - {fileID: 11400000, guid: 051cf0eacbc45eb4dba9d0c3458c7611, type: 2}

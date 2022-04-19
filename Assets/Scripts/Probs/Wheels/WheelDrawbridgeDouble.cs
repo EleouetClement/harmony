@@ -1,0 +1,58 @@
+using UnityEngine;
+
+public class WheelDrawbridgeDouble : AbstractWheelSystem
+{
+    public float maxAngle;
+
+    private Vector3 initialRotation;
+    private Vector3 finalRotation;
+
+    private void Awake()
+    {
+        rigidBody = transform.parent.gameObject.GetComponent<Rigidbody>();
+
+        initialRotation = new Vector3(transform.rotation.x, transform.rotation.y, transform.rotation.z);
+        finalRotation = new Vector3(maxAngle, transform.rotation.y, transform.rotation.z);
+    }
+
+    public override void OpenDoor()
+    {
+        if (!isTotallyOpened)
+        {
+            timer += Time.deltaTime;
+            //doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
+            doorToOpen.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedToOpen));
+            doorToOpen2.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, -finalRotation, timer * speedToOpen));
+
+            if (doorToOpen.transform.rotation.eulerAngles.x >= maxAngle && doorToOpen.transform.rotation.eulerAngles.x <= -maxAngle)
+            {
+                DrawbridgeHasFallen();
+            }
+        }
+    }
+
+    public override void CloseDoor()
+    {
+        Debug.Log("Close door");
+    }
+
+    public void DrawbridgeHasFallen()
+    {
+        isTotallyOpened = true;
+
+        // The layer of the Bridge is transformed into "Ground" layer
+        // Foreach gameObject in the Drawbridge, the layer is transformed into "Ground" layer
+        foreach (Transform item in doorToOpen.transform.gameObject.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.layer = HarmonyLayers.LAYER_GROUND;
+        }
+
+        foreach (Transform item in doorToOpen2.transform.gameObject.GetComponentsInChildren<Transform>())
+        {
+            item.gameObject.layer = HarmonyLayers.LAYER_GROUND;
+        }
+        // Avoid another interactions
+        //Destroy(doorToOpen.GetComponent<BoxCollider>());
+        //Destroy(this);
+    }
+}

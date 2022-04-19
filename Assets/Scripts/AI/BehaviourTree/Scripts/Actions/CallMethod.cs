@@ -31,6 +31,11 @@ namespace Harmony.AI
             context.components[component].Invoke(method, delay);
             return State.Success;
         }
+
+        public override string GetName()
+        {
+            return $"Call {method}";
+        }
     }
 }
 
@@ -98,9 +103,9 @@ namespace Harmony.AI
                         {
                             if (compMethod.GetParameters().Length == 0)
                             {
-                                string methodName = componentPair.Key + " - " + compMethod.Name;
+                                string methodName = componentPair.Key + " / " + compMethod.Name;
                                 methodList.Add(methodName);
-                                if (methodName == (component.stringValue + " - " + method.stringValue))
+                                if (methodName == (component.stringValue + " / " + method.stringValue))
                                     selectedMethod = methodList.Count - 1;
                             }
                         }
@@ -110,12 +115,20 @@ namespace Harmony.AI
                     selectedMethod = EditorGUILayout.Popup("Method", selectedMethod, methodList.ToArray());
                     if (EditorGUI.EndChangeCheck())
                     {
-                        string selectedMethodStr = methodList[selectedMethod];
-                        string[] methodInfos = selectedMethodStr.Split(" - ");
-                        if (methodInfos.Length == 2)
+                        if (selectedMethod == 0)
                         {
-                            component.stringValue = methodInfos[0];
-                            method.stringValue = methodInfos[1];
+                            component.stringValue = "";
+                            method.stringValue = "";
+                        }
+                        else
+                        {
+                            string selectedMethodStr = methodList[selectedMethod];
+                            string[] methodInfos = selectedMethodStr.Split(" / ");
+                            if (methodInfos.Length == 2)
+                            {
+                                component.stringValue = methodInfos[0];
+                                method.stringValue = methodInfos[1];
+                            }
                         }
                     }
 

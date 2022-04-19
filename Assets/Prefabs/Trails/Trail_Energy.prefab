@@ -192,7 +192,7 @@ TrailRenderer:
   m_Time: 1.3
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 2.7
+    widthMultiplier: 0.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -305,7 +305,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_moveObject: {fileID: 3841384982787575142}
   m_shaderPropertyName: _MoveToMaterialUV
-  m_shaderPropertyID: 1070
+  m_shaderPropertyID: 1055
   m_materialData:
   - m_trailRenderer: {fileID: 1893065722960749156}
     m_uvTiling: {x: 0.06, y: 0.4}

@@ -45,17 +45,17 @@ public abstract class AbstractSpell : MonoBehaviour
     /// <summary>
     /// Maximum cast charge duration
     /// </summary>
-    protected float maxCastTime = 5f;
+    protected float maxCastTime = 2f;
 
     /// <summary>
     /// if the spell input at the blinkTiming time, isBlinked is true
     /// </summary>
-    protected float blinkTiming = 3f;
+    protected float blinkTiming = 1.85f;
 
     /// <summary>
     /// Maximum living time for the spell
     /// </summary>
-    public float maxLivingTime { get; private set; } = 3f;
+    public float maxLivingTime { get; private set; } = 2f;
 
     private float currentCastTime = 0f;
 
@@ -78,14 +78,21 @@ public abstract class AbstractSpell : MonoBehaviour
 
     protected DamageHit damages;
 
+    bool done = false;
 
-
-	private void Update()
+    private void Start()
+    {
+       
+    }
+    private void Update()
 	{
+
     }
 
     public virtual void FixedUpdate()
-    {       
+    {
+      
+
         if (!chargeend)
         {
 
@@ -166,8 +173,9 @@ public abstract class AbstractSpell : MonoBehaviour
     {
         float blink = Mathf.Abs(blinkTiming - chargetime);
         //Debug.Log(blink);
-        if (blink <= 0.5f)
+        if (blink < 0.15f)
         {
+            Debug.Log(elementary);
             Debug.Log("Blink!");
             isBlinked = true;
         }
@@ -214,7 +222,7 @@ public abstract class AbstractSpell : MonoBehaviour
             }
             else
             {
-                float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge;
+                float multiplier = (damagesInfos.maxMultiplier / maxCastTime) * charge + 1;
                 damages.damage *= multiplier;
             }
             this.damages = damages;

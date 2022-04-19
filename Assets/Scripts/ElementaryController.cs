@@ -58,7 +58,8 @@ public class ElementaryController : MonoBehaviour
     public Transform shoulder {get; private set;}
     private Transform playerMesh;
     private GameObject debugSphereReference;
-    
+
+    public GameObject crossAirExt;
     /// <summary>
     /// true if the elementary is away from the player after a spell or inside something
     /// </summary>
@@ -283,13 +284,5 @@ public class ElementaryController : MonoBehaviour
         currentSpell = null;
         readyToCast = !IsElementaryAway();
         isReseting = true;
-    }
-
-    public GameObject GetVirtualShoulder
-    {
-        get
-        {
-            return virtualShoulder;
-        }
     }
 }

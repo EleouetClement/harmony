@@ -24,7 +24,6 @@ public class WheelDrawbridge : AbstractWheelSystem
             timer += Time.deltaTime;
             //doorToOpen.transform.localRotation = Quaternion.RotateTowards(Quaternion.Euler(initialRotation), Quaternion.Euler(finalRotation), Mathf.Pow(timer, speedToOpen));
             doorToOpen.transform.localRotation = Quaternion.Euler(Vector3.Lerp(initialRotation, finalRotation, timer * speedToOpen));
-
             if (doorToOpen.transform.rotation.eulerAngles.x >= maxAngle)
             {
                 DrawbridgeHasFallen();
